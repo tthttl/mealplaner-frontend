@@ -13,9 +13,13 @@ stages:
   - test
   - build
 
-job 1:
+lint:
   stage: test
-  script: node_modules/.bin/ng test
+  script: npm run lint
+
+test:
+  stage: test
+  script: npm run test
 
 #job 2:
 #  stage: test
