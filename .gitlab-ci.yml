@@ -14,7 +14,7 @@ stages:
   - test
 
 lint:
-  stage: test
+  stage: lint
   script: npm run lint
 
 test:
