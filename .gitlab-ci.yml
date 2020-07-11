@@ -45,7 +45,7 @@ deploy:
     # Append keyscan output into known hosts
     - ssh-keyscan $SERVER_IP >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
-    - rsync -r --exclude=".*" $CI_PROJECT_DIR/dist/mealplaner $SERVER_USER@$SERVER_IP:/var/www/mealplaner.app --delete
+    - rsync -r --exclude=".*" $CI_PROJECT_DIR/dist/mealplaner/ $SERVER_USER@$SERVER_IP:/var/www/mealplaner.app --delete
     - ssh $SERVER_USER@$SERVER_IP
 
 #release_job:
