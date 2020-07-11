@@ -26,7 +26,7 @@ test:
 
 build:
   stage: build
-  script: nmp run build
+  script: npm run build
   artifacts:
     paths:
      - build
