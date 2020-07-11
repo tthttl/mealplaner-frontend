@@ -38,7 +38,7 @@ deploy:
     - "which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y  )"
     # Inject the remote's private key
     - eval $(ssh-agent -s)
-    - echo "$SSH_PRIVATE_KEY" | tr -d '\\r' | ssh-add - > /dev/null
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
     # Append keyscan output into known hosts
