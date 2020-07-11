@@ -29,7 +29,12 @@ build:
   script: npm run build
   artifacts:
     paths:
-     - build
+     - dist
+
+deploy:
+  stage: deploy
+  script:
+    - ssh $SERVER_USER@$SERVER_IP
 
 #release_job:
 #  stage: build
