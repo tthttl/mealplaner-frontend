@@ -36,14 +36,16 @@ deploy:
   script:
     # Check for ssh-agent + rsync and install if not present
     - "which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y  )"
-    # Inject the remote's private key
+    - "which rsync || ( apt-get update -y && apt-get install rsync -y )"
     - eval $(ssh-agent -s)
+    # Inject the remote's private key
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
     # Append keyscan output into known hosts
     - ssh-keyscan $SERVER_IP >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
+    - rsync -avuz --exclude=".*" $CI_PROJECT_DIR/dist/ $SERVER_USER@$SERVER_IP:/var/www/mealplaner.app --delete
     - ssh $SERVER_USER@$SERVER_IP
 
 #release_job:
@@ -55,3 +57,6 @@ deploy:
 #      - dist/
 #  only:
 #    - tags
+
+# - rsync -r dist/portfolio-frontend/ $SERVER_USER@$SERVER_IP:/var/www/mealplaner.app --delete
+#  - rsync -avuz --exclude=".*" $CI_PROJECT_DIR/dist/ $SERVER_USER@$SERVER_IP:/var/www/mealplaner.app --delete
