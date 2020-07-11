@@ -10,8 +10,8 @@ before_script:
   - npm install --silent
 
 stages:
+  - lint
   - test
-  - build
 
 lint:
   stage: test
