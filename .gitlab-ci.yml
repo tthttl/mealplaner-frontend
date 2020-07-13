@@ -12,7 +12,7 @@ stages:
   - lint
   - test
   - build
-  - deploy
+  - deploy-prod
 
 lint:
   stage: lint
@@ -31,8 +31,10 @@ build:
     paths:
      - dist
 
-deploy:
-  stage: deploy
+deploy-prod:
+  stage: deploy-prod
+  only:
+    - tags
   script:
     # Check for ssh-agent + rsync and install if not present
     - "which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y  )"
@@ -47,16 +49,3 @@ deploy:
     - chmod 644 ~/.ssh/known_hosts
     - rsync -r --exclude=".*" $CI_PROJECT_DIR/dist/mealplaner/ $SERVER_USER@$SERVER_IP:/var/www/mealplaner.app/html --delete
     - ssh $SERVER_USER@$SERVER_IP
-
-#release_job:
-#  stage: build
-#  script: node_modules/.bin/ng build --prod --aot
-#  artifacts:
-#    name: "project-$CI_COMMIT_REF_NAME"
-#    paths:
-#      - dist/
-#  only:
-#    - tags
-
-# - rsync -r dist/portfolio-frontend/ $SERVER_USER@$SERVER_IP:/var/www/mealplaner.app --delete
-#  - rsync -avuz --exclude=".*" $CI_PROJECT_DIR/dist/ $SERVER_USER@$SERVER_IP:/var/www/mealplaner.app --delete
