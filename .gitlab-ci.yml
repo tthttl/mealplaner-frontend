@@ -26,10 +26,19 @@ test:
 
 build:
   stage: build
-  script: npm run build
+  script: npm run build --configuration=qa
   artifacts:
     paths:
      - dist
+
+build-prod:
+  stage: build
+  only:
+    - tags
+  script: npm run build --configuration=production
+  artifacts:
+    paths:
+      - dist
 
 deploy-dev:
   stage: deploy
