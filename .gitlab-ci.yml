@@ -64,6 +64,7 @@ deploy-storybook:
     - ssh-keyscan $SERVER_IP >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
     - rsync -r --exclude=".*" $CI_PROJECT_DIR/out-storybook/ $SERVER_USER@$SERVER_IP:/var/www/storybook.mealplaner.app/html --delete
+    - ssh $SERVER_USER@$SERVER_IP
 
 deploy-dev:
   stage: deploy
