@@ -35,6 +35,8 @@ build-dev:
 
 build-storybook:
   stage: build
+  only:
+    - master
   script: npm run build-storybook
   artifacts:
     paths:
@@ -51,6 +53,8 @@ build-prod:
 
 deploy-storybook:
   stage: deploy
+  only:
+    - master
   script:
     # Check for ssh-agent + rsync and install if not present
     - "which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y  )"
