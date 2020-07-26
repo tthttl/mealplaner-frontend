@@ -33,6 +33,13 @@ build-dev:
     paths:
      - dist
 
+build-storybook:
+  stage: build
+  script: npm run build-storybook
+  artifacts:
+    paths:
+      - out-storybook
+
 build-prod:
   stage: build
   only:
