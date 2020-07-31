@@ -22,6 +22,9 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
-## Further help
+## CI/CD
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+This application is set up with a CI/CD pipeline using GitLab CI. The pipeline does the follwing:
+* Run `linting` and `unit testing` on every push 
+* Deploy to staging area (beat.mealplaner.app) after merging to master.
+* Deploy to production when creating a tag. 
