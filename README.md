@@ -22,6 +22,11 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
+## Storybook
+This project uses storybook to test and showcase the Angular components isolated from the rest of the app. This helps us to build efficiently. 
+* To start storybook locally run `npm run storybook`
+* The master branch is also deployed to storybook.mealplaner.app
+
 ## CI/CD
 
 This application is set up with a CI/CD pipeline using GitLab CI. The pipeline does the follwing:

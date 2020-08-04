@@ -33,6 +33,15 @@ build-dev:
     paths:
      - dist
 
+build-storybook:
+  stage: build
+  only:
+    - master
+  script: npm run build-storybook
+  artifacts:
+    paths:
+      - out-storybook
+
 build-prod:
   stage: build
   only:
@@ -41,6 +50,25 @@ build-prod:
   artifacts:
     paths:
       - dist
+
+deploy-storybook:
+  stage: deploy
+  only:
+    - master
+  script:
+    # Check for ssh-agent + rsync and install if not present
+    - "which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y  )"
+    - "which rsync || ( apt-get update -y && apt-get install rsync -y )"
+    - eval $(ssh-agent -s)
+    # Inject the remote's private key
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    # Append keyscan output into known hosts
+    - ssh-keyscan $SERVER_IP >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+    - rsync -r --exclude=".*" $CI_PROJECT_DIR/out-storybook/ $SERVER_USER@$SERVER_IP:/var/www/storybook.mealplaner.app/html --delete
+    - ssh $SERVER_USER@$SERVER_IP
 
 deploy-dev:
   stage: deploy
