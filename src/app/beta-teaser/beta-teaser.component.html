@@ -1,1 +1,3 @@
-<div class="beta-teaser">👶 You're using the Beta Version of the mealplaner.app! You can find the stable version <a class="beta-teaser--link" [href]="url" (click)="onClick()">here.</a></div>
+<div class="beta-teaser">👶 {{translations$ | async | translate:'beta.teaser' :'en' }}
+  <a class="beta-teaser--link" [href]="url" (click)="onClick()">here.</a>
+</div>
