@@ -7,8 +7,6 @@ import { TranslationsPerLanguage } from '../../shared/model/model';
   providedIn: 'root'
 })
 export class I18nService {
-
-  // TODO get from config
   url = 'http://localhost:1337/i18n';
 
   constructor(private httpClient: HttpClient) {

@@ -11,8 +11,6 @@ export class I18nApiEffects {
     private actions$: Actions,
     private i18nService: I18nService) {
   }
-
-  // TODO error handling
   @Effect()
   getI18n = this.actions$.pipe(
     ofType(I18nApiActions.getI18n),
