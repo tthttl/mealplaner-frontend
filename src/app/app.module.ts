@@ -9,14 +9,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BetaTeaserComponent } from './beta-teaser/beta-teaser.component';
 import { I18nModule } from './i18n/i18n.module';
-import { TranslatePipe } from './shared/pipes/translate.pipe';
 import { metaReducers, reducers } from './shared/state';
 
 @NgModule({
   declarations: [
     AppComponent,
     BetaTeaserComponent,
-    TranslatePipe
   ],
   imports: [
     BrowserModule,

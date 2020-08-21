@@ -20,7 +20,7 @@ export class I18nApiEffects {
     ofType(I18nApiActions.getI18n),
     withLatestFrom(this.store),
     exhaustMap(([action, state]: [Action , GlobalState]) => this.i18nService.getI18n(state.appState.language).pipe(
-      map((i18n: I18n | null) => I18nApiActions.getI18nSuccess({i18n})),
+      map((i18n: I18n) => I18nApiActions.getI18nSuccess({i18n})),
       catchError((err: Error) => I18nApiActions.getI18nFailure)
     ))
   );
