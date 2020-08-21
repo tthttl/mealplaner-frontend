@@ -22,6 +22,11 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
+## Git Hooks
+This project uses Husky 🐶 to prevent bad `git commit` and `git push` 
+* Before every `git commit` linting is be executed. If linting fails the commit will abort, and you get an error message. If you get this error please fix all linting issues.
+* Before every `git push` all unit tests get executed. If any test fail the push process wil abort, and you get an error message. If you get this error please fix all failing tests.
+
 ## Storybook
 This project uses storybook to test and showcase the Angular components isolated from the rest of the app. This helps us to build efficiently. 
 * To start storybook locally run `npm run storybook`
