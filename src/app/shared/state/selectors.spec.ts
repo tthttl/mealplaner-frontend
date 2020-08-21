@@ -1,17 +1,18 @@
-import { Translations, TranslationsPerLanguage } from '../model/model';
-import { selectTranslations } from './index';
+import { I18n, Translations } from '../model/model';
+import { selectCurrentLanguage, selectTranslations } from './index';
 
-describe('i18nSelectors', () => {
-  const translationResult: TranslationsPerLanguage = {
-    lang: 'de',
-    translations: {} as Translations
+describe('appStateSelectors', () => {
+  const i18n: I18n = {
+    de: {} as Translations
   };
-  it('should select all translations', () => {
-    expect(selectTranslations.projector({
-      i18n: {
-        allTranslations: [translationResult]
-      }
-    }, [translationResult]))
-      .toEqual([translationResult]);
+  const appState = {
+    language: 'de',
+    i18n
+  };
+  it('should select i18n', () => {
+    expect(selectTranslations.projector(appState)).toEqual(i18n);
+  });
+  it('should select currentLanguage', () => {
+    expect(selectCurrentLanguage.projector(appState)).toEqual('de');
   });
 });

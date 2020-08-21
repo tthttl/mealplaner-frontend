@@ -1,10 +1,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { availableLanguages, TranslationsPerLanguage } from '../model/model';
-import { getTranslationForKey, selectMatchingTranslations } from './helpers';
+import { availableLanguages, I18n } from '../model/model';
+
 
 @Pipe({name: 'translate'})
 export class TranslatePipe implements PipeTransform {
-  transform(allTranslations: TranslationsPerLanguage[] | null, key: string, language: availableLanguages = 'de'): string {
-    return getTranslationForKey(selectMatchingTranslations(allTranslations, language), key);
+  transform(key: string, i18n: I18n | null, language: availableLanguages = 'de'): string {
+    return (i18n && i18n[language] && i18n[language][key]) || key;
   }
 }

@@ -1,9 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MemoizedSelector } from '@ngrx/store';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { Translations, TranslationsPerLanguage } from '../shared/model/model';
+import { availableLanguages, I18n, Translations } from '../shared/model/model';
 import { TranslatePipe } from '../shared/pipes/translate.pipe';
-import { GlobalState, selectTranslations } from '../shared/state';
+import { GlobalState, selectCurrentLanguage, selectTranslations } from '../shared/state';
 
 import { BetaTeaserComponent } from './beta-teaser.component';
 
@@ -11,7 +11,8 @@ describe('BetaTeaserComponent', () => {
   let component: BetaTeaserComponent;
   let fixture: ComponentFixture<BetaTeaserComponent>;
   let mockStore: MockStore;
-  let mockI18nSelector: MemoizedSelector<GlobalState, TranslationsPerLanguage[]>;
+  let mockI18nSelector: MemoizedSelector<GlobalState, I18n | null>;
+  let mockLanguageSelector: MemoizedSelector<GlobalState, availableLanguages>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -22,13 +23,10 @@ describe('BetaTeaserComponent', () => {
     })
       .compileComponents();
     mockStore = TestBed.inject(MockStore);
-    mockI18nSelector = mockStore.overrideSelector(
-      selectTranslations,
-      [{
-        lang: 'en',
-        translations: {} as Translations
-      }]
-    );
+    mockI18nSelector = mockStore.overrideSelector(selectTranslations, {
+      en: {} as Translations
+    });
+    mockLanguageSelector = mockStore.overrideSelector(selectCurrentLanguage, 'de');
   }));
 
   beforeEach(() => {

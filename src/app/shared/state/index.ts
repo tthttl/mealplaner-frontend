@@ -1,24 +1,29 @@
 import { ActionReducerMap, createFeatureSelector, createSelector, MetaReducer } from '@ngrx/store';
-import { i18nReducer } from '../../i18n/reducers/i18n-api.reducers';
-import { I18nState, initialI18nState } from './i18n/i18nState';
+import { appStateReducer } from '../../i18n/reducers/i18n-api.reducers';
+import { AppState, initialAppState } from './app-state/app-state';
 
 export interface GlobalState {
-  i18n: I18nState;
+  appState: AppState;
 }
 
 export const initialState: GlobalState = {
-  i18n: initialI18nState
+  appState: initialAppState
 };
 
 export const reducers: ActionReducerMap<GlobalState> = {
-  i18n: i18nReducer
+  appState: appStateReducer
 };
 
 export const metaReducers: MetaReducer<GlobalState>[] = [];
 
-export const selectI18nState = createFeatureSelector<GlobalState, I18nState>('i18n');
+export const selectAppState = createFeatureSelector<GlobalState, AppState>('appState');
 
 export const selectTranslations = createSelector(
-  selectI18nState,
-  (state: I18nState) => state.i18n.allTranslations
+  selectAppState,
+  (appState: AppState) => appState.i18n
+);
+
+export const selectCurrentLanguage = createSelector(
+  selectAppState,
+  (appState: AppState) => appState.language
 );
