@@ -9,7 +9,7 @@ export const appStateReducer = createReducer<AppState, Action>(
   initialAppState,
   on(
     I18nApiActions.getI18nSuccess,
-    (state, {i18n}: {i18n: (I18n)}) => { //TODO typeing
+    (state, {i18n}: {i18n: (I18n)}) => { // TODO typeing
     return {
       ...state,
       i18n: {
