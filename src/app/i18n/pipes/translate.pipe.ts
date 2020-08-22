@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { availableLanguages, I18n } from '../model/model';
+import { availableLanguages, I18n } from '../../shared/model/model';
 
 
 @Pipe({name: 'translate'})

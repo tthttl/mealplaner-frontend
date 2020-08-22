@@ -14,7 +14,7 @@ export class I18nService {
   constructor(private httpClient: HttpClient) {
   }
 
-  getI18n(lang: availableLanguages): Observable<I18nClient | null> {
+  getI18n(lang: availableLanguages): Observable<I18nClient> {
     return this.httpClient.get<I18nApi>(`${environment.apiUrl}/i18n/${lang}`).pipe(
       map((i18n: I18nApi) => mapI18nApiToI18nClient(i18n))
     );
