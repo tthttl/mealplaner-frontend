@@ -1,5 +1,5 @@
 export const environment = {
-  production: true,
+  production: false,
   showBetaTeaser: false,
   apiUrl: 'https://api.mealplaner.app',
 };
