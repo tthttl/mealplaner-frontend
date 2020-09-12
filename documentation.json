@@ -1,0 +1,1683 @@
+{
+    "pipes": [
+        {
+            "name": "TranslatePipe",
+            "id": "pipe-TranslatePipe-d2b7284f2b8a88a9d74b007701ed23d6",
+            "file": "src/app/i18n/pipes/translate.pipe.ts",
+            "type": "pipe",
+            "description": "",
+            "properties": [],
+            "methods": [
+                {
+                    "name": "transform",
+                    "args": [
+                        {
+                            "name": "key",
+                            "type": "string"
+                        },
+                        {
+                            "name": "i18n",
+                            "type": "I18n | null"
+                        },
+                        {
+                            "name": "language",
+                            "type": "availableLanguages",
+                            "defaultValue": "'de'"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "string",
+                    "typeParameters": [],
+                    "line": 7,
+                    "jsdoctags": [
+                        {
+                            "name": "key",
+                            "type": "string",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "i18n",
+                            "type": "I18n | null",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "language",
+                            "type": "availableLanguages",
+                            "defaultValue": "'de'",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "ngname": "translate",
+            "sourceCode": "import { Pipe, PipeTransform } from '@angular/core';\nimport { availableLanguages, I18n } from '../../shared/model/model';\n\n\n@Pipe({name: 'translate'})\nexport class TranslatePipe implements PipeTransform {\n  transform(key: string, i18n: I18n | null, language: availableLanguages = 'de'): string {\n    return (i18n && i18n[language] && i18n[language][key]) || key;\n  }\n}\n"
+        }
+    ],
+    "interfaces": [
+        {
+            "name": "AppState",
+            "id": "interface-AppState-dddc8b48dc570774d45c43aa2f2d9cc3",
+            "file": "src/app/shared/state/app-state/app-state.ts",
+            "type": "interface",
+            "sourceCode": "import { availableLanguages, I18n } from '../../model/model';\n\nexport interface AppState {\n  readonly language: availableLanguages;\n  readonly i18n: I18n | null;\n}\n\nexport const initialAppState: AppState = {\n  language: 'de',\n  i18n: null\n};\n",
+            "properties": [
+                {
+                    "name": "i18n",
+                    "type": "I18n | null",
+                    "optional": false,
+                    "description": "",
+                    "line": 5,
+                    "modifierKind": [
+                        132
+                    ]
+                },
+                {
+                    "name": "language",
+                    "type": "availableLanguages",
+                    "optional": false,
+                    "description": "",
+                    "line": 4,
+                    "modifierKind": [
+                        132
+                    ]
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 150,
+            "methods": []
+        },
+        {
+            "name": "ArrayItemMovedEvent",
+            "id": "interface-ArrayItemMovedEvent-2d835649e4ec835efe4dac0dd840c892",
+            "file": "src/app/shared/model/model.ts",
+            "type": "interface",
+            "sourceCode": "export type I18n = {\n  readonly [key: string]: Translations;\n};\n\nexport interface Translations {\n  readonly [key: string]: string;\n}\n\nexport type availableLanguages = 'de' | 'en';\n\nexport type Unit = 'kg' | 'g' | 'tableSpoon' | 'coffeeSpoon' | 'l' | 'dl' | 'ml' | 'pinch' | 'piece';\n\nexport interface Ingredient {\n  name: string;\n  amount: number;\n  unit: Unit;\n}\n\nexport interface ShoppingListItem extends Ingredient{\n  id: string;\n  isChecked: boolean;\n}\n\nexport interface ArrayItemMovedEvent {\n  currentIndex: number;\n  previousIndex: number;\n}\n",
+            "properties": [
+                {
+                    "name": "currentIndex",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 25
+                },
+                {
+                    "name": "previousIndex",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 26
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 150,
+            "methods": []
+        },
+        {
+            "name": "GlobalState",
+            "id": "interface-GlobalState-25945e35429cf548bb7a95332859e6d0",
+            "file": "src/app/shared/state/index.ts",
+            "type": "interface",
+            "sourceCode": "import { ActionReducerMap, createFeatureSelector, createSelector, MetaReducer } from '@ngrx/store';\nimport { appStateReducer } from '../../i18n/reducers/i18n-api.reducers';\nimport { AppState, initialAppState } from './app-state/app-state';\n\nexport interface GlobalState {\n  appState: AppState;\n}\n\nexport const initialState: GlobalState = {\n  appState: initialAppState\n};\n\nexport const reducers: ActionReducerMap<GlobalState> = {\n  appState: appStateReducer\n};\n\nexport const metaReducers: MetaReducer<GlobalState>[] = [];\n\nexport const selectAppState = createFeatureSelector<GlobalState, AppState>('appState');\n\nexport const selectTranslations = createSelector(\n  selectAppState,\n  (appState: AppState) => appState.i18n\n);\n\nexport const selectCurrentLanguage = createSelector(\n  selectAppState,\n  (appState: AppState) => appState.language\n);\n",
+            "properties": [
+                {
+                    "name": "appState",
+                    "type": "AppState",
+                    "optional": false,
+                    "description": "",
+                    "line": 6
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 150,
+            "methods": []
+        },
+        {
+            "name": "Ingredient",
+            "id": "interface-Ingredient-2d835649e4ec835efe4dac0dd840c892",
+            "file": "src/app/shared/model/model.ts",
+            "type": "interface",
+            "sourceCode": "export type I18n = {\n  readonly [key: string]: Translations;\n};\n\nexport interface Translations {\n  readonly [key: string]: string;\n}\n\nexport type availableLanguages = 'de' | 'en';\n\nexport type Unit = 'kg' | 'g' | 'tableSpoon' | 'coffeeSpoon' | 'l' | 'dl' | 'ml' | 'pinch' | 'piece';\n\nexport interface Ingredient {\n  name: string;\n  amount: number;\n  unit: Unit;\n}\n\nexport interface ShoppingListItem extends Ingredient{\n  id: string;\n  isChecked: boolean;\n}\n\nexport interface ArrayItemMovedEvent {\n  currentIndex: number;\n  previousIndex: number;\n}\n",
+            "properties": [
+                {
+                    "name": "amount",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 15
+                },
+                {
+                    "name": "name",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 14
+                },
+                {
+                    "name": "unit",
+                    "type": "Unit",
+                    "optional": false,
+                    "description": "",
+                    "line": 16
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 150,
+            "methods": []
+        },
+        {
+            "name": "ShoppingListItem",
+            "id": "interface-ShoppingListItem-2d835649e4ec835efe4dac0dd840c892",
+            "file": "src/app/shared/model/model.ts",
+            "type": "interface",
+            "sourceCode": "export type I18n = {\n  readonly [key: string]: Translations;\n};\n\nexport interface Translations {\n  readonly [key: string]: string;\n}\n\nexport type availableLanguages = 'de' | 'en';\n\nexport type Unit = 'kg' | 'g' | 'tableSpoon' | 'coffeeSpoon' | 'l' | 'dl' | 'ml' | 'pinch' | 'piece';\n\nexport interface Ingredient {\n  name: string;\n  amount: number;\n  unit: Unit;\n}\n\nexport interface ShoppingListItem extends Ingredient{\n  id: string;\n  isChecked: boolean;\n}\n\nexport interface ArrayItemMovedEvent {\n  currentIndex: number;\n  previousIndex: number;\n}\n",
+            "properties": [
+                {
+                    "name": "id",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 20
+                },
+                {
+                    "name": "isChecked",
+                    "type": "boolean",
+                    "optional": false,
+                    "description": "",
+                    "line": 21
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 150,
+            "methods": [],
+            "extends": "Ingredient"
+        },
+        {
+            "name": "Translations",
+            "id": "interface-Translations-2d835649e4ec835efe4dac0dd840c892",
+            "file": "src/app/shared/model/model.ts",
+            "type": "interface",
+            "sourceCode": "export type I18n = {\n  readonly [key: string]: Translations;\n};\n\nexport interface Translations {\n  readonly [key: string]: string;\n}\n\nexport type availableLanguages = 'de' | 'en';\n\nexport type Unit = 'kg' | 'g' | 'tableSpoon' | 'coffeeSpoon' | 'l' | 'dl' | 'ml' | 'pinch' | 'piece';\n\nexport interface Ingredient {\n  name: string;\n  amount: number;\n  unit: Unit;\n}\n\nexport interface ShoppingListItem extends Ingredient{\n  id: string;\n  isChecked: boolean;\n}\n\nexport interface ArrayItemMovedEvent {\n  currentIndex: number;\n  previousIndex: number;\n}\n",
+            "properties": [],
+            "indexSignatures": [
+                {
+                    "id": "index-declaration-2d835649e4ec835efe4dac0dd840c892",
+                    "args": [
+                        {
+                            "name": "key",
+                            "type": "string"
+                        }
+                    ],
+                    "returnType": "string",
+                    "line": 5
+                }
+            ],
+            "kind": 159,
+            "methods": []
+        },
+        {
+            "name": "Translations",
+            "id": "interface-Translations-c1582e609f558c89b2cde26bd3030875-1",
+            "file": "src/app/shared/model/model-api.ts",
+            "type": "interface",
+            "sourceCode": "export type I18n = {\n  readonly lang: string;\n  readonly translations: Translations;\n};\n\nexport interface Translations {\n  readonly [key: string]: string;\n}\n",
+            "properties": [],
+            "indexSignatures": [
+                {
+                    "id": "index-declaration-c1582e609f558c89b2cde26bd3030875",
+                    "args": [
+                        {
+                            "name": "key",
+                            "type": "string"
+                        }
+                    ],
+                    "returnType": "string",
+                    "line": 6
+                }
+            ],
+            "kind": 159,
+            "methods": [],
+            "isDuplicate": true,
+            "duplicateId": 1,
+            "duplicateName": "Translations-1"
+        }
+    ],
+    "injectables": [
+        {
+            "name": "I18nApiEffects",
+            "id": "injectable-I18nApiEffects-884aa16d8399f4938f9934dc35cbe266",
+            "file": "src/app/i18n/effects/i18n-api.effects.ts",
+            "properties": [
+                {
+                    "name": "getI18n",
+                    "defaultValue": "this.actions$.pipe(\n    ofType(I18nApiActions.getI18n),\n    withLatestFrom(this.store),\n    exhaustMap(([action, state]: [Action , GlobalState]) => this.i18nService.getI18n(state.appState.language).pipe(\n      map((i18n: I18n) => I18nApiActions.getI18nSuccess({i18n})),\n      catchError((err: Error) => I18nApiActions.getI18nFailure)\n    ))\n  )",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 19,
+                    "decorators": [
+                        {
+                            "name": "Effect",
+                            "stringifiedArguments": ""
+                        }
+                    ]
+                }
+            ],
+            "methods": [],
+            "description": "",
+            "sourceCode": "import { Injectable } from '@angular/core';\nimport { Actions, Effect, ofType } from '@ngrx/effects';\nimport { Action, Store } from '@ngrx/store';\nimport { catchError, exhaustMap, map, withLatestFrom } from 'rxjs/operators';\nimport { I18n } from '../../shared/model/model';\nimport { GlobalState } from '../../shared/state';\nimport { I18nApiActions } from '../actions';\nimport { I18nService } from '../services/i18n.service';\n\n@Injectable()\nexport class I18nApiEffects {\n  constructor(\n    private actions$: Actions,\n    private i18nService: I18nService,\n    private store: Store<GlobalState>) {\n  }\n\n  @Effect()\n  getI18n = this.actions$.pipe(\n    ofType(I18nApiActions.getI18n),\n    withLatestFrom(this.store),\n    exhaustMap(([action, state]: [Action , GlobalState]) => this.i18nService.getI18n(state.appState.language).pipe(\n      map((i18n: I18n) => I18nApiActions.getI18nSuccess({i18n})),\n      catchError((err: Error) => I18nApiActions.getI18nFailure)\n    ))\n  );\n}\n",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [
+                    {
+                        "name": "actions$",
+                        "type": "Actions"
+                    },
+                    {
+                        "name": "i18nService",
+                        "type": "I18nService"
+                    },
+                    {
+                        "name": "store",
+                        "type": "Store<GlobalState>"
+                    }
+                ],
+                "line": 11,
+                "jsdoctags": [
+                    {
+                        "name": "actions$",
+                        "type": "Actions",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "i18nService",
+                        "type": "I18nService",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "store",
+                        "type": "Store<GlobalState>",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "type": "injectable"
+        },
+        {
+            "name": "I18nService",
+            "id": "injectable-I18nService-3b461dd48fa3820fce63b51fbe8bd08b",
+            "file": "src/app/i18n/services/i18n.service.ts",
+            "properties": [],
+            "methods": [
+                {
+                    "name": "getI18n",
+                    "args": [
+                        {
+                            "name": "lang",
+                            "type": "availableLanguages"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "Observable<I18nClient>",
+                    "typeParameters": [],
+                    "line": 17,
+                    "jsdoctags": [
+                        {
+                            "name": "lang",
+                            "type": "availableLanguages",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "description": "",
+            "sourceCode": "import { HttpClient } from '@angular/common/http';\nimport { Injectable } from '@angular/core';\nimport { Observable } from 'rxjs';\nimport { map } from 'rxjs/operators';\nimport { environment } from '../../../environments/environment';\nimport { mapI18nApiToI18nClient } from '../../shared/helpers/helpers';\nimport { availableLanguages, I18n as I18nClient } from '../../shared/model/model';\nimport { I18n as I18nApi } from '../../shared/model/model-api';\n\n@Injectable({\n  providedIn: 'root'\n})\nexport class I18nService {\n  constructor(private httpClient: HttpClient) {\n  }\n\n  getI18n(lang: availableLanguages): Observable<I18nClient> {\n    return this.httpClient.get<I18nApi>(`${environment.apiUrl}/i18n/${lang}`).pipe(\n      map((i18n: I18nApi) => mapI18nApiToI18nClient(i18n))\n    );\n  }\n}\n",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [
+                    {
+                        "name": "httpClient",
+                        "type": "HttpClient"
+                    }
+                ],
+                "line": 13,
+                "jsdoctags": [
+                    {
+                        "name": "httpClient",
+                        "type": "HttpClient",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "type": "injectable"
+        }
+    ],
+    "classes": [
+        {
+            "name": "AppPage",
+            "id": "class-AppPage-a0db91bfa3b9914e9048612074084ee6",
+            "file": "e2e/src/app.po.ts",
+            "type": "class",
+            "sourceCode": "import { browser, by, element } from 'protractor';\n\nexport class AppPage {\n  navigateTo(): Promise<unknown> {\n    return browser.get(browser.baseUrl) as Promise<unknown>;\n  }\n\n  getTitleText(): Promise<string> {\n    return element(by.css('app-root .content span')).getText() as Promise<string>;\n  }\n}\n",
+            "properties": [],
+            "methods": [
+                {
+                    "name": "getTitleText",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "Promise<string>",
+                    "typeParameters": [],
+                    "line": 8
+                },
+                {
+                    "name": "navigateTo",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "Promise<unknown>",
+                    "typeParameters": [],
+                    "line": 4
+                }
+            ],
+            "indexSignatures": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "hostBindings": [],
+            "hostListeners": []
+        }
+    ],
+    "directives": [],
+    "components": [
+        {
+            "name": "AppComponent",
+            "id": "component-AppComponent-a4c20eb2b82646ee188fc35aa7ed8562",
+            "file": "src/app/app.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-root",
+            "styleUrls": [
+                "./app.component.scss"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./app.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "items",
+                    "defaultValue": "[\n    {id: '1', name: 'Mehl', amount: 1, unit: 'kg', isChecked: false},\n    {id: '2', name: 'Zucker', amount: 50, unit: 'g', isChecked: false},\n    {id: '3', name: 'Eier', amount: 1, unit: 'piece', isChecked: false},\n  ]",
+                    "type": "ShoppingListItem[]",
+                    "optional": false,
+                    "description": "",
+                    "line": 14
+                },
+                {
+                    "name": "showBetaTeaser",
+                    "defaultValue": "environment.showBetaTeaser",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 12
+                },
+                {
+                    "name": "title",
+                    "defaultValue": "'mealplaner'",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 11
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "log",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 20
+                }
+            ],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import { Component } from '@angular/core';\nimport {environment} from '../environments/environment';\nimport { Ingredient, ShoppingListItem } from './shared/model/model';\n\n@Component({\n  selector: 'app-root',\n  templateUrl: './app.component.html',\n  styleUrls: ['./app.component.scss']\n})\nexport class AppComponent {\n  title = 'mealplaner';\n  showBetaTeaser = environment.showBetaTeaser;\n\n  items: ShoppingListItem[] = [\n    {id: '1', name: 'Mehl', amount: 1, unit: 'kg', isChecked: false},\n    {id: '2', name: 'Zucker', amount: 50, unit: 'g', isChecked: false},\n    {id: '3', name: 'Eier', amount: 1, unit: 'piece', isChecked: false},\n  ];\n\n  log(): void {\n    console.log('test');\n  }\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "",
+                    "styleUrl": "./app.component.scss"
+                }
+            ],
+            "stylesData": "",
+            "templateData": "<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->\n<!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->\n<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->\n<!-- * * * * * * * * * * and can be replaced. * * * * * * * * * * * -->\n<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->\n<!-- * * * * * * * * * Delete the template below * * * * * * * * * * -->\n<!-- * * * * * * * to get started with your project! * * * * * * * * -->\n<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->\n\n<style>\n  :host {\n    font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\";\n    font-size: 14px;\n    color: #333;\n    box-sizing: border-box;\n    -webkit-font-smoothing: antialiased;\n    -moz-osx-font-smoothing: grayscale;\n  }\n\n  h1,\n  h2,\n  h3,\n  h4,\n  h5,\n  h6 {\n    margin: 8px 0;\n  }\n\n  p {\n    margin: 0;\n  }\n\n  .spacer {\n    flex: 1;\n  }\n\n  .toolbar {\n    position: absolute;\n    top: 70px;\n    left: 0;\n    right: 0;\n    height: 60px;\n    display: flex;\n    align-items: center;\n    background-color: #1976d2;\n    color: white;\n    font-weight: 600;\n  }\n\n  .toolbar img {\n    margin: 0 16px;\n  }\n\n  .toolbar #twitter-logo {\n    height: 40px;\n    margin: 0 16px;\n  }\n\n  .toolbar #twitter-logo:hover {\n    opacity: 0.8;\n  }\n\n  .content {\n    display: flex;\n    margin: 82px auto 32px;\n    padding: 0 16px;\n    max-width: 960px;\n    flex-direction: column;\n    align-items: center;\n  }\n\n  svg.material-icons {\n    height: 24px;\n    width: auto;\n  }\n\n  svg.material-icons:not(:last-child) {\n    margin-right: 8px;\n  }\n\n  .card svg.material-icons path {\n    fill: #888;\n  }\n\n  .card-container {\n    display: flex;\n    flex-wrap: wrap;\n    justify-content: center;\n    margin-top: 16px;\n  }\n\n  .card {\n    border-radius: 4px;\n    border: 1px solid #eee;\n    background-color: #fafafa;\n    height: 40px;\n    width: 200px;\n    margin: 0 8px 16px;\n    padding: 16px;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    transition: all 0.2s ease-in-out;\n    line-height: 24px;\n  }\n\n  .card-container .card:not(:last-child) {\n    margin-right: 0;\n  }\n\n  .card.card-small {\n    height: 16px;\n    width: 168px;\n  }\n\n  .card-container .card:not(.highlight-card) {\n    cursor: pointer;\n  }\n\n  .card-container .card:not(.highlight-card):hover {\n    transform: translateY(-3px);\n    box-shadow: 0 4px 17px rgba(0, 0, 0, 0.35);\n  }\n\n  .card-container .card:not(.highlight-card):hover .material-icons path {\n    fill: rgb(105, 103, 103);\n  }\n\n  .card.highlight-card {\n    background-color: #1976d2;\n    color: white;\n    font-weight: 600;\n    border: none;\n    width: auto;\n    min-width: 30%;\n    position: relative;\n  }\n\n  .card.card.highlight-card span {\n    margin-left: 60px;\n  }\n\n  svg#rocket {\n    width: 80px;\n    position: absolute;\n    left: -10px;\n    top: -24px;\n  }\n\n  svg#rocket-smoke {\n    height: calc(100vh - 95px);\n    position: absolute;\n    top: 10px;\n    right: 180px;\n    z-index: -10;\n  }\n\n  a,\n  a:visited,\n  a:hover {\n    color: #1976d2;\n    text-decoration: none;\n  }\n\n  a:hover {\n    color: #125699;\n  }\n\n  .terminal {\n    position: relative;\n    width: 80%;\n    max-width: 600px;\n    border-radius: 6px;\n    padding-top: 45px;\n    margin-top: 8px;\n    overflow: hidden;\n    background-color: rgb(15, 15, 16);\n  }\n\n  .terminal::before {\n    content: \"\\2022 \\2022 \\2022\";\n    position: absolute;\n    top: 0;\n    left: 0;\n    height: 4px;\n    background: rgb(58, 58, 58);\n    color: #c2c3c4;\n    width: 100%;\n    font-size: 2rem;\n    line-height: 0;\n    padding: 14px 0;\n    text-indent: 4px;\n  }\n\n  .terminal pre {\n    font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;\n    color: white;\n    padding: 0 1rem 1rem;\n    margin: 0;\n  }\n\n  .circle-link {\n    height: 40px;\n    width: 40px;\n    border-radius: 40px;\n    margin: 8px;\n    background-color: white;\n    border: 1px solid #eeeeee;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    cursor: pointer;\n    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);\n    transition: 1s ease-out;\n  }\n\n  .circle-link:hover {\n    transform: translateY(-0.25rem);\n    box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);\n  }\n\n  footer {\n    margin-top: 8px;\n    display: flex;\n    align-items: center;\n    line-height: 20px;\n  }\n\n  footer a {\n    display: flex;\n    align-items: center;\n  }\n\n  .github-star-badge {\n    color: #24292e;\n    display: flex;\n    align-items: center;\n    font-size: 12px;\n    padding: 3px 10px;\n    border: 1px solid rgba(27,31,35,.2);\n    border-radius: 3px;\n    background-image: linear-gradient(-180deg,#fafbfc,#eff3f6 90%);\n    margin-left: 4px;\n    font-weight: 600;\n    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;\n  }\n\n  .github-star-badge:hover {\n    background-image: linear-gradient(-180deg,#f0f3f6,#e6ebf1 90%);\n    border-color: rgba(27,31,35,.35);\n    background-position: -.5em;\n  }\n\n  .github-star-badge .material-icons {\n    height: 16px;\n    width: 16px;\n    margin-right: 4px;\n  }\n\n  svg#clouds {\n    position: fixed;\n    bottom: -160px;\n    left: -230px;\n    z-index: -10;\n    width: 1920px;\n  }\n\n\n  /* Responsive Styles */\n  @media screen and (max-width: 767px) {\n\n    .card-container > *:not(.circle-link) ,\n    .terminal {\n      width: 100%;\n    }\n\n    .card:not(.highlight-card) {\n      height: 16px;\n      margin: 8px 0;\n    }\n\n    .card.highlight-card span {\n      margin-left: 72px;\n    }\n\n    svg#rocket-smoke {\n      right: 120px;\n      transform: rotate(-5deg);\n    }\n  }\n\n  @media screen and (max-width: 575px) {\n    svg#rocket-smoke {\n      display: none;\n      visibility: hidden;\n    }\n  }\n\n  .beta-teaser {\n    /*width: 100%;*/\n    background: #24292e;\n    color: #FFFFFF;\n    padding: 8px;\n    text-align: center;\n  }\n</style>\n\n<!-- Toolbar -->\n<app-shopping-list [items]=\"items\" (checkItem)=\"log()\"></app-shopping-list>\n\n\n\n<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->\n<!-- * * * * * * * * * * * The content above * * * * * * * * * * * -->\n<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->\n<!-- * * * * * * * * * * and can be replaced. * * * * * * * * * * * -->\n<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->\n<!-- * * * * * * * * * * End of Placeholder * * * * * * * * * * * -->\n<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->\n\n\n\n<router-outlet></router-outlet>\n"
+        },
+        {
+            "name": "BetaTeaserComponent",
+            "id": "component-BetaTeaserComponent-d17b6eaf001f90c5da56564d712f7bcd",
+            "file": "src/app/beta-teaser/beta-teaser.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-beta-teaser",
+            "styleUrls": [
+                "./beta-teaser.component.scss"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./beta-teaser.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "currentLang$",
+                    "defaultValue": "this.store.select(selectCurrentLanguage)",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 15
+                },
+                {
+                    "name": "translations$",
+                    "defaultValue": "this.store.select(selectTranslations)",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 14
+                },
+                {
+                    "name": "url",
+                    "defaultValue": "'https://mealplaner.app'",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 13
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 22
+                }
+            ],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import { Location } from '@angular/common';\nimport { Component, OnInit } from '@angular/core';\nimport { Store } from '@ngrx/store';\nimport { getI18n } from '../i18n/actions/i18n-api.actions';\nimport { GlobalState, selectCurrentLanguage, selectTranslations } from '../shared/state';\n\n@Component({\n  selector: 'app-beta-teaser',\n  templateUrl: './beta-teaser.component.html',\n  styleUrls: ['./beta-teaser.component.scss']\n})\nexport class BetaTeaserComponent implements OnInit {\n  url = 'https://mealplaner.app';\n  translations$ = this.store.select(selectTranslations);\n  currentLang$ = this.store.select(selectCurrentLanguage);\n\n  constructor(\n    private location: Location,\n    private store: Store<GlobalState>) {\n  }\n\n  ngOnInit(): void {\n    this.url = `https://mealplaner.app${this.location.path()}`;\n    // Todo don't load the translations here\n    this.store.dispatch(getI18n());\n  }\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": ".beta-teaser {\n  background: #333333;\n  color: white;\n  text-align: center;\n  padding: 8px;\n\n  &--link {\n    color: #1976d2;\n  }\n}\n\n\n",
+                    "styleUrl": "./beta-teaser.component.scss"
+                }
+            ],
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [
+                    {
+                        "name": "location",
+                        "type": "Location"
+                    },
+                    {
+                        "name": "store",
+                        "type": "Store<GlobalState>"
+                    }
+                ],
+                "line": 15,
+                "jsdoctags": [
+                    {
+                        "name": "location",
+                        "type": "Location",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "store",
+                        "type": "Store<GlobalState>",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "implements": [
+                "OnInit"
+            ],
+            "templateData": "<div class=\"beta-teaser\">👶 {{'beta.teaser' | translate: (translations$ | async): (currentLang$ | async) || 'de' }}\n  <a class=\"beta-teaser--link\" [href]=\"url\">here.</a>\n</div>\n"
+        },
+        {
+            "name": "ShoppingListComponent",
+            "id": "component-ShoppingListComponent-6fbecdf0bb092367761e943879ae4ce8",
+            "file": "src/app/shopping-list/components/shopping-list/shopping-list.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-shopping-list",
+            "styleUrls": [
+                "./shopping-list.component.scss"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./shopping-list.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [
+                {
+                    "name": "currentLang",
+                    "defaultValue": "'de'",
+                    "line": 12,
+                    "type": "availableLanguages"
+                },
+                {
+                    "name": "items",
+                    "defaultValue": "[]",
+                    "line": 10,
+                    "type": "ShoppingListItem[]"
+                },
+                {
+                    "name": "translations",
+                    "defaultValue": "{}",
+                    "line": 11,
+                    "type": "I18n"
+                }
+            ],
+            "outputsClass": [
+                {
+                    "name": "itemDeleted",
+                    "defaultValue": "new EventEmitter()",
+                    "line": 13,
+                    "type": "EventEmitter<ShoppingListItem>"
+                },
+                {
+                    "name": "listItemMoved",
+                    "defaultValue": "new EventEmitter()",
+                    "line": 14,
+                    "type": "EventEmitter<ArrayItemMovedEvent>"
+                }
+            ],
+            "propertiesClass": [
+                {
+                    "name": "deleteBuffer",
+                    "defaultValue": "{}",
+                    "type": "literal type",
+                    "optional": false,
+                    "description": "",
+                    "line": 16
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "drop",
+                    "args": [
+                        {
+                            "type": "ArrayItemMovedEvent"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 30,
+                    "jsdoctags": [
+                        {
+                            "type": "ArrayItemMovedEvent",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "itemChecked",
+                    "args": [
+                        {
+                            "name": "item",
+                            "type": "ShoppingListItem"
+                        },
+                        {
+                            "name": "isChecked",
+                            "type": "boolean"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 18,
+                    "jsdoctags": [
+                        {
+                            "name": "item",
+                            "type": "ShoppingListItem",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "isChecked",
+                            "type": "boolean",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import { Component, EventEmitter, Input, Output } from '@angular/core';\nimport { ArrayItemMovedEvent, availableLanguages, I18n, ShoppingListItem } from '../../../shared/model/model';\n\n@Component({\n  selector: 'app-shopping-list',\n  templateUrl: './shopping-list.component.html',\n  styleUrls: ['./shopping-list.component.scss']\n})\nexport class ShoppingListComponent {\n  @Input() items: ShoppingListItem[] = [];\n  @Input() translations: I18n = {};\n  @Input() currentLang: availableLanguages = 'de';\n  @Output() itemDeleted: EventEmitter<ShoppingListItem> = new EventEmitter();\n  @Output() listItemMoved: EventEmitter<ArrayItemMovedEvent> = new EventEmitter();\n\n  deleteBuffer: {[key: string]: number} = {};\n\n  itemChecked(item: ShoppingListItem, isChecked: boolean): void {\n    item.isChecked = isChecked;\n\n    if (isChecked) {\n      this.deleteBuffer[item.id] = window.setTimeout(() => {\n        this.itemDeleted.emit(item);\n      }, 1500);\n    } else {\n     clearTimeout(this.deleteBuffer[item.id]);\n    }\n  }\n\n  drop({previousIndex, currentIndex}: ArrayItemMovedEvent): void {\n    console.log({previousIndex, currentIndex});\n    this.listItemMoved.emit({currentIndex, previousIndex});\n  }\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "@import \"../../../../styles/settings/colors\";\n\n.shopping-list {\n  width: 100%;\n  display: block;\n  overflow: hidden;\n}\n\n.shopping-list__item {\n  border-bottom: solid 1px $blue-grey_30;\n  color: $text-100;\n  font-size: 16px;\n  box-sizing: border-box;\n  cursor: move;\n  background: white;\n}\n\n.shopping-list__item-text {\n  padding: 20px 10px 15px 10px;\n  display: block;\n}\n\n.shopping-list__status {\n  height: 5px;\n  width: 0;\n  flex-basis: 100%;\n  background: $yellow_50;\n\n  &--deleted {\n    width: 100%;\n    transition: width 1.5s linear;\n  }\n}\n\n.cdk-drag-preview {\n  box-sizing: border-box;\n  border-radius: 4px;\n  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),\n  0 8px 10px 1px rgba(0, 0, 0, 0.14),\n  0 3px 14px 2px rgba(0, 0, 0, 0.12);\n}\n\n>>> .mat-checkbox-background {\n  background-color: yellow;\n}\n\n.cdk-drag-placeholder {\n  opacity: 0;\n}\n\n.cdk-drag-animating {\n  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);\n}\n\n.example-box:last-child {\n  border: none;\n}\n\n.shopping-list.cdk-drop-list-dragging .shopping-list__item:not(.cdk-drag-placeholder) {\n  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);\n}\n\n",
+                    "styleUrl": "./shopping-list.component.scss"
+                }
+            ],
+            "stylesData": "",
+            "templateData": "<div cdkDropList class=\"shopping-list\" (cdkDropListDropped)=\"drop($event)\">\n  <div class=\"shopping-list__item\" *ngFor=\"let item of items\" cdkDrag>\n    <mat-checkbox\n      class=\"shopping-list__item-text\"\n      [checked]=\"item.isChecked\"\n      [color]=\"'primary'\"\n      [disableRipple]=\"true\"\n      (change)=\"itemChecked(item, $event.checked)\">\n      {{item.amount}} {{item.unit | translate:translations:currentLang }} {{item.name}}\n    </mat-checkbox>\n    <div class=\"shopping-list__status\" [class.shopping-list__status--deleted]=\"item.isChecked\"></div>\n  </div>\n</div>\n\n"
+        }
+    ],
+    "modules": [
+        {
+            "name": "AppModule",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": [
+                        {
+                            "name": "AppComponent"
+                        },
+                        {
+                            "name": "BetaTeaserComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "imports",
+                    "elements": [
+                        {
+                            "name": "AppRoutingModule"
+                        },
+                        {
+                            "name": "I18nModule"
+                        },
+                        {
+                            "name": "ShoppinglistModule"
+                        }
+                    ]
+                },
+                {
+                    "type": "exports",
+                    "elements": []
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": [
+                        {
+                            "name": "AppComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
+            "name": "AppRoutingModule",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": []
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": []
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
+            "name": "I18nModule",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": [
+                        {
+                            "name": "I18nService"
+                        }
+                    ]
+                },
+                {
+                    "type": "declarations",
+                    "elements": [
+                        {
+                            "name": "TranslatePipe"
+                        }
+                    ]
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": [
+                        {
+                            "name": "TranslatePipe"
+                        }
+                    ]
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
+            "name": "ShoppinglistModule",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": [
+                        {
+                            "name": "ShoppingListComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "imports",
+                    "elements": [
+                        {
+                            "name": "I18nModule"
+                        }
+                    ]
+                },
+                {
+                    "type": "exports",
+                    "elements": [
+                        {
+                            "name": "ShoppingListComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        }
+    ],
+    "miscellaneous": {
+        "variables": [
+            {
+                "name": "actionsData",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shopping-list/components/shopping-list/shopping-list.stories.ts",
+                "type": "object",
+                "defaultValue": "{\n  itemDeleted: action('itemDeleted'),\n  listItemMoved: action('listItemMoved'),\n}"
+            },
+            {
+                "name": "appStateReducer",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/i18n/reducers/i18n-api.reducers.ts",
+                "type": "",
+                "defaultValue": "createReducer<AppState, Action>(\n  initialAppState,\n  on(\n    I18nApiActions.getI18nSuccess,\n    (state, {i18n}: {i18n: (I18n)}) => { // TODO typeing\n    return {\n      ...state,\n      i18n: {\n        ...state.i18n,\n        ...i18n\n      }\n    };\n  })\n)"
+            },
+            {
+                "name": "context",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/test.ts",
+                "type": "",
+                "defaultValue": "require.context('./', true, /\\.spec\\.ts$/)"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shopping-list/components/shopping-list/shopping-list.stories.ts",
+                "type": "",
+                "defaultValue": "() => ({\n  component: ShoppingListComponent,\n  props: {\n    items: taskData.items,\n    translations: taskData.translations,\n    itemDeleted: actionsData.itemDeleted,\n    listItemMoved: actionsData.listItemMoved,\n  },\n})"
+            },
+            {
+                "name": "environment",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/environments/environment.prod.ts",
+                "type": "object",
+                "defaultValue": "{\n  production: true,\n  showBetaTeaser: false,\n  apiUrl: 'https://api.mealplaner.app',\n}"
+            },
+            {
+                "name": "environment",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/environments/environment.qa.ts",
+                "type": "object",
+                "defaultValue": "{\n  production: false,\n  showBetaTeaser: false,\n  apiUrl: 'https://api.mealplaner.app',\n}"
+            },
+            {
+                "name": "environment",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/environments/environment.ts",
+                "type": "object",
+                "defaultValue": "{\n  production: false,\n  showBetaTeaser: true,\n  apiUrl: 'http://localhost:1337',\n}"
+            },
+            {
+                "name": "getI18n",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/i18n/actions/i18n-api.actions.ts",
+                "type": "",
+                "defaultValue": "createAction('[Initialize App] Get i18n')"
+            },
+            {
+                "name": "getI18nFailure",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/i18n/actions/i18n-api.actions.ts",
+                "type": "",
+                "defaultValue": "createAction('[Initialize App] Get i18n Failure')"
+            },
+            {
+                "name": "getI18nSuccess",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/i18n/actions/i18n-api.actions.ts",
+                "type": "",
+                "defaultValue": "createAction(\n  '[Initialize App] Get i18n Success',\n  props<{ i18n: I18n }>())"
+            },
+            {
+                "name": "initialAppState",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/state/app-state/app-state.ts",
+                "type": "AppState",
+                "defaultValue": "{\n  language: 'de',\n  i18n: null\n}"
+            },
+            {
+                "name": "initialState",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/state/index.ts",
+                "type": "GlobalState",
+                "defaultValue": "{\n  appState: initialAppState\n}"
+            },
+            {
+                "name": "metaReducers",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/state/index.ts",
+                "type": "MetaReducer[]",
+                "defaultValue": "[]"
+            },
+            {
+                "name": "reducers",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/state/index.ts",
+                "type": "ActionReducerMap<GlobalState>",
+                "defaultValue": "{\n  appState: appStateReducer\n}"
+            },
+            {
+                "name": "require",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/test.ts",
+                "type": "literal type"
+            },
+            {
+                "name": "selectAppState",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/state/index.ts",
+                "type": "",
+                "defaultValue": "createFeatureSelector<GlobalState, AppState>('appState')"
+            },
+            {
+                "name": "selectCurrentLanguage",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/state/index.ts",
+                "type": "",
+                "defaultValue": "createSelector(\n  selectAppState,\n  (appState: AppState) => appState.language\n)"
+            },
+            {
+                "name": "selectTranslations",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/state/index.ts",
+                "type": "",
+                "defaultValue": "createSelector(\n  selectAppState,\n  (appState: AppState) => appState.i18n\n)"
+            },
+            {
+                "name": "taskData",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shopping-list/components/shopping-list/shopping-list.stories.ts",
+                "type": "literal type",
+                "defaultValue": "{\n  items: [\n    {id: '1', name: 'Mehl', amount: 1, unit: 'kg', isChecked: false},\n    {id: '2', name: 'Zucker', amount: 50, unit: 'g', isChecked: false},\n    {id: '3', name: 'Eier', amount: 1, unit: 'piece', isChecked: false},\n  ],\n  translations: {\n    de: {\n      piece: 'Stück'\n    }\n  }\n}"
+            }
+        ],
+        "functions": [
+            {
+                "name": "mapI18nApiToI18nClient",
+                "file": "src/app/shared/helpers/helpers.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "description": "",
+                "args": [
+                    {
+                        "name": "i18nApi"
+                    }
+                ],
+                "returnType": "I18nClient",
+                "jsdoctags": [
+                    {
+                        "name": "i18nApi",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            }
+        ],
+        "typealiases": [
+            {
+                "name": "availableLanguages",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "\"de\" | \"en\"",
+                "file": "src/app/shared/model/model.ts",
+                "description": "",
+                "kind": 168
+            },
+            {
+                "name": "I18n",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "literal type",
+                "file": "src/app/shared/model/model.ts",
+                "description": "",
+                "kind": 165
+            },
+            {
+                "name": "I18n",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "literal type",
+                "file": "src/app/shared/model/model-api.ts",
+                "description": "",
+                "kind": 165
+            },
+            {
+                "name": "Unit",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "\"kg\" | \"g\" | \"tableSpoon\" | \"coffeeSpoon\" | \"l\" | \"dl\" | \"ml\" | \"pinch\" | \"piece\"",
+                "file": "src/app/shared/model/model.ts",
+                "description": "",
+                "kind": 168
+            }
+        ],
+        "enumerations": [],
+        "groupedVariables": {
+            "src/app/shopping-list/components/shopping-list/shopping-list.stories.ts": [
+                {
+                    "name": "actionsData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shopping-list/components/shopping-list/shopping-list.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  itemDeleted: action('itemDeleted'),\n  listItemMoved: action('listItemMoved'),\n}"
+                },
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shopping-list/components/shopping-list/shopping-list.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: ShoppingListComponent,\n  props: {\n    items: taskData.items,\n    translations: taskData.translations,\n    itemDeleted: actionsData.itemDeleted,\n    listItemMoved: actionsData.listItemMoved,\n  },\n})"
+                },
+                {
+                    "name": "taskData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shopping-list/components/shopping-list/shopping-list.stories.ts",
+                    "type": "literal type",
+                    "defaultValue": "{\n  items: [\n    {id: '1', name: 'Mehl', amount: 1, unit: 'kg', isChecked: false},\n    {id: '2', name: 'Zucker', amount: 50, unit: 'g', isChecked: false},\n    {id: '3', name: 'Eier', amount: 1, unit: 'piece', isChecked: false},\n  ],\n  translations: {\n    de: {\n      piece: 'Stück'\n    }\n  }\n}"
+                }
+            ],
+            "src/app/i18n/reducers/i18n-api.reducers.ts": [
+                {
+                    "name": "appStateReducer",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/i18n/reducers/i18n-api.reducers.ts",
+                    "type": "",
+                    "defaultValue": "createReducer<AppState, Action>(\n  initialAppState,\n  on(\n    I18nApiActions.getI18nSuccess,\n    (state, {i18n}: {i18n: (I18n)}) => { // TODO typeing\n    return {\n      ...state,\n      i18n: {\n        ...state.i18n,\n        ...i18n\n      }\n    };\n  })\n)"
+                }
+            ],
+            "src/test.ts": [
+                {
+                    "name": "context",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/test.ts",
+                    "type": "",
+                    "defaultValue": "require.context('./', true, /\\.spec\\.ts$/)"
+                },
+                {
+                    "name": "require",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/test.ts",
+                    "type": "literal type"
+                }
+            ],
+            "src/environments/environment.prod.ts": [
+                {
+                    "name": "environment",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/environments/environment.prod.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  production: true,\n  showBetaTeaser: false,\n  apiUrl: 'https://api.mealplaner.app',\n}"
+                }
+            ],
+            "src/environments/environment.qa.ts": [
+                {
+                    "name": "environment",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/environments/environment.qa.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  production: false,\n  showBetaTeaser: false,\n  apiUrl: 'https://api.mealplaner.app',\n}"
+                }
+            ],
+            "src/environments/environment.ts": [
+                {
+                    "name": "environment",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/environments/environment.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  production: false,\n  showBetaTeaser: true,\n  apiUrl: 'http://localhost:1337',\n}"
+                }
+            ],
+            "src/app/i18n/actions/i18n-api.actions.ts": [
+                {
+                    "name": "getI18n",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/i18n/actions/i18n-api.actions.ts",
+                    "type": "",
+                    "defaultValue": "createAction('[Initialize App] Get i18n')"
+                },
+                {
+                    "name": "getI18nFailure",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/i18n/actions/i18n-api.actions.ts",
+                    "type": "",
+                    "defaultValue": "createAction('[Initialize App] Get i18n Failure')"
+                },
+                {
+                    "name": "getI18nSuccess",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/i18n/actions/i18n-api.actions.ts",
+                    "type": "",
+                    "defaultValue": "createAction(\n  '[Initialize App] Get i18n Success',\n  props<{ i18n: I18n }>())"
+                }
+            ],
+            "src/app/shared/state/app-state/app-state.ts": [
+                {
+                    "name": "initialAppState",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/state/app-state/app-state.ts",
+                    "type": "AppState",
+                    "defaultValue": "{\n  language: 'de',\n  i18n: null\n}"
+                }
+            ],
+            "src/app/shared/state/index.ts": [
+                {
+                    "name": "initialState",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/state/index.ts",
+                    "type": "GlobalState",
+                    "defaultValue": "{\n  appState: initialAppState\n}"
+                },
+                {
+                    "name": "metaReducers",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/state/index.ts",
+                    "type": "MetaReducer[]",
+                    "defaultValue": "[]"
+                },
+                {
+                    "name": "reducers",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/state/index.ts",
+                    "type": "ActionReducerMap<GlobalState>",
+                    "defaultValue": "{\n  appState: appStateReducer\n}"
+                },
+                {
+                    "name": "selectAppState",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/state/index.ts",
+                    "type": "",
+                    "defaultValue": "createFeatureSelector<GlobalState, AppState>('appState')"
+                },
+                {
+                    "name": "selectCurrentLanguage",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/state/index.ts",
+                    "type": "",
+                    "defaultValue": "createSelector(\n  selectAppState,\n  (appState: AppState) => appState.language\n)"
+                },
+                {
+                    "name": "selectTranslations",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/state/index.ts",
+                    "type": "",
+                    "defaultValue": "createSelector(\n  selectAppState,\n  (appState: AppState) => appState.i18n\n)"
+                }
+            ]
+        },
+        "groupedFunctions": {
+            "src/app/shared/helpers/helpers.ts": [
+                {
+                    "name": "mapI18nApiToI18nClient",
+                    "file": "src/app/shared/helpers/helpers.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "i18nApi"
+                        }
+                    ],
+                    "returnType": "I18nClient",
+                    "jsdoctags": [
+                        {
+                            "name": "i18nApi",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "groupedEnumerations": {},
+        "groupedTypeAliases": {
+            "src/app/shared/model/model.ts": [
+                {
+                    "name": "availableLanguages",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "\"de\" | \"en\"",
+                    "file": "src/app/shared/model/model.ts",
+                    "description": "",
+                    "kind": 168
+                },
+                {
+                    "name": "I18n",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "literal type",
+                    "file": "src/app/shared/model/model.ts",
+                    "description": "",
+                    "kind": 165
+                },
+                {
+                    "name": "Unit",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "\"kg\" | \"g\" | \"tableSpoon\" | \"coffeeSpoon\" | \"l\" | \"dl\" | \"ml\" | \"pinch\" | \"piece\"",
+                    "file": "src/app/shared/model/model.ts",
+                    "description": "",
+                    "kind": 168
+                }
+            ],
+            "src/app/shared/model/model-api.ts": [
+                {
+                    "name": "I18n",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "literal type",
+                    "file": "src/app/shared/model/model-api.ts",
+                    "description": "",
+                    "kind": 165
+                }
+            ]
+        }
+    },
+    "routes": {
+        "name": "<root>",
+        "kind": "module",
+        "className": "AppModule",
+        "children": [
+            {
+                "name": "routes",
+                "filename": "src/app/app-routing.module.ts",
+                "module": "AppRoutingModule",
+                "children": [],
+                "kind": "module"
+            }
+        ]
+    },
+    "coverage": {
+        "count": 0,
+        "status": "low",
+        "files": [
+            {
+                "filePath": "e2e/src/app.po.ts",
+                "type": "class",
+                "linktype": "classe",
+                "name": "AppPage",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/app.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "AppComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/5",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/beta-teaser/beta-teaser.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "BetaTeaserComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/6",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/i18n/actions/i18n-api.actions.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "getI18n",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/i18n/actions/i18n-api.actions.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "getI18nFailure",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/i18n/actions/i18n-api.actions.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "getI18nSuccess",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/i18n/effects/i18n-api.effects.ts",
+                "type": "injectable",
+                "linktype": "injectable",
+                "name": "I18nApiEffects",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/i18n/pipes/translate.pipe.ts",
+                "type": "pipe",
+                "linktype": "pipe",
+                "name": "TranslatePipe",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/i18n/reducers/i18n-api.reducers.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "appStateReducer",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/i18n/services/i18n.service.ts",
+                "type": "injectable",
+                "linktype": "injectable",
+                "name": "I18nService",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/helpers/helpers.ts",
+                "type": "function",
+                "linksubtype": "function",
+                "name": "mapI18nApiToI18nClient",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/model/model-api.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "Translations",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/model/model.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "ArrayItemMovedEvent",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/model/model.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "Ingredient",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/model/model.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "ShoppingListItem",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/model/model.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "Translations",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/state/app-state/app-state.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "AppState",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/state/app-state/app-state.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "initialAppState",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/state/index.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "GlobalState",
+                "coveragePercent": 0,
+                "coverageCount": "0/2",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/state/index.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "initialState",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/state/index.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "metaReducers",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/state/index.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "reducers",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/state/index.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "selectAppState",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/state/index.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "selectCurrentLanguage",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/state/index.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "selectTranslations",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shopping-list/components/shopping-list/shopping-list.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "ShoppingListComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/9",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shopping-list/components/shopping-list/shopping-list.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "actionsData",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shopping-list/components/shopping-list/shopping-list.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shopping-list/components/shopping-list/shopping-list.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "taskData",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/environments/environment.prod.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "environment",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/environments/environment.qa.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "environment",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/environments/environment.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "environment",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/test.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "context",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/test.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "require",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            }
+        ]
+    }
+}
