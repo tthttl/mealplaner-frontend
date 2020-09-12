@@ -1,0 +1,16 @@
+<div cdkDropList class="shopping-list" (cdkDropListDropped)="drop($event)">
+  <div class="shopping-list__item" *ngFor="let item of items" cdkDrag>
+    <mat-checkbox
+      class="shopping-list__item-text"
+      [checked]="item.isChecked"
+      [color]="'primary'"
+      [disableRipple]="true"
+      (change)="itemChecked(item, $event.checked)">
+      {{item.amount}} {{item.unit | translate:translations:currentLang }} {{item.name}}
+    </mat-checkbox>
+    <div class="shopping-list__status" [class.shopping-list__status--deleted]="item.isChecked"></div>
+  </div>
+</div>
+
+
+

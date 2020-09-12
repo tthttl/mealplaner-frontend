@@ -7,6 +7,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ShoppinglistModule } from './shopping-list/shopping-list.module';
 import { BetaTeaserComponent } from './beta-teaser/beta-teaser.component';
 import { I18nModule } from './i18n/i18n.module';
 import { metaReducers, reducers } from './shared/state';
@@ -19,6 +21,8 @@ import { metaReducers, reducers } from './shared/state';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
+    ShoppinglistModule,
     HttpClientModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     StoreDevtoolsModule.instrument(),
