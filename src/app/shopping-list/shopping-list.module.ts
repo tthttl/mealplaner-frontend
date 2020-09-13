@@ -17,9 +17,6 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
     FontAwesomeModule,
     MatCheckboxModule,
     I18nModule,
-  ],
-  exports: [
-    ShoppingListComponent,
   ]
 })
 export class ShoppinglistModule {

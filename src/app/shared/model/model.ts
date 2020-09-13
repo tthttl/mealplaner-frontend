@@ -6,7 +6,7 @@ export interface Translations {
   readonly [key: string]: string;
 }
 
-export type AvailableLanguages = 'de' | 'en';
+export type Language = 'de' | 'en';
 
 export type Unit = 'kg' | 'g' | 'tableSpoon' | 'coffeeSpoon' | 'l' | 'dl' | 'ml' | 'pinch' | 'piece';
 

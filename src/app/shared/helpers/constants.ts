@@ -1,3 +1,3 @@
-import { AvailableLanguages } from '../model/model';
+import { Language } from '../model/model';
 
-export const DEFAULT_LANGAUGE: AvailableLanguages = 'de';
+export const DEFAULT_LANGAUGE: Language = 'de';

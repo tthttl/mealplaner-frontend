@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ArrayItemMovedEvent, AvailableLanguages, I18n, ShoppingListItem } from '../../../shared/model/model';
+import { ArrayItemMovedEvent, Language, I18n, ShoppingListItem } from '../../../shared/model/model';
 import { DEFAULT_LANGAUGE } from '../../../shared/helpers/constants';
 
 @Component({
@@ -10,7 +10,7 @@ import { DEFAULT_LANGAUGE } from '../../../shared/helpers/constants';
 export class ShoppingListComponent{
   @Input() items: ShoppingListItem[] = [];
   @Input() translations: I18n = {};
-  @Input() currentLang: AvailableLanguages = DEFAULT_LANGAUGE;
+  @Input() currentLang: Language = DEFAULT_LANGAUGE;
   @Output() itemDeleted: EventEmitter<ShoppingListItem> = new EventEmitter();
   @Output() listItemMoved: EventEmitter<ArrayItemMovedEvent> = new EventEmitter();
 

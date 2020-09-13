@@ -23,13 +23,11 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    ShoppinglistModule,
     HttpClientModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     StoreDevtoolsModule.instrument(),
     I18nModule,
     EffectsModule.forRoot([]),
-    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
