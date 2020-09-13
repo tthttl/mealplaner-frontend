@@ -27,4 +27,8 @@ describe('TranslatePipe', () => {
     expect(new TranslatePipe().transform(i18n.de.test, null)).toEqual(i18n.de.test);
   });
 
+  it('should return empty string when i18n is an empty string', () => {
+    expect(new TranslatePipe().transform(i18n.de.test, null)).toEqual(i18n.de.test);
+  });
+
 });

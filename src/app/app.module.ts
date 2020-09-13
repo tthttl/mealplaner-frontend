@@ -12,6 +12,7 @@ import { ShoppinglistModule } from './shopping-list/shopping-list.module';
 import { BetaTeaserComponent } from './beta-teaser/beta-teaser.component';
 import { I18nModule } from './i18n/i18n.module';
 import { metaReducers, reducers } from './shared/state';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { metaReducers, reducers } from './shared/state';
     StoreModule.forRoot(reducers, { metaReducers }),
     StoreDevtoolsModule.instrument(),
     I18nModule,
-    EffectsModule.forRoot([])
+    EffectsModule.forRoot([]),
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

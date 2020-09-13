@@ -7,10 +7,9 @@
 
   &__item {
     border-bottom: solid 1px $blue-grey_30;
-    color: $text-100;
+    color: $text-70;
     font-size: 16px;
     box-sizing: border-box;
-    cursor: move;
     background: white;
 
     &:last-child {
@@ -18,16 +17,28 @@
     }
   }
 
+  &__item-column-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
   &__item-text {
     padding: 20px 10px 15px 10px;
     display: block;
+  }
+
+  &__ellipsis {
+    color: $blue-grey_50;
+    padding: 0 20px;
+    cursor: move;
   }
 
   &__status {
     height: 5px;
     width: 0;
     flex-basis: 100%;
-    background: $yellow_50;
+    background: $blue_50;
 
     &--deleted {
       width: 100%;

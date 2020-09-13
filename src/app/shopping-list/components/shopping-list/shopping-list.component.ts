@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ArrayItemMovedEvent, AvailableLanguages, I18n, ShoppingListItem } from '../../../shared/model/model';
 import { DEFAULT_LANGAUGE } from '../../../shared/helpers/constants';
 
@@ -7,7 +7,7 @@ import { DEFAULT_LANGAUGE } from '../../../shared/helpers/constants';
   templateUrl: './shopping-list.component.html',
   styleUrls: ['./shopping-list.component.scss']
 })
-export class ShoppingListComponent {
+export class ShoppingListComponent{
   @Input() items: ShoppingListItem[] = [];
   @Input() translations: I18n = {};
   @Input() currentLang: AvailableLanguages = DEFAULT_LANGAUGE;

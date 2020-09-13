@@ -4,6 +4,8 @@ import { ShoppingListComponent } from './components/shopping-list/shopping-list.
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { I18nModule } from '../i18n/i18n.module';
+import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { fas } from '@fortawesome/free-solid-svg-icons';
 
 
 
@@ -12,6 +14,7 @@ import { I18nModule } from '../i18n/i18n.module';
   imports: [
     CommonModule,
     DragDropModule,
+    FontAwesomeModule,
     MatCheckboxModule,
     I18nModule,
   ],
@@ -19,4 +22,8 @@ import { I18nModule } from '../i18n/i18n.module';
     ShoppingListComponent,
   ]
 })
-export class ShoppinglistModule { }
+export class ShoppinglistModule {
+  constructor(library: FaIconLibrary) {
+    library.addIconPacks(fas);
+  }
+}
