@@ -19,7 +19,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
     I18nModule,
   ]
 })
-export class ShoppinglistModule {
+export class ShoppingListModule {
   constructor(library: FaIconLibrary) {
     library.addIconPacks(fas);
   }

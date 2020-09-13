@@ -8,11 +8,9 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ShoppinglistModule } from './shopping-list/shopping-list.module';
 import { BetaTeaserComponent } from './beta-teaser/beta-teaser.component';
 import { I18nModule } from './i18n/i18n.module';
 import { metaReducers, reducers } from './shared/state';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
