@@ -21,7 +21,6 @@ export class ShoppingListComponent{
   itemChecked(item: ShoppingListItem, isChecked: boolean): void {
     item.isChecked = isChecked;
 
-    console.log('here');
     if (isChecked) {
       this.deleteBuffer[item.id] = window.setTimeout(() => this.itemDeleted.emit(item), this.deletionDelayInMilliseconds);
     } else {
