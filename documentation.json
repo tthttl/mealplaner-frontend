@@ -2,7 +2,7 @@
     "pipes": [
         {
             "name": "TranslatePipe",
-            "id": "pipe-TranslatePipe-9dbcc58181560c085318aa2be44d6762",
+            "id": "pipe-TranslatePipe-1ec91847950df223f6a729f0157a9ab8",
             "file": "src/app/i18n/pipes/translate.pipe.ts",
             "type": "pipe",
             "description": "",
@@ -21,7 +21,7 @@
                         },
                         {
                             "name": "language",
-                            "type": "AvailableLanguages",
+                            "type": "Language",
                             "defaultValue": "'de'"
                         }
                     ],
@@ -46,7 +46,7 @@
                         },
                         {
                             "name": "language",
-                            "type": "AvailableLanguages",
+                            "type": "Language",
                             "defaultValue": "'de'",
                             "tagName": {
                                 "text": "param"
@@ -56,16 +56,16 @@
                 }
             ],
             "ngname": "translate",
-            "sourceCode": "import { Pipe, PipeTransform } from '@angular/core';\nimport { AvailableLanguages, I18n } from '../../shared/model/model';\n\n\n@Pipe({name: 'translate'})\nexport class TranslatePipe implements PipeTransform {\n  transform(key: string, i18n: I18n | null, language: AvailableLanguages = 'de'): string {\n    return (i18n && i18n[language] && i18n[language][key]) ?? key;\n  }\n}\n"
+            "sourceCode": "import { Pipe, PipeTransform } from '@angular/core';\nimport { Language, I18n } from '../../shared/model/model';\n\n\n@Pipe({name: 'translate'})\nexport class TranslatePipe implements PipeTransform {\n  transform(key: string, i18n: I18n | null, language: Language = 'de'): string {\n    return (i18n && i18n[language] && i18n[language][key]) ?? key;\n  }\n}\n"
         }
     ],
     "interfaces": [
         {
             "name": "AppState",
-            "id": "interface-AppState-d6cb4e8c234403ea357202e84f873eb8",
+            "id": "interface-AppState-9f7ac65a219476787cd76784061b0999",
             "file": "src/app/shared/state/app-state/app-state.ts",
             "type": "interface",
-            "sourceCode": "import { AvailableLanguages, I18n } from '../../model/model';\n\nexport interface AppState {\n  readonly language: AvailableLanguages;\n  readonly i18n: I18n | null;\n}\n\nexport const initialAppState: AppState = {\n  language: 'de',\n  i18n: null\n};\n",
+            "sourceCode": "import { Language, I18n } from '../../model/model';\n\nexport interface AppState {\n  readonly language: Language;\n  readonly i18n: I18n | null;\n}\n\nexport const initialAppState: AppState = {\n  language: 'de',\n  i18n: null\n};\n",
             "properties": [
                 {
                     "name": "i18n",
@@ -79,7 +79,7 @@
                 },
                 {
                     "name": "language",
-                    "type": "AvailableLanguages",
+                    "type": "Language",
                     "optional": false,
                     "description": "",
                     "line": 4,
@@ -94,10 +94,10 @@
         },
         {
             "name": "ArrayItemMovedEvent",
-            "id": "interface-ArrayItemMovedEvent-c5f024a25ab01c8d40a1fa43c8789ade",
+            "id": "interface-ArrayItemMovedEvent-0c5d76b68bb280da507f1a4e144c8738",
             "file": "src/app/shared/model/model.ts",
             "type": "interface",
-            "sourceCode": "export type I18n = {\n  readonly [key: string]: Translations;\n};\n\nexport interface Translations {\n  readonly [key: string]: string;\n}\n\nexport type AvailableLanguages = 'de' | 'en';\n\nexport type Unit = 'kg' | 'g' | 'tableSpoon' | 'coffeeSpoon' | 'l' | 'dl' | 'ml' | 'pinch' | 'piece';\n\nexport interface Ingredient {\n  name: string;\n  amount: number;\n  unit: Unit;\n}\n\nexport interface ShoppingListItem extends Ingredient{\n  id: string;\n  isChecked: boolean;\n}\n\nexport interface ArrayItemMovedEvent {\n  currentIndex: number;\n  previousIndex: number;\n}\n",
+            "sourceCode": "export type I18n = {\n  readonly [key: string]: Translations;\n};\n\nexport interface Translations {\n  readonly [key: string]: string;\n}\n\nexport type Language = 'de' | 'en';\n\nexport type Unit = 'kg' | 'g' | 'tableSpoon' | 'coffeeSpoon' | 'l' | 'dl' | 'ml' | 'pinch' | 'piece';\n\nexport interface Ingredient {\n  name: string;\n  amount: number;\n  unit: Unit;\n}\n\nexport interface ShoppingListItem extends Ingredient{\n  id: string;\n  isChecked: boolean;\n}\n\nexport interface ArrayItemMovedEvent {\n  currentIndex: number;\n  previousIndex: number;\n}\n",
             "properties": [
                 {
                     "name": "currentIndex",
@@ -139,10 +139,10 @@
         },
         {
             "name": "Ingredient",
-            "id": "interface-Ingredient-c5f024a25ab01c8d40a1fa43c8789ade",
+            "id": "interface-Ingredient-0c5d76b68bb280da507f1a4e144c8738",
             "file": "src/app/shared/model/model.ts",
             "type": "interface",
-            "sourceCode": "export type I18n = {\n  readonly [key: string]: Translations;\n};\n\nexport interface Translations {\n  readonly [key: string]: string;\n}\n\nexport type AvailableLanguages = 'de' | 'en';\n\nexport type Unit = 'kg' | 'g' | 'tableSpoon' | 'coffeeSpoon' | 'l' | 'dl' | 'ml' | 'pinch' | 'piece';\n\nexport interface Ingredient {\n  name: string;\n  amount: number;\n  unit: Unit;\n}\n\nexport interface ShoppingListItem extends Ingredient{\n  id: string;\n  isChecked: boolean;\n}\n\nexport interface ArrayItemMovedEvent {\n  currentIndex: number;\n  previousIndex: number;\n}\n",
+            "sourceCode": "export type I18n = {\n  readonly [key: string]: Translations;\n};\n\nexport interface Translations {\n  readonly [key: string]: string;\n}\n\nexport type Language = 'de' | 'en';\n\nexport type Unit = 'kg' | 'g' | 'tableSpoon' | 'coffeeSpoon' | 'l' | 'dl' | 'ml' | 'pinch' | 'piece';\n\nexport interface Ingredient {\n  name: string;\n  amount: number;\n  unit: Unit;\n}\n\nexport interface ShoppingListItem extends Ingredient{\n  id: string;\n  isChecked: boolean;\n}\n\nexport interface ArrayItemMovedEvent {\n  currentIndex: number;\n  previousIndex: number;\n}\n",
             "properties": [
                 {
                     "name": "amount",
@@ -172,10 +172,10 @@
         },
         {
             "name": "ShoppingListItem",
-            "id": "interface-ShoppingListItem-c5f024a25ab01c8d40a1fa43c8789ade",
+            "id": "interface-ShoppingListItem-0c5d76b68bb280da507f1a4e144c8738",
             "file": "src/app/shared/model/model.ts",
             "type": "interface",
-            "sourceCode": "export type I18n = {\n  readonly [key: string]: Translations;\n};\n\nexport interface Translations {\n  readonly [key: string]: string;\n}\n\nexport type AvailableLanguages = 'de' | 'en';\n\nexport type Unit = 'kg' | 'g' | 'tableSpoon' | 'coffeeSpoon' | 'l' | 'dl' | 'ml' | 'pinch' | 'piece';\n\nexport interface Ingredient {\n  name: string;\n  amount: number;\n  unit: Unit;\n}\n\nexport interface ShoppingListItem extends Ingredient{\n  id: string;\n  isChecked: boolean;\n}\n\nexport interface ArrayItemMovedEvent {\n  currentIndex: number;\n  previousIndex: number;\n}\n",
+            "sourceCode": "export type I18n = {\n  readonly [key: string]: Translations;\n};\n\nexport interface Translations {\n  readonly [key: string]: string;\n}\n\nexport type Language = 'de' | 'en';\n\nexport type Unit = 'kg' | 'g' | 'tableSpoon' | 'coffeeSpoon' | 'l' | 'dl' | 'ml' | 'pinch' | 'piece';\n\nexport interface Ingredient {\n  name: string;\n  amount: number;\n  unit: Unit;\n}\n\nexport interface ShoppingListItem extends Ingredient{\n  id: string;\n  isChecked: boolean;\n}\n\nexport interface ArrayItemMovedEvent {\n  currentIndex: number;\n  previousIndex: number;\n}\n",
             "properties": [
                 {
                     "name": "id",
@@ -199,30 +199,7 @@
         },
         {
             "name": "Translations",
-            "id": "interface-Translations-c5f024a25ab01c8d40a1fa43c8789ade",
-            "file": "src/app/shared/model/model.ts",
-            "type": "interface",
-            "sourceCode": "export type I18n = {\n  readonly [key: string]: Translations;\n};\n\nexport interface Translations {\n  readonly [key: string]: string;\n}\n\nexport type AvailableLanguages = 'de' | 'en';\n\nexport type Unit = 'kg' | 'g' | 'tableSpoon' | 'coffeeSpoon' | 'l' | 'dl' | 'ml' | 'pinch' | 'piece';\n\nexport interface Ingredient {\n  name: string;\n  amount: number;\n  unit: Unit;\n}\n\nexport interface ShoppingListItem extends Ingredient{\n  id: string;\n  isChecked: boolean;\n}\n\nexport interface ArrayItemMovedEvent {\n  currentIndex: number;\n  previousIndex: number;\n}\n",
-            "properties": [],
-            "indexSignatures": [
-                {
-                    "id": "index-declaration-c5f024a25ab01c8d40a1fa43c8789ade",
-                    "args": [
-                        {
-                            "name": "key",
-                            "type": "string"
-                        }
-                    ],
-                    "returnType": "string",
-                    "line": 5
-                }
-            ],
-            "kind": 159,
-            "methods": []
-        },
-        {
-            "name": "Translations",
-            "id": "interface-Translations-c1582e609f558c89b2cde26bd3030875-1",
+            "id": "interface-Translations-c1582e609f558c89b2cde26bd3030875",
             "file": "src/app/shared/model/model-api.ts",
             "type": "interface",
             "sourceCode": "export type I18n = {\n  readonly lang: string;\n  readonly translations: Translations;\n};\n\nexport interface Translations {\n  readonly [key: string]: string;\n}\n",
@@ -238,6 +215,29 @@
                     ],
                     "returnType": "string",
                     "line": 6
+                }
+            ],
+            "kind": 159,
+            "methods": []
+        },
+        {
+            "name": "Translations",
+            "id": "interface-Translations-0c5d76b68bb280da507f1a4e144c8738-1",
+            "file": "src/app/shared/model/model.ts",
+            "type": "interface",
+            "sourceCode": "export type I18n = {\n  readonly [key: string]: Translations;\n};\n\nexport interface Translations {\n  readonly [key: string]: string;\n}\n\nexport type Language = 'de' | 'en';\n\nexport type Unit = 'kg' | 'g' | 'tableSpoon' | 'coffeeSpoon' | 'l' | 'dl' | 'ml' | 'pinch' | 'piece';\n\nexport interface Ingredient {\n  name: string;\n  amount: number;\n  unit: Unit;\n}\n\nexport interface ShoppingListItem extends Ingredient{\n  id: string;\n  isChecked: boolean;\n}\n\nexport interface ArrayItemMovedEvent {\n  currentIndex: number;\n  previousIndex: number;\n}\n",
+            "properties": [],
+            "indexSignatures": [
+                {
+                    "id": "index-declaration-0c5d76b68bb280da507f1a4e144c8738",
+                    "args": [
+                        {
+                            "name": "key",
+                            "type": "string"
+                        }
+                    ],
+                    "returnType": "string",
+                    "line": 5
                 }
             ],
             "kind": 159,
@@ -317,7 +317,7 @@
         },
         {
             "name": "I18nService",
-            "id": "injectable-I18nService-0c0ade307b87ea7e5e7144c8bfe9b5e3",
+            "id": "injectable-I18nService-c362d7a94254ad1ad1128c3b74642a6a",
             "file": "src/app/i18n/services/i18n.service.ts",
             "properties": [],
             "methods": [
@@ -326,7 +326,7 @@
                     "args": [
                         {
                             "name": "lang",
-                            "type": "AvailableLanguages"
+                            "type": "Language"
                         }
                     ],
                     "optional": false,
@@ -336,7 +336,7 @@
                     "jsdoctags": [
                         {
                             "name": "lang",
-                            "type": "AvailableLanguages",
+                            "type": "Language",
                             "tagName": {
                                 "text": "param"
                             }
@@ -345,7 +345,7 @@
                 }
             ],
             "description": "",
-            "sourceCode": "import { HttpClient } from '@angular/common/http';\nimport { Injectable } from '@angular/core';\nimport { Observable } from 'rxjs';\nimport { map } from 'rxjs/operators';\nimport { environment } from '../../../environments/environment';\nimport { mapI18nApiToI18nClient } from '../../shared/helpers/helpers';\nimport { AvailableLanguages, I18n as I18nClient } from '../../shared/model/model';\nimport { I18n as I18nApi } from '../../shared/model/model-api';\n\n@Injectable({\n  providedIn: 'root'\n})\nexport class I18nService {\n  constructor(private httpClient: HttpClient) {\n  }\n\n  getI18n(lang: AvailableLanguages): Observable<I18nClient> {\n    return this.httpClient.get<I18nApi>(`${environment.apiUrl}/i18n/${lang}`).pipe(\n      map((i18n: I18nApi) => mapI18nApiToI18nClient(i18n))\n    );\n  }\n}\n",
+            "sourceCode": "import { HttpClient } from '@angular/common/http';\nimport { Injectable } from '@angular/core';\nimport { Observable } from 'rxjs';\nimport { map } from 'rxjs/operators';\nimport { environment } from '../../../environments/environment';\nimport { mapI18nApiToI18nClient } from '../../shared/helpers/helpers';\nimport { Language, I18n as I18nClient } from '../../shared/model/model';\nimport { I18n as I18nApi } from '../../shared/model/model-api';\n\n@Injectable({\n  providedIn: 'root'\n})\nexport class I18nService {\n  constructor(private httpClient: HttpClient) {\n  }\n\n  getI18n(lang: Language): Observable<I18nClient> {\n    return this.httpClient.get<I18nApi>(`${environment.apiUrl}/i18n/${lang}`).pipe(\n      map((i18n: I18nApi) => mapI18nApiToI18nClient(i18n))\n    );\n  }\n}\n",
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
@@ -567,7 +567,7 @@
         },
         {
             "name": "ShoppingListComponent",
-            "id": "component-ShoppingListComponent-01dda6e79dfdfc9cfacfe65fe0290cfc",
+            "id": "component-ShoppingListComponent-4325cd30e76c491d30adf6375c36d286",
             "file": "src/app/shopping-list/components/shopping-list/shopping-list.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -588,7 +588,7 @@
                     "name": "currentLang",
                     "defaultValue": "DEFAULT_LANGAUGE",
                     "line": 13,
-                    "type": "AvailableLanguages"
+                    "type": "Language"
                 },
                 {
                     "name": "items",
@@ -695,7 +695,7 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, EventEmitter, Input, Output } from '@angular/core';\nimport { ArrayItemMovedEvent, AvailableLanguages, I18n, ShoppingListItem } from '../../../shared/model/model';\nimport { DEFAULT_LANGAUGE } from '../../../shared/helpers/constants';\n\n@Component({\n  selector: 'app-shopping-list',\n  templateUrl: './shopping-list.component.html',\n  styleUrls: ['./shopping-list.component.scss']\n})\nexport class ShoppingListComponent{\n  @Input() items: ShoppingListItem[] = [];\n  @Input() translations: I18n = {};\n  @Input() currentLang: AvailableLanguages = DEFAULT_LANGAUGE;\n  @Output() itemDeleted: EventEmitter<ShoppingListItem> = new EventEmitter();\n  @Output() listItemMoved: EventEmitter<ArrayItemMovedEvent> = new EventEmitter();\n\n  deleteBuffer: {[key: string]: number} = {};\n  deletionDelayInMilliseconds = 1500;\n\n\n  itemChecked(item: ShoppingListItem, isChecked: boolean): void {\n    item.isChecked = isChecked;\n\n    console.log('here');\n    if (isChecked) {\n      this.deleteBuffer[item.id] = window.setTimeout(() => this.itemDeleted.emit(item), this.deletionDelayInMilliseconds);\n    } else {\n      clearTimeout(this.deleteBuffer[item.id]);\n    }\n  }\n\n  drop({previousIndex, currentIndex}: ArrayItemMovedEvent): void {\n    this.listItemMoved.emit({currentIndex, previousIndex});\n  }\n}\n",
+            "sourceCode": "import { Component, EventEmitter, Input, Output } from '@angular/core';\nimport { ArrayItemMovedEvent, Language, I18n, ShoppingListItem } from '../../../shared/model/model';\nimport { DEFAULT_LANGAUGE } from '../../../shared/helpers/constants';\n\n@Component({\n  selector: 'app-shopping-list',\n  templateUrl: './shopping-list.component.html',\n  styleUrls: ['./shopping-list.component.scss']\n})\nexport class ShoppingListComponent{\n  @Input() items: ShoppingListItem[] = [];\n  @Input() translations: I18n = {};\n  @Input() currentLang: Language = DEFAULT_LANGAUGE;\n  @Output() itemDeleted: EventEmitter<ShoppingListItem> = new EventEmitter();\n  @Output() listItemMoved: EventEmitter<ArrayItemMovedEvent> = new EventEmitter();\n\n  deleteBuffer: {[key: string]: number} = {};\n  deletionDelayInMilliseconds = 1500;\n\n\n  itemChecked(item: ShoppingListItem, isChecked: boolean): void {\n    item.isChecked = isChecked;\n\n    console.log('here');\n    if (isChecked) {\n      this.deleteBuffer[item.id] = window.setTimeout(() => this.itemDeleted.emit(item), this.deletionDelayInMilliseconds);\n    } else {\n      clearTimeout(this.deleteBuffer[item.id]);\n    }\n  }\n\n  drop({previousIndex, currentIndex}: ArrayItemMovedEvent): void {\n    this.listItemMoved.emit({currentIndex, previousIndex});\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -734,9 +734,6 @@
                         },
                         {
                             "name": "I18nModule"
-                        },
-                        {
-                            "name": "ShoppinglistModule"
                         }
                     ]
                 },
@@ -829,7 +826,7 @@
             ]
         },
         {
-            "name": "ShoppinglistModule",
+            "name": "ShoppingListModule",
             "children": [
                 {
                     "type": "providers",
@@ -853,11 +850,7 @@
                 },
                 {
                     "type": "exports",
-                    "elements": [
-                        {
-                            "name": "ShoppingListComponent"
-                        }
-                    ]
+                    "elements": []
                 },
                 {
                     "type": "bootstrap",
@@ -909,7 +902,7 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/shared/helpers/constants.ts",
-                "type": "AvailableLanguages",
+                "type": "Language",
                 "defaultValue": "'de'"
             },
             {
@@ -924,17 +917,17 @@
                 "name": "environment",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/environments/environment.prod.ts",
+                "file": "src/environments/environment.ts",
                 "type": "object",
-                "defaultValue": "{\n  production: true,\n  showBetaTeaser: false,\n  apiUrl: 'https://api.mealplaner.app',\n}"
+                "defaultValue": "{\n  production: false,\n  showBetaTeaser: true,\n  apiUrl: 'http://localhost:1337',\n}"
             },
             {
                 "name": "environment",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/environments/environment.ts",
+                "file": "src/environments/environment.prod.ts",
                 "type": "object",
-                "defaultValue": "{\n  production: false,\n  showBetaTeaser: true,\n  apiUrl: 'http://localhost:1337',\n}"
+                "defaultValue": "{\n  production: true,\n  showBetaTeaser: false,\n  apiUrl: 'https://api.mealplaner.app',\n}"
             },
             {
                 "name": "getI18n",
@@ -1057,24 +1050,6 @@
         ],
         "typealiases": [
             {
-                "name": "AvailableLanguages",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
-                "rawtype": "\"de\" | \"en\"",
-                "file": "src/app/shared/model/model.ts",
-                "description": "",
-                "kind": 168
-            },
-            {
-                "name": "I18n",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
-                "rawtype": "literal type",
-                "file": "src/app/shared/model/model.ts",
-                "description": "",
-                "kind": 165
-            },
-            {
                 "name": "I18n",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
@@ -1082,6 +1057,24 @@
                 "file": "src/app/shared/model/model-api.ts",
                 "description": "",
                 "kind": 165
+            },
+            {
+                "name": "I18n",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "literal type",
+                "file": "src/app/shared/model/model.ts",
+                "description": "",
+                "kind": 165
+            },
+            {
+                "name": "Language",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "\"de\" | \"en\"",
+                "file": "src/app/shared/model/model.ts",
+                "description": "",
+                "kind": 168
             },
             {
                 "name": "Unit",
@@ -1154,7 +1147,7 @@
                     "ctype": "miscellaneous",
                     "subtype": "variable",
                     "file": "src/app/shared/helpers/constants.ts",
-                    "type": "AvailableLanguages",
+                    "type": "Language",
                     "defaultValue": "'de'"
                 }
             ],
@@ -1168,16 +1161,6 @@
                     "defaultValue": "{\n  production: false,\n  showBetaTeaser: false,\n  apiUrl: 'https://api.mealplaner.app',\n}"
                 }
             ],
-            "src/environments/environment.prod.ts": [
-                {
-                    "name": "environment",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/environments/environment.prod.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  production: true,\n  showBetaTeaser: false,\n  apiUrl: 'https://api.mealplaner.app',\n}"
-                }
-            ],
             "src/environments/environment.ts": [
                 {
                     "name": "environment",
@@ -1186,6 +1169,16 @@
                     "file": "src/environments/environment.ts",
                     "type": "object",
                     "defaultValue": "{\n  production: false,\n  showBetaTeaser: true,\n  apiUrl: 'http://localhost:1337',\n}"
+                }
+            ],
+            "src/environments/environment.prod.ts": [
+                {
+                    "name": "environment",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/environments/environment.prod.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  production: true,\n  showBetaTeaser: false,\n  apiUrl: 'https://api.mealplaner.app',\n}"
                 }
             ],
             "src/app/i18n/actions/i18n-api.actions.ts": [
@@ -1302,35 +1295,6 @@
         },
         "groupedEnumerations": {},
         "groupedTypeAliases": {
-            "src/app/shared/model/model.ts": [
-                {
-                    "name": "AvailableLanguages",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "\"de\" | \"en\"",
-                    "file": "src/app/shared/model/model.ts",
-                    "description": "",
-                    "kind": 168
-                },
-                {
-                    "name": "I18n",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "literal type",
-                    "file": "src/app/shared/model/model.ts",
-                    "description": "",
-                    "kind": 165
-                },
-                {
-                    "name": "Unit",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "\"kg\" | \"g\" | \"tableSpoon\" | \"coffeeSpoon\" | \"l\" | \"dl\" | \"ml\" | \"pinch\" | \"piece\"",
-                    "file": "src/app/shared/model/model.ts",
-                    "description": "",
-                    "kind": 168
-                }
-            ],
             "src/app/shared/model/model-api.ts": [
                 {
                     "name": "I18n",
@@ -1340,6 +1304,35 @@
                     "file": "src/app/shared/model/model-api.ts",
                     "description": "",
                     "kind": 165
+                }
+            ],
+            "src/app/shared/model/model.ts": [
+                {
+                    "name": "I18n",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "literal type",
+                    "file": "src/app/shared/model/model.ts",
+                    "description": "",
+                    "kind": 165
+                },
+                {
+                    "name": "Language",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "\"de\" | \"en\"",
+                    "file": "src/app/shared/model/model.ts",
+                    "description": "",
+                    "kind": 168
+                },
+                {
+                    "name": "Unit",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "\"kg\" | \"g\" | \"tableSpoon\" | \"coffeeSpoon\" | \"l\" | \"dl\" | \"ml\" | \"pinch\" | \"piece\"",
+                    "file": "src/app/shared/model/model.ts",
+                    "description": "",
+                    "kind": 168
                 }
             ]
         }
