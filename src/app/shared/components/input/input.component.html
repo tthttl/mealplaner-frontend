@@ -1,18 +1,34 @@
-<div class="input-wrapper">
+<div class="input-group">
   <div class="input">
     <label class="input__label" *ngIf="label" [for]="inputId">{{label}}</label>
-    <input class="input__field"
-           [type]="type"
-           [id]="inputId"
-           [formControl]="formControl"
-           [disabled]="isDisabled"
-           [autocomplete]="autocomplete"
-           [placeholder]="placeholder"
-           [attr.data-test]="testName"
-           (input)="onUserInput($event)"
-           (blur)="onBlur()"
-           [ngClass]="{'input__field--error': errors && errors.length > 0}"
-    >
+    <div class="field-wrapper">
+      <input class="input__field"
+             [type]="type"
+             [id]="inputId"
+             [formControl]="formControl"
+             [disabled]="isDisabled"
+             [autocomplete]="autocomplete"
+             [placeholder]="placeholder"
+             [attr.data-test]="testName"
+             (input)="onUserInput($event)"
+             (blur)="onBlur()"
+             [ngClass]="{
+             'input__field--border-accent': color === 'accent' && !errors || errors.length === 0,
+             'input__field--border-warning': errors && errors.length > 0,
+             'input__field--short': !!buttonText
+             }"
+      >
+      <app-button class="input__button"
+                  *ngIf="!!buttonText"
+                  [buttonText]="buttonText"
+                  [buttonType]="buttonType"
+                  [attr.data-test]="buttonTestName"
+                  [isDisabled]="isDisabled"
+                  [isInputGroup]="true"
+                  [color]="color"
+                  (clicked)="onClicked($event)"
+      ></app-button>
+    </div>
     <div class="error__wrapper">
       <span class="input__error" *ngFor="let error of errors">{{error}}</span>
     </div>

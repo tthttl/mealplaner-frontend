@@ -1,6 +1,7 @@
 @import "../../../../styles/settings/colors";
+@import "../../../../styles/material_theme";
 
-.input-wrapper {
+.input-group {
   background-color: $blue_20;
   display: flex;
   justify-content: center;
@@ -12,25 +13,47 @@
     flex-direction: column;
     margin: 1rem 2rem 1rem 1rem;
 
+    .field-wrapper {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+    }
+
     &__label {
       color: $blue-grey_80;
     }
 
     &__field {
+      width: 100%;
       line-height: 2.5;
       margin: 1rem 0;
-      border-radius: 5px;
-      border: 2px solid $blue-grey_50;
+      border-radius: 4px;
+      border: 2px solid mat-color($mealplaner-app-primary);
       padding-left: 0.5rem;
 
       &:focus {
         outline: none;
       }
 
-      &--error {
-        border: 2px solid $red_70;
+      &--border-warning {
+        border: 2px solid mat-color($mealplaner-app-warn);
       }
 
+      &--short {
+        border-right: none;
+        border-radius: 4px 0 0 4px;
+      }
+
+      &--border-accent {
+        border: 2px solid mat-color($mealplaner-app-accent);
+      }
+
+    }
+
+    &__button {
+      flex: 0 0 20%;
+      margin: 1rem 0;
+      border-radius: 0 4px 4px 0;
     }
 
     &__error {

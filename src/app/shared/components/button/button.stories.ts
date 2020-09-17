@@ -41,7 +41,7 @@ export const buttonData = {
 export const Default = () => ({
   component: ButtonComponent,
   props: {
-    text: buttonData.text,
+    buttonText: buttonData.text,
     isDisabled: buttonData.isDisabled,
     testName: buttonData.testName,
     clicked: actionsData.clicked
@@ -51,7 +51,7 @@ export const Default = () => ({
 export const Accent = () => ({
   component: ButtonComponent,
   props: {
-    text: 'Accent',
+    buttonText: 'Accent',
     isDisabled: buttonData.isDisabled,
     testName: buttonData.testName,
     clicked: actionsData.clicked,
@@ -62,7 +62,7 @@ export const Accent = () => ({
 export const Warning = () => ({
   component: ButtonComponent,
   props: {
-    text: 'Warning',
+    buttonText: 'Warning',
     isDisabled: buttonData.isDisabled,
     testName: buttonData.testName,
     clicked: actionsData.clicked,
@@ -73,7 +73,7 @@ export const Warning = () => ({
 export const Disabled = () => ({
   component: ButtonComponent,
   props: {
-    text: 'Disabled',
+    buttonText: 'Disabled',
     isDisabled: true,
     testName: buttonData.testName,
     clicked: actionsData.clicked,
@@ -83,7 +83,7 @@ export const Disabled = () => ({
 export const IconLeft = () => ({
   component: ButtonComponent,
   props: {
-    text: 'Add',
+    buttonText: 'Add',
     isDisabled: buttonData.isDisabled,
     testName: buttonData.testName,
     clicked: actionsData.clicked,
@@ -94,7 +94,7 @@ export const IconLeft = () => ({
 export const IconRight = () => ({
   component: ButtonComponent,
   props: {
-    text: 'Delete',
+    buttonText: 'Delete',
     isDisabled: buttonData.isDisabled,
     testName: buttonData.testName,
     clicked: actionsData.clicked,

@@ -8,16 +8,18 @@ import { ThemePalette } from '@angular/material/core';
 })
 export class ButtonComponent {
 
-  @Input() text = ''; // kell type is?
+  @Input() buttonText = '';
+  @Input() buttonType = 'button';
   @Input() isDisabled = false;
   @Input() testName = '';
   @Input() color: ThemePalette = 'primary';
   @Input() iconLeft: string | undefined;
   @Input() iconRight: string | undefined;
-  @Output() clicked: EventEmitter<void> = new EventEmitter<void>(); // kell ez ide egyaltalan?
+  @Input() isInputGroup = false;
+  @Output() clicked: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
 
-  onClick(): void {
-    this.clicked.emit();
+  onClick(event: MouseEvent): void {
+    this.clicked.emit(event);
   }
 
 }

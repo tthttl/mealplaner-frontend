@@ -567,7 +567,7 @@
         },
         {
             "name": "ButtonComponent",
-            "id": "component-ButtonComponent-17098001c7d6b49ffec774a32b787fcf",
+            "id": "component-ButtonComponent-d4d19784048fda89e2149ec7ba5607c7",
             "file": "src/app/shared/components/button/button.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -585,54 +585,73 @@
             "viewProviders": [],
             "inputsClass": [
                 {
+                    "name": "buttonText",
+                    "defaultValue": "''",
+                    "line": 11
+                },
+                {
+                    "name": "buttonType",
+                    "defaultValue": "'button'",
+                    "line": 12
+                },
+                {
                     "name": "color",
                     "defaultValue": "'primary'",
-                    "line": 14,
+                    "line": 15,
                     "type": "ThemePalette"
                 },
                 {
                     "name": "iconLeft",
-                    "line": 15,
+                    "line": 16,
                     "type": "string | undefined"
                 },
                 {
                     "name": "iconRight",
-                    "line": 16,
+                    "line": 17,
                     "type": "string | undefined"
                 },
                 {
                     "name": "isDisabled",
                     "defaultValue": "false",
-                    "line": 12
+                    "line": 13
                 },
                 {
                     "name": "testName",
                     "defaultValue": "''",
-                    "line": 13
-                },
-                {
-                    "name": "text",
-                    "defaultValue": "''",
-                    "line": 11
+                    "line": 14
                 }
             ],
             "outputsClass": [
                 {
                     "name": "clicked",
-                    "defaultValue": "new EventEmitter<void>()",
-                    "line": 17,
-                    "type": "EventEmitter<void>"
+                    "defaultValue": "new EventEmitter<MouseEvent>()",
+                    "line": 18,
+                    "type": "EventEmitter<MouseEvent>"
                 }
             ],
             "propertiesClass": [],
             "methodsClass": [
                 {
                     "name": "onClick",
-                    "args": [],
+                    "args": [
+                        {
+                            "name": "event",
+                            "type": "MouseEvent"
+                        }
+                    ],
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 19
+                    "line": 20,
+                    "jsdoctags": [
+                        {
+                            "name": "event",
+                            "type": "MouseEvent",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
                 }
             ],
             "hostBindings": [],
@@ -640,20 +659,20 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, EventEmitter, Input, Output } from '@angular/core';\nimport { ThemePalette } from '@angular/material/core';\n\n@Component({\n  selector: 'app-button',\n  templateUrl: './button.component.html',\n  styleUrls: ['./button.component.scss']\n})\nexport class ButtonComponent {\n\n  @Input() text = ''; // kell type is?\n  @Input() isDisabled = false;\n  @Input() testName = '';\n  @Input() color: ThemePalette = 'primary';\n  @Input() iconLeft: string | undefined;\n  @Input() iconRight: string | undefined;\n  @Output() clicked: EventEmitter<void> = new EventEmitter<void>(); // kell ez ide egyaltalan?\n\n  onClick(): void {\n    this.clicked.emit();\n  }\n\n}\n",
+            "sourceCode": "import { Component, EventEmitter, Input, Output } from '@angular/core';\nimport { ThemePalette } from '@angular/material/core';\n\n@Component({\n  selector: 'app-button',\n  templateUrl: './button.component.html',\n  styleUrls: ['./button.component.scss']\n})\nexport class ButtonComponent {\n\n  @Input() buttonText = '';\n  @Input() buttonType = 'button';\n  @Input() isDisabled = false;\n  @Input() testName = '';\n  @Input() color: ThemePalette = 'primary';\n  @Input() iconLeft: string | undefined;\n  @Input() iconRight: string | undefined;\n  @Output() clicked: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();\n\n  onClick(event: MouseEvent): void {\n    this.clicked.emit(event);\n  }\n\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": "\n",
+                    "data": ".button{\n  width: 100%;\n  height: 100%;\n}\n",
                     "styleUrl": "./button.component.scss"
                 }
             ],
             "stylesData": "",
-            "templateData": "<button\n  mat-flat-button\n  [disabled]=\"isDisabled\"\n  [attr.data-test]=\"testName\"\n  (click)=\"onClick()\"\n  [color]=\"color\">\n  <fa-icon *ngIf=\"iconLeft\"\n    [icon]=\"['fas', iconLeft]\"></fa-icon>\n  {{text}}\n  <fa-icon *ngIf=\"iconRight\"\n    [icon]=\"['fas', iconRight]\"></fa-icon>\n</button>\n"
+            "templateData": "<button\n  class=\"button\"\n  mat-flat-button\n  [disabled]=\"isDisabled\"\n  [attr.data-test]=\"testName\"\n  [color]=\"color\"\n  [type]=\"buttonType\"\n  (click)=\"onClick($event)\"\n>\n  <fa-icon *ngIf=\"iconLeft\"\n           [icon]=\"['fas', iconLeft]\"></fa-icon>\n  {{buttonText}}\n  <fa-icon *ngIf=\"iconRight\"\n           [icon]=\"['fas', iconRight]\"></fa-icon>\n</button>\n"
         },
         {
             "name": "InputComponent",
-            "id": "component-InputComponent-d725ebd3c7c2ef3e8d9f2ca5cb4b5cd5",
+            "id": "component-InputComponent-5fca984525c51fd7129d6bf146297f5c",
             "file": "src/app/shared/components/input/input.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -671,15 +690,46 @@
             "viewProviders": [],
             "inputsClass": [
                 {
+                    "name": "autocomplete",
+                    "defaultValue": "'on'",
+                    "line": 18
+                },
+                {
+                    "name": "buttonTestName",
+                    "defaultValue": "''",
+                    "line": 26
+                },
+                {
+                    "name": "buttonText",
+                    "defaultValue": "''",
+                    "line": 24
+                },
+                {
+                    "name": "buttonType",
+                    "defaultValue": "'button'",
+                    "line": 25
+                },
+                {
+                    "name": "color",
+                    "defaultValue": "'primary'",
+                    "line": 27,
+                    "type": "ThemePalette"
+                },
+                {
                     "name": "errors",
                     "defaultValue": "[]",
-                    "line": 15,
+                    "line": 16,
                     "type": "string[]"
                 },
                 {
                     "name": "formControl",
-                    "line": 12,
+                    "line": 13,
                     "type": "FormControl | undefined"
+                },
+                {
+                    "name": "iconLeft",
+                    "line": 28,
+                    "type": "string | undefined"
                 },
                 {
                     "name": "isDisabled",
@@ -688,26 +738,39 @@
                 },
                 {
                     "name": "label",
-                    "line": 14,
+                    "line": 15,
                     "type": "string | undefined"
                 },
                 {
                     "name": "placeholder",
                     "defaultValue": "''",
-                    "line": 16
+                    "line": 19
                 },
                 {
                     "name": "testName",
                     "defaultValue": "''",
-                    "line": 18
+                    "line": 20
                 },
                 {
                     "name": "type",
                     "defaultValue": "'text'",
-                    "line": 13
+                    "line": 14
                 }
             ],
-            "outputsClass": [],
+            "outputsClass": [
+                {
+                    "name": "fieldLeft",
+                    "defaultValue": "new EventEmitter<void>()",
+                    "line": 22,
+                    "type": "EventEmitter<void>"
+                },
+                {
+                    "name": "inputChanged",
+                    "defaultValue": "new EventEmitter<Event>()",
+                    "line": 21,
+                    "type": "EventEmitter<Event>"
+                }
+            ],
             "propertiesClass": [
                 {
                     "name": "inputId",
@@ -715,17 +778,39 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 20
+                    "line": 30
                 }
             ],
             "methodsClass": [
                 {
-                    "name": "ngOnInit",
+                    "name": "onBlur",
                     "args": [],
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 26
+                    "line": 36
+                },
+                {
+                    "name": "onUserInput",
+                    "args": [
+                        {
+                            "name": "event",
+                            "type": "Event"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 32,
+                    "jsdoctags": [
+                        {
+                            "name": "event",
+                            "type": "Event",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
                 }
             ],
             "hostBindings": [],
@@ -733,25 +818,16 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, Input, OnInit } from '@angular/core';\nimport { FormControl } from '@angular/forms';\nimport { v4 as uuid } from 'uuid';\n\n@Component({\n  selector: 'app-input',\n  templateUrl: './input.component.html',\n  styleUrls: ['./input.component.scss']\n})\nexport class InputComponent implements OnInit {\n\n  @Input() formControl: FormControl | undefined;\n  @Input() type = 'text';\n  @Input() label: string | undefined;\n  @Input() errors: string[] = [];\n  @Input() placeholder = '';\n  @Input() isDisabled = false;\n  @Input() testName = '';\n\n  inputId: string = uuid();\n\n\n  constructor() {\n  }\n\n  ngOnInit(): void {\n  }\n\n}\n",
+            "sourceCode": "import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';\nimport { FormControl } from '@angular/forms';\nimport { ThemePalette } from '@angular/material/core';\nimport { v4 as uuid } from 'uuid';\n\n@Component({\n  selector: 'app-input',\n  templateUrl: './input.component.html',\n  styleUrls: ['./input.component.scss']\n})\nexport class InputComponent {\n\n  @Input() formControl: FormControl | undefined;\n  @Input() type = 'text';\n  @Input() label: string | undefined;\n  @Input() errors: string[] = [];\n  @Input() isDisabled = false;\n  @Input() autocomplete = 'on';\n  @Input() placeholder = '';\n  @Input() testName = '';\n  @Output() inputChanged: EventEmitter<Event> = new EventEmitter<Event>();\n  @Output() fieldLeft: EventEmitter<void> = new EventEmitter<void>();\n\n  @Input() buttonText = '';\n  @Input() buttonType = 'button';\n  @Input() buttonTestName = '';\n  @Input() color: ThemePalette = 'primary';\n  @Input() iconLeft: string | undefined;\n\n  inputId: string = uuid();\n\n  onUserInput(event: Event): void {\n    this.inputChanged.emit(event);\n  }\n\n  onBlur(): void {\n    this.fieldLeft.emit();\n  }\n\n\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": "@import \"../../../../styles/settings/colors\";\n\n.input-wrapper {\n  background-color: $blue_10;\n  display: flex;\n  justify-content: center;\n  font-family: 'Roboto', sans-serif;\n\n  .input {\n    width: 95%;\n    display: flex;\n    flex-direction: column;\n    margin: 1rem 2rem 1rem 1rem;\n\n    &__label {\n\n    }\n\n    &__field {\n      line-height: 2.5;\n      margin: 1rem 0;\n      border-radius: 5px;\n      border: 1px solid $blue-grey_50;\n\n      &:focus{\n        outline: none;\n        background-color: $blue_20;\n      }\n\n    }\n\n    &__error {\n      color: $red_80;\n      background-color: $blue-grey_10;\n      border-radius: 5px;\n      padding: 0.5rem;\n    }\n\n  }\n\n}\n",
+                    "data": "@import \"../../../../styles/settings/colors\";\n\n.input-group {\n  background-color: $blue_20;\n  display: flex;\n  justify-content: center;\n  font-family: 'Roboto', sans-serif;\n\n  .input {\n    width: 95%;\n    display: flex;\n    flex-direction: column;\n    margin: 1rem 2rem 1rem 1rem;\n\n    .field-wrapper {\n      display: flex;\n      flex-direction: row;\n      justify-content: flex-start;\n    }\n\n    &__label {\n      color: $blue-grey_80;\n    }\n\n    &__field {\n      flex: 0 0 80%;\n      line-height: 2.5;\n      margin: 1rem 0;\n      border-radius: 5px;\n      border: 2px solid $blue-grey_50;\n      padding-left: 0.5rem;\n\n      &:focus {\n        outline: none;\n      }\n\n      &--error {\n        border: 2px solid $red_70;\n      }\n\n      &--short {\n        border-right: none;\n        border-radius: 5px 0 0 5px;\n      }\n\n    }\n\n    &__button {\n      flex: 0 0 20%;\n      margin: 1rem 0;\n      border-radius: 0 5px 5px 0;\n    }\n\n    &__error {\n      color: $blue-grey_10;\n      background-color: $blue-grey_40;\n      border-radius: 5px;\n      padding: 0.5rem;\n      font-size: small;\n      font-weight: bold;\n      margin-right: 0.5rem;\n      margin-bottom: 0.5rem;\n    }\n\n    .error__wrapper {\n      display: flex;\n      flex-wrap: wrap;\n    }\n\n  }\n\n}\n",
                     "styleUrl": "./input.component.scss"
                 }
             ],
             "stylesData": "",
-            "constructorObj": {
-                "name": "constructor",
-                "description": "",
-                "args": [],
-                "line": 20
-            },
-            "implements": [
-                "OnInit"
-            ],
-            "templateData": "<div class=\"input-wrapper\">\n  <div class=\"input\">\n    <label class=\"input__label\" *ngIf=\"label\" [for]=\"inputId\">{{label}}</label>\n    <input class=\"input__field\" [type]=\"type\" [id]=\"inputId\" [formControl]=\"formControl\">\n    <div class=\"input__error\" *ngFor=\"let error of errors\">{{error}}</div>\n  </div>\n</div>\n\n"
+            "templateData": "<div class=\"input-group\">\n  <div class=\"input\">\n    <label class=\"input__label\" *ngIf=\"label\" [for]=\"inputId\">{{label}}</label>\n    <div class=\"field-wrapper\">\n      <input class=\"input__field\"\n             [type]=\"type\"\n             [id]=\"inputId\"\n             [formControl]=\"formControl\"\n             [disabled]=\"isDisabled\"\n             [autocomplete]=\"autocomplete\"\n             [placeholder]=\"placeholder\"\n             [attr.data-test]=\"testName\"\n             (input)=\"onUserInput($event)\"\n             (blur)=\"onBlur()\"\n             [ngClass]=\"{\n             'input__field--error': errors && errors.length > 0,\n             'input__field--short': !!buttonText\n             }\"\n      >\n      <app-button class=\"input__button\"\n                  *ngIf=\"!!buttonText\"\n                  [buttonText]=\"buttonText\"\n                  [buttonType]=\"buttonType\"\n                  [attr.data-test]=\"buttonTestName\"\n                  [color]=\"color\"\n                  [isDisabled]=\"isDisabled\"\n      ></app-button>\n    </div>\n    <div class=\"error__wrapper\">\n      <span class=\"input__error\" *ngFor=\"let error of errors\">{{error}}</span>\n    </div>\n  </div>\n</div>\n\n"
         },
         {
             "name": "ShoppingListComponent",
@@ -1065,7 +1141,7 @@
                 "subtype": "variable",
                 "file": "src/app/shared/components/button/button.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    text: 'Accent',\n    isDisabled: buttonData.isDisabled,\n    testName: buttonData.testName,\n    clicked: actionsData.clicked,\n    color: 'accent'\n  }\n})"
+                "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Accent',\n    isDisabled: buttonData.isDisabled,\n    testName: buttonData.testName,\n    clicked: actionsData.clicked,\n    color: 'accent'\n  }\n})"
             },
             {
                 "name": "actionsData",
@@ -1113,15 +1189,7 @@
                 "subtype": "variable",
                 "file": "src/app/shared/components/input/input.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData\n  }\n})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/button/button.stories.ts",
-                "type": "",
-                "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    text: buttonData.text,\n    isDisabled: buttonData.isDisabled,\n    testName: buttonData.testName,\n    clicked: actionsData.clicked\n  }\n})"
+                "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: '',\n    errors: []\n  }\n})"
             },
             {
                 "name": "Default",
@@ -1130,6 +1198,14 @@
                 "file": "src/app/shopping-list/components/shopping-list/shopping-list.stories.ts",
                 "type": "",
                 "defaultValue": "() => ({\n  component: ShoppingListComponent,\n  props: {\n    items: taskData.items,\n    translations: taskData.translations,\n    itemDeleted: actionsData.itemDeleted,\n    listItemMoved: actionsData.listItemMoved,\n  },\n})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/button/button.stories.ts",
+                "type": "",
+                "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: buttonData.text,\n    isDisabled: buttonData.isDisabled,\n    testName: buttonData.testName,\n    clicked: actionsData.clicked\n  }\n})"
             },
             {
                 "name": "DEFAULT_LANGAUGE",
@@ -1145,7 +1221,15 @@
                 "subtype": "variable",
                 "file": "src/app/shared/components/button/button.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    text: 'Disabled',\n    isDisabled: true,\n    testName: buttonData.testName,\n    clicked: actionsData.clicked,\n  }\n})"
+                "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Disabled',\n    isDisabled: true,\n    testName: buttonData.testName,\n    clicked: actionsData.clicked,\n  }\n})"
+            },
+            {
+                "name": "environment",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/environments/environment.qa.ts",
+                "type": "object",
+                "defaultValue": "{\n  production: false,\n  showBetaTeaser: false,\n  apiUrl: 'https://api.mealplaner.app',\n}"
             },
             {
                 "name": "environment",
@@ -1162,14 +1246,6 @@
                 "file": "src/environments/environment.prod.ts",
                 "type": "object",
                 "defaultValue": "{\n  production: true,\n  showBetaTeaser: false,\n  apiUrl: 'https://api.mealplaner.app',\n}"
-            },
-            {
-                "name": "environment",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/environments/environment.qa.ts",
-                "type": "object",
-                "defaultValue": "{\n  production: false,\n  showBetaTeaser: false,\n  apiUrl: 'https://api.mealplaner.app',\n}"
             },
             {
                 "name": "getI18n",
@@ -1201,7 +1277,7 @@
                 "subtype": "variable",
                 "file": "src/app/shared/components/button/button.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    text: 'Add',\n    isDisabled: buttonData.isDisabled,\n    testName: buttonData.testName,\n    clicked: actionsData.clicked,\n    iconLeft: 'plus'\n  }\n})"
+                "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Add',\n    isDisabled: buttonData.isDisabled,\n    testName: buttonData.testName,\n    clicked: actionsData.clicked,\n    iconLeft: 'plus'\n  }\n})"
             },
             {
                 "name": "IconRight",
@@ -1209,7 +1285,7 @@
                 "subtype": "variable",
                 "file": "src/app/shared/components/button/button.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    text: 'Delete',\n    isDisabled: buttonData.isDisabled,\n    testName: buttonData.testName,\n    clicked: actionsData.clicked,\n    iconRight: 'trash'\n  }\n})"
+                "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Delete',\n    isDisabled: buttonData.isDisabled,\n    testName: buttonData.testName,\n    clicked: actionsData.clicked,\n    iconRight: 'trash'\n  }\n})"
             },
             {
                 "name": "initialAppState",
@@ -1233,7 +1309,7 @@
                 "subtype": "variable",
                 "file": "src/app/shared/components/input/input.stories.ts",
                 "type": "object",
-                "defaultValue": "{\n  isDisabled: false,\n  testName: 'test',\n  label: 'Label',\n  errors: ['Error'],\n  placeholder: 'placeholder',\n  formControl: createFormControl()\n}"
+                "defaultValue": "{\n  isDisabled: false,\n  testName: 'test',\n  label: 'Label',\n  errors: ['Ooops!', 'An error has occured!'],\n  placeholder: 'Placeholder',\n  formControl: createFormControl()\n}"
             },
             {
                 "name": "metaReducers",
@@ -1296,7 +1372,31 @@
                 "subtype": "variable",
                 "file": "src/app/shared/components/button/button.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    text: 'Warning',\n    isDisabled: buttonData.isDisabled,\n    testName: buttonData.testName,\n    clicked: actionsData.clicked,\n    color: 'warn'\n  }\n})"
+                "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Warning',\n    isDisabled: buttonData.isDisabled,\n    testName: buttonData.testName,\n    clicked: actionsData.clicked,\n    color: 'warn'\n  }\n})"
+            },
+            {
+                "name": "WithButton",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/input/input.stories.ts",
+                "type": "",
+                "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: '',\n    buttonText: 'Click'\n  }\n})"
+            },
+            {
+                "name": "WithError",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/input/input.stories.ts",
+                "type": "",
+                "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: ''\n  }\n})"
+            },
+            {
+                "name": "WithoutLabel",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/input/input.stories.ts",
+                "type": "",
+                "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    label: '',\n    errors: []\n  }\n})"
             }
         ],
         "functions": [
@@ -1378,7 +1478,7 @@
                     "subtype": "variable",
                     "file": "src/app/shared/components/button/button.stories.ts",
                     "type": "",
-                    "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    text: 'Accent',\n    isDisabled: buttonData.isDisabled,\n    testName: buttonData.testName,\n    clicked: actionsData.clicked,\n    color: 'accent'\n  }\n})"
+                    "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Accent',\n    isDisabled: buttonData.isDisabled,\n    testName: buttonData.testName,\n    clicked: actionsData.clicked,\n    color: 'accent'\n  }\n})"
                 },
                 {
                     "name": "actionsData",
@@ -1402,7 +1502,7 @@
                     "subtype": "variable",
                     "file": "src/app/shared/components/button/button.stories.ts",
                     "type": "",
-                    "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    text: buttonData.text,\n    isDisabled: buttonData.isDisabled,\n    testName: buttonData.testName,\n    clicked: actionsData.clicked\n  }\n})"
+                    "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: buttonData.text,\n    isDisabled: buttonData.isDisabled,\n    testName: buttonData.testName,\n    clicked: actionsData.clicked\n  }\n})"
                 },
                 {
                     "name": "Disabled",
@@ -1410,7 +1510,7 @@
                     "subtype": "variable",
                     "file": "src/app/shared/components/button/button.stories.ts",
                     "type": "",
-                    "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    text: 'Disabled',\n    isDisabled: true,\n    testName: buttonData.testName,\n    clicked: actionsData.clicked,\n  }\n})"
+                    "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Disabled',\n    isDisabled: true,\n    testName: buttonData.testName,\n    clicked: actionsData.clicked,\n  }\n})"
                 },
                 {
                     "name": "IconLeft",
@@ -1418,7 +1518,7 @@
                     "subtype": "variable",
                     "file": "src/app/shared/components/button/button.stories.ts",
                     "type": "",
-                    "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    text: 'Add',\n    isDisabled: buttonData.isDisabled,\n    testName: buttonData.testName,\n    clicked: actionsData.clicked,\n    iconLeft: 'plus'\n  }\n})"
+                    "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Add',\n    isDisabled: buttonData.isDisabled,\n    testName: buttonData.testName,\n    clicked: actionsData.clicked,\n    iconLeft: 'plus'\n  }\n})"
                 },
                 {
                     "name": "IconRight",
@@ -1426,7 +1526,7 @@
                     "subtype": "variable",
                     "file": "src/app/shared/components/button/button.stories.ts",
                     "type": "",
-                    "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    text: 'Delete',\n    isDisabled: buttonData.isDisabled,\n    testName: buttonData.testName,\n    clicked: actionsData.clicked,\n    iconRight: 'trash'\n  }\n})"
+                    "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Delete',\n    isDisabled: buttonData.isDisabled,\n    testName: buttonData.testName,\n    clicked: actionsData.clicked,\n    iconRight: 'trash'\n  }\n})"
                 },
                 {
                     "name": "Warning",
@@ -1434,7 +1534,7 @@
                     "subtype": "variable",
                     "file": "src/app/shared/components/button/button.stories.ts",
                     "type": "",
-                    "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    text: 'Warning',\n    isDisabled: buttonData.isDisabled,\n    testName: buttonData.testName,\n    clicked: actionsData.clicked,\n    color: 'warn'\n  }\n})"
+                    "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Warning',\n    isDisabled: buttonData.isDisabled,\n    testName: buttonData.testName,\n    clicked: actionsData.clicked,\n    color: 'warn'\n  }\n})"
                 }
             ],
             "src/app/shopping-list/components/shopping-list/shopping-list.stories.ts": [
@@ -1497,7 +1597,7 @@
                     "subtype": "variable",
                     "file": "src/app/shared/components/input/input.stories.ts",
                     "type": "",
-                    "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData\n  }\n})"
+                    "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: '',\n    errors: []\n  }\n})"
                 },
                 {
                     "name": "inputData",
@@ -1505,7 +1605,31 @@
                     "subtype": "variable",
                     "file": "src/app/shared/components/input/input.stories.ts",
                     "type": "object",
-                    "defaultValue": "{\n  isDisabled: false,\n  testName: 'test',\n  label: 'Label',\n  errors: ['Error'],\n  placeholder: 'placeholder',\n  formControl: createFormControl()\n}"
+                    "defaultValue": "{\n  isDisabled: false,\n  testName: 'test',\n  label: 'Label',\n  errors: ['Ooops!', 'An error has occured!'],\n  placeholder: 'Placeholder',\n  formControl: createFormControl()\n}"
+                },
+                {
+                    "name": "WithButton",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/input/input.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: '',\n    buttonText: 'Click'\n  }\n})"
+                },
+                {
+                    "name": "WithError",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/input/input.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: ''\n  }\n})"
+                },
+                {
+                    "name": "WithoutLabel",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/input/input.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    label: '',\n    errors: []\n  }\n})"
                 }
             ],
             "src/app/shared/helpers/constants.ts": [
@@ -1516,6 +1640,16 @@
                     "file": "src/app/shared/helpers/constants.ts",
                     "type": "Language",
                     "defaultValue": "'de'"
+                }
+            ],
+            "src/environments/environment.qa.ts": [
+                {
+                    "name": "environment",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/environments/environment.qa.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  production: false,\n  showBetaTeaser: false,\n  apiUrl: 'https://api.mealplaner.app',\n}"
                 }
             ],
             "src/environments/environment.ts": [
@@ -1536,16 +1670,6 @@
                     "file": "src/environments/environment.prod.ts",
                     "type": "object",
                     "defaultValue": "{\n  production: true,\n  showBetaTeaser: false,\n  apiUrl: 'https://api.mealplaner.app',\n}"
-                }
-            ],
-            "src/environments/environment.qa.ts": [
-                {
-                    "name": "environment",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/environments/environment.qa.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  production: false,\n  showBetaTeaser: false,\n  apiUrl: 'https://api.mealplaner.app',\n}"
                 }
             ],
             "src/app/i18n/actions/i18n-api.actions.ts": [
@@ -1833,7 +1957,7 @@
                 "linktype": "component",
                 "name": "ButtonComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/9",
+                "coverageCount": "0/10",
                 "status": "low"
             },
             {
@@ -1922,7 +2046,7 @@
                 "linktype": "component",
                 "name": "InputComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/11",
+                "coverageCount": "0/19",
                 "status": "low"
             },
             {
@@ -1950,6 +2074,36 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "inputData",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/input/input.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WithButton",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/input/input.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WithError",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/input/input.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WithoutLabel",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
