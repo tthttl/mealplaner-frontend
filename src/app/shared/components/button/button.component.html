@@ -1,0 +1,12 @@
+<button
+  mat-flat-button
+  [disabled]="isDisabled"
+  [attr.data-test]="testName"
+  (click)="onClick()"
+  [color]="color">
+  <fa-icon *ngIf="iconLeft"
+    [icon]="['fas', iconLeft]"></fa-icon>
+  {{text}}
+  <fa-icon *ngIf="iconRight"
+    [icon]="['fas', iconRight]"></fa-icon>
+</button>

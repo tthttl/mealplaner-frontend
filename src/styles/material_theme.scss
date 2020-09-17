@@ -76,14 +76,11 @@ $mat-red: (
   )
 );
 
-$candy-app-primary: mat-palette($mat-primary);
+$mealplaner-app-primary: mat-palette($mat-primary);
 
-$candy-app-accent: mat-palette($mat-grey2, 600, 500, 900);
-$candy-app-warn: mat-palette($mat-red);
+$mealplaner-app-accent: mat-palette($mat-grey2, 600, 500, 900);
+$mealplaner-app-warn: mat-palette($mat-red);
 
-// Create the theme object (a Sass map containing all of the palettes).
-$candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-app-warn);
+$mealplaner-app-theme: mat-light-theme($mealplaner-app-primary, $mealplaner-app-accent, $mealplaner-app-warn);
 
-// here I am only calling checkbox mixin because i only want to change the checkbox color
-@include mat-checkbox-theme($candy-app-theme);
-
+@include angular-material-theme($mealplaner-app-theme);

@@ -1,0 +1,54 @@
+@import "../../../../styles/settings/colors";
+
+.input-wrapper {
+  background-color: $blue_20;
+  display: flex;
+  justify-content: center;
+  font-family: 'Roboto', sans-serif;
+
+  .input {
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    margin: 1rem 2rem 1rem 1rem;
+
+    &__label {
+      color: $blue-grey_80;
+    }
+
+    &__field {
+      line-height: 2.5;
+      margin: 1rem 0;
+      border-radius: 5px;
+      border: 2px solid $blue-grey_50;
+      padding-left: 0.5rem;
+
+      &:focus {
+        outline: none;
+      }
+
+      &--error {
+        border: 2px solid $red_70;
+      }
+
+    }
+
+    &__error {
+      color: $blue-grey_10;
+      background-color: $blue-grey_40;
+      border-radius: 5px;
+      padding: 0.5rem;
+      font-size: small;
+      font-weight: bold;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .error__wrapper {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+  }
+
+}
