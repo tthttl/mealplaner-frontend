@@ -26,17 +26,17 @@ $mat-primary: (
   )
 );
 
-$mat-grey2: (
-  50:  $blue-grey_10,
-  100: $blue-grey_20,
-  200: $blue-grey_30,
-  300: $blue-grey_40,
-  400: $blue-grey_50,
-  500: $blue-grey_60,
-  600: $blue-grey_70,
-  700: $blue-grey_80,
-  800: $blue-grey_90,
-  900: $blue-grey_100,
+$mat-cyan: (
+  50:  $cyan_10,
+  100: $cyan_20,
+  200: $cyan_30,
+  300: $cyan_40,
+  400: $cyan_50,
+  500: $cyan_60,
+  600: $cyan_70,
+  700: $cyan_80,
+  800: $cyan_90,
+  900: $cyan_100,
   contrast: (
     50: $text-100,
     100: $text-100,
@@ -78,7 +78,7 @@ $mat-red: (
 
 $mealplaner-app-primary: mat-palette($mat-primary);
 
-$mealplaner-app-accent: mat-palette($mat-grey2, 600, 500, 900);
+$mealplaner-app-accent: mat-palette($mat-cyan, 600, 500, 900);
 $mealplaner-app-warn: mat-palette($mat-red);
 
 $mealplaner-app-theme: mat-light-theme($mealplaner-app-primary, $mealplaner-app-accent, $mealplaner-app-warn);

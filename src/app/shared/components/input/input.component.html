@@ -5,17 +5,16 @@
       <input class="input__field"
              [type]="type"
              [id]="inputId"
-             [formControl]="formControl"
-             [disabled]="isDisabled"
+             [formControl]="control"
              [autocomplete]="autocomplete"
              [placeholder]="placeholder"
              [attr.data-test]="testName"
              (input)="onUserInput($event)"
              (blur)="onBlur()"
              [ngClass]="{
-             'input__field--border-accent': color === 'accent' && !errors || errors.length === 0,
-             'input__field--border-warning': errors && errors.length > 0,
-             'input__field--short': !!buttonText
+             'input__field--short': !!buttonText,
+             'input__field--border-accent': color === 'accent' && (!errors || errors.length === 0),
+             'input__field--border-warning': errors && errors.length > 0
              }"
       >
       <app-button class="input__button"
@@ -29,7 +28,7 @@
                   (clicked)="onClicked($event)"
       ></app-button>
     </div>
-    <div class="error__wrapper">
+    <div class="error-wrapper">
       <span class="input__error" *ngFor="let error of errors">{{error}}</span>
     </div>
   </div>

@@ -1,16 +1,23 @@
 <button
   class="button"
-  mat-flat-button
   [disabled]="isDisabled"
   [attr.data-test]="testName"
-  [color]="color"
   [type]="buttonType"
   (click)="onClick($event)"
-  [ngClass]="{'button--no-left-border-radius': isInputGroup}"
+  [ngClass]="{
+  'button--no-left-border-radius': isInputGroup,
+  'button--color-accent': color === 'accent' && !isDisabled,
+  'button--color-warning': color === 'warn' && !isDisabled,
+  'button--color-disabled': isDisabled
+  }"
 >
   <fa-icon *ngIf="iconLeft"
-           [icon]="['fas', iconLeft]"></fa-icon>
+           [icon]="['fas', iconLeft]"
+           class="icon-left"
+  ></fa-icon>
   {{buttonText}}
   <fa-icon *ngIf="iconRight"
-           [icon]="['fas', iconRight]"></fa-icon>
+           [icon]="['fas', iconRight]"
+           class="icon-right"
+  ></fa-icon>
 </button>

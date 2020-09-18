@@ -1,5 +1,4 @@
 import { APP_INITIALIZER } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { action } from '@storybook/addon-actions';
@@ -11,7 +10,7 @@ export default {
   excludeStories: /.*Data$/,
   decorators: [
     moduleMetadata({
-      imports: [MatButtonModule, FontAwesomeModule],
+      imports: [FontAwesomeModule],
       providers: [
         {
           provide: APP_INITIALIZER,

@@ -1,6 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { ThemePalette } from '@angular/material/core';
 import { v4 as uuid } from 'uuid';
 
 @Component({
@@ -13,10 +12,10 @@ export class InputComponent {
   @Input() buttonText = '';
   @Input() buttonType = 'button';
   @Input() buttonTestName = '';
-  @Input() color: ThemePalette = 'primary';
+  @Input() color = 'primary';
   @Input() iconLeft: string | undefined;
 
-  @Input() formControl: FormControl | undefined;
+  @Input() control: FormControl | undefined;
   @Input() type = 'text';
   @Input() label: string | undefined;
   @Input() errors: string[] = [];

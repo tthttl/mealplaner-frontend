@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ThemePalette } from '@angular/material/core';
 
 @Component({
   selector: 'app-button',
@@ -12,7 +11,7 @@ export class ButtonComponent {
   @Input() buttonType = 'button';
   @Input() isDisabled = false;
   @Input() testName = '';
-  @Input() color: ThemePalette = 'primary';
+  @Input() color = 'primary';
   @Input() iconLeft: string | undefined;
   @Input() iconRight: string | undefined;
   @Input() isInputGroup = false;

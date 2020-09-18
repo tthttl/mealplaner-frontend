@@ -1,6 +1,5 @@
 import { APP_INITIALIZER } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { action } from '@storybook/addon-actions';
@@ -14,7 +13,7 @@ export default {
   decorators: [
     moduleMetadata({
       declarations: [ButtonComponent, InputComponent],
-      imports: [ReactiveFormsModule, MatButtonModule, FontAwesomeModule],
+      imports: [ReactiveFormsModule, FontAwesomeModule],
       providers: [
         {
           provide: APP_INITIALIZER,
