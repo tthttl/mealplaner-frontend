@@ -1,0 +1,24 @@
+<button
+  class="button"
+  [disabled]="isDisabled"
+  [attr.data-test]="e2eTestName"
+  [type]="buttonType"
+  (click)="onClick($event)"
+  [ngClass]="{
+  'button--no-left-border-radius': isInputGroup,
+  'button--color-accent': color === 'accent' && !isDisabled,
+  'button--color-warning': color === 'warn' && !isDisabled,
+  'button--color-disabled': isDisabled,
+  'button--warning-border': isInputGroup && hasErrors
+  }"
+>
+  <fa-icon *ngIf="iconLeft"
+           [icon]="['fas', iconLeft]"
+           class="icon-left"
+  ></fa-icon>
+  {{buttonText}}
+  <fa-icon *ngIf="iconRight"
+           [icon]="['fas', iconRight]"
+           class="icon-right"
+  ></fa-icon>
+</button>

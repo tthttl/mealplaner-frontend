@@ -1,0 +1,35 @@
+<div class="input-group">
+  <div class="input">
+    <label class="input__label" *ngIf="label" [for]="inputId">{{label}}</label>
+    <div class="field-wrapper">
+      <input class="input__field"
+             [type]="type"
+             [id]="inputId"
+             [formControl]="control"
+             [autocomplete]="autocomplete"
+             [placeholder]="placeholder"
+             [attr.data-test]="e2eTestName"
+             [ngClass]="{
+             'input__field--short': !!buttonText,
+             'input__field--border-accent': color === 'accent' && (!errors || errors.length === 0),
+             'input__field--border-warning': errors && errors.length > 0
+             }"
+      >
+      <app-button class="input__button"
+                  *ngIf="!!buttonText"
+                  [buttonText]="buttonText"
+                  [buttonType]="buttonType"
+                  [attr.data-test]="buttonTestName"
+                  [isDisabled]="isDisabled"
+                  [isInputGroup]="true"
+                  [color]="color"
+                  [hasErrors]="errors && errors.length > 0"
+                  (clicked)="onClicked($event)"
+      ></app-button>
+    </div>
+    <div>
+      <div class="input__error" *ngFor="let error of errors">{{error}}</div>
+    </div>
+  </div>
+</div>
+
