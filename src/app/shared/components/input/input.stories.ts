@@ -12,7 +12,7 @@ export default {
   excludeStories: /.*Data$/,
   decorators: [
     moduleMetadata({
-      declarations: [ButtonComponent, InputComponent],
+      declarations: [ButtonComponent],
       imports: [ReactiveFormsModule, FontAwesomeModule],
       providers: [
         {
@@ -32,7 +32,7 @@ export default {
 
 export const inputData = {
   isDisabled: false,
-  testName: 'test',
+  e2eTestName: 'test',
   label: 'Label',
   errors: ['Ooops!', 'An error has occured!'],
   placeholder: 'Placeholder',
@@ -41,8 +41,6 @@ export const inputData = {
 
 export const actionsData = {
   clicked: action('clicked'),
-  inputChanged: action('inputChanged'),
-  fieldLeft: action('fieldLeft')
 };
 
 export const Default = () => ({
@@ -50,9 +48,7 @@ export const Default = () => ({
   props: {
     ...inputData,
     placeholder: '',
-    errors: [],
-    inputChanged: actionsData.inputChanged,
-    fieldLeft: actionsData.fieldLeft
+    errors: []
   }
 });
 
@@ -61,9 +57,7 @@ export const WithoutLabel = () => ({
   props: {
     ...inputData,
     label: '',
-    errors: [],
-    inputChanged: actionsData.inputChanged,
-    fieldLeft: actionsData.fieldLeft
+    errors: []
   }
 });
 
@@ -71,9 +65,7 @@ export const WithError = () => ({
   component: InputComponent,
   props: {
     ...inputData,
-    placeholder: '',
-    inputChanged: actionsData.inputChanged,
-    fieldLeft: actionsData.fieldLeft
+    placeholder: ''
   }
 });
 
@@ -84,9 +76,7 @@ export const WithPrimaryButton = () => ({
     placeholder: '',
     buttonText: 'Click',
     errors: [],
-    clicked: actionsData.clicked,
-    inputChanged: actionsData.inputChanged,
-    fieldLeft: actionsData.fieldLeft
+    clicked: actionsData.clicked
   }
 });
 
@@ -98,9 +88,7 @@ export const WithAccentButton = () => ({
     buttonText: 'Click',
     errors: [],
     color: 'accent',
-    clicked: actionsData.clicked,
-    inputChanged: actionsData.inputChanged,
-    fieldLeft: actionsData.fieldLeft
+    clicked: actionsData.clicked
   }
 });
 
@@ -112,9 +100,7 @@ export const WithButtonAndError = () => ({
     buttonText: 'Click',
     errors: ['Ooops!', 'An error has occured!'],
     color: 'accent',
-    clicked: actionsData.clicked,
-    inputChanged: actionsData.inputChanged,
-    fieldLeft: actionsData.fieldLeft
+    clicked: actionsData.clicked
   }
 });
 

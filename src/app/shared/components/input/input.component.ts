@@ -22,20 +22,10 @@ export class InputComponent {
   @Input() isDisabled = false;
   @Input() autocomplete = 'on';
   @Input() placeholder = '';
-  @Input() testName = '';
-  @Output() inputChanged: EventEmitter<Event> = new EventEmitter<Event>();
-  @Output() fieldLeft: EventEmitter<void> = new EventEmitter<void>();
+  @Input() e2eTestName = '';
   @Output() clicked: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
 
   inputId: string = uuid();
-
-  onUserInput(event: Event): void {
-    this.inputChanged.emit(event);
-  }
-
-  onBlur(): void {
-    this.fieldLeft.emit();
-  }
 
   onClicked(event: MouseEvent): void {
     this.clicked.emit(event);

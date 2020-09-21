@@ -17,7 +17,7 @@ import { metaReducers, reducers } from './shared/state';
 @NgModule({
   declarations: [
     AppComponent,
-    BetaTeaserComponent
+    BetaTeaserComponent,
   ],
   imports: [
     BrowserModule,

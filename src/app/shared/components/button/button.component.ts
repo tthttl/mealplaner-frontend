@@ -10,7 +10,7 @@ export class ButtonComponent {
   @Input() buttonText = '';
   @Input() buttonType = 'button';
   @Input() isDisabled = false;
-  @Input() testName = '';
+  @Input() e2eTestName = '';
   @Input() color = 'primary';
   @Input() iconLeft: string | undefined;
   @Input() iconRight: string | undefined;

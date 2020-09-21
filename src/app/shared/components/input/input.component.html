@@ -8,9 +8,7 @@
              [formControl]="control"
              [autocomplete]="autocomplete"
              [placeholder]="placeholder"
-             [attr.data-test]="testName"
-             (input)="onUserInput($event)"
-             (blur)="onBlur()"
+             [attr.data-test]="e2eTestName"
              [ngClass]="{
              'input__field--short': !!buttonText,
              'input__field--border-accent': color === 'accent' && (!errors || errors.length === 0),

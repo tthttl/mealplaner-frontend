@@ -34,7 +34,7 @@ export const actionsData = {
 export const buttonData = {
   text: 'Primary',
   isDisabled: false,
-  testName: 'buttonTest'
+  e2eTestName: 'buttonTest'
 };
 
 export const Default = () => ({
@@ -42,7 +42,7 @@ export const Default = () => ({
   props: {
     buttonText: buttonData.text,
     isDisabled: buttonData.isDisabled,
-    testName: buttonData.testName,
+    e2eTestName: buttonData.e2eTestName,
     clicked: actionsData.clicked
   }
 });
@@ -52,7 +52,7 @@ export const Accent = () => ({
   props: {
     buttonText: 'Accent',
     isDisabled: buttonData.isDisabled,
-    testName: buttonData.testName,
+    e2eTestName: buttonData.e2eTestName,
     clicked: actionsData.clicked,
     color: 'accent'
   }
@@ -63,7 +63,7 @@ export const Warning = () => ({
   props: {
     buttonText: 'Warning',
     isDisabled: buttonData.isDisabled,
-    testName: buttonData.testName,
+    e2eTestName: buttonData.e2eTestName,
     clicked: actionsData.clicked,
     color: 'warn'
   }
@@ -74,7 +74,7 @@ export const Disabled = () => ({
   props: {
     buttonText: 'Disabled',
     isDisabled: true,
-    testName: buttonData.testName,
+    e2eTestName: buttonData.e2eTestName,
     clicked: actionsData.clicked,
   }
 });
@@ -84,7 +84,7 @@ export const IconLeft = () => ({
   props: {
     buttonText: 'Add',
     isDisabled: buttonData.isDisabled,
-    testName: buttonData.testName,
+    e2eTestName: buttonData.e2eTestName,
     clicked: actionsData.clicked,
     iconLeft: 'plus'
   }
@@ -95,7 +95,7 @@ export const IconRight = () => ({
   props: {
     buttonText: 'Delete',
     isDisabled: buttonData.isDisabled,
-    testName: buttonData.testName,
+    e2eTestName: buttonData.e2eTestName,
     clicked: actionsData.clicked,
     iconRight: 'trash'
   }

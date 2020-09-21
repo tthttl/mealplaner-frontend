@@ -69,6 +69,6 @@ export const Register = () => ({
   props: {
     credentialsReceived: actionsData.credentialsReceived,
     translations: formData.translations,
-    isRegistration: true
+    buttonText: 'register'
   }
 });
