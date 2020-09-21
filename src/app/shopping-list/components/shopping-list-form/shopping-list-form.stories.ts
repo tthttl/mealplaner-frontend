@@ -48,6 +48,8 @@ export const taskData = {
     de: {
       'shoppingList.addForm.amount': 'Menge',
       'shoppingList.addForm.product': 'Zucker',
+      'shoppingList.addForm.piece': 'Stück',
+      'shoppingList.addForm.pack': 'Packung',
     }
   },
   currentLang: 'de'

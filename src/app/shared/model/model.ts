@@ -8,7 +8,7 @@ export interface Translations {
 
 export type Language = 'de' | 'en';
 
-export type Unit = 'kg' | 'g' | 'tableSpoon' | 'coffeeSpoon' | 'l' | 'dl' | 'ml' | 'pinch' | 'piece';
+export type Unit = 'kg' | 'g' | 'tableSpoon' | 'coffeeSpoon' | 'l' | 'dl' | 'ml' | 'pinch' | 'piece' | 'pack';
 
 export interface Ingredient {
   name: string;

@@ -5,7 +5,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ButtonComponent } from './components/button/button.component';
 import { InputComponent } from './components/input/input.component';
 import { SelectComponent } from './components/select/select.component';
-import { InputGroupComponent } from './components/input-group/input-group.component';
 
 
 @NgModule({
@@ -13,7 +12,6 @@ import { InputGroupComponent } from './components/input-group/input-group.compon
     ButtonComponent,
     InputComponent,
     SelectComponent,
-    InputGroupComponent
   ],
   imports: [
     CommonModule,
@@ -25,7 +23,6 @@ import { InputGroupComponent } from './components/input-group/input-group.compon
     ButtonComponent,
     InputComponent,
     SelectComponent,
-    InputGroupComponent
   ]
 })
 export class SharedModule {
