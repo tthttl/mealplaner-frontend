@@ -567,7 +567,7 @@
         },
         {
             "name": "ButtonComponent",
-            "id": "component-ButtonComponent-a537007c5e817fd30acd2081c48ba7f9",
+            "id": "component-ButtonComponent-53aab669e0374b36fec55d7e5e6e9c2a",
             "file": "src/app/shared/components/button/button.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -600,6 +600,16 @@
                     "line": 14
                 },
                 {
+                    "name": "e2eTestName",
+                    "defaultValue": "''",
+                    "line": 13
+                },
+                {
+                    "name": "hasErrors",
+                    "defaultValue": "false",
+                    "line": 18
+                },
+                {
                     "name": "iconLeft",
                     "line": 15,
                     "type": "string | undefined"
@@ -618,18 +628,13 @@
                     "name": "isInputGroup",
                     "defaultValue": "false",
                     "line": 17
-                },
-                {
-                    "name": "testName",
-                    "defaultValue": "''",
-                    "line": 13
                 }
             ],
             "outputsClass": [
                 {
                     "name": "clicked",
                     "defaultValue": "new EventEmitter<MouseEvent>()",
-                    "line": 18,
+                    "line": 19,
                     "type": "EventEmitter<MouseEvent>"
                 }
             ],
@@ -646,7 +651,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 20,
+                    "line": 21,
                     "jsdoctags": [
                         {
                             "name": "event",
@@ -663,20 +668,20 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, EventEmitter, Input, Output } from '@angular/core';\n\n@Component({\n  selector: 'app-button',\n  templateUrl: './button.component.html',\n  styleUrls: ['./button.component.scss']\n})\nexport class ButtonComponent {\n\n  @Input() buttonText = '';\n  @Input() buttonType = 'button';\n  @Input() isDisabled = false;\n  @Input() testName = '';\n  @Input() color = 'primary';\n  @Input() iconLeft: string | undefined;\n  @Input() iconRight: string | undefined;\n  @Input() isInputGroup = false;\n  @Output() clicked: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();\n\n  onClick(event: MouseEvent): void {\n    this.clicked.emit(event);\n  }\n\n}\n",
+            "sourceCode": "import { Component, EventEmitter, Input, Output } from '@angular/core';\n\n@Component({\n  selector: 'app-button',\n  templateUrl: './button.component.html',\n  styleUrls: ['./button.component.scss']\n})\nexport class ButtonComponent {\n\n  @Input() buttonText = '';\n  @Input() buttonType = 'button';\n  @Input() isDisabled = false;\n  @Input() e2eTestName = '';\n  @Input() color = 'primary';\n  @Input() iconLeft: string | undefined;\n  @Input() iconRight: string | undefined;\n  @Input() isInputGroup = false;\n  @Input() hasErrors = false;\n  @Output() clicked: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();\n\n  onClick(event: MouseEvent): void {\n    this.clicked.emit(event);\n  }\n\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": "@import \"../../../../styles/material_theme\";\n@import \"../../../../styles/settings/colors\";\n\n.button{\n  width: 100%;\n  height: 100%;\n  background-color: mat-color($mealplaner-app-primary);\n  border-radius: 4px;\n  border-style:none;\n  border-width:0;\n  box-sizing:border-box;\n  color:mat-color($mealplaner-app-primary, default-contrast);\n  cursor:pointer;\n  display:inline-block;\n  font-family:Roboto, sans-serif;\n  font-size:1rem;\n  font-stretch:100%;\n  font-style:normal;\n  font-weight:500;\n  line-height:2rem;\n  margin:0;\n  outline-style:none;\n  outline-width:0;\n  overflow:visible;\n  padding-left:1rem;\n  padding-right:1rem;\n  position:relative;\n  text-align:center;\n  vertical-align:baseline;\n  white-space:nowrap;\n  transition-duration: 0.2s;\n\n  &:hover{\n    background-color: mat-color($mealplaner-app-primary, 400);\n  }\n\n  &:active {\n    background-color: mat-color($mealplaner-app-primary, 700);\n  }\n\n  &--no-left-border-radius{\n    border-radius: 0 4px 4px 0;\n  }\n\n  &--color-accent{\n    background-color: mat-color($mealplaner-app-accent);\n    color:mat-color($mealplaner-app-accent, default-contrast);\n\n    &:hover{\n      background-color: mat-color($mealplaner-app-accent, 400);\n    }\n\n    &:active {\n      background-color: mat-color($mealplaner-app-accent, 700);\n    }\n  }\n\n  &--color-warning{\n    background-color: mat-color($mealplaner-app-warn);\n    color:mat-color($mealplaner-app-warn, default-contrast);\n\n    &:hover{\n      background-color: mat-color($mealplaner-app-warn, 400);\n    }\n\n    &:active {\n      background-color: mat-color($mealplaner-app-warn, 700);\n    }\n  }\n\n  &--color-disabled{\n    background-color: $blue-grey_50;\n\n    &:hover,\n    &:active{\n      background-color: $blue-grey_50;\n    }\n\n  }\n\n  .icon-left{\n    padding-right: 0.5rem;\n  }\n\n  .icon-right{\n    padding-left: 0.5rem;\n  }\n\n}\n",
+                    "data": "@import \"../../../../styles/material_theme\";\n@import \"../../../../styles/settings/colors\";\n\n.button{\n  width: 100%;\n  height: 100%;\n  background-color: $blue_70;\n  border-radius: 4px;\n  border-style:none;\n  border-width:0;\n  box-sizing:border-box;\n  color: $blue-grey_10;\n  cursor:pointer;\n  display:inline-block;\n  font-family:Roboto, sans-serif;\n  font-size:1rem;\n  font-stretch:100%;\n  font-style:normal;\n  font-weight:500;\n  line-height:2rem;\n  margin:0;\n  outline-style:none;\n  outline-width:0;\n  overflow:visible;\n  padding-left:1rem;\n  padding-right:1rem;\n  position:relative;\n  text-align:center;\n  vertical-align:baseline;\n  white-space:nowrap;\n  transition-duration: 0.2s;\n\n  &:hover{\n    background-color: $blue_60;\n  }\n\n  &:active {\n    background-color: $blue_80;\n  }\n\n  &--no-left-border-radius{\n    border-radius: 0 4px 4px 0;\n  }\n\n  &--color-accent{\n    background-color: $cyan_70;\n    color:$cyan_10;\n\n    &:hover{\n      background-color: $cyan_60;\n    }\n\n    &:active {\n      background-color: $cyan_80;\n    }\n  }\n\n  &--color-warning{\n    background-color: $red_70;\n    color: $red_10;\n\n    &:hover{\n      background-color: $red_60;\n    }\n\n    &:active {\n      background-color: $red_80;\n    }\n  }\n\n  &--color-disabled{\n    background-color: $blue-grey_50;\n    cursor: not-allowed;\n\n    &:hover,\n    &:active{\n      background-color: $blue-grey_50;\n    }\n\n  }\n\n  &--warning-border{\n    border: 2px solid $red_70;\n    border-left: none;\n  }\n\n  .icon-left{\n    padding-right: 0.5rem;\n  }\n\n  .icon-right{\n    padding-left: 0.5rem;\n  }\n\n}\n",
                     "styleUrl": "./button.component.scss"
                 }
             ],
             "stylesData": "",
-            "templateData": "<button\n  class=\"button\"\n  [disabled]=\"isDisabled\"\n  [attr.data-test]=\"testName\"\n  [type]=\"buttonType\"\n  (click)=\"onClick($event)\"\n  [ngClass]=\"{\n  'button--no-left-border-radius': isInputGroup,\n  'button--color-accent': color === 'accent' && !isDisabled,\n  'button--color-warning': color === 'warn' && !isDisabled,\n  'button--color-disabled': isDisabled\n  }\"\n>\n  <fa-icon *ngIf=\"iconLeft\"\n           [icon]=\"['fas', iconLeft]\"\n           class=\"icon-left\"\n  ></fa-icon>\n  {{buttonText}}\n  <fa-icon *ngIf=\"iconRight\"\n           [icon]=\"['fas', iconRight]\"\n           class=\"icon-right\"\n  ></fa-icon>\n</button>\n"
+            "templateData": "<button\n  class=\"button\"\n  [disabled]=\"isDisabled\"\n  [attr.data-test]=\"e2eTestName\"\n  [type]=\"buttonType\"\n  (click)=\"onClick($event)\"\n  [ngClass]=\"{\n  'button--no-left-border-radius': isInputGroup,\n  'button--color-accent': color === 'accent' && !isDisabled,\n  'button--color-warning': color === 'warn' && !isDisabled,\n  'button--color-disabled': isDisabled,\n  'button--warning-border': isInputGroup && hasErrors\n  }\"\n>\n  <fa-icon *ngIf=\"iconLeft\"\n           [icon]=\"['fas', iconLeft]\"\n           class=\"icon-left\"\n  ></fa-icon>\n  {{buttonText}}\n  <fa-icon *ngIf=\"iconRight\"\n           [icon]=\"['fas', iconRight]\"\n           class=\"icon-right\"\n  ></fa-icon>\n</button>\n"
         },
         {
             "name": "InputComponent",
-            "id": "component-InputComponent-349ba9f931b24379f0ce0de6138310db",
+            "id": "component-InputComponent-def402cff7a8ba1d166a9c9d72b664a1",
             "file": "src/app/shared/components/input/input.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -719,15 +724,20 @@
                     "line": 15
                 },
                 {
+                    "name": "control",
+                    "line": 18,
+                    "type": "FormControl | undefined"
+                },
+                {
+                    "name": "e2eTestName",
+                    "defaultValue": "''",
+                    "line": 25
+                },
+                {
                     "name": "errors",
                     "defaultValue": "[]",
                     "line": 21,
                     "type": "string[]"
-                },
-                {
-                    "name": "formControl",
-                    "line": 18,
-                    "type": "FormControl | undefined"
                 },
                 {
                     "name": "iconLeft",
@@ -750,11 +760,6 @@
                     "line": 24
                 },
                 {
-                    "name": "testName",
-                    "defaultValue": "''",
-                    "line": 25
-                },
-                {
                     "name": "type",
                     "defaultValue": "'text'",
                     "line": 19
@@ -764,20 +769,8 @@
                 {
                     "name": "clicked",
                     "defaultValue": "new EventEmitter<MouseEvent>()",
-                    "line": 28,
-                    "type": "EventEmitter<MouseEvent>"
-                },
-                {
-                    "name": "fieldLeft",
-                    "defaultValue": "new EventEmitter<void>()",
-                    "line": 27,
-                    "type": "EventEmitter<void>"
-                },
-                {
-                    "name": "inputChanged",
-                    "defaultValue": "new EventEmitter<Event>()",
                     "line": 26,
-                    "type": "EventEmitter<Event>"
+                    "type": "EventEmitter<MouseEvent>"
                 }
             ],
             "propertiesClass": [
@@ -787,18 +780,10 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 30
+                    "line": 28
                 }
             ],
             "methodsClass": [
-                {
-                    "name": "onBlur",
-                    "args": [],
-                    "optional": false,
-                    "returnType": "void",
-                    "typeParameters": [],
-                    "line": 36
-                },
                 {
                     "name": "onClicked",
                     "args": [
@@ -810,33 +795,11 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 40,
+                    "line": 30,
                     "jsdoctags": [
                         {
                             "name": "event",
                             "type": "MouseEvent",
-                            "tagName": {
-                                "text": "param"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "name": "onUserInput",
-                    "args": [
-                        {
-                            "name": "event",
-                            "type": "Event"
-                        }
-                    ],
-                    "optional": false,
-                    "returnType": "void",
-                    "typeParameters": [],
-                    "line": 32,
-                    "jsdoctags": [
-                        {
-                            "name": "event",
-                            "type": "Event",
                             "tagName": {
                                 "text": "param"
                             }
@@ -849,20 +812,20 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, EventEmitter, Input, Output } from '@angular/core';\nimport { FormControl } from '@angular/forms';\nimport { v4 as uuid } from 'uuid';\n\n@Component({\n  selector: 'app-input',\n  templateUrl: './input.component.html',\n  styleUrls: ['./input.component.scss']\n})\nexport class InputComponent {\n\n  @Input() buttonText = '';\n  @Input() buttonType = 'button';\n  @Input() buttonTestName = '';\n  @Input() color = 'primary';\n  @Input() iconLeft: string | undefined;\n\n  @Input() formControl: FormControl | undefined;\n  @Input() type = 'text';\n  @Input() label: string | undefined;\n  @Input() errors: string[] = [];\n  @Input() isDisabled = false;\n  @Input() autocomplete = 'on';\n  @Input() placeholder = '';\n  @Input() testName = '';\n  @Output() inputChanged: EventEmitter<Event> = new EventEmitter<Event>();\n  @Output() fieldLeft: EventEmitter<void> = new EventEmitter<void>();\n  @Output() clicked: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();\n\n  inputId: string = uuid();\n\n  onUserInput(event: Event): void {\n    this.inputChanged.emit(event);\n  }\n\n  onBlur(): void {\n    this.fieldLeft.emit();\n  }\n\n  onClicked(event: MouseEvent): void {\n    this.clicked.emit(event);\n  }\n\n\n}\n",
+            "sourceCode": "import { Component, EventEmitter, Input, Output } from '@angular/core';\nimport { FormControl } from '@angular/forms';\nimport { v4 as uuid } from 'uuid';\n\n@Component({\n  selector: 'app-input',\n  templateUrl: './input.component.html',\n  styleUrls: ['./input.component.scss']\n})\nexport class InputComponent {\n\n  @Input() buttonText = '';\n  @Input() buttonType = 'button';\n  @Input() buttonTestName = '';\n  @Input() color = 'primary';\n  @Input() iconLeft: string | undefined;\n\n  @Input() control: FormControl | undefined;\n  @Input() type = 'text';\n  @Input() label: string | undefined;\n  @Input() errors: string[] = [];\n  @Input() isDisabled = false;\n  @Input() autocomplete = 'on';\n  @Input() placeholder = '';\n  @Input() e2eTestName = '';\n  @Output() clicked: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();\n\n  inputId: string = uuid();\n\n  onClicked(event: MouseEvent): void {\n    this.clicked.emit(event);\n  }\n\n\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": "@import \"../../../../styles/settings/colors\";\n@import \"../../../../styles/material_theme\";\n\n.input-group {\n  background-color: $blue_20;\n  display: flex;\n  justify-content: center;\n  font-family: 'Roboto', sans-serif;\n\n  .input {\n    width: 95%;\n    display: flex;\n    flex-direction: column;\n    margin: 1rem 2rem 1rem 1rem;\n\n    .field-wrapper {\n      display: flex;\n      flex-direction: row;\n      justify-content: flex-start;\n    }\n\n    &__label {\n      color: $blue-grey_80;\n    }\n\n    &__field {\n      width: 100%;\n      line-height: 2.5;\n      margin: 1rem 0;\n      border-radius: 4px;\n      border: 2px solid mat-color($mealplaner-app-primary);\n      padding-left: 0.5rem;\n\n      &:focus {\n        outline: none;\n      }\n\n      &--border-warning {\n        border: 2px solid mat-color($mealplaner-app-warn);\n      }\n\n      &--border-accent {\n        border: 2px solid mat-color($mealplaner-app-accent);\n      }\n\n      &--short {\n        border-right: none;\n        border-radius: 4px 0 0 4px;\n      }\n\n    }\n\n    &__button {\n      flex: 0 0 20%;\n      margin: 1rem 0;\n      border-radius: 0 4px 4px 0;\n    }\n\n    &__error {\n      color: $blue-grey_10;\n      background-color: $blue-grey_40;\n      border-radius: 5px;\n      padding: 0.5rem;\n      font-size: small;\n      font-weight: bold;\n      margin-right: 0.5rem;\n      margin-bottom: 0.5rem;\n    }\n\n    .error-wrapper {\n      display: flex;\n      flex-wrap: wrap;\n    }\n\n  }\n\n}\n",
+                    "data": "@import \"../../../../styles/settings/colors\";\n@import \"../../../../styles/material_theme\";\n\n.input-group {\n  display: flex;\n  justify-content: center;\n  font-family: 'Roboto', sans-serif;\n  margin-bottom: 0.5rem;\n\n  .input {\n    width: 100%;\n    display: flex;\n    flex-direction: column;\n\n    .field-wrapper {\n      display: flex;\n      flex-direction: row;\n      justify-content: flex-start;\n    }\n\n    &__label {\n      color: $blue-grey_80;\n      padding-bottom: 0.5rem;\n    }\n\n    &__field {\n      width: 100%;\n      border-radius: 4px;\n      border: 2px solid $blue_70;\n      padding: 0.5rem;\n\n      &:focus {\n        outline: none;\n      }\n\n      &--border-warning {\n        border: 2px solid $red_70;\n      }\n\n      &--border-accent {\n        border: 2px solid $cyan_70;\n      }\n\n      &--short {\n        border-right: none;\n        border-radius: 4px 0 0 4px;\n      }\n\n    }\n\n    &__button {\n      flex: 0 0 20%;\n      border-radius: 0 4px 4px 0;\n    }\n\n    &__error {\n      color: $red_20;\n      background-color: $red_70;\n      border-radius: 5px;\n      padding: 0.5rem;\n      font-size: small;\n      font-weight: bold;\n      margin: 0.5rem 0;\n    }\n\n  }\n\n}\n",
                     "styleUrl": "./input.component.scss"
                 }
             ],
             "stylesData": "",
-            "templateData": "<div class=\"input-group\">\n  <div class=\"input\">\n    <label class=\"input__label\" *ngIf=\"label\" [for]=\"inputId\">{{label}}</label>\n    <div class=\"field-wrapper\">\n      <input class=\"input__field\"\n             [type]=\"type\"\n             [id]=\"inputId\"\n             [formControl]=\"formControl\"\n             [autocomplete]=\"autocomplete\"\n             [placeholder]=\"placeholder\"\n             [attr.data-test]=\"testName\"\n             (input)=\"onUserInput($event)\"\n             (blur)=\"onBlur()\"\n             [ngClass]=\"{\n             'input__field--short': !!buttonText,\n             'input__field--border-accent': color === 'accent' && (!errors || errors.length === 0),\n             'input__field--border-warning': errors && errors.length > 0\n             }\"\n      >\n      <app-button class=\"input__button\"\n                  *ngIf=\"!!buttonText\"\n                  [buttonText]=\"buttonText\"\n                  [buttonType]=\"buttonType\"\n                  [attr.data-test]=\"buttonTestName\"\n                  [isDisabled]=\"isDisabled\"\n                  [isInputGroup]=\"true\"\n                  [color]=\"color\"\n                  (clicked)=\"onClicked($event)\"\n      ></app-button>\n    </div>\n    <div class=\"error-wrapper\">\n      <span class=\"input__error\" *ngFor=\"let error of errors\">{{error}}</span>\n    </div>\n  </div>\n</div>\n\n"
+            "templateData": "<div class=\"input-group\">\n  <div class=\"input\">\n    <label class=\"input__label\" *ngIf=\"label\" [for]=\"inputId\">{{label}}</label>\n    <div class=\"field-wrapper\">\n      <input class=\"input__field\"\n             [type]=\"type\"\n             [id]=\"inputId\"\n             [formControl]=\"control\"\n             [autocomplete]=\"autocomplete\"\n             [placeholder]=\"placeholder\"\n             [attr.data-test]=\"e2eTestName\"\n             [ngClass]=\"{\n             'input__field--short': !!buttonText,\n             'input__field--border-accent': color === 'accent' && (!errors || errors.length === 0),\n             'input__field--border-warning': errors && errors.length > 0\n             }\"\n      >\n      <app-button class=\"input__button\"\n                  *ngIf=\"!!buttonText\"\n                  [buttonText]=\"buttonText\"\n                  [buttonType]=\"buttonType\"\n                  [attr.data-test]=\"buttonTestName\"\n                  [isDisabled]=\"isDisabled\"\n                  [isInputGroup]=\"true\"\n                  [color]=\"color\"\n                  [hasErrors]=\"errors && errors.length > 0\"\n                  (clicked)=\"onClicked($event)\"\n      ></app-button>\n    </div>\n    <div>\n      <div class=\"input__error\" *ngFor=\"let error of errors\">{{error}}</div>\n    </div>\n  </div>\n</div>\n\n"
         },
         {
             "name": "LoginFormComponent",
-            "id": "component-LoginFormComponent-a82af058baef740da0d0a2823dafbfd6",
+            "id": "component-LoginFormComponent-40899dec6e0722b6a55de933999efe54",
             "file": "src/app/login/components/login-form/login-form.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -880,15 +843,15 @@
             "viewProviders": [],
             "inputsClass": [
                 {
+                    "name": "buttonText",
+                    "defaultValue": "'login'",
+                    "line": 15
+                },
+                {
                     "name": "currentLang",
                     "defaultValue": "DEFAULT_LANGAUGE",
                     "line": 17,
                     "type": "Language"
-                },
-                {
-                    "name": "isRegistration",
-                    "defaultValue": "false",
-                    "line": 15
                 },
                 {
                     "name": "translations",
@@ -908,7 +871,7 @@
             "propertiesClass": [
                 {
                     "name": "loginForm",
-                    "type": "FormGroup | undefined",
+                    "type": "FormGroup",
                     "optional": false,
                     "description": "",
                     "line": 21
@@ -926,7 +889,7 @@
                     "optional": false,
                     "returnType": "string[]",
                     "typeParameters": [],
-                    "line": 48,
+                    "line": 44,
                     "jsdoctags": [
                         {
                             "name": "key",
@@ -948,7 +911,7 @@
                     "optional": false,
                     "returnType": "FormControl",
                     "typeParameters": [],
-                    "line": 40,
+                    "line": 36,
                     "jsdoctags": [
                         {
                             "name": "key",
@@ -960,20 +923,12 @@
                     ]
                 },
                 {
-                    "name": "ngOnInit",
-                    "args": [],
-                    "optional": false,
-                    "returnType": "void",
-                    "typeParameters": [],
-                    "line": 26
-                },
-                {
                     "name": "onSubmit",
                     "args": [],
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 44
+                    "line": 40
                 }
             ],
             "hostBindings": [],
@@ -981,11 +936,11 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';\nimport { FormControl, FormGroup, Validators } from '@angular/forms';\nimport { TranslatePipe } from '../../../i18n/pipes/translate.pipe';\nimport { DEFAULT_LANGAUGE } from '../../../shared/helpers/constants';\nimport { translateValidationErrors } from '../../../shared/helpers/helpers';\nimport { I18n, Language } from '../../../shared/model/model';\n\n@Component({\n  selector: 'app-login-form',\n  templateUrl: './login-form.component.html',\n  styleUrls: ['./login-form.component.scss']\n})\nexport class LoginFormComponent implements OnInit {\n\n  @Input() isRegistration = false;\n  @Input() translations: I18n = {};\n  @Input() currentLang: Language = DEFAULT_LANGAUGE;\n  @Output() credentialsReceived: EventEmitter<{ email: string, password: string }> =\n    new EventEmitter<{ email: string; password: string }>();\n\n  loginForm: FormGroup | undefined;\n\n  constructor(private translatePipe: TranslatePipe) {\n  }\n\n  ngOnInit(): void {\n    this.loginForm = new FormGroup({\n      email: new FormControl('', [\n        Validators.required,\n        Validators.pattern(/^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$/)\n      ]),\n      password: new FormControl('', [\n        Validators.required,\n        Validators.minLength(4),\n        Validators.pattern(/^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{4,}$/g)\n      ])\n    });\n  }\n\n  getFormControl(key: string): FormControl {\n    return this.loginForm?.controls[key] as FormControl;\n  }\n\n  onSubmit(): void {\n    this.credentialsReceived.emit(this.loginForm?.value);\n  }\n\n  getErrorsFor(key: string): string[] {\n    const formControl = this.getFormControl(key);\n    if (formControl.invalid && formControl.errors &&\n      (formControl.touched || formControl.dirty)) {\n      return translateValidationErrors(\n        formControl.errors,\n        this.translatePipe,\n        this.translations,\n        this.currentLang,\n        key);\n    }\n    return [];\n  }\n\n}\n",
+            "sourceCode": "import { Component, EventEmitter, Input, Output } from '@angular/core';\nimport { FormControl, FormGroup, Validators } from '@angular/forms';\nimport { TranslatePipe } from '../../../i18n/pipes/translate.pipe';\nimport { DEFAULT_LANGAUGE, EMAIL_PATTERN } from '../../../shared/helpers/constants';\nimport { translateValidationErrors } from '../../../shared/helpers/helpers';\nimport { I18n, Language } from '../../../shared/model/model';\n\n@Component({\n  selector: 'app-login-form',\n  templateUrl: './login-form.component.html',\n  styleUrls: ['./login-form.component.scss']\n})\nexport class LoginFormComponent {\n\n  @Input() buttonText = 'login';\n  @Input() translations: I18n = {};\n  @Input() currentLang: Language = DEFAULT_LANGAUGE;\n  @Output() credentialsReceived: EventEmitter<{ email: string, password: string }> =\n    new EventEmitter<{ email: string; password: string }>();\n\n  loginForm: FormGroup;\n\n  constructor(private translatePipe: TranslatePipe) {\n    this.loginForm = new FormGroup({\n      email: new FormControl('', [\n        Validators.required,\n        Validators.pattern(EMAIL_PATTERN)\n      ]),\n      password: new FormControl('', [\n        Validators.required,\n        Validators.minLength(4)\n      ])\n    });\n  }\n\n  getFormControl(key: string): FormControl {\n    return this.loginForm?.controls[key] as FormControl;\n  }\n\n  onSubmit(): void {\n    this.credentialsReceived.emit(this.loginForm?.value);\n  }\n\n  getErrorsFor(key: string): string[] {\n    return translateValidationErrors(\n      this.getFormControl(key),\n      this.translatePipe,\n      this.translations,\n      this.currentLang,\n      key);\n  }\n\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": "@import \"../../../../styles/settings/colors\";\n\n.form-wrapper{\n  padding: 1rem;\n  border: 1px solid $blue_80;\n  border-radius: 4px;\n}\n",
+                    "data": "@import \"../../../../styles/settings/colors\";\n\n.form-wrapper{\n  padding: 1rem;\n  border: 1px solid $blue_80;\n  border-radius: 4px;\n\n  .form-button{\n    display: block;\n    margin-top: 1rem;\n  }\n}\n",
                     "styleUrl": "./login-form.component.scss"
                 }
             ],
@@ -1010,10 +965,7 @@
                     }
                 ]
             },
-            "implements": [
-                "OnInit"
-            ],
-            "templateData": "<div class=\"form-wrapper\">\n  <form [formGroup]=\"loginForm\" (ngSubmit)=\"onSubmit()\">\n    <app-input\n      ngDefaultControl\n      [formControl]=\"getFormControl('email')\"\n      [type]=\"'email'\"\n      [autocomplete]=\"'email'\"\n      [placeholder]=\"'peter.muster@gmail.com'\"\n      [label]=\"'email' | translate:translations:currentLang\"\n      [errors]=\"getErrorsFor('email')\"\n    ></app-input>\n    <app-input\n      ngDefaultControl\n      [formControl]=\"getFormControl('password')\"\n      [type]=\"'password'\"\n      [autocomplete]=\"isRegistration ? 'new-password' : 'current-password'\"\n      [label]=\"'password' | translate:translations:currentLang\"\n      [buttonText]=\"(isRegistration ? 'register' : 'login') | translate:translations:currentLang\"\n      [buttonType]=\"'submit'\"\n      [isDisabled]=\"!loginForm.valid\"\n      [errors]=\" getErrorsFor('password')\"\n    ></app-input>\n  </form>\n</div>\n"
+            "templateData": "<div class=\"form-wrapper\">\n  <form [formGroup]=\"loginForm\" (ngSubmit)=\"onSubmit()\">\n    <app-input\n      [control]=\"getFormControl('email')\"\n      [type]=\"'email'\"\n      [autocomplete]=\"'email'\"\n      [placeholder]=\"'Email'\"\n      [label]=\"'email' | translate:translations:currentLang\"\n      [errors]=\"getErrorsFor('email')\"\n    ></app-input>\n    <app-input\n      [control]=\"getFormControl('password')\"\n      [type]=\"'password'\"\n      [autocomplete]=\"buttonText==='login' ? 'current-password' : 'new-password'\"\n      [label]=\"'password' | translate:translations:currentLang\"\n      [errors]=\" getErrorsFor('password')\"\n    ></app-input>\n    <app-button class=\"form-button\"\n      [buttonText]=\"buttonText | translate:translations:currentLang\"\n      [buttonType]=\"'submit'\"\n      [isDisabled]=\"!loginForm.valid\"\n    >\n    </app-button>\n  </form>\n</div>\n"
         },
         {
             "name": "ShoppingListComponent",
@@ -1404,15 +1356,15 @@
                 "subtype": "variable",
                 "file": "src/app/shared/components/button/button.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Accent',\n    isDisabled: buttonData.isDisabled,\n    testName: buttonData.testName,\n    clicked: actionsData.clicked,\n    color: 'accent'\n  }\n})"
+                "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Accent',\n    isDisabled: buttonData.isDisabled,\n    e2eTestName: buttonData.e2eTestName,\n    clicked: actionsData.clicked,\n    color: 'accent'\n  }\n})"
             },
             {
                 "name": "actionsData",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/input/input.stories.ts",
+                "file": "src/app/shared/components/button/button.stories.ts",
                 "type": "object",
-                "defaultValue": "{\n  clicked: action('clicked'),\n  inputChanged: action('inputChanged'),\n  fieldLeft: action('fieldLeft')\n}"
+                "defaultValue": "{\n  clicked: action('clicked')\n}"
             },
             {
                 "name": "actionsData",
@@ -1426,9 +1378,9 @@
                 "name": "actionsData",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/button/button.stories.ts",
+                "file": "src/app/shared/components/input/input.stories.ts",
                 "type": "object",
-                "defaultValue": "{\n  clicked: action('clicked')\n}"
+                "defaultValue": "{\n  clicked: action('clicked'),\n}"
             },
             {
                 "name": "actionsData",
@@ -1452,7 +1404,7 @@
                 "subtype": "variable",
                 "file": "src/app/shared/components/button/button.stories.ts",
                 "type": "object",
-                "defaultValue": "{\n  text: 'Primary',\n  isDisabled: false,\n  testName: 'buttonTest'\n}"
+                "defaultValue": "{\n  text: 'Primary',\n  isDisabled: false,\n  e2eTestName: 'buttonTest'\n}"
             },
             {
                 "name": "context",
@@ -1476,7 +1428,7 @@
                 "subtype": "variable",
                 "file": "src/app/shared/components/input/input.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: '',\n    errors: [],\n    inputChanged: actionsData.inputChanged,\n    fieldLeft: actionsData.fieldLeft\n  }\n})"
+                "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: '',\n    errors: []\n  }\n})"
             },
             {
                 "name": "Default",
@@ -1484,7 +1436,7 @@
                 "subtype": "variable",
                 "file": "src/app/shared/components/button/button.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: buttonData.text,\n    isDisabled: buttonData.isDisabled,\n    testName: buttonData.testName,\n    clicked: actionsData.clicked\n  }\n})"
+                "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: buttonData.text,\n    isDisabled: buttonData.isDisabled,\n    e2eTestName: buttonData.e2eTestName,\n    clicked: actionsData.clicked\n  }\n})"
             },
             {
                 "name": "DEFAULT_LANGAUGE",
@@ -1500,7 +1452,15 @@
                 "subtype": "variable",
                 "file": "src/app/shared/components/button/button.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Disabled',\n    isDisabled: true,\n    testName: buttonData.testName,\n    clicked: actionsData.clicked,\n  }\n})"
+                "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Disabled',\n    isDisabled: true,\n    e2eTestName: buttonData.e2eTestName,\n    clicked: actionsData.clicked,\n  }\n})"
+            },
+            {
+                "name": "EMAIL_PATTERN",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/helpers/constants.ts",
+                "type": "",
+                "defaultValue": "/^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$/"
             },
             {
                 "name": "environment",
@@ -1564,7 +1524,7 @@
                 "subtype": "variable",
                 "file": "src/app/shared/components/button/button.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Add',\n    isDisabled: buttonData.isDisabled,\n    testName: buttonData.testName,\n    clicked: actionsData.clicked,\n    iconLeft: 'plus'\n  }\n})"
+                "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Add',\n    isDisabled: buttonData.isDisabled,\n    e2eTestName: buttonData.e2eTestName,\n    clicked: actionsData.clicked,\n    iconLeft: 'plus'\n  }\n})"
             },
             {
                 "name": "IconRight",
@@ -1572,7 +1532,7 @@
                 "subtype": "variable",
                 "file": "src/app/shared/components/button/button.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Delete',\n    isDisabled: buttonData.isDisabled,\n    testName: buttonData.testName,\n    clicked: actionsData.clicked,\n    iconRight: 'trash'\n  }\n})"
+                "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Delete',\n    isDisabled: buttonData.isDisabled,\n    e2eTestName: buttonData.e2eTestName,\n    clicked: actionsData.clicked,\n    iconRight: 'trash'\n  }\n})"
             },
             {
                 "name": "initialAppState",
@@ -1596,7 +1556,7 @@
                 "subtype": "variable",
                 "file": "src/app/shared/components/input/input.stories.ts",
                 "type": "object",
-                "defaultValue": "{\n  isDisabled: false,\n  testName: 'test',\n  label: 'Label',\n  errors: ['Ooops!', 'An error has occured!'],\n  placeholder: 'Placeholder',\n  formControl: createFormControl()\n}"
+                "defaultValue": "{\n  isDisabled: false,\n  e2eTestName: 'test',\n  label: 'Label',\n  errors: ['Ooops!', 'An error has occured!'],\n  placeholder: 'Placeholder',\n  formControl: createFormControl()\n}"
             },
             {
                 "name": "Login",
@@ -1628,7 +1588,7 @@
                 "subtype": "variable",
                 "file": "src/app/login/components/login-form/login-form.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: LoginFormComponent,\n  props: {\n    credentialsReceived: actionsData.credentialsReceived,\n    translations: formData.translations,\n    isRegistration: true\n  }\n})"
+                "defaultValue": "() => ({\n  component: LoginFormComponent,\n  props: {\n    credentialsReceived: actionsData.credentialsReceived,\n    translations: formData.translations,\n    buttonText: 'register'\n  }\n})"
             },
             {
                 "name": "require",
@@ -1675,7 +1635,7 @@
                 "subtype": "variable",
                 "file": "src/app/shared/components/button/button.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Warning',\n    isDisabled: buttonData.isDisabled,\n    testName: buttonData.testName,\n    clicked: actionsData.clicked,\n    color: 'warn'\n  }\n})"
+                "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Warning',\n    isDisabled: buttonData.isDisabled,\n    e2eTestName: buttonData.e2eTestName,\n    clicked: actionsData.clicked,\n    color: 'warn'\n  }\n})"
             },
             {
                 "name": "WithAccentButton",
@@ -1683,7 +1643,7 @@
                 "subtype": "variable",
                 "file": "src/app/shared/components/input/input.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: '',\n    buttonText: 'Click',\n    errors: [],\n    color: 'accent',\n    clicked: actionsData.clicked,\n    inputChanged: actionsData.inputChanged,\n    fieldLeft: actionsData.fieldLeft\n  }\n})"
+                "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: '',\n    buttonText: 'Click',\n    errors: [],\n    color: 'accent',\n    clicked: actionsData.clicked\n  }\n})"
             },
             {
                 "name": "WithButtonAndError",
@@ -1691,7 +1651,7 @@
                 "subtype": "variable",
                 "file": "src/app/shared/components/input/input.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: '',\n    buttonText: 'Click',\n    errors: ['Ooops!', 'An error has occured!'],\n    color: 'accent',\n    clicked: actionsData.clicked,\n    inputChanged: actionsData.inputChanged,\n    fieldLeft: actionsData.fieldLeft\n  }\n})"
+                "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: '',\n    buttonText: 'Click',\n    errors: ['Ooops!', 'An error has occured!'],\n    color: 'accent',\n    clicked: actionsData.clicked\n  }\n})"
             },
             {
                 "name": "WithError",
@@ -1699,7 +1659,7 @@
                 "subtype": "variable",
                 "file": "src/app/shared/components/input/input.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: '',\n    inputChanged: actionsData.inputChanged,\n    fieldLeft: actionsData.fieldLeft\n  }\n})"
+                "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: ''\n  }\n})"
             },
             {
                 "name": "WithoutLabel",
@@ -1707,7 +1667,7 @@
                 "subtype": "variable",
                 "file": "src/app/shared/components/input/input.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    label: '',\n    errors: [],\n    inputChanged: actionsData.inputChanged,\n    fieldLeft: actionsData.fieldLeft\n  }\n})"
+                "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    label: '',\n    errors: []\n  }\n})"
             },
             {
                 "name": "WithPrimaryButton",
@@ -1715,7 +1675,7 @@
                 "subtype": "variable",
                 "file": "src/app/shared/components/input/input.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: '',\n    buttonText: 'Click',\n    errors: [],\n    clicked: actionsData.clicked,\n    inputChanged: actionsData.inputChanged,\n    fieldLeft: actionsData.fieldLeft\n  }\n})"
+                "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: '',\n    buttonText: 'Click',\n    errors: [],\n    clicked: actionsData.clicked\n  }\n})"
             }
         ],
         "functions": [
@@ -1757,7 +1717,7 @@
                 "description": "",
                 "args": [
                     {
-                        "name": "errors"
+                        "name": "formControl"
                     },
                     {
                         "name": "translatePipe"
@@ -1775,7 +1735,7 @@
                 "returnType": "string[]",
                 "jsdoctags": [
                     {
-                        "name": "errors",
+                        "name": "formControl",
                         "tagName": {
                             "text": "param"
                         }
@@ -1854,7 +1814,7 @@
                     "subtype": "variable",
                     "file": "src/app/shared/components/button/button.stories.ts",
                     "type": "",
-                    "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Accent',\n    isDisabled: buttonData.isDisabled,\n    testName: buttonData.testName,\n    clicked: actionsData.clicked,\n    color: 'accent'\n  }\n})"
+                    "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Accent',\n    isDisabled: buttonData.isDisabled,\n    e2eTestName: buttonData.e2eTestName,\n    clicked: actionsData.clicked,\n    color: 'accent'\n  }\n})"
                 },
                 {
                     "name": "actionsData",
@@ -1870,7 +1830,7 @@
                     "subtype": "variable",
                     "file": "src/app/shared/components/button/button.stories.ts",
                     "type": "object",
-                    "defaultValue": "{\n  text: 'Primary',\n  isDisabled: false,\n  testName: 'buttonTest'\n}"
+                    "defaultValue": "{\n  text: 'Primary',\n  isDisabled: false,\n  e2eTestName: 'buttonTest'\n}"
                 },
                 {
                     "name": "Default",
@@ -1878,7 +1838,7 @@
                     "subtype": "variable",
                     "file": "src/app/shared/components/button/button.stories.ts",
                     "type": "",
-                    "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: buttonData.text,\n    isDisabled: buttonData.isDisabled,\n    testName: buttonData.testName,\n    clicked: actionsData.clicked\n  }\n})"
+                    "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: buttonData.text,\n    isDisabled: buttonData.isDisabled,\n    e2eTestName: buttonData.e2eTestName,\n    clicked: actionsData.clicked\n  }\n})"
                 },
                 {
                     "name": "Disabled",
@@ -1886,7 +1846,7 @@
                     "subtype": "variable",
                     "file": "src/app/shared/components/button/button.stories.ts",
                     "type": "",
-                    "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Disabled',\n    isDisabled: true,\n    testName: buttonData.testName,\n    clicked: actionsData.clicked,\n  }\n})"
+                    "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Disabled',\n    isDisabled: true,\n    e2eTestName: buttonData.e2eTestName,\n    clicked: actionsData.clicked,\n  }\n})"
                 },
                 {
                     "name": "IconLeft",
@@ -1894,7 +1854,7 @@
                     "subtype": "variable",
                     "file": "src/app/shared/components/button/button.stories.ts",
                     "type": "",
-                    "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Add',\n    isDisabled: buttonData.isDisabled,\n    testName: buttonData.testName,\n    clicked: actionsData.clicked,\n    iconLeft: 'plus'\n  }\n})"
+                    "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Add',\n    isDisabled: buttonData.isDisabled,\n    e2eTestName: buttonData.e2eTestName,\n    clicked: actionsData.clicked,\n    iconLeft: 'plus'\n  }\n})"
                 },
                 {
                     "name": "IconRight",
@@ -1902,7 +1862,7 @@
                     "subtype": "variable",
                     "file": "src/app/shared/components/button/button.stories.ts",
                     "type": "",
-                    "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Delete',\n    isDisabled: buttonData.isDisabled,\n    testName: buttonData.testName,\n    clicked: actionsData.clicked,\n    iconRight: 'trash'\n  }\n})"
+                    "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Delete',\n    isDisabled: buttonData.isDisabled,\n    e2eTestName: buttonData.e2eTestName,\n    clicked: actionsData.clicked,\n    iconRight: 'trash'\n  }\n})"
                 },
                 {
                     "name": "Warning",
@@ -1910,73 +1870,7 @@
                     "subtype": "variable",
                     "file": "src/app/shared/components/button/button.stories.ts",
                     "type": "",
-                    "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Warning',\n    isDisabled: buttonData.isDisabled,\n    testName: buttonData.testName,\n    clicked: actionsData.clicked,\n    color: 'warn'\n  }\n})"
-                }
-            ],
-            "src/app/shared/components/input/input.stories.ts": [
-                {
-                    "name": "actionsData",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/input/input.stories.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  clicked: action('clicked'),\n  inputChanged: action('inputChanged'),\n  fieldLeft: action('fieldLeft')\n}"
-                },
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/input/input.stories.ts",
-                    "type": "",
-                    "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: '',\n    errors: [],\n    inputChanged: actionsData.inputChanged,\n    fieldLeft: actionsData.fieldLeft\n  }\n})"
-                },
-                {
-                    "name": "inputData",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/input/input.stories.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  isDisabled: false,\n  testName: 'test',\n  label: 'Label',\n  errors: ['Ooops!', 'An error has occured!'],\n  placeholder: 'Placeholder',\n  formControl: createFormControl()\n}"
-                },
-                {
-                    "name": "WithAccentButton",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/input/input.stories.ts",
-                    "type": "",
-                    "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: '',\n    buttonText: 'Click',\n    errors: [],\n    color: 'accent',\n    clicked: actionsData.clicked,\n    inputChanged: actionsData.inputChanged,\n    fieldLeft: actionsData.fieldLeft\n  }\n})"
-                },
-                {
-                    "name": "WithButtonAndError",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/input/input.stories.ts",
-                    "type": "",
-                    "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: '',\n    buttonText: 'Click',\n    errors: ['Ooops!', 'An error has occured!'],\n    color: 'accent',\n    clicked: actionsData.clicked,\n    inputChanged: actionsData.inputChanged,\n    fieldLeft: actionsData.fieldLeft\n  }\n})"
-                },
-                {
-                    "name": "WithError",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/input/input.stories.ts",
-                    "type": "",
-                    "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: '',\n    inputChanged: actionsData.inputChanged,\n    fieldLeft: actionsData.fieldLeft\n  }\n})"
-                },
-                {
-                    "name": "WithoutLabel",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/input/input.stories.ts",
-                    "type": "",
-                    "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    label: '',\n    errors: [],\n    inputChanged: actionsData.inputChanged,\n    fieldLeft: actionsData.fieldLeft\n  }\n})"
-                },
-                {
-                    "name": "WithPrimaryButton",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/input/input.stories.ts",
-                    "type": "",
-                    "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: '',\n    buttonText: 'Click',\n    errors: [],\n    clicked: actionsData.clicked,\n    inputChanged: actionsData.inputChanged,\n    fieldLeft: actionsData.fieldLeft\n  }\n})"
+                    "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Warning',\n    isDisabled: buttonData.isDisabled,\n    e2eTestName: buttonData.e2eTestName,\n    clicked: actionsData.clicked,\n    color: 'warn'\n  }\n})"
                 }
             ],
             "src/app/login/components/login-form/login-form.stories.ts": [
@@ -2010,7 +1904,73 @@
                     "subtype": "variable",
                     "file": "src/app/login/components/login-form/login-form.stories.ts",
                     "type": "",
-                    "defaultValue": "() => ({\n  component: LoginFormComponent,\n  props: {\n    credentialsReceived: actionsData.credentialsReceived,\n    translations: formData.translations,\n    isRegistration: true\n  }\n})"
+                    "defaultValue": "() => ({\n  component: LoginFormComponent,\n  props: {\n    credentialsReceived: actionsData.credentialsReceived,\n    translations: formData.translations,\n    buttonText: 'register'\n  }\n})"
+                }
+            ],
+            "src/app/shared/components/input/input.stories.ts": [
+                {
+                    "name": "actionsData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/input/input.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  clicked: action('clicked'),\n}"
+                },
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/input/input.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: '',\n    errors: []\n  }\n})"
+                },
+                {
+                    "name": "inputData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/input/input.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  isDisabled: false,\n  e2eTestName: 'test',\n  label: 'Label',\n  errors: ['Ooops!', 'An error has occured!'],\n  placeholder: 'Placeholder',\n  formControl: createFormControl()\n}"
+                },
+                {
+                    "name": "WithAccentButton",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/input/input.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: '',\n    buttonText: 'Click',\n    errors: [],\n    color: 'accent',\n    clicked: actionsData.clicked\n  }\n})"
+                },
+                {
+                    "name": "WithButtonAndError",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/input/input.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: '',\n    buttonText: 'Click',\n    errors: ['Ooops!', 'An error has occured!'],\n    color: 'accent',\n    clicked: actionsData.clicked\n  }\n})"
+                },
+                {
+                    "name": "WithError",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/input/input.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: ''\n  }\n})"
+                },
+                {
+                    "name": "WithoutLabel",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/input/input.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    label: '',\n    errors: []\n  }\n})"
+                },
+                {
+                    "name": "WithPrimaryButton",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/input/input.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: '',\n    buttonText: 'Click',\n    errors: [],\n    clicked: actionsData.clicked\n  }\n})"
                 }
             ],
             "src/app/shopping-list/components/shopping-list/shopping-list.stories.ts": [
@@ -2074,6 +2034,14 @@
                     "file": "src/app/shared/helpers/constants.ts",
                     "type": "Language",
                     "defaultValue": "'de'"
+                },
+                {
+                    "name": "EMAIL_PATTERN",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/helpers/constants.ts",
+                    "type": "",
+                    "defaultValue": "/^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$/"
                 }
             ],
             "src/environments/environment.qa.ts": [
@@ -2235,7 +2203,7 @@
                     "description": "",
                     "args": [
                         {
-                            "name": "errors"
+                            "name": "formControl"
                         },
                         {
                             "name": "translatePipe"
@@ -2253,7 +2221,7 @@
                     "returnType": "string[]",
                     "jsdoctags": [
                         {
-                            "name": "errors",
+                            "name": "formControl",
                             "tagName": {
                                 "text": "param"
                             }
@@ -2448,7 +2416,7 @@
                 "linktype": "component",
                 "name": "LoginFormComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/11",
+                "coverageCount": "0/10",
                 "status": "low"
             },
             {
@@ -2497,7 +2465,7 @@
                 "linktype": "component",
                 "name": "ButtonComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/11",
+                "coverageCount": "0/12",
                 "status": "low"
             },
             {
@@ -2586,7 +2554,7 @@
                 "linktype": "component",
                 "name": "InputComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/21",
+                "coverageCount": "0/17",
                 "status": "low"
             },
             {
@@ -2684,6 +2652,16 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "DEFAULT_LANGAUGE",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/helpers/constants.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "EMAIL_PATTERN",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
