@@ -25,11 +25,12 @@
                   [isDisabled]="isDisabled"
                   [isInputGroup]="true"
                   [color]="color"
+                  [hasErrors]="errors && errors.length > 0"
                   (clicked)="onClicked($event)"
       ></app-button>
     </div>
-    <div class="error-wrapper">
-      <span class="input__error" *ngFor="let error of errors">{{error}}</span>
+    <div>
+      <div class="input__error" *ngFor="let error of errors">{{error}}</div>
     </div>
   </div>
 </div>

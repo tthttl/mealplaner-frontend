@@ -2,7 +2,6 @@
 @import "../../../../styles/material_theme";
 
 .input-group {
-  background-color: $blue_20;
   display: flex;
   justify-content: center;
   font-family: 'Roboto', sans-serif;
@@ -11,7 +10,6 @@
     width: 95%;
     display: flex;
     flex-direction: column;
-    margin: 1rem 2rem 1rem 1rem;
 
     .field-wrapper {
       display: flex;
@@ -21,26 +19,25 @@
 
     &__label {
       color: $blue-grey_80;
+      padding-bottom: 0.5rem;
     }
 
     &__field {
       width: 100%;
-      line-height: 2.5;
-      margin: 1rem 0;
       border-radius: 4px;
-      border: 2px solid mat-color($mealplaner-app-primary);
-      padding-left: 0.5rem;
+      border: 2px solid $blue_70;
+      padding: 0.5rem;
 
       &:focus {
         outline: none;
       }
 
       &--border-warning {
-        border: 2px solid mat-color($mealplaner-app-warn);
+        border: 2px solid $red_70;
       }
 
       &--border-accent {
-        border: 2px solid mat-color($mealplaner-app-accent);
+        border: 2px solid $cyan_70;
       }
 
       &--short {
@@ -52,24 +49,17 @@
 
     &__button {
       flex: 0 0 20%;
-      margin: 1rem 0;
       border-radius: 0 4px 4px 0;
     }
 
     &__error {
-      color: $blue-grey_10;
-      background-color: $blue-grey_40;
+      color: $red_20;
+      background-color: $red_70;
       border-radius: 5px;
       padding: 0.5rem;
       font-size: small;
       font-weight: bold;
-      margin-right: 0.5rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .error-wrapper {
-      display: flex;
-      flex-wrap: wrap;
+      margin: 0.5rem 0;
     }
 
   }

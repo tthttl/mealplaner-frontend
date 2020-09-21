@@ -15,6 +15,7 @@ export class ButtonComponent {
   @Input() iconLeft: string | undefined;
   @Input() iconRight: string | undefined;
   @Input() isInputGroup = false;
+  @Input() hasErrors = false;
   @Output() clicked: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
 
   onClick(event: MouseEvent): void {

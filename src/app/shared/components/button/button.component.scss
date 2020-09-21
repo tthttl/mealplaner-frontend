@@ -4,12 +4,12 @@
 .button{
   width: 100%;
   height: 100%;
-  background-color: mat-color($mealplaner-app-primary);
+  background-color: $blue_70;
   border-radius: 4px;
   border-style:none;
   border-width:0;
   box-sizing:border-box;
-  color:mat-color($mealplaner-app-primary, default-contrast);
+  color: $blue-grey_10;
   cursor:pointer;
   display:inline-block;
   font-family:Roboto, sans-serif;
@@ -31,11 +31,11 @@
   transition-duration: 0.2s;
 
   &:hover{
-    background-color: mat-color($mealplaner-app-primary, 400);
+    background-color: $blue_60;
   }
 
   &:active {
-    background-color: mat-color($mealplaner-app-primary, 700);
+    background-color: $blue_80;
   }
 
   &--no-left-border-radius{
@@ -43,39 +43,45 @@
   }
 
   &--color-accent{
-    background-color: mat-color($mealplaner-app-accent);
-    color:mat-color($mealplaner-app-accent, default-contrast);
+    background-color: $cyan_70;
+    color:$cyan_10;
 
     &:hover{
-      background-color: mat-color($mealplaner-app-accent, 400);
+      background-color: $cyan_60;
     }
 
     &:active {
-      background-color: mat-color($mealplaner-app-accent, 700);
+      background-color: $cyan_80;
     }
   }
 
   &--color-warning{
-    background-color: mat-color($mealplaner-app-warn);
-    color:mat-color($mealplaner-app-warn, default-contrast);
+    background-color: $red_70;
+    color: $red_10;
 
     &:hover{
-      background-color: mat-color($mealplaner-app-warn, 400);
+      background-color: $red_60;
     }
 
     &:active {
-      background-color: mat-color($mealplaner-app-warn, 700);
+      background-color: $red_80;
     }
   }
 
   &--color-disabled{
     background-color: $blue-grey_50;
+    cursor: not-allowed;
 
     &:hover,
     &:active{
       background-color: $blue-grey_50;
     }
 
+  }
+
+  &--warning-border{
+    border: 2px solid $red_70;
+    border-left: none;
   }
 
   .icon-left{

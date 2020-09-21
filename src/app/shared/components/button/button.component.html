@@ -8,7 +8,8 @@
   'button--no-left-border-radius': isInputGroup,
   'button--color-accent': color === 'accent' && !isDisabled,
   'button--color-warning': color === 'warn' && !isDisabled,
-  'button--color-disabled': isDisabled
+  'button--color-disabled': isDisabled,
+  'button--warning-border': isInputGroup && hasErrors
   }"
 >
   <fa-icon *ngIf="iconLeft"
