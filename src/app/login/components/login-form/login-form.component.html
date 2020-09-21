@@ -4,19 +4,22 @@
       [control]="getFormControl('email')"
       [type]="'email'"
       [autocomplete]="'email'"
-      [placeholder]="'peter.muster@gmail.com'"
+      [placeholder]="'Email'"
       [label]="'email' | translate:translations:currentLang"
       [errors]="getErrorsFor('email')"
     ></app-input>
     <app-input
       [control]="getFormControl('password')"
       [type]="'password'"
-      [autocomplete]="isRegistration ? 'new-password' : 'current-password'"
+      [autocomplete]="buttonText==='login' ? 'current-password' : 'new-password'"
       [label]="'password' | translate:translations:currentLang"
-      [buttonText]="(isRegistration ? 'register' : 'login') | translate:translations:currentLang"
-      [buttonType]="'submit'"
-      [isDisabled]="!loginForm.valid"
       [errors]=" getErrorsFor('password')"
     ></app-input>
+    <app-button class="form-button"
+      [buttonText]="buttonText | translate:translations:currentLang"
+      [buttonType]="'submit'"
+      [isDisabled]="!loginForm.valid"
+    >
+    </app-button>
   </form>
 </div>

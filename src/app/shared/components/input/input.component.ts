@@ -22,7 +22,7 @@ export class InputComponent {
   @Input() isDisabled = false;
   @Input() autocomplete = 'on';
   @Input() placeholder = '';
-  @Input() testName = '';
+  @Input() e2eTestName = '';
   @Output() inputChanged: EventEmitter<Event> = new EventEmitter<Event>();
   @Output() fieldLeft: EventEmitter<void> = new EventEmitter<void>();
   @Output() clicked: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();

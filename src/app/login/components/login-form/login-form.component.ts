@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TranslatePipe } from '../../../i18n/pipes/translate.pipe';
-import { DEFAULT_LANGAUGE } from '../../../shared/helpers/constants';
+import { DEFAULT_LANGAUGE, EMAIL_PATTERN } from '../../../shared/helpers/constants';
 import { translateValidationErrors } from '../../../shared/helpers/helpers';
 import { I18n, Language } from '../../../shared/model/model';
 
@@ -10,29 +10,25 @@ import { I18n, Language } from '../../../shared/model/model';
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.scss']
 })
-export class LoginFormComponent implements OnInit {
+export class LoginFormComponent {
 
-  @Input() isRegistration = false;
+  @Input() buttonText = 'login';
   @Input() translations: I18n = {};
   @Input() currentLang: Language = DEFAULT_LANGAUGE;
   @Output() credentialsReceived: EventEmitter<{ email: string, password: string }> =
     new EventEmitter<{ email: string; password: string }>();
 
-  loginForm: FormGroup | undefined;
+  loginForm: FormGroup;
 
   constructor(private translatePipe: TranslatePipe) {
-  }
-
-  ngOnInit(): void {
     this.loginForm = new FormGroup({
       email: new FormControl('', [
         Validators.required,
-        Validators.pattern(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/)
+        Validators.pattern(EMAIL_PATTERN)
       ]),
       password: new FormControl('', [
         Validators.required,
-        Validators.minLength(4),
-        Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{4,}/g)
+        Validators.minLength(4)
       ])
     });
   }

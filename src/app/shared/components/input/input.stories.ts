@@ -32,7 +32,7 @@ export default {
 
 export const inputData = {
   isDisabled: false,
-  testName: 'test',
+  e2eTestName: 'test',
   label: 'Label',
   errors: ['Ooops!', 'An error has occured!'],
   placeholder: 'Placeholder',
