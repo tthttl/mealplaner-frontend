@@ -1,0 +1,68 @@
+@import "../../../../styles/settings/colors";
+
+.shopping-list {
+  width: 100%;
+  display: block;
+  overflow: hidden;
+
+  &__item {
+    border-bottom: solid 1px $blue-grey_30;
+    color: $text-70;
+    font-size: 16px;
+    box-sizing: border-box;
+    background: white;
+
+    &:last-child {
+      border: none;
+    }
+  }
+
+  &__item-column-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__item-text {
+    padding: 20px 10px 15px 10px;
+    display: block;
+  }
+
+  &__ellipsis {
+    color: $blue-grey_50;
+    padding: 0 20px;
+    cursor: move;
+  }
+
+  &__status {
+    height: 5px;
+    width: 0;
+    flex-basis: 100%;
+    background: $blue_50;
+
+    &--deleted {
+      width: 100%;
+      transition: width 1.5s linear;
+    }
+  }
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px $blue-grey_30,
+  0 8px 10px 1px $blue-grey_20,
+  0 3px 14px 2px $blue-grey_10;
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.shopping-list-item.cdk-drop-list-dragging .shopping-list-item:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}

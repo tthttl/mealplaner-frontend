@@ -1,7 +1,7 @@
-import { availableLanguages, I18n } from '../../model/model';
+import { Language, I18n } from '../../model/model';
 
 export interface AppState {
-  readonly language: availableLanguages;
+  readonly language: Language;
   readonly i18n: I18n | null;
 }
 

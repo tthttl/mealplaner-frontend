@@ -1,0 +1,89 @@
+@import "../../node_modules/@angular/material/theming";
+@import "./settings/colors";
+
+$mat-primary: (
+  50: $blue_10,
+  100: $blue_20,
+  200: $blue_30,
+  300: $blue_40,
+  400: $blue_50,
+  500: $blue_60,
+  600: $blue_70,
+  700: $blue_80,
+  800: $blue_90,
+  900: $blue_100,
+  contrast: (
+    50: $text-100,
+    100: $text-100,
+    200: $text-100,
+    300: $text-10,
+    400: $text-10,
+    500: $text-10,
+    600: $text-10,
+    700: $text-10,
+    800: $text-10,
+    900: $text-10,
+  )
+);
+
+$mat-grey2: (
+  50:  $blue-grey_10,
+  100: $blue-grey_20,
+  200: $blue-grey_30,
+  300: $blue-grey_40,
+  400: $blue-grey_50,
+  500: $blue-grey_60,
+  600: $blue-grey_70,
+  700: $blue-grey_80,
+  800: $blue-grey_90,
+  900: $blue-grey_100,
+  contrast: (
+    50: $text-100,
+    100: $text-100,
+    200: $text-100,
+    300: $text-10,
+    400: $text-10,
+    500: $text-10,
+    600: $text-10,
+    700: $text-10,
+    800: $text-10,
+    900: $text-10,
+  )
+);
+
+$mat-red: (
+  50: $red_10,
+  100: $red_20,
+  200: $red_30,
+  300: $red_40,
+  400: $red_50,
+  500: $red_60,
+  600: $red_70,
+  700: $red_80,
+  800: $red_90,
+  900: $red_100,
+  contrast: (
+    50: $text-100,
+    100: $text-100,
+    200: $text-100,
+    300: $text-10,
+    400: $text-10,
+    500: $text-10,
+    600: $text-10,
+    700: $text-10,
+    800: $text-10,
+    900: $text-10,
+  )
+);
+
+$candy-app-primary: mat-palette($mat-primary);
+
+$candy-app-accent: mat-palette($mat-grey2, 600, 500, 900);
+$candy-app-warn: mat-palette($mat-red);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-app-warn);
+
+// here I am only calling checkbox mixin because i only want to change the checkbox color
+@include mat-checkbox-theme($candy-app-theme);
+
