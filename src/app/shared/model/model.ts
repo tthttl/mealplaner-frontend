@@ -25,3 +25,9 @@ export interface ArrayItemMovedEvent {
   currentIndex: number;
   previousIndex: number;
 }
+
+export interface SelectOption<T extends object | string> {
+  value: T | string;
+  key?: string;
+  name?: string;
+}

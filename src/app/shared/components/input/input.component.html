@@ -1,4 +1,4 @@
-<div class="input-group">
+<div class="input-field-group">
   <div class="input">
     <label class="input__label" *ngIf="label" [for]="inputId">{{label}}</label>
     <div class="field-wrapper">
@@ -14,7 +14,7 @@
              [ngClass]="{
              'input__field--short': !!buttonText,
              'input__field--border-accent': color === 'accent' && (!errors || errors.length === 0),
-             'input__field--border-warning': errors && errors.length > 0
+             'input__field--error': errors?.length > 0
              }"
       >
       <app-button class="input__button"
