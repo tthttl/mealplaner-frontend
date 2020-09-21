@@ -42,17 +42,12 @@ export class LoginFormComponent {
   }
 
   getErrorsFor(key: string): string[] {
-    const formControl = this.getFormControl(key);
-    if (formControl.invalid && formControl.errors &&
-      (formControl.touched || formControl.dirty)) {
-      return translateValidationErrors(
-        formControl.errors,
-        this.translatePipe,
-        this.translations,
-        this.currentLang,
-        key);
-    }
-    return [];
+    return translateValidationErrors(
+      this.getFormControl(key),
+      this.translatePipe,
+      this.translations,
+      this.currentLang,
+      key);
   }
 
 }

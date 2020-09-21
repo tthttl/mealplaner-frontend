@@ -23,19 +23,9 @@ export class InputComponent {
   @Input() autocomplete = 'on';
   @Input() placeholder = '';
   @Input() e2eTestName = '';
-  @Output() inputChanged: EventEmitter<Event> = new EventEmitter<Event>();
-  @Output() fieldLeft: EventEmitter<void> = new EventEmitter<void>();
   @Output() clicked: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
 
   inputId: string = uuid();
-
-  onUserInput(event: Event): void {
-    this.inputChanged.emit(event);
-  }
-
-  onBlur(): void {
-    this.fieldLeft.emit();
-  }
 
   onClicked(event: MouseEvent): void {
     this.clicked.emit(event);
