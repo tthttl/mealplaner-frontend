@@ -21,13 +21,13 @@ export class ShoppingListFormComponent implements OnInit {
 
   constructor(private translatePipe: TranslatePipe) {
     this.addItemForm = new FormGroup({
-      name:  new FormControl('', [
-        Validators.required,
-      ]),
       amount:  new FormControl('', [
         Validators.required,
       ]),
-      unit:  new FormControl('', [
+      unit:  new FormControl('pack', [
+        Validators.required,
+      ]),
+      name:  new FormControl('', [
         Validators.required,
       ]),
     });

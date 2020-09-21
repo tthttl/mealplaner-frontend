@@ -60,10 +60,6 @@ export const Default = () => ({
   props: {
     ...taskData,
     ...actionsData
-    /*items: taskData.items,
-    translations: taskData.translations,
-    itemDeleted: actionsData.itemDeleted,
-    listItemMoved: actionsData.listItemMoved,*/
   },
 });
 

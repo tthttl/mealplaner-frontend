@@ -5,6 +5,11 @@
   border: 1px solid $blue_80;
   border-radius: 4px;
 
+  .login-form__input {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
   .form-button{
     display: block;
     margin-top: 1rem;
