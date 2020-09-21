@@ -1,0 +1,34 @@
+<div class="form-wrapper">
+  <form class="add-items-form" [formGroup]="addItemForm" (ngSubmit)="onSubmit()">
+    <app-input
+      class="add-items-form--input add-items-form--input-amount"
+      type="number"
+      [placeholder]="'shoppingList.addForm.amount' | translate:translations:currentLang"
+      [control]="getFormControl('amount')"></app-input>
+
+    <app-select
+      class="add-items-form--input add-items-form--input-unit"
+      [options]="units"
+      [control]="getFormControl('unit')">
+    </app-select>
+
+    <app-input
+      class="add-items-form--input"
+      [placeholder]="'shoppingList.addForm.product' | translate:translations:currentLang"
+      [control]="getFormControl('name')">
+    </app-input>
+
+    <app-button
+      class="add-items-form--submit"
+      [buttonType]="'submit'"
+      [buttonText]="'Hinzufügen'"></app-button>
+  </form>
+</div>
+<!--
+[control]="getFormControl('email')"
+      [type]="'email'"
+      [autocomplete]="'email'"
+      [placeholder]="'peter.muster@gmail.com'"
+      [label]="'email' | translate:translations:currentLang"
+      [errors]="getErrorsFor('email')"
+-->

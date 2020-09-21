@@ -1,0 +1,16 @@
+@import "../../../../styles/settings/colors";
+@import "../../../../styles/mixins/forms";
+
+.select {
+  &__field {
+    @include form-filed;
+  }
+
+  &__label {
+    @include label;
+  }
+
+  &__error {
+    @include form-errors;
+  }
+}

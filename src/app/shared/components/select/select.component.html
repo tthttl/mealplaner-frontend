@@ -1,0 +1,24 @@
+<label *ngIf="label" class="select__label" for="cars">{{label}}</label>
+
+<select
+  [(ngModel)]="selectedValue"
+  [formControl]="control"
+  (ngModelChange)="onChange($event)"
+  [attr.disabled]="isDisabled ? '' : null"
+  [attr.data-test]="e2eTestName"
+  class="select__field"
+  name="cars"
+  id="cars"
+  [ngClass]="{'select__field--error': errors?.length > 0}"
+>
+  <option
+    *ngFor="let option of options"
+    [ngValue]="option.value">
+    {{getOptionKey(option)}}
+  </option>
+</select>
+
+<div class="error-wrapper">
+  <div class="select__error" *ngFor="let error of errors">{{error}}</div>
+</div>
+
