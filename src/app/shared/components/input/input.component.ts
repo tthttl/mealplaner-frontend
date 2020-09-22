@@ -1,13 +1,19 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { v4 as uuid } from 'uuid';
 
 @Component({
   selector: 'app-input',
   templateUrl: './input.component.html',
-  styleUrls: ['./input.component.scss']
-})
-export class InputComponent {
+  styleUrls: ['./input.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => InputComponent),
+      multi: true
+    }
+  ]})
+export class InputComponent implements ControlValueAccessor {
 
   @Input() buttonText = '';
   @Input() buttonType = 'button';
@@ -16,8 +22,8 @@ export class InputComponent {
   @Input() iconLeft: string | undefined;
   @Input() minValue: number | null = null;
 
-  @Input() control: FormControl | undefined;
   @Input() type = 'text';
+  @Input() name = '';
   @Input() label: string | undefined;
   @Input() errors: string[] = [];
   @Input() isDisabled = false;
@@ -28,8 +34,29 @@ export class InputComponent {
 
   inputId: string = uuid();
 
+  currentValue: string | number = '';
+
+  onChange(option: string | number): void {
+    this.propagateChange(option);
+  }
+
   onClicked(event: MouseEvent): void {
     this.clicked.emit(event);
+  }
+
+  propagateChange = (value: string | number) => {};
+
+  registerOnChange(fn: () => {}): void {
+    this.propagateChange = fn;
+  }
+
+  registerOnTouched(fn: () => {}): void {
+  }
+
+  writeValue(value: string | number): void {
+    if (value !== undefined) {
+      this.currentValue = value;
+    }
   }
 
 

@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { SelectOption } from '../../model/model';
 import { v4 as uuid } from 'uuid';
 
@@ -7,9 +7,15 @@ import { v4 as uuid } from 'uuid';
 @Component({
   selector: 'app-select',
   templateUrl: './select.component.html',
-  styleUrls: ['./select.component.scss']
-})
-export class SelectComponent<T extends object> implements OnInit {
+  styleUrls: ['./select.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => SelectComponent),
+      multi: true
+    }
+  ]})
+export class SelectComponent<T extends object> implements OnInit, ControlValueAccessor {
   @Input() control: FormControl | undefined;
   @Input() name = '';
   @Input() options: SelectOption<T>[] = [];
@@ -26,14 +32,30 @@ export class SelectComponent<T extends object> implements OnInit {
 
   ngOnInit(): void {
     this.selectedValue = this.options[0].value;
+    this.propagateChange(this.options[0].value);
   }
 
-  onChange(option: T): void {
-    this.valueChanged.emit(option);
+  onChange(option: T | string): void {
+    this.propagateChange(option);
   }
 
   getOptionKey(option: SelectOption<T>): string {
     return option?.key ?? (option.value && option.value.toString());
+  }
+
+  propagateChange = (value: T | string) => {};
+
+  registerOnChange(fn: () => {}): void {
+    this.propagateChange = fn;
+  }
+
+  registerOnTouched(fn: () => {}): void {
+  }
+
+  writeValue(value: T | string): void {
+    if (value !== undefined) {
+      this.selectedValue = value;
+    }
   }
 }
 

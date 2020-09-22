@@ -2,14 +2,14 @@
 
 <select
   [(ngModel)]="selectedValue"
-  [formControl]="control"
+  ngDefaultControl
   (ngModelChange)="onChange($event)"
   [attr.disabled]="isDisabled ? '' : null"
   [attr.data-test]="e2eTestName"
   class="select__field"
   name="{{name}}"
   id="{{inputId}}"
-  [ngClass]="{'select__field--error': errors?.length > 0}"
+  [ngClass]="{'select__field--error': errors && errors.length > 0}"
 >
   <option
     *ngFor="let option of options"

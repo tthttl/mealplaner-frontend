@@ -2,7 +2,7 @@
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <app-input
       class="login-form__input"
-      [control]="getFormControl('email')"
+      [formControl]="getFormControl('email')"
       [type]="'email'"
       [autocomplete]="'email'"
       [placeholder]="'Email'"
@@ -11,7 +11,7 @@
     ></app-input>
     <app-input
       class="login-form__input"
-      [control]="getFormControl('password')"
+      [formControl]="getFormControl('password')"
       [type]="'password'"
       [autocomplete]="buttonText==='login' ? 'current-password' : 'new-password'"
       [label]="'password' | translate:translations:currentLang"
