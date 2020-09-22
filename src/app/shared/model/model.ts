@@ -8,7 +8,7 @@ export interface Translations {
 
 export type Language = 'de' | 'en';
 
-export type Unit = 'kg' | 'g' | 'tableSpoon' | 'coffeeSpoon' | 'l' | 'dl' | 'ml' | 'pinch' | 'piece';
+export type Unit = 'kg' | 'g' | 'tableSpoon' | 'coffeeSpoon' | 'l' | 'dl' | 'ml' | 'pinch' | 'piece' | 'pack';
 
 export interface Ingredient {
   name: string;
@@ -24,4 +24,10 @@ export interface ShoppingListItem extends Ingredient{
 export interface ArrayItemMovedEvent {
   currentIndex: number;
   previousIndex: number;
+}
+
+export interface SelectOption<T extends object | string> {
+  value: T | string;
+  key?: string;
+  name?: string;
 }

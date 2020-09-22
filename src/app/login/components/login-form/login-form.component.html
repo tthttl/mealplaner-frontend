@@ -1,6 +1,7 @@
 <div class="form-wrapper">
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <app-input
+      class="login-form__input"
       [control]="getFormControl('email')"
       [type]="'email'"
       [autocomplete]="'email'"
@@ -9,6 +10,7 @@
       [errors]="getErrorsFor('email')"
     ></app-input>
     <app-input
+      class="login-form__input"
       [control]="getFormControl('password')"
       [type]="'password'"
       [autocomplete]="buttonText==='login' ? 'current-password' : 'new-password'"

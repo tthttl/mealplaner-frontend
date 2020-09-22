@@ -1,0 +1,44 @@
+@import "../../../../styles/settings/colors";
+@import "../../../../styles/settings/breakpoints";
+
+.add-items-form {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid $blue_80;
+  border-radius: 4px;
+  padding: 1rem 2rem;
+
+  @include large {
+    flex-direction:  row;
+  }
+
+  &--input-amount {
+    @include large {
+      max-width: 8rem;
+    }
+  }
+
+  &--input {
+    padding-bottom: 1rem;
+    flex: 1 1 auto;
+
+    @include large {
+      padding-bottom: 0;
+      padding-right: 1rem;
+    }
+  }
+
+  &--input-unit {
+    @include large {
+      max-width: 8.5rem;
+    }
+  }
+
+  &--submit {
+    height: 2.5rem;
+
+    @include large {
+      height: auto;
+    }
+  }
+}

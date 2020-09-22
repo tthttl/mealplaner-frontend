@@ -1,11 +1,13 @@
 @import "../../../../styles/settings/colors";
 @import "../../../../styles/material_theme";
+@import "../../../../styles/mixins/forms";
+
+
 
 .input-group {
   display: flex;
   justify-content: center;
   font-family: 'Roboto', sans-serif;
-  margin-bottom: 0.5rem;
 
   .input {
     width: 100%;
@@ -19,23 +21,11 @@
     }
 
     &__label {
-      color: $blue-grey_80;
-      padding-bottom: 0.5rem;
+      @include label;
     }
 
     &__field {
-      width: 100%;
-      border-radius: 4px;
-      border: 2px solid $blue_70;
-      padding: 0.5rem;
-
-      &:focus {
-        outline: none;
-      }
-
-      &--border-warning {
-        border: 2px solid $red_70;
-      }
+      @include form-field;
 
       &--border-accent {
         border: 2px solid $cyan_70;
@@ -54,15 +44,7 @@
     }
 
     &__error {
-      color: $red_20;
-      background-color: $red_70;
-      border-radius: 5px;
-      padding: 0.5rem;
-      font-size: small;
-      font-weight: bold;
-      margin: 0.5rem 0;
+      @include form-errors;
     }
-
   }
-
 }

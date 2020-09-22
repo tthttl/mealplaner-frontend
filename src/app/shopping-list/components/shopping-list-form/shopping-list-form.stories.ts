@@ -1,4 +1,3 @@
-import { ShoppingListComponent } from './shopping-list.component';
 import { I18n, ShoppingListItem } from '../../../shared/model/model';
 import { moduleMetadata } from '@storybook/angular';
 import { CommonModule } from '@angular/common';
@@ -9,14 +8,17 @@ import { TranslatePipe } from '../../../i18n/pipes/translate.pipe';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { APP_INITIALIZER } from '@angular/core';
+import { ShoppingListFormComponent } from './shopping-list-form.component';
+import { SharedModule } from '../../../shared/shared.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 export default {
-  title: 'ShoppingList',
+  title: 'ShoppingListForm',
   excludeStories: /.*Data$/,
   decorators: [
     moduleMetadata({
       declarations: [TranslatePipe],
-      imports: [CommonModule,  DragDropModule, MatCheckboxModule, FontAwesomeModule],
+      imports: [CommonModule, ReactiveFormsModule, DragDropModule, MatCheckboxModule, FontAwesomeModule, SharedModule],
       providers: [
         {
           provide: APP_INITIALIZER,
@@ -28,35 +30,34 @@ export default {
           deps: [ FaIconLibrary ],
           multi: true,
         },
+        {
+          provide: TranslatePipe,
+          useClass: TranslatePipe
+        }
       ]
     }),
   ],
 };
 
 export const actionsData = {
-  itemDeleted: action('itemDeleted'),
-  listItemMoved: action('listItemMoved'),
+  itemAdded: action('itemAdded'),
 };
 
-export const taskData: {items: ShoppingListItem[], translations: I18n} = {
-  items: [
-    {id: '1', name: 'Mehl', amount: 1, unit: 'kg', isChecked: false},
-    {id: '2', name: 'Zucker', amount: 50, unit: 'g', isChecked: false},
-    {id: '3', name: 'Eier', amount: 1, unit: 'piece', isChecked: false},
-    {id: '4', name: 'Slaz', amount: 5, unit: 'coffeeSpoon', isChecked: false},
-  ],
+export const taskData = {
   translations: {
     de: {
-      piece: '',
-      tableSpoon: 'Esslöffel',
-      coffeeSpoon: 'Kaffelöffel',
-      pinch: 'Prise',
+      'shoppingList.addForm.amount': 'Menge',
+      'shoppingList.addForm.product': 'Zucker',
+      'shoppingList.addForm.piece': 'Stück',
+      'shoppingList.addForm.pack': 'Packung',
+      'shoppingList.addForm.addLabel': 'Hinzufügen',
     }
-  }
+  },
+  currentLang: 'de'
 };
 
 export const Default = () => ({
-  component: ShoppingListComponent,
+  component: ShoppingListFormComponent,
   props: {
     ...taskData,
     ...actionsData
