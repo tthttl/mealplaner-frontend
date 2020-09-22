@@ -8,17 +8,24 @@ import { LoginFormComponent } from './components/login-form/login-form.component
 import { LoginContainerComponent } from './containers/login-container/login-container.component';
 import { RegisterContainerComponent } from './containers/register-container/register-container.component';
 import { LoginRoutingModule } from './login-routing.module';
+import { TranslatePipe } from '../i18n/pipes/translate.pipe';
 
 
 @NgModule({
   declarations: [LoginFormComponent, LoginContainerComponent, RegisterContainerComponent],
   imports: [
+    I18nModule,
     CommonModule,
     ReactiveFormsModule,
     FontAwesomeModule,
-    I18nModule,
     SharedModule,
     LoginRoutingModule
+  ],
+  providers: [
+    {
+      provide: TranslatePipe,
+      useClass: TranslatePipe
+    }
   ]
 })
 export class LoginModule { }

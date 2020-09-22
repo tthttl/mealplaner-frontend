@@ -31,3 +31,8 @@ export interface SelectOption<T extends object | string> {
   key?: string;
   name?: string;
 }
+
+export interface LoginCredentials {
+  email: string;
+  password: string;
+}
