@@ -33,13 +33,30 @@ describe('LoginFormComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  fit('button should be disabled when inputs are empty', () => {
+  it('button should be disabled when inputs are empty', () => {
     const hostElement = fixture.nativeElement;
     const button = hostElement.querySelector('button');
     expect(button.disabled).toBeTruthy();
   });
 
   it('should emit credentials when inputs are filled and button is clicked', () => {
-    expect(component).toBeTruthy();
+    spyOn(component.credentialsReceived, 'emit');
+    const hostElement = fixture.nativeElement;
+    const emailInput = hostElement.querySelector('input[type="email"]');
+    const passwordInput = hostElement.querySelector('input[type="password"]');
+
+    emailInput.value = 'peter.muster@gmail.com';
+    emailInput.dispatchEvent(new Event('input'));
+    passwordInput.value = 'uncrackable';
+    passwordInput.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    const button = hostElement.querySelector('button');
+    button.click();
+
+    expect(component.credentialsReceived.emit).toHaveBeenCalledWith({
+      email: 'peter.muster@gmail.com',
+      password: 'uncrackable'
+    });
   });
 });

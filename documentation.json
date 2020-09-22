@@ -1370,17 +1370,17 @@
                 "name": "actionsData",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/login/components/login-form/login-form.stories.ts",
+                "file": "src/app/shared/components/input/input.stories.ts",
                 "type": "object",
-                "defaultValue": "{\n  credentialsReceived: action('credentialsReceived')\n}"
+                "defaultValue": "{\n  clicked: action('clicked'),\n}"
             },
             {
                 "name": "actionsData",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/input/input.stories.ts",
+                "file": "src/app/login/components/login-form/login-form.stories.ts",
                 "type": "object",
-                "defaultValue": "{\n  clicked: action('clicked'),\n}"
+                "defaultValue": "{\n  credentialsReceived: action('credentialsReceived')\n}"
             },
             {
                 "name": "actionsData",
@@ -1418,9 +1418,9 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shopping-list/components/shopping-list/shopping-list.stories.ts",
+                "file": "src/app/shared/components/button/button.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: ShoppingListComponent,\n  props: {\n    items: taskData.items,\n    translations: taskData.translations,\n    itemDeleted: actionsData.itemDeleted,\n    listItemMoved: actionsData.listItemMoved,\n  },\n})"
+                "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: buttonData.text,\n    isDisabled: buttonData.isDisabled,\n    e2eTestName: buttonData.e2eTestName,\n    clicked: actionsData.clicked\n  }\n})"
             },
             {
                 "name": "Default",
@@ -1434,9 +1434,9 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/button/button.stories.ts",
+                "file": "src/app/shopping-list/components/shopping-list/shopping-list.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: buttonData.text,\n    isDisabled: buttonData.isDisabled,\n    e2eTestName: buttonData.e2eTestName,\n    clicked: actionsData.clicked\n  }\n})"
+                "defaultValue": "() => ({\n  component: ShoppingListComponent,\n  props: {\n    items: taskData.items,\n    translations: taskData.translations,\n    itemDeleted: actionsData.itemDeleted,\n    listItemMoved: actionsData.listItemMoved,\n  },\n})"
             },
             {
                 "name": "DEFAULT_LANGAUGE",
@@ -1466,14 +1466,6 @@
                 "name": "environment",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/environments/environment.qa.ts",
-                "type": "object",
-                "defaultValue": "{\n  production: false,\n  showBetaTeaser: false,\n  apiUrl: 'https://api.mealplaner.app',\n}"
-            },
-            {
-                "name": "environment",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/environments/environment.prod.ts",
                 "type": "object",
                 "defaultValue": "{\n  production: true,\n  showBetaTeaser: false,\n  apiUrl: 'https://api.mealplaner.app',\n}"
@@ -1485,6 +1477,14 @@
                 "file": "src/environments/environment.ts",
                 "type": "object",
                 "defaultValue": "{\n  production: false,\n  showBetaTeaser: true,\n  apiUrl: 'http://localhost:1337',\n}"
+            },
+            {
+                "name": "environment",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/environments/environment.qa.ts",
+                "type": "object",
+                "defaultValue": "{\n  production: false,\n  showBetaTeaser: false,\n  apiUrl: 'https://api.mealplaner.app',\n}"
             },
             {
                 "name": "formData",
@@ -1873,40 +1873,6 @@
                     "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Warning',\n    isDisabled: buttonData.isDisabled,\n    e2eTestName: buttonData.e2eTestName,\n    clicked: actionsData.clicked,\n    color: 'warn'\n  }\n})"
                 }
             ],
-            "src/app/login/components/login-form/login-form.stories.ts": [
-                {
-                    "name": "actionsData",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/login/components/login-form/login-form.stories.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  credentialsReceived: action('credentialsReceived')\n}"
-                },
-                {
-                    "name": "formData",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/login/components/login-form/login-form.stories.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  translations: {\n    de: {\n      email: 'Email Adresse',\n      password: 'Passwort',\n      login: 'Anmelden',\n      register: 'Registrieren',\n      'errors.validation.email.required': 'Bitte geben Sie Ihre Email Adresse ein',\n      'errors.validation.email.pattern': 'Valid Email Format braucht @ ein . dann mindestens 2 Zeichen',\n      'errors.validation.password.required': 'Bitte geben Sie Ihre Passwort ein',\n      'errors.validation.password.minlength': 'Passwort muss mindestens 4 character lang sein',\n      'errors.validation.password.pattern': 'Passwort braucht klein und gross Buchstaben und ein Zahl'\n      }\n    }\n}"
-                },
-                {
-                    "name": "Login",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/login/components/login-form/login-form.stories.ts",
-                    "type": "",
-                    "defaultValue": "() => ({\n  component: LoginFormComponent,\n  props: {\n    credentialsReceived: actionsData.credentialsReceived,\n    translations: formData.translations\n  }\n})"
-                },
-                {
-                    "name": "Register",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/login/components/login-form/login-form.stories.ts",
-                    "type": "",
-                    "defaultValue": "() => ({\n  component: LoginFormComponent,\n  props: {\n    credentialsReceived: actionsData.credentialsReceived,\n    translations: formData.translations,\n    buttonText: 'register'\n  }\n})"
-                }
-            ],
             "src/app/shared/components/input/input.stories.ts": [
                 {
                     "name": "actionsData",
@@ -1971,6 +1937,40 @@
                     "file": "src/app/shared/components/input/input.stories.ts",
                     "type": "",
                     "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: '',\n    buttonText: 'Click',\n    errors: [],\n    clicked: actionsData.clicked\n  }\n})"
+                }
+            ],
+            "src/app/login/components/login-form/login-form.stories.ts": [
+                {
+                    "name": "actionsData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/login/components/login-form/login-form.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  credentialsReceived: action('credentialsReceived')\n}"
+                },
+                {
+                    "name": "formData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/login/components/login-form/login-form.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  translations: {\n    de: {\n      email: 'Email Adresse',\n      password: 'Passwort',\n      login: 'Anmelden',\n      register: 'Registrieren',\n      'errors.validation.email.required': 'Bitte geben Sie Ihre Email Adresse ein',\n      'errors.validation.email.pattern': 'Valid Email Format braucht @ ein . dann mindestens 2 Zeichen',\n      'errors.validation.password.required': 'Bitte geben Sie Ihre Passwort ein',\n      'errors.validation.password.minlength': 'Passwort muss mindestens 4 character lang sein',\n      'errors.validation.password.pattern': 'Passwort braucht klein und gross Buchstaben und ein Zahl'\n      }\n    }\n}"
+                },
+                {
+                    "name": "Login",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/login/components/login-form/login-form.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: LoginFormComponent,\n  props: {\n    credentialsReceived: actionsData.credentialsReceived,\n    translations: formData.translations\n  }\n})"
+                },
+                {
+                    "name": "Register",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/login/components/login-form/login-form.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: LoginFormComponent,\n  props: {\n    credentialsReceived: actionsData.credentialsReceived,\n    translations: formData.translations,\n    buttonText: 'register'\n  }\n})"
                 }
             ],
             "src/app/shopping-list/components/shopping-list/shopping-list.stories.ts": [
@@ -2044,16 +2044,6 @@
                     "defaultValue": "/^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$/"
                 }
             ],
-            "src/environments/environment.qa.ts": [
-                {
-                    "name": "environment",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/environments/environment.qa.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  production: false,\n  showBetaTeaser: false,\n  apiUrl: 'https://api.mealplaner.app',\n}"
-                }
-            ],
             "src/environments/environment.prod.ts": [
                 {
                     "name": "environment",
@@ -2072,6 +2062,16 @@
                     "file": "src/environments/environment.ts",
                     "type": "object",
                     "defaultValue": "{\n  production: false,\n  showBetaTeaser: true,\n  apiUrl: 'http://localhost:1337',\n}"
+                }
+            ],
+            "src/environments/environment.qa.ts": [
+                {
+                    "name": "environment",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/environments/environment.qa.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  production: false,\n  showBetaTeaser: false,\n  apiUrl: 'https://api.mealplaner.app',\n}"
                 }
             ],
             "src/app/i18n/actions/i18n-api.actions.ts": [
