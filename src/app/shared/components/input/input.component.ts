@@ -14,6 +14,7 @@ export class InputComponent {
   @Input() buttonTestName = '';
   @Input() color = 'primary';
   @Input() iconLeft: string | undefined;
+  @Input() minValue: number | null = null;
 
   @Input() control: FormControl | undefined;
   @Input() type = 'text';

@@ -1,10 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { SelectOption } from '../../model/model';
+import { v4 as uuid } from 'uuid';
 
-function uuid() {
-  return '';
-}
 
 @Component({
   selector: 'app-select',
@@ -13,6 +11,7 @@ function uuid() {
 })
 export class SelectComponent<T extends object> implements OnInit {
   @Input() control: FormControl | undefined;
+  @Input() name = '';
   @Input() options: SelectOption<T>[] = [];
   @Input() label: string | undefined;
   @Input() errors: string[] = [];
@@ -37,6 +36,4 @@ export class SelectComponent<T extends object> implements OnInit {
     return option?.key ?? (option.value && option.value.toString());
   }
 }
-/*
-  @Input() errors: string[] = [];
- */
+

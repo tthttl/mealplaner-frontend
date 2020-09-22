@@ -49,7 +49,6 @@ export class ShoppingListFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log('here');
     this.itemAdded.emit(this.addItemForm?.value);
   }
 

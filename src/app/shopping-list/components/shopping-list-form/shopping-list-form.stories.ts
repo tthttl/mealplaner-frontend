@@ -50,6 +50,7 @@ export const taskData = {
       'shoppingList.addForm.product': 'Zucker',
       'shoppingList.addForm.piece': 'Stück',
       'shoppingList.addForm.pack': 'Packung',
+      'shoppingList.addForm.addLabel': 'Hinzufügen',
     }
   },
   currentLang: 'de'

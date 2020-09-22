@@ -58,7 +58,6 @@ export const WithLabel = () => ({
     ...inputData,
     label: 'Label',
     ...actionsData,
-    formControl: createFormControl('testControl'),
   }
 });
 
@@ -67,15 +66,6 @@ export const Disabled = () => ({
   props: {
     ...inputData,
     isDisabled: true,
-    ...actionsData,
-  }
-});
-
-export const WithPlaceholder = () => ({
-  component: SelectComponent,
-  props: {
-    ...inputData,
-    // placeholder: 'Placeholder',
     ...actionsData,
   }
 });
@@ -100,7 +90,6 @@ export const WithErrors = () => ({
   props: {
     ...inputData,
     errors: ['An error has occured!'],
-
     ...actionsData,
   }
 });

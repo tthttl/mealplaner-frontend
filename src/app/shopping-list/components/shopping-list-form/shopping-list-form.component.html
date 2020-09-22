@@ -3,12 +3,14 @@
     <app-input
       class="add-items-form--input add-items-form--input-amount"
       type="number"
+      [minValue]="0"
       [placeholder]="'shoppingList.addForm.amount' | translate:translations:currentLang"
       [control]="getFormControl('amount')"></app-input>
 
     <app-select
       class="add-items-form--input add-items-form--input-unit"
       [options]="units"
+      [name]="'unit'"
       [control]="getFormControl('unit')">
     </app-select>
 
@@ -21,14 +23,8 @@
     <app-button
       class="add-items-form--submit"
       [buttonType]="'submit'"
-      [buttonText]="'Hinzufügen'"></app-button>
+      [buttonText]="'shoppingList.addForm.addLabel' | translate:translations:currentLang"
+      [isDisabled]="addItemForm.invalid"></app-button>
   </form>
 </div>
-<!--
-[control]="getFormControl('email')"
-      [type]="'email'"
-      [autocomplete]="'email'"
-      [placeholder]="'peter.muster@gmail.com'"
-      [label]="'email' | translate:translations:currentLang"
-      [errors]="getErrorsFor('email')"
--->
+

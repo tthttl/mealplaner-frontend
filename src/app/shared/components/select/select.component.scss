@@ -2,8 +2,10 @@
 @import "../../../../styles/mixins/forms";
 
 .select {
+  font-family: 'Roboto', sans-serif;
+
   &__field {
-    @include form-filed;
+    @include form-field;
   }
 
   &__label {

@@ -25,7 +25,7 @@
     }
 
     &__field {
-      @include form-filed;
+      @include form-field;
 
       &--border-accent {
         border: 2px solid $cyan_70;

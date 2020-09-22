@@ -9,6 +9,7 @@
              [autocomplete]="autocomplete"
              [placeholder]="placeholder"
              [attr.data-test]="e2eTestName"
+             [attr.min]="minValue"
              [ngClass]="{
              'input__field--short': !!buttonText,
              'input__field--border-accent': color === 'accent' && (!errors || errors.length === 0),
