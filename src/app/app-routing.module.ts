@@ -5,7 +5,7 @@ import { AuthModule } from './auth/auth.module';
 
 const routes: Routes = [
   {
-    path: 'user',
+    path: 'auth',
     loadChildren: () => AuthModule
   },
   {

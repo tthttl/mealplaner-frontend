@@ -17,7 +17,7 @@ export class JwtInterceptor implements HttpInterceptor {
       first(),
       flatMap(user => {
         const jwt = user?.jwt || null;
-        const isRequestToAppBackend = request.url.startsWith(environment.apiUrl);
+        const isRequestToAppBackend = request.url.startsWith(environment.authUrl);
         const authReq = !!(jwt && isRequestToAppBackend) ? request.clone({
           setHeaders: { Authorization: 'Bearer ' + jwt },
         }) : request;

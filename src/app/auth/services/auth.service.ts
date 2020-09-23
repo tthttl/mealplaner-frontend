@@ -6,6 +6,9 @@ import { environment } from '../../../environments/environment';
 import { decodeJWT, mapI18nApiToI18nClient, mapUserApiToUserClient } from '../../shared/helpers/helpers';
 import { UserApi, I18n as I18nApi } from '../../shared/model/model-api';
 import { JwtToken, LoginCredentials, User } from '../../shared/model/model';
+import { GlobalState } from '../../shared/state';
+import { Store } from '@ngrx/store';
+import { LoginServiceActions } from '../actions';
 
 @Injectable({
   providedIn: 'root'
@@ -13,18 +16,18 @@ import { JwtToken, LoginCredentials, User } from '../../shared/model/model';
 export class AuthService {
   private refreshTokenTimeout: number | undefined;
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private store: Store<GlobalState>) {
   }
 
   login(credentials: LoginCredentials): Observable<User> {
-    return this.httpClient.post<UserApi>(`${environment.apiUrl}/auth/local`, credentials).pipe(
+    return this.httpClient.post<UserApi>(`${environment.authUrl}/auth/local`, credentials).pipe(
       map((userApi: UserApi) => mapUserApiToUserClient(userApi)),
       tap(user => this.startRefreshTokenTimer(user.jwt))
     );
   }
 
   refreshToken(): Observable<User | null> {
-    return this.httpClient.post<UserApi>(`${environment.apiUrl}/auth/refresh-token`, {}).pipe(
+    return this.httpClient.post<UserApi>(`${environment.authUrl}/auth/refresh-token`, {}).pipe(
       map((response: UserApi | {ok: false, accessToken: ''}) => {
         return response.hasOwnProperty('jwt') ? mapUserApiToUserClient(response as UserApi) : null;
       }),
@@ -34,7 +37,7 @@ export class AuthService {
 
   logout(): Observable<true> {
     this.stopRefreshTokenTimer();
-    return this.httpClient.post<true>(`${environment.apiUrl}/auth/logout`, {});
+    return this.httpClient.post<true>(`${environment.authUrl}/auth/logout`, {});
   }
 
   private startRefreshTokenTimer(jwt: string): void {
@@ -44,7 +47,7 @@ export class AuthService {
     // set a timeout to refresh the token a minute before it expires
     const timeout = expires.getTime() - Date.now() - (60 * 1000);
     this.stopRefreshTokenTimer();
-    this.refreshTokenTimeout = setTimeout(() => this.refreshToken().subscribe(), timeout);
+    this.refreshTokenTimeout = setTimeout(() => this.store.dispatch(LoginServiceActions.refreshToken()), timeout);
   }
 
   private stopRefreshTokenTimer(): void {

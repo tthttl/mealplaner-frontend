@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TranslatePipe } from '../../../i18n/pipes/translate.pipe';
-import { DEFAULT_LANGAUGE, EMAIL_PATTERN } from '../../../shared/helpers/constants';
+import { DEFAULT_LANGUAGE, EMAIL_PATTERN } from '../../../shared/helpers/constants';
 import { translateValidationErrors } from '../../../shared/helpers/helpers';
 import { I18n, Language, LoginCredentials } from '../../../shared/model/model';
 
@@ -14,7 +14,7 @@ export class LoginFormComponent {
 
   @Input() buttonText = 'login';
   @Input() translations: I18n | null = {};
-  @Input() currentLang: Language = DEFAULT_LANGAUGE;
+  @Input() currentLang: Language = DEFAULT_LANGUAGE;
   @Output() credentialsReceived: EventEmitter<LoginCredentials> = new EventEmitter();
 
   loginForm: FormGroup;

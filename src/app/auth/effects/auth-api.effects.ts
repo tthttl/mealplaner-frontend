@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { Action, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { GlobalState } from '../../shared/state';
-import { LoginPageActions, AuthApiActions } from '../actions';
+import { LoginPageActions, AuthApiActions, LoginServiceActions } from '../actions';
 import { catchError, exhaustMap, map, tap, withLatestFrom } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 import { LoginAction } from '../../shared/model/model-action';
@@ -30,7 +30,7 @@ export class AuthApiEffects {
 
   @Effect()
   refreshToke = this.actions$.pipe(
-    ofType(AppInitializationActions.refreshToken),
+    ofType(AppInitializationActions.refreshToken, LoginServiceActions.refreshToken),
     exhaustMap(() => this.authService.refreshToken().pipe(
       map((user: User | null) => AuthApiActions.refreshTokenSuccess({user})),
       catchError((err: Error) => of(AuthApiActions.refreshTokenFailed()))

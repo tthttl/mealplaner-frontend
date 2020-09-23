@@ -21,7 +21,7 @@ export class ErrorInterceptor implements HttpInterceptor {
           tap(user => {
             if ([401, 403].includes(err.status) && user) {
               console.log('here');
-              this.authenticationService.logout().subscribe();
+              // this.authenticationService.logout().subscribe();
             }
           }),
           tap(_ => console.error(err)),

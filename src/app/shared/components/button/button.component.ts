@@ -13,8 +13,8 @@ export class ButtonComponent {
   @Input() isDisabled = false;
   @Input() e2eTestName = '';
   @Input() color = 'primary';
-  @Input() iconLeft: [string, IconName] | undefined;
-  @Input() iconRight: [string, IconName] | undefined;
+  @Input() iconLeft: IconName | undefined;
+  @Input() iconRight: IconName | undefined;
   @Input() isInputGroup = false;
   @Input() hasErrors = false;
   @Output() clicked: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();

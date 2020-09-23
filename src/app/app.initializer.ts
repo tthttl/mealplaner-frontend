@@ -8,6 +8,8 @@ import { Actions, ofType } from '@ngrx/effects';
 import { I18nApiActions } from './i18n/actions';
 import { first, takeUntil } from 'rxjs/operators';
 import { AuthApiActions } from './auth/actions';
+import { Language } from './shared/model/model';
+import { DEFAULT_LANGUAGE, SUPPORTED_LANGUAGES } from './shared/helpers/constants';
 
 export function appInitializer(
   authService: AuthService,
@@ -16,9 +18,11 @@ export function appInitializer(
   actions$: Actions
 ): () => void {
   return () => new Promise(resolve => {
-    // Todo get current Lang
-    store.dispatch(AppInitializationActions.loadI18n({language: 'de'}));
     store.dispatch(AppInitializationActions.refreshToken());
+
+    const userLanguage: string = localStorage.getItem('userLanguage') || navigator.language.substr(0, 2) || DEFAULT_LANGUAGE;
+    const appLanguage: Language = DEFAULT_LANGUAGE.includes(userLanguage) ? userLanguage as Language : DEFAULT_LANGUAGE;
+    store.dispatch(AppInitializationActions.loadI18n({language: appLanguage}));
 
     const loadI18nDone$ = actions$.pipe(
       ofType(I18nApiActions.getI18nSuccess),
@@ -28,7 +32,7 @@ export function appInitializer(
 
     const refreshedToken$ = actions$.pipe(
       ofType(AuthApiActions.refreshTokenSuccess),
-      takeUntil(actions$.pipe(ofType(AuthApiActions.refreshTokenSuccess))),
+      takeUntil(actions$.pipe(ofType(AuthApiActions.refreshTokenFailed))),
       first()
     );
 
