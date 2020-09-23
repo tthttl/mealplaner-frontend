@@ -7,8 +7,10 @@ import { SharedModule } from '../shared/shared.module';
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { LoginContainerComponent } from './containers/login-container/login-container.component';
 import { RegisterContainerComponent } from './containers/register-container/register-container.component';
-import { LoginRoutingModule } from './login-routing.module';
 import { TranslatePipe } from '../i18n/pipes/translate.pipe';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthApiEffects } from './effects/auth-api.effects';
+import { AuthRoutingModule } from './auth-routing.module';
 
 
 @NgModule({
@@ -19,7 +21,8 @@ import { TranslatePipe } from '../i18n/pipes/translate.pipe';
     ReactiveFormsModule,
     FontAwesomeModule,
     SharedModule,
-    LoginRoutingModule
+    AuthRoutingModule,
+    EffectsModule.forFeature([AuthApiEffects])
   ],
   providers: [
     {
@@ -28,4 +31,4 @@ import { TranslatePipe } from '../i18n/pipes/translate.pipe';
     }
   ]
 })
-export class LoginModule { }
+export class AuthModule { }

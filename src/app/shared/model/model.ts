@@ -33,6 +33,18 @@ export interface SelectOption<T extends object | string> {
 }
 
 export interface LoginCredentials {
-  email: string;
+  identifier: string;
   password: string;
+}
+
+export interface User {
+  jwt: string;
+  name: string;
+  email: string;
+}
+
+export interface JwtToken {
+  id: number;
+  iat: number;
+  exp: number;
 }

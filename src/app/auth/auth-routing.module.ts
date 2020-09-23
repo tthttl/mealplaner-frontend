@@ -1,12 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginContainerComponent } from './containers/login-container/login-container.component';
+import { AuthenticatedGuard } from '../shared/guards/authenticated.guard';
+import { LoggedOutGuard } from '../shared/guards/logged-out.guard';
 
 
 const routes: Routes = [
   {
-    path: '',
-    component: LoginContainerComponent
+    path: 'login',
+    component: LoginContainerComponent,
+    canActivate: [LoggedOutGuard]
   }
 ];
 
@@ -14,4 +17,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class LoginRoutingModule { }
+export class AuthRoutingModule { }

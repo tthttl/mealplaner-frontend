@@ -7,6 +7,7 @@
              [id]="inputId"
              [(ngModel)]="currentValue"
              (ngModelChange)="onChange($event)"
+             (blur)="onBlur()"
              name="{{name}}"
              [autocomplete]="autocomplete"
              [placeholder]="placeholder"

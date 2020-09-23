@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TranslatePipe } from '../../../i18n/pipes/translate.pipe';
 import { DEFAULT_LANGAUGE, EMAIL_PATTERN } from '../../../shared/helpers/constants';
 import { translateValidationErrors } from '../../../shared/helpers/helpers';
-import { I18n, Language } from '../../../shared/model/model';
+import { I18n, Language, LoginCredentials } from '../../../shared/model/model';
 
 @Component({
   selector: 'app-login-form',
@@ -13,16 +13,15 @@ import { I18n, Language } from '../../../shared/model/model';
 export class LoginFormComponent {
 
   @Input() buttonText = 'login';
-  @Input() translations: I18n = {};
+  @Input() translations: I18n | null = {};
   @Input() currentLang: Language = DEFAULT_LANGAUGE;
-  @Output() credentialsReceived: EventEmitter<{ email: string, password: string }> =
-    new EventEmitter<{ email: string; password: string }>();
+  @Output() credentialsReceived: EventEmitter<LoginCredentials> = new EventEmitter();
 
   loginForm: FormGroup;
 
   constructor(private translatePipe: TranslatePipe) {
     this.loginForm = new FormGroup({
-      email: new FormControl('', [
+      identifier: new FormControl('', [
         Validators.required,
         Validators.pattern(EMAIL_PATTERN)
       ]),
@@ -42,6 +41,8 @@ export class LoginFormComponent {
   }
 
   getErrorsFor(key: string): string[] {
+
+
     return translateValidationErrors(
       this.getFormControl(key),
       this.translatePipe,

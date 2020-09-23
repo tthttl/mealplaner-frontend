@@ -40,17 +40,23 @@ export class InputComponent implements ControlValueAccessor {
     this.propagateChange(option);
   }
 
+  onBlur(): void {
+    this.markAsTouched();
+  }
+
   onClicked(event: MouseEvent): void {
     this.clicked.emit(event);
   }
 
   propagateChange = (value: string | number) => {};
+  markAsTouched = () => {};
 
   registerOnChange(fn: () => {}): void {
     this.propagateChange = fn;
   }
 
   registerOnTouched(fn: () => {}): void {
+    this.markAsTouched = fn;
   }
 
   writeValue(value: string | number): void {

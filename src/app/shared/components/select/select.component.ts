@@ -15,7 +15,7 @@ import { v4 as uuid } from 'uuid';
       multi: true
     }
   ]})
-export class SelectComponent<T extends object> implements OnInit, ControlValueAccessor {
+export class SelectComponent<T extends object | string> implements OnInit, ControlValueAccessor {
   @Input() control: FormControl | undefined;
   @Input() name = '';
   @Input() options: SelectOption<T>[] = [];

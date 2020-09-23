@@ -1,5 +1,6 @@
 <div class="container">
   <app-login-form
+    [translations]="translations$ | async"
     (credentialsReceived)="login($event)"
   ></app-login-form>
 </div>

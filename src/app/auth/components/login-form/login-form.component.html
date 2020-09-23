@@ -2,12 +2,12 @@
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <app-input
       class="login-form__input"
-      [formControl]="getFormControl('email')"
+      formControlName="identifier"
       [type]="'email'"
       [autocomplete]="'email'"
       [placeholder]="'Email'"
       [label]="'email' | translate:translations:currentLang"
-      [errors]="getErrorsFor('email')"
+      [errors]="getErrorsFor('identifier')"
     ></app-input>
     <app-input
       class="login-form__input"
