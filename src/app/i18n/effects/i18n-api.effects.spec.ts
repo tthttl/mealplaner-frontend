@@ -15,7 +15,7 @@ describe('i18n Effects', () => {
     appState: {
       language: 'de',
       i18n: null,
-      user: null
+      user: null,
     }
   };
   // tslint:disable-next-line:no-any

@@ -20,12 +20,12 @@ export class AuthenticatedGuard implements CanActivate {
     return this.store.select(selectUser).pipe(
       map(user => {
 
-        if (!user?.jwt) {
+        if (!user?.jwt || isTokenExpired(user.jwt)) {
           this.router.navigate(['/user/login']);
           return false;
         }
 
-        return !isTokenExpired(user.jwt);
+        return true;
       })
     );
   }

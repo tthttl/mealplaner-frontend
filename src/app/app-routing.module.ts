@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthModule } from './auth/auth.module';
 
 
 const routes: Routes = [
   {
     path: 'user',
-    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
+    loadChildren: () => AuthModule
   },
   {
     path: 'shopping-list',

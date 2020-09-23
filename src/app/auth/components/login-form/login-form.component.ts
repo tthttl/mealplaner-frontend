@@ -41,8 +41,6 @@ export class LoginFormComponent {
   }
 
   getErrorsFor(key: string): string[] {
-
-
     return translateValidationErrors(
       this.getFormControl(key),
       this.translatePipe,

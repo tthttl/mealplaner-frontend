@@ -26,5 +26,4 @@ export class I18nApiEffects {
       catchError((err: Error) => of(I18nApiActions.getI18nFailure))
     ))
   );
-
 }

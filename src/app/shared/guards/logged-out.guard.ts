@@ -19,14 +19,12 @@ export class LoggedOutGuard implements CanActivate {
 
     return this.store.select(selectUser).pipe(
       map(user => {
-
-        console.log('guard', user && user.jwt && isTokenExpired(user.jwt));
-
-        if (!user || (user.jwt && isTokenExpired(user.jwt))) {
-          return true;
+        if (!!user && isTokenExpired(user.jwt)) {
+          this.router.navigate(['/shopping-list']);
+          return false;
         }
-        this.router.navigate(['/shopping-list']);
-        return false;
+
+        return true;
       })
     );
   }
