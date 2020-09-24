@@ -44,7 +44,6 @@ describe('Helpers', () => {
         translatePipe,
         {} as I18n,
         'de',
-        'key'
       )).toEqual(['dummy', 'dummy']);
     });
     it('should call transform with errors.validation.key.required', () => {
@@ -59,7 +58,6 @@ describe('Helpers', () => {
         translatePipe,
         {} as I18n,
         'de',
-        'key'
       );
       expect(translatePipe.transform).toHaveBeenCalledWith('errors.validation.required', {}, 'de');
     });
@@ -77,7 +75,6 @@ describe('Helpers', () => {
         translatePipe,
         {} as I18n,
         'de',
-        'key'
       )).toEqual([]);
     });
 
@@ -95,7 +92,6 @@ describe('Helpers', () => {
         translatePipe,
         {} as I18n,
         'de',
-        'key'
       )).toEqual([]);
     });
   });

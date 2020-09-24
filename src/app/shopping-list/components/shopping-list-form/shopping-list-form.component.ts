@@ -57,7 +57,6 @@ export class ShoppingListFormComponent implements OnInit {
       this.getFormControl(key),
       this.translatePipe,
       this.translations,
-      this.currentLang,
-      key);
+      this.currentLang);
   }
 }
