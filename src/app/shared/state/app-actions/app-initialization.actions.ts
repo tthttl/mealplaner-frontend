@@ -1,9 +1,9 @@
 import { createAction, props } from '@ngrx/store';
-import { I18n, Language, User } from '../../model/model';
+import { Language } from '../../model/model';
 
 
-export const loadI18n = createAction(
-  '[App Initialization] Load I18n',
+export const setLanguage = createAction(
+  '[App Initialization] Set Application Startup Language',
   props<{ language: Language }>());
 
 export const refreshToken = createAction('[App Initialization] Refresh JWT Token');

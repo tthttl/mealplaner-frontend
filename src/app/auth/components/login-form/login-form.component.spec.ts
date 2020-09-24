@@ -1,8 +1,9 @@
-/*import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslatePipe } from '../../../i18n/pipes/translate.pipe';
 
 import { LoginFormComponent } from './login-form.component';
+import { SharedModule } from '../../../shared/shared.module';
 
 describe('LoginFormComponent', () => {
   let component: LoginFormComponent;
@@ -10,7 +11,7 @@ describe('LoginFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule],
+      imports: [ReactiveFormsModule, SharedModule],
       declarations: [LoginFormComponent, TranslatePipe],
       providers: [
         {
@@ -31,4 +32,4 @@ describe('LoginFormComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-});*/
+});

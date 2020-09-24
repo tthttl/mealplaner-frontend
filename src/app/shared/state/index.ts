@@ -32,3 +32,8 @@ export const selectUser = createSelector(
   selectAppState,
   (appState: AppState) => appState.user
 );
+
+export const selectRequestedUrlBeforeLoginWasRequired = createSelector(
+  selectAppState,
+  (appState: AppState) => appState.requestedUrlBeforeLoginWasRequired
+);

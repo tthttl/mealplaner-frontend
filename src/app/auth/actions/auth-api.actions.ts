@@ -9,7 +9,7 @@ export const loginFailure = createAction('[Auth] Login Failure');
 
 export const refreshTokenSuccess = createAction(
   '[Auth App] Refresh Token Success',
-  props<{ user: User | null}>()
+  props<{ jwt: string }>()
 );
 
 export const refreshTokenFailed = createAction(

@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
-import { decodeJWT, mapI18nApiToI18nClient, mapUserApiToUserClient } from '../../shared/helpers/helpers';
-import { UserApi, I18n as I18nApi } from '../../shared/model/model-api';
-import { JwtToken, LoginCredentials, User } from '../../shared/model/model';
+import { decodeJwtToken, mapUserApiToUserClient } from '../../shared/helpers/helpers';
+import { UserApi } from '../../shared/model/model-api';
+import { JwtRenewal, LoginCredentials, User } from '../../shared/model/model';
 import { GlobalState } from '../../shared/state';
 import { Store } from '@ngrx/store';
 import { LoginServiceActions } from '../actions';
@@ -26,11 +26,8 @@ export class AuthService {
     );
   }
 
-  refreshToken(): Observable<User | null> {
-    return this.httpClient.post<UserApi>(`${environment.authUrl}/auth/refresh-token`, {}).pipe(
-      map((response: UserApi | {ok: false, accessToken: ''}) => {
-        return response.hasOwnProperty('jwt') ? mapUserApiToUserClient(response as UserApi) : null;
-      }),
+  refreshToken(): Observable<JwtRenewal> {
+    return this.httpClient.post<JwtRenewal>(`${environment.authUrl}/auth/refresh-token`, {}).pipe(
       tap(user => user && this.startRefreshTokenTimer(user.jwt))
     );
   }
@@ -41,7 +38,7 @@ export class AuthService {
   }
 
   private startRefreshTokenTimer(jwt: string): void {
-    const {exp} = decodeJWT(jwt);
+    const {exp} = decodeJwtToken(jwt);
 
     const expires = new Date(exp * 1000);
     // set a timeout to refresh the token a minute before it expires

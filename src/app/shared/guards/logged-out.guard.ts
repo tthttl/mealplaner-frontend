@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
-import { GlobalState, selectTranslations, selectUser } from '../state';
+import { GlobalState, selectUser } from '../state';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
-import { isTokenExpired } from '../helpers/helpers';
+import { isJwtTokenExpired } from '../helpers/helpers';
+import { DEFAUT_REDIRECT_URL_FOR_LOGGED_IN_USER } from '../helpers/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +20,8 @@ export class LoggedOutGuard implements CanActivate {
 
     return this.store.select(selectUser).pipe(
       map(user => {
-        if (!!user && !isTokenExpired(user.jwt)) {
-          this.router.navigate(['/shopping-list']);
+        if (!!user && !isJwtTokenExpired(user.jwt)) {
+          this.router.navigate([DEFAUT_REDIRECT_URL_FOR_LOGGED_IN_USER]);
           return false;
         }
 

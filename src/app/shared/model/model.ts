@@ -43,8 +43,13 @@ export interface User {
   email: string;
 }
 
-export interface JwtToken {
-  id: number;
+export interface JwtPayload {
+  id: string;
   iat: number;
   exp: number;
+}
+
+export interface JwtRenewal {
+  success: boolean;
+  jwt: string;
 }

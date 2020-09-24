@@ -21,8 +21,8 @@ export function appInitializer(
     store.dispatch(AppInitializationActions.refreshToken());
 
     const userLanguage: string = localStorage.getItem('userLanguage') || navigator.language.substr(0, 2) || DEFAULT_LANGUAGE;
-    const appLanguage: Language = DEFAULT_LANGUAGE.includes(userLanguage) ? userLanguage as Language : DEFAULT_LANGUAGE;
-    store.dispatch(AppInitializationActions.loadI18n({language: appLanguage}));
+    const appLanguage: Language = SUPPORTED_LANGUAGES.includes(userLanguage) ? userLanguage as Language : DEFAULT_LANGUAGE;
+    store.dispatch(AppInitializationActions.setLanguage({language: appLanguage}));
 
     const loadI18nDone$ = actions$.pipe(
       ofType(I18nApiActions.getI18nSuccess),

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { I18n, LoginCredentials } from '../../../shared/model/model';
-import { Store } from '@ngrx/store';
+import { I18n, Language, LoginCredentials } from '../../../shared/model/model';
+import { select, Store } from '@ngrx/store';
 import { GlobalState, selectTranslations } from '../../../shared/state';
 import { LoginPageActions } from '../../actions';
 import { Observable } from 'rxjs';
@@ -13,8 +13,10 @@ import { Observable } from 'rxjs';
 export class LoginContainerComponent implements OnInit {
 
   translations$: Observable<I18n | null> = this.store.select(selectTranslations);
+  currentLanguage$: Observable<Language> = this.store.pipe(select(state => state.appState.language));
 
-  constructor(private store: Store<GlobalState>) { }
+  constructor(private store: Store<GlobalState>) {
+  }
 
   ngOnInit(): void {
   }

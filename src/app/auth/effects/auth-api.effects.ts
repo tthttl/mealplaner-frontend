@@ -1,39 +1,52 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { GlobalState } from '../../shared/state';
-import { LoginPageActions, AuthApiActions, LoginServiceActions } from '../actions';
+import { GlobalState, selectRequestedUrlBeforeLoginWasRequired } from '../../shared/state';
+import { AuthApiActions, LoginPageActions, LoginServiceActions } from '../actions';
 import { catchError, exhaustMap, map, tap, withLatestFrom } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 import { LoginAction } from '../../shared/model/model-action';
-import { User } from '../../shared/model/model';
+import { JwtRenewal, User } from '../../shared/model/model';
 import { of } from 'rxjs';
 import { AppInitializationActions } from '../../shared/state/app-actions';
+import { Router } from '@angular/router';
+import { DEFAUT_REDIRECT_URL_FOR_LOGGED_IN_USER } from '../../shared/helpers/constants';
 
 @Injectable()
 export class AuthApiEffects {
   constructor(
     private actions$: Actions,
     private authService: AuthService,
+    private router: Router,
     private store: Store<GlobalState>) {
   }
 
   @Effect()
   login = this.actions$.pipe(
     ofType(LoginPageActions.login),
-    withLatestFrom(this.store),
-    exhaustMap(([{credentials}, state]: [LoginAction , GlobalState]) => this.authService.login(credentials).pipe(
+    exhaustMap(({credentials}: LoginAction) => this.authService.login(credentials).pipe(
       map((user: User) => AuthApiActions.loginSuccess({user})),
-      catchError((err: Error) => of(AuthApiActions.loginFailure()))
+      catchError(() => of(AuthApiActions.loginFailure()))
     )),
   );
 
   @Effect()
-  refreshToke = this.actions$.pipe(
+  refreshToken = this.actions$.pipe(
     ofType(AppInitializationActions.refreshToken, LoginServiceActions.refreshToken),
     exhaustMap(() => this.authService.refreshToken().pipe(
-      map((user: User | null) => AuthApiActions.refreshTokenSuccess({user})),
-      catchError((err: Error) => of(AuthApiActions.refreshTokenFailed()))
+      map((jwtRenewal: JwtRenewal) => {
+        return jwtRenewal.success ? AuthApiActions.refreshTokenSuccess({jwt: jwtRenewal.jwt}) : AuthApiActions.refreshTokenFailed();
+      }),
+      catchError(() => of(AuthApiActions.refreshTokenFailed()))
     )),
+  );
+
+  @Effect({dispatch: false})
+  redirectWhenLoggedIn = this.actions$.pipe(
+    ofType(AuthApiActions.loginSuccess),
+    withLatestFrom(this.store.select(selectRequestedUrlBeforeLoginWasRequired)),
+    tap(([_, url]) => {
+      this.router.navigate([url || DEFAUT_REDIRECT_URL_FOR_LOGGED_IN_USER]);
+    }),
   );
 }
