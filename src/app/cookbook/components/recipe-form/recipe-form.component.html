@@ -2,18 +2,18 @@
   <app-input
     class="recipe-form__input recipe-form--input-title"
     [name]="'title'"
-    [placeholder]="'recipe-form.input.title' | translate:translations:currentLang"
+    [placeholder]="'recipe-form.placeholder.title' | translate:translations:currentLang"
     [label]="'recipe-form.label.title' | translate:translations:currentLang"
     [errors]="getErrorsFor('title')"
     [formControl]="getFormControl('title')"></app-input>
   <app-input
     class="recipe-form__input recipe-form--input-url"
     [name]="'url'"
-    [placeholder]="'recipe-form.input.url' | translate:translations:currentLang"
+    [placeholder]="'recipe-form.placeholder.url' | translate:translations:currentLang"
     [label]="'recipe-form.label.url' | translate:translations:currentLang"
     [formControl]="getFormControl('url')"></app-input>
 
-  <label class="ingredients-label">{{'ingredient-form.input.label-text' | translate:translations:currentLang}}</label>
+  <label class="ingredients-label">{{'recipe-form.ingredients.label-text' | translate:translations:currentLang}}</label>
   <div class="ingredients recipe-form__input">
     <div *ngFor="let ingredient of ingredients.controls; let last = last"
          class="ingredients__row"
@@ -23,7 +23,7 @@
         [type]="'number'"
         [minValue]="1"
         [name]="'amount'"
-        [placeholder]="'ingredient-form.placeholder.amount' | translate:translations:currentLang"
+        [placeholder]="'recipe-form.placeholder.amount' | translate:translations:currentLang"
         [formControl]="getIngredientFormControl(ingredient, 'amount')">
       </app-input>
       <app-select
@@ -35,14 +35,14 @@
       <app-input
         class="ingredients__row--input"
         [name]="'name'"
-        [placeholder]="'ingredient-form.input.name' | translate:translations:currentLang"
+        [placeholder]="'recipe-form.placeholder.name' | translate:translations:currentLang"
         [formControl]="getIngredientFormControl(ingredient, 'name')">
       </app-input>
       <mat-slide-toggle
         class="ingredients__row--input ingredients__row--input-toggle"
         [color]="'primary'"
         [formControl]="getIngredientFormControl(ingredient, 'isStapleFood')">
-        {{'ingredient-form.input.toggle-text' | translate:translations:currentLang}}
+        {{'recipe-form.text.toggle' | translate:translations:currentLang}}
       </mat-slide-toggle>
       <button
         class="icon-wrapper"
@@ -54,7 +54,7 @@
           [ngClass]="{'delete-icon--disabled': ingredients?.length === 1}"
           [icon]="['fas', 'times']">
         </fa-icon>
-        <span class="delete-text">{{'ingredient-form.input.delete' | translate:translations:currentLang}}</span>
+        <span class="delete-text">{{'recipe-form.button.delete' | translate:translations:currentLang}}</span>
       </button>
     </div>
     <app-button

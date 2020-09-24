@@ -323,30 +323,7 @@
         },
         {
             "name": "Translations",
-            "id": "interface-Translations-c2f16e45be479b91d793703859c4a61b",
-            "file": "src/app/shared/model/model.ts",
-            "type": "interface",
-            "sourceCode": "export type I18n = {\n  readonly [key: string]: Translations;\n};\n\nexport interface Translations {\n  readonly [key: string]: string;\n}\n\nexport type Language = 'de' | 'en';\n\nexport type Unit = 'kg' | 'g' | 'tableSpoon' | 'coffeeSpoon' | 'l' | 'dl' | 'ml' | 'pinch' | 'piece' | 'pack';\n\nexport interface Ingredient {\n  name: string;\n  amount: number;\n  unit: Unit;\n}\n\nexport interface ShoppingListItem extends Ingredient {\n  id: string;\n  isChecked: boolean;\n}\n\nexport interface ArrayItemMovedEvent {\n  currentIndex: number;\n  previousIndex: number;\n}\n\nexport interface SelectOption<T extends object | string> {\n  value: T | string;\n  key?: string;\n  name?: string;\n}\n\nexport interface LoginCredentials {\n  email: string;\n  password: string;\n}\n\nexport interface RecipeIngredient extends Ingredient {\n  readonly isStapleFood: boolean;\n}\n\nexport interface Recipe {\n  readonly title: string;\n  readonly ingredients: RecipeIngredient [];\n  readonly url?: string;\n}\n",
-            "properties": [],
-            "indexSignatures": [
-                {
-                    "id": "index-declaration-c2f16e45be479b91d793703859c4a61b",
-                    "args": [
-                        {
-                            "name": "key",
-                            "type": "string"
-                        }
-                    ],
-                    "returnType": "string",
-                    "line": 5
-                }
-            ],
-            "kind": 159,
-            "methods": []
-        },
-        {
-            "name": "Translations",
-            "id": "interface-Translations-c1582e609f558c89b2cde26bd3030875-1",
+            "id": "interface-Translations-c1582e609f558c89b2cde26bd3030875",
             "file": "src/app/shared/model/model-api.ts",
             "type": "interface",
             "sourceCode": "export type I18n = {\n  readonly lang: string;\n  readonly translations: Translations;\n};\n\nexport interface Translations {\n  readonly [key: string]: string;\n}\n",
@@ -362,6 +339,29 @@
                     ],
                     "returnType": "string",
                     "line": 6
+                }
+            ],
+            "kind": 159,
+            "methods": []
+        },
+        {
+            "name": "Translations",
+            "id": "interface-Translations-c2f16e45be479b91d793703859c4a61b-1",
+            "file": "src/app/shared/model/model.ts",
+            "type": "interface",
+            "sourceCode": "export type I18n = {\n  readonly [key: string]: Translations;\n};\n\nexport interface Translations {\n  readonly [key: string]: string;\n}\n\nexport type Language = 'de' | 'en';\n\nexport type Unit = 'kg' | 'g' | 'tableSpoon' | 'coffeeSpoon' | 'l' | 'dl' | 'ml' | 'pinch' | 'piece' | 'pack';\n\nexport interface Ingredient {\n  name: string;\n  amount: number;\n  unit: Unit;\n}\n\nexport interface ShoppingListItem extends Ingredient {\n  id: string;\n  isChecked: boolean;\n}\n\nexport interface ArrayItemMovedEvent {\n  currentIndex: number;\n  previousIndex: number;\n}\n\nexport interface SelectOption<T extends object | string> {\n  value: T | string;\n  key?: string;\n  name?: string;\n}\n\nexport interface LoginCredentials {\n  email: string;\n  password: string;\n}\n\nexport interface RecipeIngredient extends Ingredient {\n  readonly isStapleFood: boolean;\n}\n\nexport interface Recipe {\n  readonly title: string;\n  readonly ingredients: RecipeIngredient [];\n  readonly url?: string;\n}\n",
+            "properties": [],
+            "indexSignatures": [
+                {
+                    "id": "index-declaration-c2f16e45be479b91d793703859c4a61b",
+                    "args": [
+                        {
+                            "name": "key",
+                            "type": "string"
+                        }
+                    ],
+                    "returnType": "string",
+                    "line": 5
                 }
             ],
             "kind": 159,
@@ -796,7 +796,7 @@
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": "@import \"../../../../styles/material_theme\";\n@import \"../../../../styles/settings/colors\";\n\n.button{\n  width: 100%;\n  height: 100%;\n  background-color: $blue_70;\n  border-radius: 4px;\n  border-style:none;\n  border-width:0;\n  box-sizing:border-box;\n  color: $blue-grey_10;\n  cursor:pointer;\n  display:inline-block;\n  font-family:Roboto, sans-serif;\n  font-size:1rem;\n  font-stretch:100%;\n  font-style:normal;\n  font-weight:500;\n  line-height:2rem;\n  margin:0;\n  outline-style:none;\n  outline-width:0;\n  overflow:visible;\n  padding-left:1rem;\n  padding-right:1rem;\n  position:relative;\n  text-align:center;\n  vertical-align:baseline;\n  white-space:nowrap;\n  transition-duration: 0.2s;\n\n  &:hover{\n    background-color: $blue_60;\n  }\n\n  &:active {\n    background-color: $blue_80;\n  }\n\n  &--no-left-border-radius{\n    border-radius: 0 4px 4px 0;\n  }\n\n  &--color-accent{\n    background-color: $cyan_70;\n    color:$cyan_10;\n\n    &:hover{\n      background-color: $cyan_60;\n    }\n\n    &:active {\n      background-color: $cyan_80;\n    }\n  }\n\n  &--color-warning{\n    background-color: $red_70;\n    color: $red_10;\n\n    &:hover{\n      background-color: $red_60;\n    }\n\n    &:active {\n      background-color: $red_80;\n    }\n  }\n\n  &--color-disabled{\n    background-color: $blue-grey_50;\n    cursor: not-allowed;\n\n    &:hover,\n    &:active{\n      background-color: $blue-grey_50;\n    }\n\n  }\n\n  &--warning-border{\n    border: 2px solid $red_70;\n    border-left: none;\n  }\n\n  .icon-left{\n    padding-right: 0.5rem;\n  }\n\n  .icon-right{\n    padding-left: 0.5rem;\n  }\n\n}\n",
+                    "data": "@import \"../../../../styles/material_theme\";\n@import \"../../../../styles/settings/colors\";\n@import \"../../../../styles/mixins/forms\";\n\n.button{\n  background-color: $blue_70;\n  color: $blue-grey_10;\n   @include button();\n\n  &:hover{\n    background-color: $blue_60;\n  }\n\n  &:active {\n    background-color: $blue_80;\n  }\n\n  &--no-left-border-radius{\n    border-radius: 0 4px 4px 0;\n  }\n\n  &--color-accent{\n    background-color: $cyan_70;\n    color:$cyan_10;\n\n    &:hover{\n      background-color: $cyan_60;\n    }\n\n    &:active {\n      background-color: $cyan_80;\n    }\n  }\n\n  &--color-warning{\n    background-color: $red_70;\n    color: $red_10;\n\n    &:hover{\n      background-color: $red_60;\n    }\n\n    &:active {\n      background-color: $red_80;\n    }\n  }\n\n  &--color-disabled{\n    background-color: $blue-grey_50;\n    cursor: not-allowed;\n\n    &:hover,\n    &:active{\n      background-color: $blue-grey_50;\n    }\n\n  }\n\n  &--warning-border{\n    border: 2px solid $red_70;\n    border-left: none;\n  }\n\n  .icon-left{\n    padding-right: 0.5rem;\n  }\n\n  .icon-right{\n    padding-left: 0.5rem;\n  }\n\n}\n",
                     "styleUrl": "./button.component.scss"
                 }
             ],
@@ -1059,7 +1059,7 @@
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": "@import \"../../../../styles/settings/colors\";\n@import \"../../../../styles/material_theme\";\n@import \"../../../../styles/mixins/forms\";\n\n\n\n.input-group {\n  display: flex;\n  justify-content: center;\n  font-family: 'Roboto', sans-serif;\n\n  .input {\n    width: 100%;\n    display: flex;\n    flex-direction: column;\n\n    .field-wrapper {\n      display: flex;\n      flex-direction: row;\n      justify-content: flex-start;\n    }\n\n    &__label {\n      @include label;\n    }\n\n    &__field {\n      @include form-field;\n\n      &--border-accent {\n        border: 2px solid $cyan_70;\n      }\n\n      &--short {\n        border-right: none;\n        border-radius: 4px 0 0 4px;\n      }\n\n    }\n\n    &__button {\n      flex: 0 0 20%;\n      border-radius: 0 4px 4px 0;\n    }\n\n    &__error {\n      @include form-errors;\n    }\n  }\n}\n",
+                    "data": "@import \"../../../../styles/settings/colors\";\n@import \"../../../../styles/material_theme\";\n@import \"../../../../styles/mixins/forms\";\n\n\n\n.input-group {\n  display: flex;\n  justify-content: center;\n\n  .input {\n    width: 100%;\n    display: flex;\n    flex-direction: column;\n\n    .field-wrapper {\n      display: flex;\n      flex-direction: row;\n      justify-content: flex-start;\n    }\n\n    &__label {\n      @include label;\n    }\n\n    &__field {\n      @include form-field;\n\n      &--border-accent {\n        border: 2px solid $cyan_70;\n      }\n\n      &--short {\n        border-right: none;\n        border-radius: 4px 0 0 4px;\n      }\n\n    }\n\n    &__button {\n      flex: 0 0 20%;\n      border-radius: 0 4px 4px 0;\n    }\n\n    &__error {\n      @include form-errors;\n    }\n  }\n}\n",
                     "styleUrl": "./input.component.scss"
                 }
             ],
@@ -1293,7 +1293,7 @@
         },
         {
             "name": "RecipeFormComponent",
-            "id": "component-RecipeFormComponent-453399efc8b3891fed5d1113861ca551",
+            "id": "component-RecipeFormComponent-14081d856cd187c7c7fc17b4bed661dc",
             "file": "src/app/cookbook/components/recipe-form/recipe-form.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -1313,18 +1313,18 @@
                 {
                     "name": "buttonText",
                     "defaultValue": "'add'",
-                    "line": 13
+                    "line": 18
                 },
                 {
                     "name": "currentLang",
                     "defaultValue": "DEFAULT_LANGAUGE",
-                    "line": 15,
+                    "line": 20,
                     "type": "Language"
                 },
                 {
                     "name": "translations",
                     "defaultValue": "{}",
-                    "line": 14,
+                    "line": 19,
                     "type": "I18n"
                 }
             ],
@@ -1332,20 +1332,103 @@
                 {
                     "name": "recipeSaved",
                     "defaultValue": "new EventEmitter<Recipe>()",
-                    "line": 16,
+                    "line": 21,
                     "type": "EventEmitter<Recipe>"
                 }
             ],
             "propertiesClass": [
                 {
+                    "name": "ingredients",
+                    "type": "FormArray",
+                    "optional": false,
+                    "description": "",
+                    "line": 24
+                },
+                {
                     "name": "recipeForm",
                     "type": "FormGroup",
                     "optional": false,
                     "description": "",
-                    "line": 18
+                    "line": 23
+                },
+                {
+                    "name": "units",
+                    "defaultValue": "[]",
+                    "type": "SelectOption<string>[]",
+                    "optional": false,
+                    "description": "",
+                    "line": 25
                 }
             ],
             "methodsClass": [
+                {
+                    "name": "addEmptyIngredientRow",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 64
+                },
+                {
+                    "name": "createNewEmptyIngredientFormGroup",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "FormGroup",
+                    "typeParameters": [],
+                    "line": 51
+                },
+                {
+                    "name": "createUnits",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "SelectOption[]",
+                    "typeParameters": [],
+                    "line": 81
+                },
+                {
+                    "name": "deleteIngredient",
+                    "args": [
+                        {
+                            "name": "ingredient",
+                            "type": "AbstractControl"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 68,
+                    "jsdoctags": [
+                        {
+                            "name": "ingredient",
+                            "type": "AbstractControl",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "getErrorsFor",
+                    "args": [
+                        {
+                            "name": "key",
+                            "type": "string"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "string[]",
+                    "typeParameters": [],
+                    "line": 72,
+                    "jsdoctags": [
+                        {
+                            "name": "key",
+                            "type": "string",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
                 {
                     "name": "getFormControl",
                     "args": [
@@ -1357,8 +1440,41 @@
                     "optional": false,
                     "returnType": "FormControl",
                     "typeParameters": [],
-                    "line": 32,
+                    "line": 43,
                     "jsdoctags": [
+                        {
+                            "name": "key",
+                            "type": "string",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "getIngredientFormControl",
+                    "args": [
+                        {
+                            "name": "ingredient",
+                            "type": "AbstractControl"
+                        },
+                        {
+                            "name": "key",
+                            "type": "string"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "FormControl",
+                    "typeParameters": [],
+                    "line": 47,
+                    "jsdoctags": [
+                        {
+                            "name": "ingredient",
+                            "type": "AbstractControl",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
                         {
                             "name": "key",
                             "type": "string",
@@ -1374,7 +1490,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 28
+                    "line": 38
                 },
                 {
                     "name": "onSubmit",
@@ -1382,7 +1498,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 36
+                    "line": 60
                 }
             ],
             "hostBindings": [],
@@ -1390,11 +1506,11 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';\nimport { FormControl, FormGroup, Validators } from '@angular/forms';\nimport { DEFAULT_LANGAUGE } from '../../../shared/helpers/constants';\nimport { I18n, Language, Recipe } from '../../../shared/model/model';\n\n@Component({\n  selector: 'app-recipe-form',\n  templateUrl: './recipe-form.component.html',\n  styleUrls: ['./recipe-form.component.scss']\n})\nexport class RecipeFormComponent implements OnInit {\n\n  @Input() buttonText = 'add';\n  @Input() translations: I18n = {};\n  @Input() currentLang: Language = DEFAULT_LANGAUGE;\n  @Output() recipeSaved: EventEmitter<Recipe> = new EventEmitter<Recipe>();\n\n  recipeForm: FormGroup;\n\n  constructor() {\n    this.recipeForm = new FormGroup({\n      title: new FormControl('', [Validators.required]),\n      url: new FormControl(''),\n      ingredients: new FormControl([], [Validators.required])\n    });\n  }\n\n  ngOnInit(): void {\n  }\n\n\n  getFormControl(key: string): FormControl {\n    return this.recipeForm?.controls[key] as FormControl;\n  }\n\n  onSubmit(): void {\n    this.recipeSaved.emit(this.recipeForm?.value);\n  }\n\n}\n",
+            "sourceCode": "import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';\nimport { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';\nimport { Store } from '@ngrx/store';\nimport { getI18n } from '../../../i18n/actions/i18n-api.actions';\nimport { TranslatePipe } from '../../../i18n/pipes/translate.pipe';\nimport { DEFAULT_LANGAUGE } from '../../../shared/helpers/constants';\nimport { translateValidationErrors } from '../../../shared/helpers/helpers';\nimport { I18n, Language, Recipe, SelectOption } from '../../../shared/model/model';\nimport { GlobalState, selectTranslations } from '../../../shared/state';\n\n@Component({\n  selector: 'app-recipe-form',\n  templateUrl: './recipe-form.component.html',\n  styleUrls: ['./recipe-form.component.scss']\n})\nexport class RecipeFormComponent implements OnInit {\n\n  @Input() buttonText = 'add';\n  @Input() translations: I18n = {};\n  @Input() currentLang: Language = DEFAULT_LANGAUGE;\n  @Output() recipeSaved: EventEmitter<Recipe> = new EventEmitter<Recipe>();\n\n  recipeForm: FormGroup;\n  ingredients: FormArray;\n  units: SelectOption<string>[] = [];\n\n  constructor(private translatePipe: TranslatePipe) {\n    this.recipeForm = new FormGroup({\n      title: new FormControl('', [Validators.required]),\n      url: new FormControl(''),\n      ingredients: new FormArray([\n        this.createNewEmptyIngredientFormGroup()\n      ])\n    });\n    this.ingredients = this.recipeForm?.controls.ingredients as FormArray;\n  }\n\n  ngOnInit(): void {\n    this.units = this.createUnits();\n  }\n\n\n  getFormControl(key: string): FormControl {\n    return this.recipeForm?.controls[key] as FormControl;\n  }\n\n  getIngredientFormControl(ingredient: AbstractControl, key: string): FormControl {\n    return (ingredient as FormGroup).controls[key] as FormControl;\n  }\n\n  createNewEmptyIngredientFormGroup(): FormGroup {\n    return new FormGroup({\n      name: new FormControl('', [Validators.required]),\n      amount: new FormControl('', [Validators.required]),\n      unit: new FormControl('kg', [Validators.required]),\n      isStapleFood: new FormControl(false, [Validators.required])\n    });\n  }\n\n  onSubmit(): void {\n    this.recipeSaved.emit(this.recipeForm?.value);\n  }\n\n  addEmptyIngredientRow(): void {\n    this.ingredients.push(this.createNewEmptyIngredientFormGroup());\n  }\n\n  deleteIngredient(ingredient: AbstractControl): void {\n    this.ingredients = new FormArray(this.ingredients.controls.filter((item: AbstractControl) => item !== ingredient));\n  }\n\n  getErrorsFor(key: string): string[] {\n    return translateValidationErrors(\n      this.getFormControl(key),\n      this.translatePipe,\n      this.translations,\n      this.currentLang,\n      key);\n  }\n\n  createUnits(): SelectOption<string>[] {\n    return [\n      {\n        value: 'tableSpoon',\n        key: this.translatePipe.transform('forms.units.tablespoon', this.translations, this.currentLang)\n      },\n      {\n        value: 'coffeeSpoon',\n        key: this.translatePipe.transform('forms.units.coffee-spoon', this.translations, this.currentLang)\n      },\n      {\n        value: 'pinch',\n        key: this.translatePipe.transform('forms.units.pinch', this.translations, this.currentLang)\n      },\n      {\n        value: 'pack',\n        key: this.translatePipe.transform('forms.units.pack', this.translations, this.currentLang)\n      },\n      {\n        value: 'piece',\n        key: this.translatePipe.transform('forms.units.piece', this.translations, this.currentLang)\n      },\n      {value: 'kg', key: 'kg'},\n      {value: 'g', key: 'g'},\n      {value: 'l', key: 'l'},\n      {value: 'dl', key: 'dl'},\n      {value: 'ml', key: 'ml'},\n    ];\n  }\n\n\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": "",
+                    "data": "@import \"../../../../styles/settings/colors\";\n@import \"../../../../styles/settings/breakpoints\";\n@import \"../../../../styles/mixins/forms\";\n\n.recipe-form {\n\n  &__input {\n    display: block;\n    margin-bottom: 1rem;\n  }\n\n  &__button {\n    display: block;\n    margin: 0 2rem 1rem 2rem;\n  }\n\n  .ingredients-label{\n    @include label;\n  }\n\n}\n\n.ingredients {\n  width: 100%;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  overflow: hidden;\n  border: 2px solid $blue_80;\n  border-radius: 4px;\n\n  &__row {\n    width: 100%;\n    display: flex;\n    flex-direction: column;\n    overflow: hidden;\n    //mixin\n    border-bottom: 1px solid $blue_80;\n    padding: 1rem 2rem;\n\n    @include large {\n      flex-direction: row;\n    }\n\n    &--last {\n      border-bottom: none;\n    }\n\n    &--input-amount {\n      @include large {\n        max-width: 8rem;\n      }\n    }\n\n    &--input {\n      padding-bottom: 1rem;\n      flex: 1 1 auto;\n\n      @include large {\n        padding-bottom: 0;\n        padding-right: 1rem;\n\n        &:last-child {\n          padding-right: 0;\n        }\n      }\n    }\n\n    &--input-unit {\n      @include large {\n        max-width: 8.5rem;\n      }\n    }\n\n    &--input-toggle {\n      margin-bottom: 1rem;\n      color: $blue_70;\n      @include large {\n        max-width: 10rem;\n        margin: auto 0;\n      }\n    }\n\n  }\n\n  .icon-wrapper {\n    background-color: $red_70;\n    border-radius: 4px;\n    @include button();\n\n    &--disabled {\n      background-color: $blue-grey_50;\n      cursor: not-allowed;\n    }\n\n    @include large {\n      background: none;\n      border: none;\n      width: fit-content;\n      height: unset;\n    }\n\n    .delete-icon {\n      color: $red_70;\n      cursor: pointer;\n      margin: auto;\n      font-size: 1.5rem;\n      visibility: hidden;\n\n      @include large() {\n        visibility: visible;\n      }\n\n      &--disabled {\n        color: $blue-grey_10;\n        cursor: not-allowed;\n\n        @include large {\n          color: $blue-grey_50;\n        }\n      }\n    }\n\n    .delete-text {\n      color: $blue-grey_10;\n\n      @include large() {\n        display: none;\n      }\n    }\n  }\n\n}\n\n\n",
                     "styleUrl": "./recipe-form.component.scss"
                 }
             ],
@@ -1402,13 +1518,27 @@
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
-                "args": [],
-                "line": 18
+                "args": [
+                    {
+                        "name": "translatePipe",
+                        "type": "TranslatePipe"
+                    }
+                ],
+                "line": 25,
+                "jsdoctags": [
+                    {
+                        "name": "translatePipe",
+                        "type": "TranslatePipe",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
             },
             "implements": [
                 "OnInit"
             ],
-            "templateData": "<div class=\"form-wrapper\">\n  <form class=\"recipe-form\" [formGroup]=\"recipeForm\" (ngSubmit)=\"onSubmit()\">\n    <app-input\n      class=\"recipe-form--input recipe-form--input-amount\"\n      type=\"number\"\n      [minValue]=\"0\"\n      [name]=\"'amount'\"\n      [placeholder]=\"'shoppingList.addForm.amount' | translate:translations:currentLang\"\n      [formControl]=\"getFormControl('amount')\"></app-input>\n\n    <app-select\n      class=\"recipe-form--input recipe-form--input-unit\"\n      [options]=\"units\"\n      [name]=\"'unit'\"\n      [formControl]=\"getFormControl('unit')\">\n    </app-select>\n\n    <app-input\n      class=\"recipe-form--input\"\n      [placeholder]=\"'shoppingList.addForm.product' | translate:translations:currentLang\"\n      [formControl]=\"getFormControl('name')\">\n    </app-input>\n\n    <app-button\n      class=\"recipe-form--submit\"\n      [buttonType]=\"'submit'\"\n      [buttonText]=\"'shoppingList.addForm.addLabel' | translate:translations:currentLang\"\n      [isDisabled]=\"recipeForm.invalid\"></app-button>\n  </form>\n</div>\n\n\n"
+            "templateData": "<form class=\"recipe-form\" [formGroup]=\"recipeForm\" (ngSubmit)=\"onSubmit()\">\n  <app-input\n    class=\"recipe-form__input recipe-form--input-title\"\n    [name]=\"'title'\"\n    [placeholder]=\"'recipe-form.placeholder.title' | translate:translations:currentLang\"\n    [label]=\"'recipe-form.label.title' | translate:translations:currentLang\"\n    [errors]=\"getErrorsFor('title')\"\n    [formControl]=\"getFormControl('title')\"></app-input>\n  <app-input\n    class=\"recipe-form__input recipe-form--input-url\"\n    [name]=\"'url'\"\n    [placeholder]=\"'recipe-form.placeholder.url' | translate:translations:currentLang\"\n    [label]=\"'recipe-form.label.url' | translate:translations:currentLang\"\n    [formControl]=\"getFormControl('url')\"></app-input>\n\n  <label class=\"ingredients-label\">{{'recipe-form.ingredients.label-text' | translate:translations:currentLang}}</label>\n  <div class=\"ingredients recipe-form__input\">\n    <div *ngFor=\"let ingredient of ingredients.controls; let last = last\"\n         class=\"ingredients__row\"\n         [ngClass]=\"{'ingredients__row--last': last}\">\n      <app-input\n        class=\"ingredients__row--input ingredients__row--input-amount\"\n        [type]=\"'number'\"\n        [minValue]=\"1\"\n        [name]=\"'amount'\"\n        [placeholder]=\"'recipe-form.placeholder.amount' | translate:translations:currentLang\"\n        [formControl]=\"getIngredientFormControl(ingredient, 'amount')\">\n      </app-input>\n      <app-select\n        class=\"ingredients__row--input ingredients__row--input-unit\"\n        [options]=\"units\"\n        [name]=\"'unit'\"\n        [formControl]=\"getIngredientFormControl(ingredient, 'unit')\">\n      </app-select>\n      <app-input\n        class=\"ingredients__row--input\"\n        [name]=\"'name'\"\n        [placeholder]=\"'recipe-form.placeholder.name' | translate:translations:currentLang\"\n        [formControl]=\"getIngredientFormControl(ingredient, 'name')\">\n      </app-input>\n      <mat-slide-toggle\n        class=\"ingredients__row--input ingredients__row--input-toggle\"\n        [color]=\"'primary'\"\n        [formControl]=\"getIngredientFormControl(ingredient, 'isStapleFood')\">\n        {{'recipe-form.text.toggle' | translate:translations:currentLang}}\n      </mat-slide-toggle>\n      <button\n        class=\"icon-wrapper\"\n        (click)=\"deleteIngredient(ingredient)\"\n        [disabled]=\"ingredients?.length === 1\"\n        [ngClass]=\"{'icon-wrapper--disabled': ingredients?.length === 1}\">\n        <fa-icon\n          class=\"delete-icon\"\n          [ngClass]=\"{'delete-icon--disabled': ingredients?.length === 1}\"\n          [icon]=\"['fas', 'times']\">\n        </fa-icon>\n        <span class=\"delete-text\">{{'recipe-form.button.delete' | translate:translations:currentLang}}</span>\n      </button>\n    </div>\n    <app-button\n      class=\"recipe-form__button\"\n      [buttonText]=\"'recipe-form.button.new-ingredient' | translate:translations:currentLang\"\n      [isDisabled]=\"ingredients.invalid\"\n      [color]=\"'accent'\"\n      (clicked)=\"addEmptyIngredientRow()\">\n    </app-button>\n  </div>\n\n  <app-button\n    class=\"recipe-form__button\"\n    [buttonType]=\"'submit'\"\n    [buttonText]=\"'recipe-form.button.submit' | translate:translations:currentLang\"\n    [isDisabled]=\"recipeForm.invalid\"></app-button>\n</form>\n\n\n\n"
         },
         {
             "name": "RegisterContainerComponent",
@@ -1468,7 +1598,7 @@
         },
         {
             "name": "SelectComponent",
-            "id": "component-SelectComponent-5cf6ad948e0ab68ebb8d24c9ddd16844",
+            "id": "component-SelectComponent-e0761b4ee4c74356989082654f8dced9",
             "file": "src/app/shared/components/select/select.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -1691,11 +1821,11 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';\nimport { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';\nimport { SelectOption } from '../../model/model';\nimport { v4 as uuid } from 'uuid';\n\n\n@Component({\n  selector: 'app-select',\n  templateUrl: './select.component.html',\n  styleUrls: ['./select.component.scss'],\n  providers: [\n    {\n      provide: NG_VALUE_ACCESSOR,\n      useExisting: forwardRef(() => SelectComponent),\n      multi: true\n    }\n  ]})\nexport class SelectComponent<T extends object> implements OnInit, ControlValueAccessor {\n  @Input() control: FormControl | undefined;\n  @Input() name = '';\n  @Input() options: SelectOption<T>[] = [];\n  @Input() label: string | undefined;\n  @Input() errors: string[] = [];\n  @Input() isDisabled = false;\n  @Input() e2eTestName = '';\n  @Output() valueChanged: EventEmitter<T | string> = new EventEmitter();\n\n  selectedValue: T | string | null = null;\n  inputId: string = uuid();\n\n  constructor() { }\n\n  ngOnInit(): void {\n    this.selectedValue = this.options[0].value;\n    this.propagateChange(this.options[0].value);\n  }\n\n  onChange(option: T | string): void {\n    this.propagateChange(option);\n  }\n\n  getOptionKey(option: SelectOption<T>): string {\n    return option?.key ?? (option.value && option.value.toString());\n  }\n\n  propagateChange = (value: T | string) => {};\n\n  registerOnChange(fn: () => {}): void {\n    this.propagateChange = fn;\n  }\n\n  registerOnTouched(fn: () => {}): void {\n  }\n\n  writeValue(value: T | string): void {\n    if (value !== undefined) {\n      this.selectedValue = value;\n    }\n  }\n}\n\n",
+            "sourceCode": "import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';\nimport { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';\nimport { v4 as uuid } from 'uuid';\nimport { SelectOption } from '../../model/model';\n\n\n@Component({\n  selector: 'app-select',\n  templateUrl: './select.component.html',\n  styleUrls: ['./select.component.scss'],\n  providers: [\n    {\n      provide: NG_VALUE_ACCESSOR,\n      useExisting: forwardRef(() => SelectComponent),\n      multi: true\n    }\n  ]})\nexport class SelectComponent<T extends object | string> implements OnInit, ControlValueAccessor {\n  @Input() control: FormControl | undefined;\n  @Input() name = '';\n  @Input() options: SelectOption<T>[] = [];\n  @Input() label: string | undefined;\n  @Input() errors: string[] = [];\n  @Input() isDisabled = false;\n  @Input() e2eTestName = '';\n  @Output() valueChanged: EventEmitter<T | string> = new EventEmitter();\n\n  selectedValue: T | string | null = null;\n  inputId: string = uuid();\n\n  constructor() { }\n\n  ngOnInit(): void {\n    this.selectedValue = this.options[0].value;\n    this.propagateChange(this.options[0].value);\n  }\n\n  onChange(option: T | string): void {\n    this.propagateChange(option);\n  }\n\n  getOptionKey(option: SelectOption<T>): string {\n    return option?.key ?? (option.value && option.value.toString());\n  }\n\n  propagateChange = (value: T | string) => {};\n\n  registerOnChange(fn: () => {}): void {\n    this.propagateChange = fn;\n  }\n\n  registerOnTouched(fn: () => {}): void {\n  }\n\n  writeValue(value: T | string): void {\n    if (value !== undefined) {\n      this.selectedValue = value;\n    }\n  }\n}\n\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": "@import \"../../../../styles/settings/colors\";\n@import \"../../../../styles/mixins/forms\";\n\n.select {\n  font-family: 'Roboto', sans-serif;\n\n  &__field {\n    @include form-field;\n  }\n\n  &__label {\n    @include label;\n  }\n\n  &__error {\n    @include form-errors;\n  }\n}\n",
+                    "data": "@import \"../../../../styles/settings/colors\";\n@import \"../../../../styles/mixins/forms\";\n\n.select {\n\n  &__field {\n    @include form-field;\n  }\n\n  &__label {\n    @include label;\n  }\n\n  &__error {\n    @include form-errors;\n  }\n}\n",
                     "styleUrl": "./select.component.scss"
                 }
             ],
@@ -1855,7 +1985,7 @@
         },
         {
             "name": "ShoppingListFormComponent",
-            "id": "component-ShoppingListFormComponent-b7ee96937718b1db52f31a464012d6c8",
+            "id": "component-ShoppingListFormComponent-c4b158456e7d17e12980d622d476f161",
             "file": "src/app/shopping-list/components/shopping-list-form/shopping-list-form.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -1904,7 +2034,7 @@
                 {
                     "name": "units",
                     "defaultValue": "[]",
-                    "type": "SelectOption<Unit>[]",
+                    "type": "SelectOption<string>[]",
                     "optional": false,
                     "description": "",
                     "line": 20
@@ -1977,7 +2107,7 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';\nimport { I18n, Language, SelectOption, ShoppingListItem, Unit } from '../../../shared/model/model';\nimport { DEFAULT_LANGAUGE } from '../../../shared/helpers/constants';\nimport { FormControl, FormGroup, Validators } from '@angular/forms';\nimport { translateValidationErrors } from '../../../shared/helpers/helpers';\nimport { TranslatePipe } from '../../../i18n/pipes/translate.pipe';\n\n@Component({\n  selector: 'app-shopping-list-form',\n  templateUrl: './shopping-list-form.component.html',\n  styleUrls: ['./shopping-list-form.component.scss']\n})\nexport class ShoppingListFormComponent implements OnInit {\n  @Input() translations: I18n = {};\n  @Input() currentLang: Language = DEFAULT_LANGAUGE;\n  @Output() itemAdded: EventEmitter<ShoppingListItem> = new EventEmitter();\n\n  addItemForm: FormGroup;\n\n  units: SelectOption<Unit>[] = [];\n\n  constructor(private translatePipe: TranslatePipe) {\n    this.addItemForm = new FormGroup({\n      amount:  new FormControl('', [\n        Validators.required,\n      ]),\n      unit:  new FormControl('pack', [\n        Validators.required,\n      ]),\n      name:  new FormControl('', [\n        Validators.required,\n      ]),\n    });\n  }\n\n  ngOnInit(): void {\n    this.units = [\n      {value: 'pack', key: this.translatePipe.transform('shoppingList.addForm.pack', this.translations, this.currentLang)},\n      {value: 'piece', key: this.translatePipe.transform('shoppingList.addForm.piece', this.translations, this.currentLang)},\n      {value: 'kg', key: 'kg'},\n      {value: 'g', key: 'g'},\n      {value: 'l', key: 'l'},\n      {value: 'dl', key: 'dl'},\n    ];\n  }\n\n  getFormControl(key: string): FormControl {\n    return this.addItemForm?.controls[key] as FormControl;\n  }\n\n  onSubmit(): void {\n    this.itemAdded.emit(this.addItemForm?.value);\n  }\n\n  getErrorsFor(key: string): string[] {\n    return translateValidationErrors(\n      this.getFormControl(key),\n      this.translatePipe,\n      this.translations,\n      this.currentLang,\n      key);\n  }\n}\n",
+            "sourceCode": "import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';\nimport { FormControl, FormGroup, Validators } from '@angular/forms';\nimport { TranslatePipe } from '../../../i18n/pipes/translate.pipe';\nimport { DEFAULT_LANGAUGE } from '../../../shared/helpers/constants';\nimport { translateValidationErrors } from '../../../shared/helpers/helpers';\nimport { I18n, Language, SelectOption, ShoppingListItem } from '../../../shared/model/model';\n\n@Component({\n  selector: 'app-shopping-list-form',\n  templateUrl: './shopping-list-form.component.html',\n  styleUrls: ['./shopping-list-form.component.scss']\n})\nexport class ShoppingListFormComponent implements OnInit {\n  @Input() translations: I18n = {};\n  @Input() currentLang: Language = DEFAULT_LANGAUGE;\n  @Output() itemAdded: EventEmitter<ShoppingListItem> = new EventEmitter();\n\n  addItemForm: FormGroup;\n\n  units: SelectOption<string>[] = [];\n\n  constructor(private translatePipe: TranslatePipe) {\n    this.addItemForm = new FormGroup({\n      amount:  new FormControl('', [\n        Validators.required,\n      ]),\n      unit:  new FormControl('pack', [\n        Validators.required,\n      ]),\n      name:  new FormControl('', [\n        Validators.required,\n      ]),\n    });\n  }\n\n  ngOnInit(): void {\n    this.units = [\n      {value: 'pack', key: this.translatePipe.transform('shoppingList.addForm.pack', this.translations, this.currentLang)},\n      {value: 'piece', key: this.translatePipe.transform('shoppingList.addForm.piece', this.translations, this.currentLang)},\n      {value: 'kg', key: 'kg'},\n      {value: 'g', key: 'g'},\n      {value: 'l', key: 'l'},\n      {value: 'dl', key: 'dl'},\n    ];\n  }\n\n  getFormControl(key: string): FormControl {\n    return this.addItemForm?.controls[key] as FormControl;\n  }\n\n  onSubmit(): void {\n    this.itemAdded.emit(this.addItemForm?.value);\n  }\n\n  getErrorsFor(key: string): string[] {\n    return translateValidationErrors(\n      this.getFormControl(key),\n      this.translatePipe,\n      this.translations,\n      this.currentLang,\n      key);\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -2387,6 +2517,14 @@
                 "name": "actionsData",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/select/select.stories.ts",
+                "type": "object",
+                "defaultValue": "{\n  valueChanged: action('valueChanged'),\n}"
+            },
+            {
+                "name": "actionsData",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/input/input.stories.ts",
                 "type": "object",
                 "defaultValue": "{\n  clicked: action('clicked'),\n}"
@@ -2398,14 +2536,6 @@
                 "file": "src/app/shared/components/button/button.stories.ts",
                 "type": "object",
                 "defaultValue": "{\n  clicked: action('clicked')\n}"
-            },
-            {
-                "name": "actionsData",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts",
-                "type": "object",
-                "defaultValue": "{\n  itemAdded: action('itemAdded'),\n}"
             },
             {
                 "name": "actionsData",
@@ -2427,9 +2557,9 @@
                 "name": "actionsData",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/select/select.stories.ts",
+                "file": "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts",
                 "type": "object",
-                "defaultValue": "{\n  valueChanged: action('valueChanged'),\n}"
+                "defaultValue": "{\n  itemAdded: action('itemAdded'),\n}"
             },
             {
                 "name": "appStateReducer",
@@ -2459,9 +2589,9 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shopping-list/components/shopping-list/shopping-list.stories.ts",
+                "file": "src/app/shared/components/button/button.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: ShoppingListComponent,\n  props: {\n    ...taskData,\n    ...actionsData\n  },\n})"
+                "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: buttonData.text,\n    isDisabled: buttonData.isDisabled,\n    e2eTestName: buttonData.e2eTestName,\n    clicked: actionsData.clicked\n  }\n})"
             },
             {
                 "name": "Default",
@@ -2475,17 +2605,9 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts",
+                "file": "src/app/shopping-list/components/shopping-list/shopping-list.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: ShoppingListFormComponent,\n  props: {\n    ...taskData,\n    ...actionsData\n  },\n})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/button/button.stories.ts",
-                "type": "",
-                "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: buttonData.text,\n    isDisabled: buttonData.isDisabled,\n    e2eTestName: buttonData.e2eTestName,\n    clicked: actionsData.clicked\n  }\n})"
+                "defaultValue": "() => ({\n  component: ShoppingListComponent,\n  props: {\n    ...taskData,\n    ...actionsData\n  },\n})"
             },
             {
                 "name": "Default",
@@ -2494,6 +2616,14 @@
                 "file": "src/app/shared/components/select/select.stories.ts",
                 "type": "",
                 "defaultValue": "() => ({\n  component: SelectComponent,\n  props: {\n    ...inputData,\n    ...actionsData,\n  }\n})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts",
+                "type": "",
+                "defaultValue": "() => ({\n  component: ShoppingListFormComponent,\n  props: {\n    ...taskData,\n    ...actionsData\n  },\n})"
             },
             {
                 "name": "DEFAULT_LANGAUGE",
@@ -2531,6 +2661,14 @@
                 "name": "environment",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/environments/environment.ts",
+                "type": "object",
+                "defaultValue": "{\n  production: false,\n  showBetaTeaser: true,\n  apiUrl: 'http://localhost:1337',\n}"
+            },
+            {
+                "name": "environment",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/environments/environment.prod.ts",
                 "type": "object",
                 "defaultValue": "{\n  production: true,\n  showBetaTeaser: false,\n  apiUrl: 'https://api.mealplaner.app',\n}"
@@ -2542,14 +2680,6 @@
                 "file": "src/environments/environment.qa.ts",
                 "type": "object",
                 "defaultValue": "{\n  production: false,\n  showBetaTeaser: false,\n  apiUrl: 'https://api.mealplaner.app',\n}"
-            },
-            {
-                "name": "environment",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/environments/environment.ts",
-                "type": "object",
-                "defaultValue": "{\n  production: false,\n  showBetaTeaser: true,\n  apiUrl: 'http://localhost:1337',\n}"
             },
             {
                 "name": "formData",
@@ -2793,6 +2923,33 @@
         ],
         "functions": [
             {
+                "name": "changeElementPosition",
+                "file": "src/app/shared/helpers/helpers.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "description": "",
+                "args": [
+                    {
+                        "name": "input"
+                    },
+                    {}
+                ],
+                "returnType": "T[]",
+                "jsdoctags": [
+                    {
+                        "name": "input",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            {
                 "name": "createFormControl",
                 "file": "src/app/shared/components/input/input.stories.ts",
                 "ctype": "miscellaneous",
@@ -2907,7 +3064,7 @@
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
                 "rawtype": "literal type",
-                "file": "src/app/shared/model/model.ts",
+                "file": "src/app/shared/model/model-api.ts",
                 "description": "",
                 "kind": 165
             },
@@ -2916,7 +3073,7 @@
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
                 "rawtype": "literal type",
-                "file": "src/app/shared/model/model-api.ts",
+                "file": "src/app/shared/model/model.ts",
                 "description": "",
                 "kind": 165
             },
@@ -3007,6 +3164,64 @@
                     "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Warning',\n    isDisabled: buttonData.isDisabled,\n    e2eTestName: buttonData.e2eTestName,\n    clicked: actionsData.clicked,\n    color: 'warn'\n  }\n})"
                 }
             ],
+            "src/app/shared/components/select/select.stories.ts": [
+                {
+                    "name": "actionsData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/select/select.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  valueChanged: action('valueChanged'),\n}"
+                },
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/select/select.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: SelectComponent,\n  props: {\n    ...inputData,\n    ...actionsData,\n  }\n})"
+                },
+                {
+                    "name": "Disabled",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/select/select.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: SelectComponent,\n  props: {\n    ...inputData,\n    isDisabled: true,\n    ...actionsData,\n  }\n})"
+                },
+                {
+                    "name": "inputData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/select/select.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  options: [\n    {key: 'Tesla', value: 'Tesla'},\n    {key: 'Audi', value: 'Audi'},\n    {key: 'Skoda', value: 'Skoda'},\n    {key: 'BMW', value: 'BMW'},\n  ],\n  isDisabled: false,\n}"
+                },
+                {
+                    "name": "WithErrors",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/select/select.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: SelectComponent,\n  props: {\n    ...inputData,\n    errors: ['An error has occured!'],\n    ...actionsData,\n  }\n})"
+                },
+                {
+                    "name": "WithLabel",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/select/select.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: SelectComponent,\n  props: {\n    ...inputData,\n    label: 'Label',\n    ...actionsData,\n  }\n})"
+                },
+                {
+                    "name": "WithObjectValues",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/select/select.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: SelectComponent,\n  props: {\n    ...inputData,\n    options: [\n      {key: 'Tesla Key', value: {brand: 'Tesla'}},\n      {key: 'Audi Key', value: {brand: 'Audi'}},\n      {key: 'Skoda', value: {brand: 'Skoda'}},\n      {key: 'BMW', value: {brand: 'BMW'}},\n    ],\n    ...actionsData,\n  }\n})"
+                }
+            ],
             "src/app/shared/components/input/input.stories.ts": [
                 {
                     "name": "actionsData",
@@ -3073,32 +3288,6 @@
                     "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: '',\n    buttonText: 'Click',\n    errors: [],\n    clicked: actionsData.clicked\n  }\n})"
                 }
             ],
-            "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts": [
-                {
-                    "name": "actionsData",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  itemAdded: action('itemAdded'),\n}"
-                },
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts",
-                    "type": "",
-                    "defaultValue": "() => ({\n  component: ShoppingListFormComponent,\n  props: {\n    ...taskData,\n    ...actionsData\n  },\n})"
-                },
-                {
-                    "name": "taskData",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  translations: {\n    de: {\n      'shoppingList.addForm.amount': 'Menge',\n      'shoppingList.addForm.product': 'Zucker',\n      'shoppingList.addForm.piece': 'Stück',\n      'shoppingList.addForm.pack': 'Packung',\n      'shoppingList.addForm.addLabel': 'Hinzufügen',\n    }\n  },\n  currentLang: 'de'\n}"
-                }
-            ],
             "src/app/login/components/login-form/login-form.stories.ts": [
                 {
                     "name": "actionsData",
@@ -3159,62 +3348,30 @@
                     "defaultValue": "{\n  items: [\n    {id: '1', name: 'Mehl', amount: 1, unit: 'kg', isChecked: false},\n    {id: '2', name: 'Zucker', amount: 50, unit: 'g', isChecked: false},\n    {id: '3', name: 'Eier', amount: 1, unit: 'piece', isChecked: false},\n    {id: '4', name: 'Slaz', amount: 5, unit: 'coffeeSpoon', isChecked: false},\n  ],\n  translations: {\n    de: {\n      piece: '',\n      tableSpoon: 'Esslöffel',\n      coffeeSpoon: 'Kaffelöffel',\n      pinch: 'Prise',\n    }\n  }\n}"
                 }
             ],
-            "src/app/shared/components/select/select.stories.ts": [
+            "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts": [
                 {
                     "name": "actionsData",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/shared/components/select/select.stories.ts",
+                    "file": "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts",
                     "type": "object",
-                    "defaultValue": "{\n  valueChanged: action('valueChanged'),\n}"
+                    "defaultValue": "{\n  itemAdded: action('itemAdded'),\n}"
                 },
                 {
                     "name": "Default",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/shared/components/select/select.stories.ts",
+                    "file": "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts",
                     "type": "",
-                    "defaultValue": "() => ({\n  component: SelectComponent,\n  props: {\n    ...inputData,\n    ...actionsData,\n  }\n})"
+                    "defaultValue": "() => ({\n  component: ShoppingListFormComponent,\n  props: {\n    ...taskData,\n    ...actionsData\n  },\n})"
                 },
                 {
-                    "name": "Disabled",
+                    "name": "taskData",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/shared/components/select/select.stories.ts",
-                    "type": "",
-                    "defaultValue": "() => ({\n  component: SelectComponent,\n  props: {\n    ...inputData,\n    isDisabled: true,\n    ...actionsData,\n  }\n})"
-                },
-                {
-                    "name": "inputData",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/select/select.stories.ts",
+                    "file": "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts",
                     "type": "object",
-                    "defaultValue": "{\n  options: [\n    {key: 'Tesla', value: 'Tesla'},\n    {key: 'Audi', value: 'Audi'},\n    {key: 'Skoda', value: 'Skoda'},\n    {key: 'BMW', value: 'BMW'},\n  ],\n  isDisabled: false,\n}"
-                },
-                {
-                    "name": "WithErrors",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/select/select.stories.ts",
-                    "type": "",
-                    "defaultValue": "() => ({\n  component: SelectComponent,\n  props: {\n    ...inputData,\n    errors: ['An error has occured!'],\n    ...actionsData,\n  }\n})"
-                },
-                {
-                    "name": "WithLabel",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/select/select.stories.ts",
-                    "type": "",
-                    "defaultValue": "() => ({\n  component: SelectComponent,\n  props: {\n    ...inputData,\n    label: 'Label',\n    ...actionsData,\n  }\n})"
-                },
-                {
-                    "name": "WithObjectValues",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/select/select.stories.ts",
-                    "type": "",
-                    "defaultValue": "() => ({\n  component: SelectComponent,\n  props: {\n    ...inputData,\n    options: [\n      {key: 'Tesla Key', value: {brand: 'Tesla'}},\n      {key: 'Audi Key', value: {brand: 'Audi'}},\n      {key: 'Skoda', value: {brand: 'Skoda'}},\n      {key: 'BMW', value: {brand: 'BMW'}},\n    ],\n    ...actionsData,\n  }\n})"
+                    "defaultValue": "{\n  translations: {\n    de: {\n      'shoppingList.addForm.amount': 'Menge',\n      'shoppingList.addForm.product': 'Zucker',\n      'shoppingList.addForm.piece': 'Stück',\n      'shoppingList.addForm.pack': 'Packung',\n      'shoppingList.addForm.addLabel': 'Hinzufügen',\n    }\n  },\n  currentLang: 'de'\n}"
                 }
             ],
             "src/app/i18n/reducers/i18n-api.reducers.ts": [
@@ -3262,6 +3419,16 @@
                     "defaultValue": "/^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$/"
                 }
             ],
+            "src/environments/environment.ts": [
+                {
+                    "name": "environment",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/environments/environment.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  production: false,\n  showBetaTeaser: true,\n  apiUrl: 'http://localhost:1337',\n}"
+                }
+            ],
             "src/environments/environment.prod.ts": [
                 {
                     "name": "environment",
@@ -3280,16 +3447,6 @@
                     "file": "src/environments/environment.qa.ts",
                     "type": "object",
                     "defaultValue": "{\n  production: false,\n  showBetaTeaser: false,\n  apiUrl: 'https://api.mealplaner.app',\n}"
-                }
-            ],
-            "src/environments/environment.ts": [
-                {
-                    "name": "environment",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/environments/environment.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  production: false,\n  showBetaTeaser: true,\n  apiUrl: 'http://localhost:1337',\n}"
                 }
             ],
             "src/app/i18n/actions/i18n-api.actions.ts": [
@@ -3390,41 +3547,34 @@
             ]
         },
         "groupedFunctions": {
-            "src/app/shared/components/input/input.stories.ts": [
+            "src/app/shared/helpers/helpers.ts": [
                 {
-                    "name": "createFormControl",
-                    "file": "src/app/shared/components/input/input.stories.ts",
-                    "ctype": "miscellaneous",
-                    "subtype": "function",
-                    "description": "",
-                    "args": [],
-                    "returnType": "FormControl"
-                }
-            ],
-            "src/app/shared/components/select/select.stories.ts": [
-                {
-                    "name": "createFormControl",
-                    "file": "src/app/shared/components/select/select.stories.ts",
+                    "name": "changeElementPosition",
+                    "file": "src/app/shared/helpers/helpers.ts",
                     "ctype": "miscellaneous",
                     "subtype": "function",
                     "description": "",
                     "args": [
                         {
-                            "name": "name"
-                        }
+                            "name": "input"
+                        },
+                        {}
                     ],
-                    "returnType": "FormControl",
+                    "returnType": "T[]",
                     "jsdoctags": [
                         {
-                            "name": "name",
+                            "name": "input",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
                             "tagName": {
                                 "text": "param"
                             }
                         }
                     ]
-                }
-            ],
-            "src/app/shared/helpers/helpers.ts": [
+                },
                 {
                     "name": "mapI18nApiToI18nClient",
                     "file": "src/app/shared/helpers/helpers.ts",
@@ -3503,10 +3653,55 @@
                         }
                     ]
                 }
+            ],
+            "src/app/shared/components/input/input.stories.ts": [
+                {
+                    "name": "createFormControl",
+                    "file": "src/app/shared/components/input/input.stories.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "description": "",
+                    "args": [],
+                    "returnType": "FormControl"
+                }
+            ],
+            "src/app/shared/components/select/select.stories.ts": [
+                {
+                    "name": "createFormControl",
+                    "file": "src/app/shared/components/select/select.stories.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "name"
+                        }
+                    ],
+                    "returnType": "FormControl",
+                    "jsdoctags": [
+                        {
+                            "name": "name",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
             ]
         },
         "groupedEnumerations": {},
         "groupedTypeAliases": {
+            "src/app/shared/model/model-api.ts": [
+                {
+                    "name": "I18n",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "literal type",
+                    "file": "src/app/shared/model/model-api.ts",
+                    "description": "",
+                    "kind": 165
+                }
+            ],
             "src/app/shared/model/model.ts": [
                 {
                     "name": "I18n",
@@ -3534,17 +3729,6 @@
                     "file": "src/app/shared/model/model.ts",
                     "description": "",
                     "kind": 168
-                }
-            ],
-            "src/app/shared/model/model-api.ts": [
-                {
-                    "name": "I18n",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "literal type",
-                    "file": "src/app/shared/model/model-api.ts",
-                    "description": "",
-                    "kind": 165
                 }
             ]
         }
@@ -3649,7 +3833,7 @@
                 "linktype": "component",
                 "name": "RecipeFormComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/10",
+                "coverageCount": "0/18",
                 "status": "low"
             },
             {
@@ -4087,6 +4271,15 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "EMAIL_PATTERN",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/helpers/helpers.ts",
+                "type": "function",
+                "linksubtype": "function",
+                "name": "changeElementPosition",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
