@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { TranslatePipe } from '../../../i18n/pipes/translate.pipe';
 
 import { RecipeFormComponent } from './recipe-form.component';
 
@@ -8,7 +9,13 @@ describe('RecipeFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RecipeFormComponent ]
+      declarations: [ RecipeFormComponent, TranslatePipe ],
+      providers: [
+        {
+          provide: TranslatePipe,
+          useClass: TranslatePipe
+        }
+      ]
     })
     .compileComponents();
   }));
