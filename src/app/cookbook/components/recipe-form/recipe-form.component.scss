@@ -1,6 +1,7 @@
 @import "../../../../styles/settings/colors";
 @import "../../../../styles/settings/breakpoints";
 @import "../../../../styles/mixins/forms";
+@import "../../../../styles/settings/variables";
 
 .recipe-form {
 
@@ -11,7 +12,7 @@
 
   &__button {
     display: block;
-    margin: 0 2rem 1rem 2rem;
+    margin-top: 2rem;
   }
 
   .ingredients-label{
@@ -26,8 +27,12 @@
   flex-direction: column;
   justify-content: center;
   overflow: hidden;
-  border: 2px solid $blue_80;
-  border-radius: 4px;
+  border: $border-primary;
+  border-radius: $border-radius-default;
+
+  &__button{
+    margin: 0 2rem 1rem 2rem;
+  }
 
   &__row {
     width: 100%;
@@ -35,7 +40,7 @@
     flex-direction: column;
     overflow: hidden;
     //mixin
-    border-bottom: 1px solid $blue_80;
+    border-bottom: 1px solid $blue_70;
     padding: 1rem 2rem;
 
     @include large {
@@ -85,7 +90,7 @@
 
   .icon-wrapper {
     background-color: $red_70;
-    border-radius: 4px;
+    border-radius: $border-radius-default;
     @include button();
 
     &--disabled {

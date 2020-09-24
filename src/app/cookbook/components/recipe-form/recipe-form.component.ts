@@ -12,7 +12,6 @@ import { I18n, Language, Recipe, SelectOption } from '../../../shared/model/mode
 })
 export class RecipeFormComponent implements OnInit {
 
-  @Input() buttonText = 'add';
   @Input() translations: I18n = {};
   @Input() currentLang: Language = DEFAULT_LANGAUGE;
   @Output() recipeSaved: EventEmitter<Recipe> = new EventEmitter<Recipe>();
