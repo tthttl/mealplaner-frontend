@@ -15,13 +15,13 @@
 
   <label class="ingredients-label">{{'recipe-form.ingredients.label-text' | translate:translations:currentLang}}</label>
   <div class="ingredients recipe-form__input">
-    <div *ngFor="let ingredient of ingredients.controls; let last = last"
+    <div *ngFor="let ingredient of ingredients.controls; let last = last; let index = index"
          class="ingredients__row"
          [ngClass]="{'ingredients__row--last': last}">
       <app-input
         class="ingredients__row--input ingredients__row--input-amount"
         [type]="'number'"
-        [minValue]="1"
+        [minValue]="0"
         [name]="'amount'"
         [placeholder]="'recipe-form.placeholder.amount' | translate:translations:currentLang"
         [formControl]="getIngredientFormControl(ingredient, 'amount')">
@@ -46,7 +46,7 @@
       </mat-slide-toggle>
       <button
         class="icon-wrapper"
-        (click)="deleteIngredient(ingredient)"
+        (click)="deleteIngredient(index)"
         [disabled]="ingredients?.length === 1"
         [ngClass]="{'icon-wrapper--disabled': ingredients?.length === 1}">
         <fa-icon

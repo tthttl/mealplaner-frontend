@@ -3,7 +3,7 @@ import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '
 import { TranslatePipe } from '../../../i18n/pipes/translate.pipe';
 import { DEFAULT_LANGAUGE } from '../../../shared/helpers/constants';
 import { translateValidationErrors } from '../../../shared/helpers/helpers';
-import { I18n, Language, Recipe, SelectOption } from '../../../shared/model/model';
+import { I18n, Language, Recipe, RecipeIngredient, SelectOption } from '../../../shared/model/model';
 
 @Component({
   selector: 'app-recipe-form',
@@ -47,22 +47,24 @@ export class RecipeFormComponent implements OnInit {
   createNewEmptyIngredientFormGroup(): FormGroup {
     return new FormGroup({
       name: new FormControl('', [Validators.required]),
-      amount: new FormControl('', [Validators.required]),
+      amount: new FormControl(null, [Validators.required, Validators.min(1)]),
       unit: new FormControl('kg', [Validators.required]),
       isStapleFood: new FormControl(false, [Validators.required])
     });
   }
 
   onSubmit(): void {
-    this.recipeSaved.emit(this.recipeForm?.value);
+    const recipe = this.recipeForm.value;
+    recipe.ingredients.map((ingredient: RecipeIngredient) => ingredient.amount = +ingredient.amount);
+    this.recipeSaved.emit(recipe);
   }
 
   addEmptyIngredientRow(): void {
     this.ingredients.push(this.createNewEmptyIngredientFormGroup());
   }
 
-  deleteIngredient(ingredient: AbstractControl): void {
-    this.ingredients = new FormArray(this.ingredients.controls.filter((item: AbstractControl) => item !== ingredient));
+  deleteIngredient(index: number): void {
+    (this.recipeForm.controls.ingredients as FormArray).removeAt(index);
   }
 
   getErrorsFor(key: string): string[] {
