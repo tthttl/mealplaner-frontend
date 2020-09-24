@@ -100,7 +100,7 @@ describe('Helpers', () => {
     });
   });
 
-  fdescribe('changeElementPosition', () => {
+  describe('changeElementPosition', () => {
     let input: number[] = [];
     beforeEach(() => {
       input = [1, 2, 3, 4];
