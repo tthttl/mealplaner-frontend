@@ -2,7 +2,7 @@ import { FormControl } from '@angular/forms';
 import { TranslatePipe } from '../../i18n/pipes/translate.pipe';
 import { I18n } from '../model/model';
 import { I18n as I18nApi } from '../model/model-api';
-import { mapI18nApiToI18nClient, translateValidationErrors } from './helpers';
+import { changeElementPosition, mapI18nApiToI18nClient, translateValidationErrors } from './helpers';
 import createSpyObj = jasmine.createSpyObj;
 
 describe('Helpers', () => {
@@ -97,6 +97,25 @@ describe('Helpers', () => {
         'de',
         'key'
       )).toEqual([]);
+    });
+  });
+
+  fdescribe('changeElementPosition', () => {
+    let input: number[] = [];
+    beforeEach(() => {
+      input = [1, 2, 3, 4];
+    });
+    it('should change pos from 3 to 0', () => {
+      expect(changeElementPosition(input, {previousIndex: 3, currentIndex: 0}))
+        .toEqual([4, 1, 2, 3]);
+    });
+    it('should change pos from 0 to 3', () => {
+      expect(changeElementPosition(input, {previousIndex: 3, currentIndex: 0}))
+        .toEqual([2, 3, 4, 1]);
+    });
+    it('should change pos from 2 to 2', () => {
+      expect(changeElementPosition(input, {previousIndex: 3, currentIndex: 0}))
+        .toEqual([1, 2, 3, 4]);
     });
   });
 });
