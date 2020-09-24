@@ -110,11 +110,11 @@ describe('Helpers', () => {
         .toEqual([4, 1, 2, 3]);
     });
     it('should change pos from 0 to 3', () => {
-      expect(changeElementPosition(input, {previousIndex: 3, currentIndex: 0}))
+      expect(changeElementPosition(input, {previousIndex: 0, currentIndex: 3}))
         .toEqual([2, 3, 4, 1]);
     });
     it('should change pos from 2 to 2', () => {
-      expect(changeElementPosition(input, {previousIndex: 3, currentIndex: 0}))
+      expect(changeElementPosition(input, {previousIndex: 2, currentIndex: 2}))
         .toEqual([1, 2, 3, 4]);
     });
   });
