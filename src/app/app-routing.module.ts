@@ -1,12 +1,16 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 
 const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () => import('./login/login.module').then(m => m.LoginModule)
-  }
+  },
+  {
+    path: 'cookbook',
+    loadChildren: () => import('./cookbook/cookbook.module').then(m => m.CookbookModule)
+  },
 ];
 
 @NgModule({

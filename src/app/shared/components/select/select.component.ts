@@ -1,7 +1,7 @@
 import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { SelectOption } from '../../model/model';
 import { v4 as uuid } from 'uuid';
+import { SelectOption } from '../../model/model';
 
 
 @Component({
@@ -15,7 +15,7 @@ import { v4 as uuid } from 'uuid';
       multi: true
     }
   ]})
-export class SelectComponent<T extends object> implements OnInit, ControlValueAccessor {
+export class SelectComponent<T extends object | string> implements OnInit, ControlValueAccessor {
   @Input() control: FormControl | undefined;
   @Input() name = '';
   @Input() options: SelectOption<T>[] = [];

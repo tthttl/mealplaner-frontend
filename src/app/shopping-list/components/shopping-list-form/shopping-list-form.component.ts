@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { I18n, Language, SelectOption, ShoppingListItem, Unit } from '../../../shared/model/model';
-import { DEFAULT_LANGAUGE } from '../../../shared/helpers/constants';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { translateValidationErrors } from '../../../shared/helpers/helpers';
 import { TranslatePipe } from '../../../i18n/pipes/translate.pipe';
+import { DEFAULT_LANGAUGE } from '../../../shared/helpers/constants';
+import { translateValidationErrors } from '../../../shared/helpers/helpers';
+import { I18n, Language, SelectOption, ShoppingListItem } from '../../../shared/model/model';
 
 @Component({
   selector: 'app-shopping-list-form',
@@ -17,7 +17,7 @@ export class ShoppingListFormComponent implements OnInit {
 
   addItemForm: FormGroup;
 
-  units: SelectOption<Unit>[] = [];
+  units: SelectOption<string>[] = [];
 
   constructor(private translatePipe: TranslatePipe) {
     this.addItemForm = new FormGroup({

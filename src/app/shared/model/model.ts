@@ -16,7 +16,7 @@ export interface Ingredient {
   unit: Unit;
 }
 
-export interface ShoppingListItem extends Ingredient{
+export interface ShoppingListItem extends Ingredient {
   id: string;
   isChecked: boolean;
 }
@@ -35,4 +35,14 @@ export interface SelectOption<T extends object | string> {
 export interface LoginCredentials {
   email: string;
   password: string;
+}
+
+export interface RecipeIngredient extends Ingredient {
+  readonly isStapleFood: boolean;
+}
+
+export interface Recipe {
+  readonly title: string;
+  readonly ingredients: RecipeIngredient [];
+  readonly url?: string;
 }
