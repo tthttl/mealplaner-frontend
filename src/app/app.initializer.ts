@@ -30,7 +30,7 @@ export function appInitializer(
       first()
     );
 
-    const refreshedToken$ = actions$.pipe(
+    const refreshedTokenDone$ = actions$.pipe(
       ofType(AuthApiActions.refreshTokenSuccess),
       takeUntil(actions$.pipe(ofType(AuthApiActions.refreshTokenFailed))),
       first()
@@ -38,7 +38,7 @@ export function appInitializer(
 
     forkJoin([
       loadI18nDone$,
-      refreshedToken$
+      refreshedTokenDone$
     ]).subscribe()
       .add(resolve);
   });

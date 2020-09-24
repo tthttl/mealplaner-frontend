@@ -33,6 +33,14 @@ export const appStateReducer = createReducer<AppState, Action>(
       return state;
     }),
   on(
+    AuthApiActions.refreshTokenFailed,
+    (state) => {
+      return {
+        ...state,
+        user: null
+      };
+    }),
+  on(
     AuthApiActions.loginSuccess,
     (state, {user}: { user: User }) => {
       return {

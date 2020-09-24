@@ -28,21 +28,3 @@ export class JwtInterceptor implements HttpInterceptor {
   }
 }
 
-
-/*
-@Injectable()
-export class TokenInterceptor implements HttpInterceptor {
-  intercept(req: HttpRequest<any>, next: HttpHandler) {
-    return this.store.select(fromAuth.getToken).pipe(
-      first(),
-      flatMap(token => {
-        const authReq = !!token ? req.clone({
-          setHeaders: { Authorization: 'Bearer ' + token },
-        }) : req;
-        return next.handle(authReq);
-      }),
-    );
-  }
-}
-
- */
