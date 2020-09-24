@@ -41,6 +41,34 @@ describe('RecipeFormComponent', () => {
 
   });
 
+  it('new ingredient button should be disabled when amount is invalid', () => {
+    const hostElement = fixture.nativeElement;
+    const button = hostElement.querySelector('button.icon-wrapper');
+    const amountInput = hostElement.querySelector('input[ng-reflect-name="amount"]');
+    const nameInput = hostElement.querySelector('input[ng-reflect-name="name"]');
+    amountInput.value = 0;
+    amountInput.dispatchEvent(new Event('input'));
+    nameInput.value = 'Beer';
+    nameInput.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    expect(button.disabled).toBeTruthy();
+
+  });
+
+  it('new ingredient button should be disabled when name is empty', () => {
+    const hostElement = fixture.nativeElement;
+    const button = hostElement.querySelector('button.icon-wrapper');
+    const amountInput = hostElement.querySelector('input[ng-reflect-name="amount"]');
+    amountInput.value = 1;
+    amountInput.dispatchEvent(new Event('input'));
+
+    fixture.detectChanges();
+
+    expect(button.disabled).toBeTruthy();
+
+  });
+
   it('should emit Recipe when inputs are filled and submit is clicked', () => {
     spyOn(component.recipeSaved, 'emit');
     const hostElement = fixture.nativeElement;
