@@ -15,7 +15,7 @@ import { v4 as uuid } from 'uuid';
       multi: true
     }
   ]})
-export class SelectComponent<T extends object | string> implements OnInit, ControlValueAccessor {
+export class SelectComponent<T> implements OnInit, ControlValueAccessor {
   @Input() control: FormControl | undefined;
   @Input() name = '';
   @Input() options: SelectOption<T>[] = [];
@@ -40,7 +40,7 @@ export class SelectComponent<T extends object | string> implements OnInit, Contr
   }
 
   getOptionKey(option: SelectOption<T>): string {
-    return option?.key ?? (option.value && option.value.toString());
+    return option?.key ?? ((typeof option.value === 'string') ? option.value : JSON.stringify(option.value));
   }
 
   propagateChange = (value: T | string) => {};

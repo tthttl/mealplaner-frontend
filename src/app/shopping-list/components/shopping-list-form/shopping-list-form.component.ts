@@ -17,7 +17,7 @@ export class ShoppingListFormComponent implements OnInit {
 
   addItemForm: FormGroup;
 
-  units: SelectOption<string>[] = [];
+  units: SelectOption<Unit>[] = [];
 
   constructor(private translatePipe: TranslatePipe) {
     this.addItemForm = new FormGroup({
