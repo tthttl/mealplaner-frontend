@@ -1,46 +1,46 @@
-import SpyObj = jasmine.SpyObj;
 import { AuthService } from '../services/auth.service';
 import { AuthApiEffects } from './auth-api.effects';
-import { initialState } from '../../shared/state';
+import { GlobalState, initialState } from '../../shared/state';
 import { of, throwError } from 'rxjs';
 import { AuthApiActions, LoginPageActions } from '../actions';
 import { Router } from '@angular/router';
-import { JwtRenewal, User } from '../../shared/model/model';
-import { Action, Store } from '@ngrx/store';
 import { TestBed } from '@angular/core/testing';
 import { provideMockStore } from '@ngrx/store/testing';
+import { JwtRenewal, User } from '../../shared/model/model';
+import { Action, Store } from '@ngrx/store';
 import { AppInitializationActions } from '../../shared/state/app-actions';
 import { DEFAUT_REDIRECT_URL_FOR_LOGGED_IN_USER } from '../../shared/helpers/constants';
+import SpyObj = jasmine.SpyObj;
 
-/*describe('Auth Api Effects', () => {
+describe('Auth Api Effects', () => {
+
   let actions$;
   let authService: SpyObj<AuthService>;
   let router: SpyObj<Router>;
   let authApiEffects: AuthApiEffects;
+  let store: Store<GlobalState>;
 
-  // tslint:disable-next-line:no-any
-  let store: any;
+  class StoreMock {
+    select = jasmine.createSpy().and.returnValue(of({}));
+    dispatch = jasmine.createSpy();
+    pipe = jasmine.createSpy().and.returnValue(of('success'));
+  }
 
-  describe('login', () => {
+  describe('login$', () => {
     beforeEach(() => {
-      class StoreMock {
-        select = jasmine.createSpy().and.returnValue(of({}));
-        dispatch = jasmine.createSpy();
-        pipe = jasmine.createSpy().and.returnValue(of('success'));
-      }
       TestBed.configureTestingModule({
         providers: [
           {
             provide: Store,
             useClass: StoreMock
           },
-          provideMockStore()
+          provideMockStore({initialState}),
         ]
       });
+      store = TestBed.inject(Store);
       actions$ = of({type: LoginPageActions.login.type});
       authService = jasmine.createSpyObj('AuthService', ['login']);
       router = jasmine.createSpyObj('Router', ['navigate']);
-      store = TestBed.inject(Store);
       authApiEffects = new AuthApiEffects(
         actions$,
         authService,
@@ -64,26 +64,21 @@ import { DEFAUT_REDIRECT_URL_FOR_LOGGED_IN_USER } from '../../shared/helpers/con
     });
   });
 
-  describe('refreshToke', () => {
+  describe('refreshToke$', () => {
     beforeEach(() => {
-      class StoreMock {
-        select = jasmine.createSpy().and.returnValue(of({}));
-        dispatch = jasmine.createSpy();
-        pipe = jasmine.createSpy().and.returnValue(of('success'));
-      }
       TestBed.configureTestingModule({
         providers: [
           {
             provide: Store,
             useClass: StoreMock
           },
-          provideMockStore()
+          provideMockStore({initialState}),
         ]
       });
+      store = TestBed.inject(Store);
       actions$ = of({type: AppInitializationActions.refreshToken.type});
       authService = jasmine.createSpyObj('AuthService', ['refreshToken']);
       router = jasmine.createSpyObj('Router', ['navigate']);
-      store = TestBed.inject(Store);
       authApiEffects = new AuthApiEffects(
         actions$,
         authService,
@@ -92,7 +87,7 @@ import { DEFAUT_REDIRECT_URL_FOR_LOGGED_IN_USER } from '../../shared/helpers/con
     });
 
     it('should return success action', () => {
-      authService.refreshToken.and.returnValue(of({success: true, jwt: 'jwt'} as JwtRenewal));
+      authService.refreshToken.and.returnValue(of({ok: true, user: {} as User} as JwtRenewal));
       authApiEffects.refreshToken.subscribe((action: Action) => {
         expect(action.type).toEqual(AuthApiActions.refreshTokenSuccess.type);
       });
@@ -106,36 +101,28 @@ import { DEFAUT_REDIRECT_URL_FOR_LOGGED_IN_USER } from '../../shared/helpers/con
     });
 
     it('should return failure action if renewal fails', () => {
-      authService.refreshToken.and.returnValue(of({success: false, jwt: ''} as JwtRenewal));
+      authService.refreshToken.and.returnValue(of({ok: false, user: null} as JwtRenewal));
       authApiEffects.refreshToken.subscribe((action: Action) => {
         expect(action.type).toEqual(AuthApiActions.refreshTokenFailed.type);
       });
     });
   });
 
-
-
-
-  describe('redirectWhenLoggedIn', () => {
+  describe('redirectWhenLoggedIn$', () => {
     beforeEach(() => {
-      class StoreMock {
-        select = jasmine.createSpy().and.returnValue(of({...initialState}));
-        dispatch = jasmine.createSpy();
-        pipe = jasmine.createSpy().and.returnValue(of('success'));
-      }
       TestBed.configureTestingModule({
         providers: [
           {
             provide: Store,
             useClass: StoreMock
           },
-          provideMockStore()
+          provideMockStore({initialState}),
         ]
       });
+      store = TestBed.inject(Store);
       actions$ = of({type: AuthApiActions.loginSuccess.type});
       authService = jasmine.createSpyObj('AuthService', ['']);
       router = jasmine.createSpyObj('Router', ['navigate']);
-      store = TestBed.inject(Store);
       authApiEffects = new AuthApiEffects(
         actions$,
         authService,
@@ -149,4 +136,4 @@ import { DEFAUT_REDIRECT_URL_FOR_LOGGED_IN_USER } from '../../shared/helpers/con
       });
     });
   });
-});*/
+});

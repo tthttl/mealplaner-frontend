@@ -28,7 +28,7 @@ export class AuthService {
 
   refreshToken(): Observable<JwtRenewal> {
     return this.httpClient.post<JwtRenewal>(`${environment.authUrl}/auth/refresh-token`, {}).pipe(
-      tap((jwtRenewal: JwtRenewal) => jwtRenewal.ok && this.startRefreshTokenTimer(jwtRenewal.user.jwt))
+      tap((jwtRenewal: JwtRenewal) => jwtRenewal.user && this.startRefreshTokenTimer(jwtRenewal.user.jwt))
     );
   }
 
@@ -44,7 +44,7 @@ export class AuthService {
     // set a timeout to refresh the token a minute before it expires
     const timeout = expires.getTime() - Date.now() - (60 * 1000);
     this.stopRefreshTokenTimer();
-    this.refreshTokenTimeout = setTimeout(() => this.store.dispatch(LoginServiceActions.refreshToken()), timeout);
+    this.refreshTokenTimeout = window.setTimeout(() => this.store.dispatch(LoginServiceActions.refreshToken()), timeout);
   }
 
   private stopRefreshTokenTimer(): void {

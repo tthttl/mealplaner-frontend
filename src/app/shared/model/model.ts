@@ -51,5 +51,5 @@ export interface JwtPayload {
 
 export interface JwtRenewal {
   ok: boolean;
-  user: User;
+  user: User | null;
 }

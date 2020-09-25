@@ -11,24 +11,26 @@ describe('i18n Api Effects', () => {
   let i18nService: SpyObj<I18nService>;
   let i18nApiEffects: I18nApiEffects;
 
-  beforeEach(() => {
-    actions$ = of({type: I18nApiActions.getI18n.type});
-    i18nService = jasmine.createSpyObj('i18nService', ['getI18n']);
-    i18nApiEffects = new I18nApiEffects(
-      actions$,
-      i18nService);
-  });
-
-  it('should return success action', () => {
-    i18nService.getI18n.and.returnValue(of({} as I18nClient));
-    i18nApiEffects.getI18n.subscribe((action: Action) => {
-      expect(action.type).toEqual(I18nApiActions.getI18nSuccess.type);
+  describe('getI18n', () => {
+    beforeEach(() => {
+      actions$ = of({type: I18nApiActions.getI18n.type});
+      i18nService = jasmine.createSpyObj('i18nService', ['getI18n']);
+      i18nApiEffects = new I18nApiEffects(
+        actions$,
+        i18nService);
     });
-  });
-  it('should return failure action', () => {
-    i18nService.getI18n.and.returnValue(throwError('error'));
-    i18nApiEffects.getI18n.subscribe((action: Action) => {
-      expect(action.type).toEqual(I18nApiActions.getI18nFailure.type);
+
+    it('should return success action', () => {
+      i18nService.getI18n.and.returnValue(of({} as I18nClient));
+      i18nApiEffects.getI18n.subscribe((action: Action) => {
+        expect(action.type).toEqual(I18nApiActions.getI18nSuccess.type);
+      });
+    });
+    it('should return failure action', () => {
+      i18nService.getI18n.and.returnValue(throwError('error'));
+      i18nApiEffects.getI18n.subscribe((action: Action) => {
+        expect(action.type).toEqual(I18nApiActions.getI18nFailure.type);
+      });
     });
   });
 });
