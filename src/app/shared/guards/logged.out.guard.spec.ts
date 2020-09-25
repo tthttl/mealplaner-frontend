@@ -1,29 +1,30 @@
 import { TestBed } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
-import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import { AuthService } from '../../auth/services/auth.service';
 import SpyObj = jasmine.SpyObj;
 import { GlobalState, initialState } from '../state';
-import { AuthenticatedGuard } from './authenticated.guard';
+import { LoggedOutGuard } from './logged-out.guard';
+import { DEFAUT_REDIRECT_URL_FOR_LOGGED_IN_USER } from '../helpers/constants';
 
 const routeMock: Partial<ActivatedRouteSnapshot> = {url: []};
 const routeStateMock: Partial<RouterStateSnapshot> = {url: '/cookies'};
 
 
-describe('AuthenticatedGuard', () => {
+describe('Logged Out Guard', () => {
   let authService: SpyObj<AuthService>;
   let router: SpyObj<Router>;
-  let guard: AuthenticatedGuard;
-
+  let guard: LoggedOutGuard;
   // tslint:disable-next-line:no-any
   let store: any;
 
   const validJwt = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjk5OTk5OTk5OTk5fQ.XXX'; // JWT Expires at November 16 5138
   const expiredJWT = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjB9.XXX'; // JWT Expires at January 01 1970
 
-  describe('login', () => {
+
+  describe('', () => {
     beforeEach(() => {
       class StoreMock {
         select = jasmine.createSpy().and.returnValue(of({...initialState}));
@@ -43,7 +44,7 @@ describe('AuthenticatedGuard', () => {
       authService = jasmine.createSpyObj('AuthService', ['login']);
       router = jasmine.createSpyObj('Router', ['navigate']);
       store = TestBed.inject(Store);
-      guard = new AuthenticatedGuard(
+      guard = new LoggedOutGuard(
         router,
         store);
     });
@@ -52,39 +53,39 @@ describe('AuthenticatedGuard', () => {
       expect(guard).toBeTruthy();
     });
 
-    it('should reject when no jwt token is available', (done) => {
-      guard.canActivate(routeMock as ActivatedRouteSnapshot, routeStateMock as RouterStateSnapshot).subscribe((result: boolean) => {
-        expect(result).toBeFalse();
-        done();
-      });
-    });
-
-    it('should allow when no jwt token is available and not expired', (done) => {
-      store.setState({...initialState, appState: {user: {jwt: validJwt}}});
+    it('should pass when no jwt token is available', (done) => {
       guard.canActivate(routeMock as ActivatedRouteSnapshot, routeStateMock as RouterStateSnapshot).subscribe((result: boolean) => {
         expect(result).toBeTrue();
         done();
       });
     });
 
-    it('should allow when no jwt token is available but  expired', (done) => {
-      store.setState({...initialState, appState: {user: {jwt: expiredJWT}}});
+    it('should fail when no jwt token is available and not expired', (done) => {
+      store.setState({...initialState, appState: {user: {jwt: validJwt}}});
       guard.canActivate(routeMock as ActivatedRouteSnapshot, routeStateMock as RouterStateSnapshot).subscribe((result: boolean) => {
         expect(result).toBeFalse();
         done();
       });
     });
 
-    it('should redirect when failed', (done) => {
+    it('should pass when no jwt token is available but  expired', (done) => {
       store.setState({...initialState, appState: {user: {jwt: expiredJWT}}});
       guard.canActivate(routeMock as ActivatedRouteSnapshot, routeStateMock as RouterStateSnapshot).subscribe((result: boolean) => {
-        expect(router.navigate).toHaveBeenCalledWith(['/auth/login']);
+        expect(result).toBeTrue();
+        done();
+      });
+    });
+
+    it('should redirect when failed', (done) => {
+      store.setState({...initialState, appState: {user: {jwt: validJwt}}});
+      guard.canActivate(routeMock as ActivatedRouteSnapshot, routeStateMock as RouterStateSnapshot).subscribe((result: boolean) => {
+        expect(router.navigate).toHaveBeenCalledWith([DEFAUT_REDIRECT_URL_FOR_LOGGED_IN_USER]);
         done();
       });
     });
 
     it('should not redirect when pass', (done) => {
-      store.setState({...initialState, appState: {user: {jwt: validJwt}}});
+      store.setState({...initialState, appState: {user: {jwt: expiredJWT}}} as GlobalState);
       guard.canActivate(routeMock as ActivatedRouteSnapshot, routeStateMock as RouterStateSnapshot).subscribe((result: boolean) => {
         expect(router.navigate).toHaveBeenCalledTimes(0);
         done();
