@@ -50,6 +50,6 @@ export interface JwtPayload {
 }
 
 export interface JwtRenewal {
-  success: boolean;
-  jwt: string;
+  ok: boolean;
+  user: User;
 }

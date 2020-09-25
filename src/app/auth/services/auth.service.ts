@@ -28,7 +28,7 @@ export class AuthService {
 
   refreshToken(): Observable<JwtRenewal> {
     return this.httpClient.post<JwtRenewal>(`${environment.authUrl}/auth/refresh-token`, {}).pipe(
-      tap(user => user && this.startRefreshTokenTimer(user.jwt))
+      tap((jwtRenewal: JwtRenewal) => jwtRenewal.ok && this.startRefreshTokenTimer(jwtRenewal.user.jwt))
     );
   }
 

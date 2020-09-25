@@ -21,16 +21,13 @@ export const appStateReducer = createReducer<AppState, Action>(
     }),
   on(
     AuthApiActions.refreshTokenSuccess,
-    (state, {jwt}: { jwt: string }) => {
-      const copy = {
-        ...state
+    (state, {user}: { user: User }) => {
+      return {
+        ...state,
+        user: {
+          ...user
+        }
       };
-
-      if (copy.user) {
-        copy.user.jwt = jwt;
-      }
-
-      return state;
     }),
   on(
     AuthApiActions.refreshTokenFailed,

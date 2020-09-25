@@ -35,7 +35,7 @@ export class AuthApiEffects {
     ofType(AppInitializationActions.refreshToken, LoginServiceActions.refreshToken),
     exhaustMap(() => this.authService.refreshToken().pipe(
       map((jwtRenewal: JwtRenewal) => {
-        return jwtRenewal.success ? AuthApiActions.refreshTokenSuccess({jwt: jwtRenewal.jwt}) : AuthApiActions.refreshTokenFailed();
+        return jwtRenewal.ok ? AuthApiActions.refreshTokenSuccess({user: jwtRenewal.user}) : AuthApiActions.refreshTokenFailed();
       }),
       catchError(() => of(AuthApiActions.refreshTokenFailed()))
     )),

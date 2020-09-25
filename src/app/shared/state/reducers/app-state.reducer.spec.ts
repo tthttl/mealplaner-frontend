@@ -51,7 +51,11 @@ describe('i18nReducer', () => {
           }
         },
         AuthApiActions.refreshTokenSuccess({
-          jwt: 'jwtRenewed'
+          user: {
+            name: 'Joe',
+            email: 'joe@doe.com',
+            jwt: 'jwtRenewed'
+          }
         }))).toEqual({
         ...initialAppState,
         user: {
@@ -59,17 +63,6 @@ describe('i18nReducer', () => {
           email: 'joe@doe.com',
           jwt: 'jwtRenewed'
         },
-      });
-    });
-
-    it('should not add new token to store if no user exists', () => {
-      expect(appStateReducer({
-          ...initialAppState,
-        },
-        AuthApiActions.refreshTokenSuccess({
-          jwt: 'jwtRenewed'
-        }))).toEqual({
-        ...initialAppState,
       });
     });
   });
