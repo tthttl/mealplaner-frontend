@@ -1,0 +1,27 @@
+<div class="form-wrapper">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <app-input
+      class="login-form__input"
+      formControlName="identifier"
+      [type]="'email'"
+      [autocomplete]="'email'"
+      [placeholder]="'Email'"
+      [label]="'email' | translate:translations:currentLang"
+      [errors]="getErrorsFor('identifier')"
+    ></app-input>
+    <app-input
+      class="login-form__input"
+      [formControl]="getFormControl('password')"
+      [type]="'password'"
+      [autocomplete]="buttonText==='login' ? 'current-password' : 'new-password'"
+      [label]="'password' | translate:translations:currentLang"
+      [errors]=" getErrorsFor('password')"
+    ></app-input>
+    <app-button class="form-button"
+      [buttonText]="buttonText | translate:translations:currentLang"
+      [buttonType]="'submit'"
+      [isDisabled]="!loginForm.valid"
+    >
+    </app-button>
+  </form>
+</div>

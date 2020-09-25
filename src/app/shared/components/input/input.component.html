@@ -7,16 +7,12 @@
              [id]="inputId"
              [(ngModel)]="currentValue"
              (ngModelChange)="onChange($event)"
+             (blur)="onBlur()"
              name="{{name}}"
              [autocomplete]="autocomplete"
              [placeholder]="placeholder"
              [attr.data-test]="e2eTestName"
              [attr.min]="minValue"
-             [ngClass]="{
-             'input__field--short': !!buttonText,
-             'input__field--border-accent': color === 'accent' && (!errors || errors.length === 0),
-             'input__field--error': errors && errors.length > 0
-             }"
       >
       <app-button class="input__button"
                   *ngIf="!!buttonText"

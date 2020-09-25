@@ -1,8 +1,15 @@
 import { FormControl } from '@angular/forms';
 import { TranslatePipe } from '../../i18n/pipes/translate.pipe';
 import { I18n } from '../model/model';
-import { I18n as I18nApi } from '../model/model-api';
-import { changeElementPosition, mapI18nApiToI18nClient, translateValidationErrors } from './helpers';
+import { I18n as I18nApi, UserApi } from '../model/model-api';
+import {
+  changeElementPosition,
+  decodeJwtToken,
+  isJwtTokenExpired,
+  mapI18nApiToI18nClient,
+  mapUserApiToUserClient,
+  translateValidationErrors
+} from './helpers';
 import createSpyObj = jasmine.createSpyObj;
 
 describe('Helpers', () => {
@@ -44,7 +51,6 @@ describe('Helpers', () => {
         translatePipe,
         {} as I18n,
         'de',
-        'key'
       )).toEqual(['dummy', 'dummy']);
     });
     it('should call transform with errors.validation.key.required', () => {
@@ -59,9 +65,8 @@ describe('Helpers', () => {
         translatePipe,
         {} as I18n,
         'de',
-        'key'
       );
-      expect(translatePipe.transform).toHaveBeenCalledWith('errors.validation.key.required', {}, 'de');
+      expect(translatePipe.transform).toHaveBeenCalledWith('errors.validation.required', {}, 'de');
     });
 
     it('should not have errors when its not touched or dirty', () => {
@@ -77,7 +82,6 @@ describe('Helpers', () => {
         translatePipe,
         {} as I18n,
         'de',
-        'key'
       )).toEqual([]);
     });
 
@@ -95,8 +99,52 @@ describe('Helpers', () => {
         translatePipe,
         {} as I18n,
         'de',
-        'key'
       )).toEqual([]);
+    });
+  });
+
+  describe('mapUserApiToUserClient', () => {
+    const userApi: UserApi = {
+      jwt: 'jwt',
+      user: {
+        username: 'Joe',
+        email: 'joe@doe.ch'
+      },
+    };
+    it('should convert to User', () => {
+      expect(mapUserApiToUserClient(userApi)).toEqual({
+        jwt: 'jwt',
+        name: 'Joe',
+        email: 'joe@doe.ch'
+      });
+    });
+  });
+
+  describe('decodeJwt', () => {
+    const jwtToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEzMTIiLCJpYXQiOjE2MDA5MzMwNTMsImV4cCI6MTYwMDkzMzE3M30.XXX';
+    it('should decode', () => {
+      expect(decodeJwtToken(jwtToken)).toEqual({
+        id: '1312',
+        iat: 1600933053,
+        exp: 1600933173
+      });
+    });
+  });
+
+  describe('isJwtTokenExpired', () => {
+    const jwtToken = 'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjEzMTIiLCJpYXQiOjE2MDA5MzMwNTMsImV4cCI6MTYwMDkzMzE3M30.XXX'; // Thu Sep 24 2020 09:39:33
+
+    it('should return true when expiration date is after current date', () => {
+      expect(isJwtTokenExpired(jwtToken, new Date(1600933300000 /* Thu Sep 24 2020 09:41:40  */))).toBeTrue();
+    });
+
+    it('should return false when expiration date is after current date', () => {
+      expect(isJwtTokenExpired(jwtToken, new Date(1600933100000 /* Thu Sep 24 2020 09:38:20  */))).toBeFalse();
+    });
+
+    it('should return false when expiration date is not a valid Date', () => {
+      const invalidJwtToken = 'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjEzMTIiLCJpYXQiOjE2MDA5MzMwNTMsImV4cCI6IkZDTCJ9.XXX';
+      expect(isJwtTokenExpired(invalidJwtToken, new Date(1600933100000 /* Thu Sep 24 2020 09:38:20  */))).toBeFalse();
     });
   });
 

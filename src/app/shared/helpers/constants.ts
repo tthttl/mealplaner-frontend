@@ -1,4 +1,7 @@
-import { Language } from '../model/model';
+import { Language, StringUnion } from '../model/model';
 
-export const DEFAULT_LANGAUGE: Language = 'de';
-export const EMAIL_PATTERN = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+export const DEFAULT_LANGUAGE: Language = 'de';
+export const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+export const DEFAULT_REDIRECT_URL_FOR_LOGGED_IN_USER = 'shopping-list';
+
+export const SUPPORTED_LANGUAGES = StringUnion('de', 'en');

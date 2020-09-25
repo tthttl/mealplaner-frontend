@@ -1,11 +1,20 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
+import { AuthModule } from './auth/auth.module';
 
 
 const routes: Routes = [
   {
     path: 'auth',
-    loadChildren: () => import('./login/login.module').then(m => m.LoginModule)
+    loadChildren: () => AuthModule
+  },
+  {
+    path: 'shopping-list',
+    loadChildren: () => import('./shopping-list/shopping-list.module').then(m => m.ShoppingListModule)
+  },
+  {
+    path: 'meal-planer',
+    loadChildren: () => import('./meal-planer/meal-planer.module').then(m => m.MealPlanerModule)
   },
   {
     path: 'cookbook',

@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TranslatePipe } from '../../../i18n/pipes/translate.pipe';
 import { DEFAULT_LANGAUGE } from '../../../shared/helpers/constants';
 import { translateValidationErrors } from '../../../shared/helpers/helpers';
-import { I18n, Language, SelectOption, ShoppingListItem } from '../../../shared/model/model';
+import { I18n, Language, SelectOption, ShoppingListItem, Unit } from '../../../shared/model/model';
 
 @Component({
   selector: 'app-shopping-list-form',
@@ -12,12 +12,12 @@ import { I18n, Language, SelectOption, ShoppingListItem } from '../../../shared/
 })
 export class ShoppingListFormComponent implements OnInit {
   @Input() translations: I18n = {};
-  @Input() currentLang: Language = DEFAULT_LANGAUGE;
+  @Input() currentLang: Language = DEFAULT_LANGUAGE;
   @Output() itemAdded: EventEmitter<ShoppingListItem> = new EventEmitter();
 
   addItemForm: FormGroup;
 
-  units: SelectOption<string>[] = [];
+  units: SelectOption<Unit>[] = [];
 
   constructor(private translatePipe: TranslatePipe) {
     this.addItemForm = new FormGroup({
@@ -57,7 +57,6 @@ export class ShoppingListFormComponent implements OnInit {
       this.getFormControl(key),
       this.translatePipe,
       this.translations,
-      this.currentLang,
-      key);
+      this.currentLang);
   }
 }

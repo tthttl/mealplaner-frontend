@@ -1,0 +1,18 @@
+{
+  "/api": {
+    "target": "http://localhost:1337",
+    "pathRewrite": {"^/api" : ""}
+  },
+  "/auth/local": {
+    "target": "http://localhost:1337",
+    "secure": false
+  },
+  "/auth/refresh-token": {
+    "target": "http://localhost:1337",
+    "secure": false
+  },
+  "/auth/logout": {
+    "target": "http://localhost:1337",
+    "secure": false
+  }
+}
