@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { TranslatePipe } from '../../../i18n/pipes/translate.pipe';
-import { DEFAULT_LANGAUGE } from '../../../shared/helpers/constants';
+import { DEFAULT_LANGUAGE } from '../../../shared/helpers/constants';
 import { translateValidationErrors } from '../../../shared/helpers/helpers';
 import { I18n, Language, Recipe, RecipeIngredient, SelectOption } from '../../../shared/model/model';
 
@@ -13,7 +13,7 @@ import { I18n, Language, Recipe, RecipeIngredient, SelectOption } from '../../..
 export class RecipeFormComponent implements OnInit {
 
   @Input() translations: I18n = {};
-  @Input() currentLang: Language = DEFAULT_LANGAUGE;
+  @Input() currentLang: Language = DEFAULT_LANGUAGE;
   @Output() recipeSaved: EventEmitter<Recipe> = new EventEmitter<Recipe>();
 
   recipeForm: FormGroup;
@@ -72,8 +72,7 @@ export class RecipeFormComponent implements OnInit {
       this.getFormControl(key),
       this.translatePipe,
       this.translations,
-      this.currentLang,
-      key);
+      this.currentLang);
   }
 
   createUnits(): SelectOption<string>[] {
