@@ -4,6 +4,7 @@ import { SelectOption } from '../../model/model';
 import { v4 as uuid } from 'uuid';
 
 
+
 @Component({
   selector: 'app-select',
   templateUrl: './select.component.html',

@@ -15,7 +15,11 @@ const routes: Routes = [
   {
     path: 'meal-planer',
     loadChildren: () => import('./meal-planer/meal-planer.module').then(m => m.MealPlanerModule)
-  }
+  },
+  {
+    path: 'cookbook',
+    loadChildren: () => import('./cookbook/cookbook.module').then(m => m.CookbookModule)
+  },
 ];
 
 @NgModule({
