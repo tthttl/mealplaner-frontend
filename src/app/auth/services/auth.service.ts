@@ -5,7 +5,7 @@ import { map, tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { decodeJwtToken, mapUserApiToUserClient } from '../../shared/helpers/helpers';
 import { UserApi } from '../../shared/model/model-api';
-import { JwtRenewal, LoginCredentials, User } from '../../shared/model/model';
+import { JwtRefreshResponse, LoginCredentials, User } from '../../shared/model/model';
 import { GlobalState } from '../../shared/state';
 import { Store } from '@ngrx/store';
 import { LoginServiceActions } from '../actions';
@@ -26,9 +26,9 @@ export class AuthService {
     );
   }
 
-  refreshToken(): Observable<JwtRenewal> {
-    return this.httpClient.post<JwtRenewal>(`${environment.authUrl}/auth/refresh-token`, {}).pipe(
-      tap((jwtRenewal: JwtRenewal) => jwtRenewal.user && this.startRefreshTokenTimer(jwtRenewal.user.jwt))
+  refreshToken(): Observable<JwtRefreshResponse> {
+    return this.httpClient.post<JwtRefreshResponse>(`${environment.authUrl}/auth/refresh-token`, {}).pipe(
+      tap((jwtRenewal: JwtRefreshResponse) => jwtRenewal.user && this.startRefreshTokenTimer(jwtRenewal.user.jwt))
     );
   }
 

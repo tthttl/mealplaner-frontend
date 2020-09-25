@@ -3,7 +3,7 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/c
 import { Store } from '@ngrx/store';
 import { GlobalState, selectUser } from '../state';
 import { Observable } from 'rxjs';
-import { first, flatMap, map, withLatestFrom } from 'rxjs/operators';
+import { flatMap, take } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 
 @Injectable()
@@ -14,12 +14,12 @@ export class JwtInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<{}>, next: HttpHandler): Observable<HttpEvent<{}>> {
 
     return this.store.select(selectUser).pipe(
-      first(),
+      take(1),
       flatMap(user => {
         const jwt = user?.jwt || null;
         const isRequestToAppBackend = request.url.startsWith(environment.authUrl);
         const authReq = !!(jwt && isRequestToAppBackend) ? request.clone({
-          setHeaders: { Authorization: 'Bearer ' + jwt },
+          setHeaders: {Authorization: 'Bearer ' + jwt},
         }) : request;
 
         return next.handle(authReq);

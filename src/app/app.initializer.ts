@@ -6,7 +6,7 @@ import { AppInitializationActions } from './shared/state/app-actions';
 import { AuthService } from './auth/services/auth.service';
 import { Actions, ofType } from '@ngrx/effects';
 import { I18nApiActions } from './i18n/actions';
-import { first, takeUntil } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 import { AuthApiActions } from './auth/actions';
 import { Language } from './shared/model/model';
 import { DEFAULT_LANGUAGE, SUPPORTED_LANGUAGES } from './shared/helpers/constants';
@@ -27,13 +27,13 @@ export function appInitializer(
     const loadI18nDone$ = actions$.pipe(
       ofType(I18nApiActions.getI18nSuccess),
       takeUntil(actions$.pipe(ofType(I18nApiActions.getI18nFailure))),
-      first()
+      take(1)
     );
 
     const refreshedTokenDone$ = actions$.pipe(
       ofType(AuthApiActions.refreshTokenSuccess),
       takeUntil(actions$.pipe(ofType(AuthApiActions.refreshTokenFailed))),
-      first()
+      take(1)
     );
 
     forkJoin([

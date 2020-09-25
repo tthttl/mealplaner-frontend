@@ -1,7 +1,7 @@
 import { TestBed, getTestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { AuthService } from './auth.service';
-import { JwtRenewal, User as UserClient } from '../../shared/model/model';
+import { JwtRefreshResponse, User as UserClient } from '../../shared/model/model';
 import { UserApi } from '../../shared/model/model-api';
 import { environment } from '../../../environments/environment';
 import { of } from 'rxjs';
@@ -59,7 +59,7 @@ describe('AuthService', () => {
   });
 
   it('refreshToken() should return RefreshToken', () => {
-    const mockJwtRenewal: JwtRenewal = {
+    const mockJwtRenewal: JwtRefreshResponse = {
       ok: true,
       user: {
         name: 'Joe',

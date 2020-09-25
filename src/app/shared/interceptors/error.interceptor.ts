@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError, first, flatMap, tap } from 'rxjs/operators';
+import { catchError, flatMap, take, tap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { GlobalState, selectUser } from '../state';
 import { AuthService } from '../../auth/services/auth.service';
@@ -18,7 +18,7 @@ export class ErrorInterceptor implements HttpInterceptor {
       catchError(err => {
 
         return this.store.select(selectUser).pipe(
-          first(),
+          take(1),
           tap(user => {
             if ([401, 403].includes(err.status) && user && !request.url.includes('logout')) {
               this.store.dispatch(ErrorInterceptorActions.logout());

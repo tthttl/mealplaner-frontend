@@ -20,7 +20,7 @@ export class I18nApiEffects {
     ofType(AppInitializationActions.setLanguage),
     exhaustMap(({language}: LoadI18nAction) => this.i18nService.getI18n(language).pipe(
       map((i18n: I18n) => I18nApiActions.getI18nSuccess({i18n})),
-      catchError(() => of(I18nApiActions.getI18nFailure))
+      catchError(() => of(I18nApiActions.getI18nFailure()))
     ))
   );
 }

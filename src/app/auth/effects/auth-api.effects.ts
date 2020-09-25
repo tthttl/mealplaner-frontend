@@ -6,7 +6,7 @@ import { AuthApiActions, LoginPageActions, LoginServiceActions } from '../action
 import { catchError, exhaustMap, map, tap, withLatestFrom } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 import { LoginAction } from '../../shared/model/model-action';
-import { JwtRenewal, User } from '../../shared/model/model';
+import { JwtRefreshResponse, User } from '../../shared/model/model';
 import { of } from 'rxjs';
 import { AppInitializationActions, ErrorInterceptorActions } from '../../shared/state/app-actions';
 import { Router } from '@angular/router';
@@ -34,7 +34,7 @@ export class AuthApiEffects {
   refreshToken = this.actions$.pipe(
     ofType(AppInitializationActions.refreshToken, LoginServiceActions.refreshToken),
     exhaustMap(() => this.authService.refreshToken().pipe(
-      map((jwtRenewal: JwtRenewal) => {
+      map((jwtRenewal: JwtRefreshResponse) => {
         return (jwtRenewal.ok && jwtRenewal.user) ?
           AuthApiActions.refreshTokenSuccess({user: jwtRenewal.user}) : AuthApiActions.refreshTokenFailed();
       }),

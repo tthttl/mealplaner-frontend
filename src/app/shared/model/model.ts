@@ -51,7 +51,7 @@ export interface JwtPayload {
   exp: number;
 }
 
-export interface JwtRenewal {
+export interface JwtRefreshResponse {
   ok: boolean;
   user: User | null;
 }

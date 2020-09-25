@@ -6,7 +6,7 @@ import { AuthApiActions, LoginPageActions } from '../actions';
 import { Router } from '@angular/router';
 import { TestBed } from '@angular/core/testing';
 import { provideMockStore } from '@ngrx/store/testing';
-import { JwtRenewal, User } from '../../shared/model/model';
+import { JwtRefreshResponse, User } from '../../shared/model/model';
 import { Action, Store } from '@ngrx/store';
 import { AppInitializationActions } from '../../shared/state/app-actions';
 import { DEFAUT_REDIRECT_URL_FOR_LOGGED_IN_USER } from '../../shared/helpers/constants';
@@ -87,7 +87,7 @@ describe('Auth Api Effects', () => {
     });
 
     it('should return success action', () => {
-      authService.refreshToken.and.returnValue(of({ok: true, user: {} as User} as JwtRenewal));
+      authService.refreshToken.and.returnValue(of({ok: true, user: {} as User} as JwtRefreshResponse));
       authApiEffects.refreshToken.subscribe((action: Action) => {
         expect(action.type).toEqual(AuthApiActions.refreshTokenSuccess.type);
       });
@@ -101,7 +101,7 @@ describe('Auth Api Effects', () => {
     });
 
     it('should return failure action if renewal fails', () => {
-      authService.refreshToken.and.returnValue(of({ok: false, user: null} as JwtRenewal));
+      authService.refreshToken.and.returnValue(of({ok: false, user: null} as JwtRefreshResponse));
       authApiEffects.refreshToken.subscribe((action: Action) => {
         expect(action.type).toEqual(AuthApiActions.refreshTokenFailed.type);
       });
