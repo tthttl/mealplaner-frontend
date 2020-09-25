@@ -5,7 +5,7 @@ import { GlobalState, selectUser } from '../state';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
 import { isJwtTokenExpired } from '../helpers/helpers';
-import { DEFAUT_REDIRECT_URL_FOR_LOGGED_IN_USER } from '../helpers/constants';
+import { DEFAULT_REDIRECT_URL_FOR_LOGGED_IN_USER } from '../helpers/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,7 @@ export class LoggedOutGuard implements CanActivate {
     return this.store.select(selectUser).pipe(
       map(user => {
         if (!!user && !isJwtTokenExpired(user.jwt)) {
-          this.router.navigate([DEFAUT_REDIRECT_URL_FOR_LOGGED_IN_USER]);
+          this.router.navigate([DEFAULT_REDIRECT_URL_FOR_LOGGED_IN_USER]);
           return false;
         }
 

@@ -7,7 +7,7 @@ import { AuthService } from '../../auth/services/auth.service';
 import SpyObj = jasmine.SpyObj;
 import { GlobalState, initialState } from '../state';
 import { LoggedOutGuard } from './logged-out.guard';
-import { DEFAUT_REDIRECT_URL_FOR_LOGGED_IN_USER } from '../helpers/constants';
+import { DEFAULT_REDIRECT_URL_FOR_LOGGED_IN_USER } from '../helpers/constants';
 
 const routeMock: Partial<ActivatedRouteSnapshot> = {url: []};
 const routeStateMock: Partial<RouterStateSnapshot> = {url: '/cookies'};
@@ -79,7 +79,7 @@ describe('Logged Out Guard', () => {
     it('should redirect when failed', (done) => {
       store.setState({...initialState, appState: {user: {jwt: validJwt}}});
       guard.canActivate(routeMock as ActivatedRouteSnapshot, routeStateMock as RouterStateSnapshot).subscribe((result: boolean) => {
-        expect(router.navigate).toHaveBeenCalledWith([DEFAUT_REDIRECT_URL_FOR_LOGGED_IN_USER]);
+        expect(router.navigate).toHaveBeenCalledWith([DEFAULT_REDIRECT_URL_FOR_LOGGED_IN_USER]);
         done();
       });
     });
