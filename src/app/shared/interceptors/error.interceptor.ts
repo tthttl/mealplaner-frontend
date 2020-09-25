@@ -5,6 +5,7 @@ import { catchError, first, flatMap, tap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { GlobalState, selectUser } from '../state';
 import { AuthService } from '../../auth/services/auth.service';
+import { ErrorInterceptorActions } from '../state/app-actions';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
@@ -19,8 +20,8 @@ export class ErrorInterceptor implements HttpInterceptor {
         return this.store.select(selectUser).pipe(
           first(),
           tap(user => {
-            if ([401, 403].includes(err.status) && user) {
-              // Todo this.authenticationService.logout().subscribe();
+            if ([401, 403].includes(err.status) && user && !request.url.includes('logout')) {
+              this.store.dispatch(ErrorInterceptorActions.logout());
             }
           }),
           tap(_ => console.error(err)),
