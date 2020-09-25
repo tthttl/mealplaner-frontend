@@ -8,7 +8,7 @@ import { AuthService } from '../services/auth.service';
 import { LoginAction } from '../../shared/model/model-action';
 import { JwtRenewal, User } from '../../shared/model/model';
 import { of } from 'rxjs';
-import { AppInitializationActions } from '../../shared/state/app-actions';
+import { AppInitializationActions, ErrorInterceptorActions } from '../../shared/state/app-actions';
 import { Router } from '@angular/router';
 import { DEFAUT_REDIRECT_URL_FOR_LOGGED_IN_USER } from '../../shared/helpers/constants';
 
@@ -38,6 +38,15 @@ export class AuthApiEffects {
         return jwtRenewal.ok ? AuthApiActions.refreshTokenSuccess({user: jwtRenewal.user}) : AuthApiActions.refreshTokenFailed();
       }),
       catchError(() => of(AuthApiActions.refreshTokenFailed()))
+    )),
+  );
+
+  @Effect()
+  logout = this.actions$.pipe(
+    ofType(ErrorInterceptorActions.logout),
+    exhaustMap(() => this.authService.logout().pipe(
+      map(() => AuthApiActions.logoutSuccess()),
+      catchError(() => of(AuthApiActions.loginFailure()))
     )),
   );
 

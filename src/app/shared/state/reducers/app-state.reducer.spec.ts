@@ -128,4 +128,21 @@ describe('i18nReducer', () => {
     });
   });
 
+  describe('ErrorInterceptorActions.logout', () => {
+    it('should remove user in store', () => {
+      expect(appStateReducer({
+          ...initialAppState,
+          user: {
+            name: 'Joe',
+            email: 'joe@doe.com',
+            jwt: 'jwt',
+          }
+        },
+        AppInitializationActions.setLanguage({language: 'en'}))).toEqual({
+        ...initialAppState,
+        user: null
+      });
+    });
+  });
+
 });
