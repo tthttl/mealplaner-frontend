@@ -1,6 +1,4 @@
-/*import { TestBed } from '@angular/core/testing';
-
-import { AuthenticatedGuard } from './authenticated.guard';
+import { TestBed } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { provideMockStore } from '@ngrx/store/testing';
@@ -8,6 +6,7 @@ import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/ro
 import { AuthService } from '../../auth/services/auth.service';
 import SpyObj = jasmine.SpyObj;
 import { initialState } from '../state';
+import { AuthenticatedGuard } from './authenticated.guard';
 
 const routeMock: Partial<ActivatedRouteSnapshot> = {url: []};
 const routeStateMock: Partial<RouterStateSnapshot> = {url: '/cookies'};
@@ -52,7 +51,7 @@ describe('AuthenticatedGuard', () => {
     });
 
     it('should reject when no jwt token is available', (done) => {
-      guard.canActivate(routeMock as ActivatedRouteSnapshot, routeStateMock as RouterStateSnapshot).subscribe((result) => {
+      guard.canActivate(routeMock as ActivatedRouteSnapshot, routeStateMock as RouterStateSnapshot).subscribe((result: boolean) => {
         expect(result).toBeFalse();
         done();
       });
@@ -60,7 +59,7 @@ describe('AuthenticatedGuard', () => {
 
     it('should allow when no jwt token is available and not expired', (done) => {
       const jwt = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjk5OTk5OTk5OTk5fQ.XXX'; // JWT Expires at November 16 5138
-      guard.canActivate(routeMock as ActivatedRouteSnapshot, routeStateMock as RouterStateSnapshot).subscribe((result) => {
+      guard.canActivate(routeMock as ActivatedRouteSnapshot, routeStateMock as RouterStateSnapshot).subscribe((result: boolean) => {
         expect(result).toBeTrue();
         done();
       });
@@ -68,10 +67,10 @@ describe('AuthenticatedGuard', () => {
 
     it('should allow when no jwt token is available but  expired', (done) => {
       const jwt = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjB9.XXX'; // JWT Expires at January 01 1970
-      guard.canActivate(routeMock as ActivatedRouteSnapshot, routeStateMock as RouterStateSnapshot).subscribe((result) => {
+      guard.canActivate(routeMock as ActivatedRouteSnapshot, routeStateMock as RouterStateSnapshot).subscribe((result: boolean) => {
         expect(result).toBeFalse();
         done();
       });
     });
   });
-*/
+});

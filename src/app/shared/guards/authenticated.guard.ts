@@ -1,4 +1,4 @@
-/*import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { GlobalState, selectTranslations, selectUser } from '../state';
@@ -32,5 +32,5 @@ export class AuthenticatedGuard implements CanActivate {
     );
   }
 }
-*/
+
 

@@ -48,7 +48,6 @@ export const appStateReducer = createReducer<AppState, Action>(
         user: {
           ...user
         },
-        url: null
       };
     }),
   on(

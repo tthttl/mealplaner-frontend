@@ -12,7 +12,7 @@ import { provideMockStore } from '@ngrx/store/testing';
 import { AppInitializationActions } from '../../shared/state/app-actions';
 import { DEFAUT_REDIRECT_URL_FOR_LOGGED_IN_USER } from '../../shared/helpers/constants';
 
-/*describe('Auth Api Effects', () => {
+describe('Auth Api Effects', () => {
   let actions$;
   let authService: SpyObj<AuthService>;
   let router: SpyObj<Router>;
@@ -149,4 +149,4 @@ import { DEFAUT_REDIRECT_URL_FOR_LOGGED_IN_USER } from '../../shared/helpers/con
       });
     });
   });
-});*/
+});
