@@ -1,4 +1,4 @@
-/*import { TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { provideMockStore } from '@ngrx/store/testing';
@@ -13,7 +13,7 @@ const routeStateMock: Partial<RouterStateSnapshot> = {url: '/cookies'};
 const routerMock = jasmine.createSpyObj('Router', ['navigate']);
 
 
-describe('AuthenticatedGuard', () => {
+/*describe('AuthenticatedGuard', () => {
   let authService: SpyObj<AuthService>;
   let router: SpyObj<Router>;
   let guard: AuthenticatedGuard;
@@ -35,7 +35,7 @@ describe('AuthenticatedGuard', () => {
             provide: Store,
             useClass: StoreMock
           },
-          provideMockStore()
+          provideMockStore({initialState})
         ]
       });
       authService = jasmine.createSpyObj('AuthService', ['login']);
@@ -59,6 +59,7 @@ describe('AuthenticatedGuard', () => {
 
     it('should allow when no jwt token is available and not expired', (done) => {
       const jwt = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjk5OTk5OTk5OTk5fQ.XXX'; // JWT Expires at November 16 5138
+      // spyOn(store, 'select').and.returnValue(of({...initialState, appState: {user: {jwt}}}));
       guard.canActivate(routeMock as ActivatedRouteSnapshot, routeStateMock as RouterStateSnapshot).subscribe((result: boolean) => {
         expect(result).toBeTrue();
         done();

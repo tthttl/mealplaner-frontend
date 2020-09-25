@@ -132,7 +132,7 @@ describe('Auth Api Effects', () => {
 
     it('should redirect when successfully login', () => {
       authApiEffects.redirectWhenLoggedIn.subscribe(() => {
-        expect(router).toHaveBeenCalledWith(DEFAUT_REDIRECT_URL_FOR_LOGGED_IN_USER);
+        expect(router.navigate).toHaveBeenCalledWith([DEFAUT_REDIRECT_URL_FOR_LOGGED_IN_USER]);
       });
     });
   });
