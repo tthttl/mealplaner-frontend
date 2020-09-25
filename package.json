@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -36,6 +36,7 @@
     "@ngrx/effects": "^9.2.0",
     "@ngrx/entity": "^9.2.0",
     "@ngrx/store": "^9.2.0",
+    "date-fns": "^2.16.1",
     "puppeteer": "^5.0.0",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",

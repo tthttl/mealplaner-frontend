@@ -1,6 +1,6 @@
 import { ActionReducerMap, createFeatureSelector, createSelector, MetaReducer } from '@ngrx/store';
-import { appStateReducer } from '../../i18n/reducers/i18n-api.reducers';
-import { AppState, initialAppState } from './app-state/app-state';
+import { AppState, initialAppState } from './states/app-state';
+import { appStateReducer } from './reducers/app-state.reducers';
 
 export interface GlobalState {
   appState: AppState;
@@ -26,4 +26,14 @@ export const selectTranslations = createSelector(
 export const selectCurrentLanguage = createSelector(
   selectAppState,
   (appState: AppState) => appState.language
+);
+
+export const selectUser = createSelector(
+  selectAppState,
+  (appState: AppState) => appState.user
+);
+
+export const selectRequestedUrlBeforeLoginWasRequired = createSelector(
+  selectAppState,
+  (appState: AppState) => appState.requestedUrlBeforeLoginWasRequired
 );

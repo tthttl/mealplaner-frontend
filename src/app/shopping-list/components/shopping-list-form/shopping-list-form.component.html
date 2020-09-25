@@ -1,30 +1,33 @@
 <div class="form-wrapper">
   <form class="add-items-form" [formGroup]="addItemForm" (ngSubmit)="onSubmit()">
-    <app-input
+    <!--<app-input
       class="add-items-form--input add-items-form--input-amount"
       type="number"
       [minValue]="0"
+      [name]="'amount'"
       [placeholder]="'shoppingList.addForm.amount' | translate:translations:currentLang"
-      [control]="getFormControl('amount')"></app-input>
+      [formControl]="getFormControl('amount')"></app-input>
+
+
 
     <app-select
       class="add-items-form--input add-items-form--input-unit"
       [options]="units"
       [name]="'unit'"
-      [control]="getFormControl('unit')">
+      [formControl]="getFormControl('unit')">
     </app-select>
 
     <app-input
       class="add-items-form--input"
       [placeholder]="'shoppingList.addForm.product' | translate:translations:currentLang"
-      [control]="getFormControl('name')">
+      [formControl]="getFormControl('name')">
     </app-input>
 
     <app-button
       class="add-items-form--submit"
       [buttonType]="'submit'"
       [buttonText]="'shoppingList.addForm.addLabel' | translate:translations:currentLang"
-      [isDisabled]="addItemForm.invalid"></app-button>
+      [isDisabled]="addItemForm.invalid"></app-button>-->
   </form>
 </div>
 
