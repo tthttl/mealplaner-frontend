@@ -3,7 +3,7 @@ import { I18nApiActions } from '../../../i18n/actions';
 import { appStateReducer } from './app-state.reducers';
 import { initialAppState } from '../states/app-state';
 import { AuthApiActions } from '../../../auth/actions';
-import { AppInitializationActions, AuthenticatedGuardActions } from '../app-actions';
+import { AppInitializationActions, AuthenticatedGuardActions, ErrorInterceptorActions } from '../app-actions';
 
 describe('i18nReducer', () => {
   describe('I18nApiActions.getI18nSuccess', () => {
@@ -138,7 +138,7 @@ describe('i18nReducer', () => {
             jwt: 'jwt',
           }
         },
-        AppInitializationActions.setLanguage({language: 'en'}))).toEqual({
+        ErrorInterceptorActions.logout())).toEqual({
         ...initialAppState,
         user: null
       });

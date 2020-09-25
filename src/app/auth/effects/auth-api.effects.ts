@@ -58,4 +58,13 @@ export class AuthApiEffects {
       this.router.navigate([url || DEFAUT_REDIRECT_URL_FOR_LOGGED_IN_USER]);
     }),
   );
+
+  @Effect({dispatch: false})
+  redirectWhenLoggedOut = this.actions$.pipe(
+    ofType(AuthApiActions.logoutSuccess),
+    withLatestFrom(this.store.select(selectRequestedUrlBeforeLoginWasRequired)),
+    tap(([_, url]) => {
+      this.router.navigate(['/']);
+    }),
+  );
 }
