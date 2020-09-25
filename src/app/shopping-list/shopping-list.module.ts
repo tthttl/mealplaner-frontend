@@ -8,10 +8,12 @@ import { ShoppingListComponent } from './components/shopping-list/shopping-list.
 import { ShoppingListFormComponent } from './components/shopping-list-form/shopping-list-form.component';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ShoppingListContainerComponent } from './containers/shopping-list-container/shopping-list-container.component';
+import { ShoppingListRoutingModule } from './shopping-list-routing.module';
 
 
 @NgModule({
-  declarations: [ShoppingListComponent, ShoppingListFormComponent],
+  declarations: [ShoppingListComponent, ShoppingListFormComponent, ShoppingListContainerComponent],
   imports: [
     CommonModule,
     DragDropModule,
@@ -20,6 +22,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     I18nModule,
     SharedModule,
     ReactiveFormsModule,
+    ShoppingListRoutingModule,
   ]
 })
 export class ShoppingListModule {
