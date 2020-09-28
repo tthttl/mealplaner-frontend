@@ -8,11 +8,12 @@ import { I18nModule } from '../i18n/i18n.module';
 import { TranslatePipe } from '../i18n/pipes/translate.pipe';
 import { SharedModule } from '../shared/shared.module';
 import { RecipeFormComponent } from './components/recipe-form/recipe-form.component';
+import { RecipeListComponent } from './components/recipe-list/recipe-list.component';
 import { CookbookRoutingModule } from './cookbook-routing.module';
 
 
 @NgModule({
-  declarations: [RecipeFormComponent],
+  declarations: [RecipeFormComponent, RecipeListComponent],
   imports: [
     CommonModule,
     CookbookRoutingModule,

@@ -1,0 +1,8 @@
+<div class="recipe-list">
+  <app-input
+    class="search-field"
+    [placeholder]="'recipe-list.search' | translate:translations:currentLang"
+    #searchField
+  ></app-input>
+  <div class="recipe" *ngFor="let recipe of recipes">{{recipe.title}}</div>
+</div>
