@@ -46,23 +46,30 @@ export default {
 };
 
 export const actionsData = {
-  inputChanged: action('inputChanged')
+  inputChanged: action('inputChanged'),
+  editRecipe: action('editRecipe'),
+  deleteRecipe: action('deleteRecipe')
 };
 
 export const formData = {
   translations: {
     de: {
       'recipe-list.search': 'Suchen',
+      'button.edit': 'Bearbeiten',
+      'button.delete': 'Löschen'
     }
   },
   recipes: [
     {
+      id: '1',
       title: 'Chocolate chip cookie'
     },
     {
+      id: '2',
       title: 'Cheesecake'
     },
     {
+      id: '3',
       title: 'Muffin'
     }
   ]

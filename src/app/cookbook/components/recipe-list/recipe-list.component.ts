@@ -15,6 +15,8 @@ export class RecipeListComponent implements OnInit, OnDestroy {
   @Input() currentLang: Language = DEFAULT_LANGUAGE;
   @Input() recipes: Recipe[] | undefined;
   @Output() inputChanged: EventEmitter<string> = new EventEmitter<string>();
+  @Output() editRecipe: EventEmitter<string> = new EventEmitter<string>();
+  @Output() deleteRecipe: EventEmitter<string> = new EventEmitter<string>();
 
   @ViewChild('searchField', {static: true, read: ElementRef}) searchField: ElementRef | undefined;
 
@@ -32,6 +34,13 @@ export class RecipeListComponent implements OnInit, OnDestroy {
     ).subscribe((value: string) => this.inputChanged.emit(value));
   }
 
+  onEditRecipe(id: string): void {
+    this.editRecipe.emit(id);
+  }
+
+  onDeleteRecipe(id: string): void {
+    this.deleteRecipe.emit(id);
+  }
 
   ngOnDestroy(): void {
     this.destroy$.next();
