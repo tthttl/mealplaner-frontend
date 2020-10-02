@@ -85,7 +85,7 @@ export interface RecipeIngredient extends Ingredient {
 }
 
 export interface Recipe {
-  readonly id: string;
+  readonly id?: string;
   readonly title: string;
   readonly ingredients: RecipeIngredient [];
   readonly url?: string;

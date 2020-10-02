@@ -34,12 +34,16 @@ export class RecipeListComponent implements OnInit, OnDestroy {
     ).subscribe((value: string) => this.inputChanged.emit(value));
   }
 
-  onEditRecipe(id: string): void {
-    this.editRecipe.emit(id);
+  onEditRecipe(id: string | undefined): void {
+    if (id) {
+      this.editRecipe.emit(id);
+    }
   }
 
-  onDeleteRecipe(id: string): void {
-    this.deleteRecipe.emit(id);
+  onDeleteRecipe(id: string | undefined): void {
+    if (id) {
+      this.deleteRecipe.emit(id);
+    }
   }
 
   ngOnDestroy(): void {
