@@ -25,10 +25,6 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.store.dispatch(CookbookApiActions.loadCookbook());
-/*    this.store.select(selectCookbooks).pipe(
-      takeUntil(this.destroy$),
-      tap(() => this.store.dispatch(RecipeApiActions.loadRecipes()))
-    ).subscribe();*/
   }
 
   ngOnDestroy(): void {
