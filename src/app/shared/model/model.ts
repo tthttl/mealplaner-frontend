@@ -81,12 +81,17 @@ export const StringUnion = <UnionType extends string>(...values: UnionType[]) =>
 };
 
 export interface RecipeIngredient extends Ingredient {
-  readonly isStapleFood: boolean;
+    readonly isStapleFood: boolean;
 }
 
 export interface Recipe {
-  readonly id?: string;
-  readonly title: string;
-  readonly ingredients: RecipeIngredient [];
-  readonly url?: string;
+    readonly id?: string;
+    readonly title: string;
+    readonly ingredients: RecipeIngredient [];
+    readonly url?: string;
+}
+
+export interface Cookbook {
+    readonly id: string;
+    readonly title: string;
 }

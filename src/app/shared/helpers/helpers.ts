@@ -1,8 +1,18 @@
 import { FormControl } from '@angular/forms';
 import { isAfter, isDate } from 'date-fns';
 import { TranslatePipe } from '../../i18n/pipes/translate.pipe';
-import { ArrayItemMovedEvent, I18n as I18nClient, I18n, JwtPayload, Language, User } from '../../shared/model/model';
-import { I18n as I18nApi, UserApi } from '../../shared/model/model-api';
+import {
+  ArrayItemMovedEvent,
+  Cookbook,
+  I18n as I18nClient,
+  I18n,
+  JwtPayload,
+  Language,
+  Recipe,
+  RecipeIngredient,
+  User
+} from '../../shared/model/model';
+import { CookbookApi, I18n as I18nApi, IngredientApi, RecipeApi, UserApi } from '../../shared/model/model-api';
 import { DEFAULT_LANGUAGE } from './constants';
 
 export function mapI18nApiToI18nClient(i18nApi: I18nApi): I18nClient {
@@ -69,4 +79,36 @@ export function isJwtTokenExpired(token: string, now: Date = new Date()): boolea
   }
 
   return isAfter(now, tokenExpirationDate);
+}
+
+export function convertRecipesApiToRecipes(recipes: RecipeApi[]): Recipe[] {
+  return recipes.map((recipe: RecipeApi) => {
+    return {
+      id: recipe.id,
+      title: recipe.title,
+      url: recipe.url,
+      ingredients: convertIngredientApiArrayToRecipeIngredientArray(recipe.ingredients)
+    };
+  });
+}
+
+export function convertIngredientApiArrayToRecipeIngredientArray(ingredients: IngredientApi[]): RecipeIngredient[] {
+  return ingredients.map((ingredient: IngredientApi) => {
+    return {
+      id: ingredient.id,
+      name: ingredient.title,
+      unit: ingredient.unit,
+      amount: ingredient.amount,
+      isStapleFood: ingredient.isStapleFood || false
+    };
+  });
+}
+
+export function convertCookbookApisToCookbooks(cookbooks: CookbookApi[]): Cookbook[] {
+  return cookbooks.map((cookbook: CookbookApi) => {
+    return {
+      id: cookbook.id,
+      title: cookbook.title
+    };
+  });
 }

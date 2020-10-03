@@ -10,15 +10,16 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BetaTeaserComponent } from './beta-teaser/beta-teaser.component';
-import { I18nModule } from './i18n/i18n.module';
-import { metaReducers, reducers } from './shared/state';
 import { appInitializer } from './app.initializer';
-import { I18nService } from './i18n/services/i18n.service';
-import { JwtInterceptor } from './shared/interceptors/jwt.interceptor';
-import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
-import { AuthService } from './auth/services/auth.service';
 import { AuthModule } from './auth/auth.module';
+import { AuthService } from './auth/services/auth.service';
+import { BetaTeaserComponent } from './beta-teaser/beta-teaser.component';
+import { CookbookModule } from './cookbook/cookbook.module';
+import { I18nModule } from './i18n/i18n.module';
+import { I18nService } from './i18n/services/i18n.service';
+import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
+import { JwtInterceptor } from './shared/interceptors/jwt.interceptor';
+import { metaReducers, reducers } from './shared/state';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { AuthModule } from './auth/auth.module';
     StoreDevtoolsModule.instrument(),
     I18nModule,
     AuthModule,
+    CookbookModule,
     EffectsModule.forRoot([]),
     FontAwesomeModule
   ],
