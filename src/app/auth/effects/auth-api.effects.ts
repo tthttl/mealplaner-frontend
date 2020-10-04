@@ -8,9 +8,9 @@ import { AuthService } from '../services/auth.service';
 import { LoginAction } from '../../shared/model/model-action';
 import { JwtRefreshResponse, User } from '../../shared/model/model';
 import { of } from 'rxjs';
-import { AppInitializationActions, ErrorInterceptorActions } from '../../shared/state/app-actions';
+import { AppInitializationActions, ErrorInterceptorActions, NavActions } from '../../shared/state/app-actions';
 import { Router } from '@angular/router';
-import { DEFAUT_REDIRECT_URL_FOR_LOGGED_IN_USER } from '../../shared/helpers/constants';
+import { DEFAULT_REDIRECT_URL_FOR_LOGGED_IN_USER } from '../../shared/helpers/constants';
 
 @Injectable()
 export class AuthApiEffects {
@@ -44,7 +44,7 @@ export class AuthApiEffects {
 
   @Effect()
   logout = this.actions$.pipe(
-    ofType(ErrorInterceptorActions.logout),
+    ofType(ErrorInterceptorActions.logout, NavActions.logout),
     exhaustMap(() => this.authService.logout().pipe(
       map(() => AuthApiActions.logoutSuccess()),
       catchError(() => of(AuthApiActions.loginFailure()))
@@ -56,7 +56,7 @@ export class AuthApiEffects {
     ofType(AuthApiActions.loginSuccess),
     withLatestFrom(this.store.select(selectRequestedUrlBeforeLoginWasRequired)),
     tap(([_, url]) => {
-      this.router.navigate([url || DEFAUT_REDIRECT_URL_FOR_LOGGED_IN_USER]);
+      this.router.navigate([url || DEFAULT_REDIRECT_URL_FOR_LOGGED_IN_USER]);
     }),
   );
 

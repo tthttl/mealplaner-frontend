@@ -42,6 +42,20 @@
     border-radius: 0 4px 4px 0;
   }
 
+  &--color-inverted{
+    background-color: #FFFFFF;
+    color: $blue_100;
+    font-weight: 400;
+
+    &:hover{
+      background-color: $blue-grey_10;
+    }
+
+    &:active {
+      background-color: $blue-grey_10;
+    }
+  }
+
   &--color-accent{
     background-color: $cyan_70;
     color:$cyan_10;

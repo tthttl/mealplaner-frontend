@@ -9,7 +9,7 @@ import { provideMockStore } from '@ngrx/store/testing';
 import { JwtRefreshResponse, User } from '../../shared/model/model';
 import { Action, Store } from '@ngrx/store';
 import { AppInitializationActions } from '../../shared/state/app-actions';
-import { DEFAUT_REDIRECT_URL_FOR_LOGGED_IN_USER } from '../../shared/helpers/constants';
+import { DEFAULT_REDIRECT_URL_FOR_LOGGED_IN_USER } from '../../shared/helpers/constants';
 import SpyObj = jasmine.SpyObj;
 
 describe('Auth Api Effects', () => {
@@ -132,7 +132,7 @@ describe('Auth Api Effects', () => {
 
     it('should redirect when successfully login', () => {
       authApiEffects.redirectWhenLoggedIn.subscribe(() => {
-        expect(router.navigate).toHaveBeenCalledWith([DEFAUT_REDIRECT_URL_FOR_LOGGED_IN_USER]);
+        expect(router.navigate).toHaveBeenCalledWith([DEFAULT_REDIRECT_URL_FOR_LOGGED_IN_USER]);
       });
     });
   });

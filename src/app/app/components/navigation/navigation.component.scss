@@ -1,0 +1,159 @@
+@import "../../../../styles/settings/colors";
+@import "../../../../styles/settings/breakpoints";
+
+.main-navigation {
+  background: $blue_100;
+  width: 100%;
+  height: 3.5rem;
+  position: fixed;
+  top: 0;
+  display: flex;
+  align-items: center;
+
+  &__logo {
+    height: 2rem;
+    width: auto;
+    padding-right: 2rem;
+  }
+
+  &__content {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__actions {
+    height: 2rem;
+    display: flex;
+  }
+
+  &__wrapper {
+    display: flex;
+    height: 100%;
+    align-items: center;
+  }
+
+  &__secondary-action {
+    color: white;
+    padding-right: 1.5rem;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  &__primary-action {
+    background: white;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    color: $blue_100;
+    text-decoration: none;
+    width: 7rem;
+  }
+}
+
+
+.mobile-navigation {
+  position: fixed;
+  background: #FFFFFF;
+  bottom: 0;
+  height: 4.5rem;
+  width: 100%;
+  box-shadow: 0px -4px 6px 0px rgba(224, 224, 224, 1);
+  border-bottom: 0.3rem solid $blue-grey_20;
+
+  @include large {
+    display: none;
+  }
+
+  &__link-list {
+    list-style: none;
+    display: flex;
+    margin-top: 0.4rem;
+  }
+
+  &__link-list-element {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    text-align: center;
+  }
+
+  &__link-icon {
+    color: $blue_80;
+    font-size: 1.8rem;
+  }
+
+  &__link-text {
+    color: $blue_80;
+    font-size: 0.8rem;
+    margin-top: -0.3rem;
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+
+  &__link {
+    text-decoration: none;
+  }
+
+  &__link--active {
+    text-decoration: none;
+
+    .mobile-navigation__status {
+      width: 5.5rem;
+      margin: 0 auto;
+      background-color: $blue_80;
+      height: 0.3rem;
+      position: relative;
+      bottom: 0;
+    }
+  }
+}
+
+// destkop-navigation__link-list
+.desktop-navigation {
+  display: none;
+  color: white;
+  list-style: none;
+  height: 100%;
+
+  &__link-list {
+    color: white;
+    list-style: none;
+    display: flex;
+    height: 100%;
+  }
+
+  &__link {
+    color: #FFFFFF;
+    text-decoration: none;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    border-bottom: 4px solid transparent;
+  }
+
+  &__link--active {
+    border-bottom: 4px solid $blue-grey_10;
+  }
+
+  &__link-list-element {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    color: white;
+  }
+
+  @include large {
+    display: flex;
+  }
+}
+
+
