@@ -63,7 +63,8 @@ export const formData = {
       'recipe-form.button.delete': 'Delete',
       'recipe-form.button.new-ingredient': 'Add new Ingredient',
       'recipe-form.button.submit': 'Create',
-      'errors.validation.title.required': 'Titel ist ein Pflichtfeld'
+      'errors.validation.title.required': 'Titel is required',
+      'recipe-form.button.modify': 'Edit'
     }
   }
 };
@@ -75,4 +76,31 @@ export const Default = () => ({
     ...actionsData
   }
 });
+
+export const Edit = () => ({
+  component: RecipeFormComponent,
+  props: {
+    ...formData,
+    ...actionsData,
+    recipe: {
+      title: 'Beef & beer pie',
+      url: 'https://www.bbcgoodfood.com/recipes/beef-beer-pie',
+      ingredients: [
+        {
+          name: 'Beer',
+          amount: 1,
+          unit: 'l',
+          isStapleFood: true,
+        },
+        {
+          name: 'Beef',
+          amount: 1,
+          unit: 'kg',
+          isStapleFood: false,
+        }
+      ]
+    }
+  }
+});
+
 
