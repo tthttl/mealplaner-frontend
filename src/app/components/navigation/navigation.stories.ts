@@ -9,7 +9,6 @@ import { ButtonComponent } from '../../shared/components/button/button.component
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterLinkDirectiveStub } from '../../../../testing/router-link-directive.stub';
 
-
 export default {
   title: 'Navigation',
   excludeStories: /.*Data$/,
@@ -33,10 +32,6 @@ export default {
   ]
 };
 
-export const actionsData = {
-  clicked: action('clicked')
-};
-
 export const buttonData = {
   isLoggedIn: false,
   currentLang: 'de',
@@ -52,22 +47,37 @@ export const buttonData = {
   }
 };
 
-export const Default = () => ({
+export const actionsData = {
+  logout: action('clicked')
+};
+
+// tslint:disable-next-line:no-any
+const Template: any = (args: NavigationComponent) => ({
+  component: NavigationComponent,
+  props: args,
+});
+
+export let Primary = Template.bind({});
+Primary.args = {
+  ...buttonData,
+  ...actionsData,
+};
+
+
+export const LoggedOut = () => ({
   component: NavigationComponent,
   props: {
-    isLoggedIn: buttonData.isLoggedIn,
-    currentLang: buttonData.currentLang,
-    translations: buttonData.translations,
+    ...buttonData,
+    ...actionsData,
   }
 });
 
 export const LoggedIn = () => ({
   component: NavigationComponent,
   props: {
+    ...buttonData,
     isLoggedIn: true,
-    currentLang: buttonData.currentLang,
-    translations: buttonData.translations,
+    ...actionsData,
   }
 });
-
 
