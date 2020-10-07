@@ -9,6 +9,8 @@ import { RecipeFormComponent } from './recipe-form.component';
 describe('RecipeFormComponent', () => {
   let component: RecipeFormComponent;
   let fixture: ComponentFixture<RecipeFormComponent>;
+  // tslint:disable-next-line:no-any
+  let hostElement: any;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -28,6 +30,7 @@ describe('RecipeFormComponent', () => {
     fixture = TestBed.createComponent(RecipeFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    hostElement = fixture.nativeElement;
   });
 
   it('should create', () => {
@@ -35,14 +38,12 @@ describe('RecipeFormComponent', () => {
   });
 
   it('submit button should be disabled when inputs are empty', () => {
-    const hostElement = fixture.nativeElement;
     const button = hostElement.querySelector('button[type="submit"]');
     expect(button.disabled).toBeTruthy();
 
   });
 
   it('new ingredient button should be disabled when amount is invalid', () => {
-    const hostElement = fixture.nativeElement;
     const button = hostElement.querySelector('button.icon-wrapper');
     const amountInput = hostElement.querySelector('input[ng-reflect-name="amount"]');
     const nameInput = hostElement.querySelector('input[ng-reflect-name="name"]');
@@ -57,7 +58,6 @@ describe('RecipeFormComponent', () => {
   });
 
   it('new ingredient button should be disabled when name is empty', () => {
-    const hostElement = fixture.nativeElement;
     const button = hostElement.querySelector('button.icon-wrapper');
     const amountInput = hostElement.querySelector('input[ng-reflect-name="amount"]');
     amountInput.value = 1;
@@ -71,7 +71,6 @@ describe('RecipeFormComponent', () => {
 
   it('should emit Recipe when inputs are filled and submit is clicked', () => {
     spyOn(component.recipeSaved, 'emit');
-    const hostElement = fixture.nativeElement;
     const titleInput = hostElement.querySelector('input[ng-reflect-name="title"]');
     const amountInput = hostElement.querySelector('input[ng-reflect-name="amount"]');
     const nameInput = hostElement.querySelector('input[ng-reflect-name="name"]');
@@ -104,5 +103,38 @@ describe('RecipeFormComponent', () => {
       ]
     });
 
+  });
+
+  it('inputs should be pre-filled when recipe is supplied as input', () => {
+    spyOn(component.recipeSaved, 'emit');
+    component.recipe = {
+      title: 'Recipe',
+      url: 'URL',
+      ingredients: [
+        {
+          name: 'Beer',
+          amount: 1,
+          unit: 'l',
+          isStapleFood: false,
+        }
+      ]
+    };
+    component.ngOnInit();
+    fixture.detectChanges();
+    const button = hostElement.querySelector('button[type="submit"]');
+    button.click();
+
+    expect(component.recipeSaved.emit).toHaveBeenCalledWith({
+      title: 'Recipe',
+      url: 'URL',
+      ingredients: [
+        {
+          name: 'Beer',
+          amount: 1,
+          unit: 'l',
+          isStapleFood: false,
+        }
+      ]
+    });
   });
 });

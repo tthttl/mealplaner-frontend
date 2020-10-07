@@ -69,7 +69,7 @@
   <app-button
     class="recipe-form__button"
     [buttonType]="'submit'"
-    [buttonText]="'recipe-form.button.submit' | translate:translations:currentLang"
+    [buttonText]="(recipe ? 'recipe-form.button.modify' : 'recipe-form.button.submit') | translate:translations:currentLang"
     [isDisabled]="recipeForm.invalid"></app-button>
 </form>
 

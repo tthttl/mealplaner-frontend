@@ -3,7 +3,7 @@ import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '
 import { TranslatePipe } from '../../../i18n/pipes/translate.pipe';
 import { DEFAULT_LANGUAGE } from '../../../shared/helpers/constants';
 import { translateValidationErrors } from '../../../shared/helpers/helpers';
-import { I18n, Language, Recipe, RecipeIngredient, SelectOption } from '../../../shared/model/model';
+import { I18n, Language, Recipe, RecipeIngredient, SelectOption, Unit } from '../../../shared/model/model';
 
 @Component({
   selector: 'app-recipe-form',
@@ -14,6 +14,7 @@ export class RecipeFormComponent implements OnInit {
 
   @Input() translations: I18n = {};
   @Input() currentLang: Language = DEFAULT_LANGUAGE;
+  @Input() recipe: Recipe | undefined;
   @Output() recipeSaved: EventEmitter<Recipe> = new EventEmitter<Recipe>();
 
   recipeForm: FormGroup;
@@ -25,7 +26,7 @@ export class RecipeFormComponent implements OnInit {
       title: new FormControl('', [Validators.required]),
       url: new FormControl(''),
       ingredients: new FormArray([
-        this.createNewEmptyIngredientFormGroup()
+        this.createNewIngredientFormGroup()
       ])
     });
     this.ingredients = this.recipeForm?.controls.ingredients as FormArray;
@@ -33,8 +34,41 @@ export class RecipeFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.units = this.createUnits();
+    this.fillForm();
   }
 
+  fillForm(): void {
+    if (!!this.recipe) {
+      Object.keys(this.recipe).forEach((key: string) => {
+        if (key === 'ingredients') {
+          this.recipe?.ingredients.forEach((ingredient: RecipeIngredient, index: number) => {
+            if (index === 0) {
+              this.overwriteFirstIngredient(ingredient);
+            } else {
+              (this.recipeForm.controls.ingredients as FormArray)
+                .push(this.createNewIngredientFormGroup(
+                  ingredient.name,
+                  ingredient.amount,
+                  ingredient.unit,
+                  ingredient.isStapleFood)
+                );
+            }
+          });
+        } else {
+          // @ts-ignore
+          this.getFormControl(key).setValue(this.recipe[key]);
+        }
+      });
+    }
+  }
+
+  overwriteFirstIngredient(ingredient: RecipeIngredient): void {
+    Object.keys(ingredient).forEach((key: string) => {
+      ((this.recipeForm.controls.ingredients as FormArray).at(0) as FormGroup).controls[key]
+        // @ts-ignore
+        .setValue(ingredient[key]);
+    });
+  }
 
   getFormControl(key: string): FormControl {
     return this.recipeForm?.controls[key] as FormControl;
@@ -44,27 +78,27 @@ export class RecipeFormComponent implements OnInit {
     return (ingredient as FormGroup).controls[key] as FormControl;
   }
 
-  createNewEmptyIngredientFormGroup(): FormGroup {
+  createNewIngredientFormGroup(name?: string, amount?: number, unit?: Unit, isStapleFood?: boolean): FormGroup {
     return new FormGroup({
-      name: new FormControl('', [Validators.required]),
-      amount: new FormControl(null, [Validators.required, Validators.min(1)]),
-      unit: new FormControl('kg', [Validators.required]),
-      isStapleFood: new FormControl(false, [Validators.required])
+      name: new FormControl(name || '', [Validators.required]),
+      amount: new FormControl(amount || null, [Validators.required, Validators.min(1)]),
+      unit: new FormControl(unit || 'kg', [Validators.required]),
+      isStapleFood: new FormControl(isStapleFood || false, [Validators.required])
     });
   }
 
   onSubmit(): void {
-    const recipe = this.recipeForm.value;
+    const recipe = this.recipeForm?.value;
     recipe.ingredients.map((ingredient: RecipeIngredient) => ingredient.amount = +ingredient.amount);
     this.recipeSaved.emit(recipe);
   }
 
   addEmptyIngredientRow(): void {
-    this.ingredients.push(this.createNewEmptyIngredientFormGroup());
+    this.ingredients.push(this.createNewIngredientFormGroup());
   }
 
   deleteIngredient(index: number): void {
-    (this.recipeForm.controls.ingredients as FormArray).removeAt(index);
+    (this.recipeForm?.controls.ingredients as FormArray).removeAt(index);
   }
 
   getErrorsFor(key: string): string[] {
