@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslatePipe } from '../../../i18n/pipes/translate.pipe';
-import { SharedModule } from '../../../shared/shared.module';
 
 import { LoginFormComponent } from './login-form.component';
 import { SharedModule } from '../../../shared/shared.module';
@@ -56,7 +55,7 @@ describe('LoginFormComponent', () => {
     button.click();
 
     expect(component.credentialsReceived.emit).toHaveBeenCalledWith({
-      email: 'peter.muster@gmail.com',
+      identifier: 'peter.muster@gmail.com',
       password: 'uncrackable'
     });
   });
