@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
 import { I18n, Language, Recipe } from '../../../shared/model/model';
@@ -17,7 +18,10 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
   recipes$: Observable<Recipe[]>;
   private destroy$: Subject<void> = new Subject<void>();
 
-  constructor(private store: Store<GlobalState>) {
+  constructor(
+    private store: Store<GlobalState>,
+    private router: Router
+  ) {
     this.translations$ = this.store.select(selectTranslations);
     this.currentLang$ = this.store.select((state: GlobalState) => state.appState.language);
     this.recipes$ = this.store.select(selectRecipes);
@@ -25,6 +29,18 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.store.dispatch(CookbookApiActions.loadCookbook());
+  }
+
+  onDeleteRecipe(recipeId: string): void {
+    // dispatch delete action
+  }
+
+  onEditRecipe(recipeId: string): void {
+    this.router.navigate([`/recipe/${recipeId}`]);
+  }
+
+  onCreate(): void {
+    this.router.navigate(['/recipe']);
   }
 
   ngOnDestroy(): void {

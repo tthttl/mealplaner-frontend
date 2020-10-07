@@ -54,7 +54,7 @@ export const actionsData = {
 export const formData = {
   translations: {
     de: {
-      'recipe-list.search': 'Suchen',
+      'input.search': 'Suchen',
       'button.edit': 'Bearbeiten',
       'button.delete': 'Löschen'
     }

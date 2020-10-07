@@ -13,7 +13,8 @@ export type Language = typeof SUPPORTED_LANGUAGES.type;
 export type Unit = 'kg' | 'g' | 'tableSpoon' | 'coffeeSpoon' | 'l' | 'dl' | 'ml' | 'pinch' | 'piece' | 'pack';
 
 export interface Ingredient {
-  name: string;
+  id?: string;
+  title: string;
   amount: number;
   unit: Unit;
 }

@@ -11,6 +11,7 @@ import { SharedModule } from '../shared/shared.module';
 import { RecipeFormComponent } from './components/recipe-form/recipe-form.component';
 import { RecipeListComponent } from './components/recipe-list/recipe-list.component';
 import { CookbookContainerComponent } from './containers/cookbook-container/cookbook-container.component';
+import { RecipeContainerComponent } from './containers/recipe-container/recipe-container.component';
 import { CookbookRoutingModule } from './cookbook-routing.module';
 import { CookbookEffects } from './effects/cookbook.effects';
 import { RecipeEffects } from './effects/recipe.effects';
@@ -19,7 +20,12 @@ import { RecipeService } from './services/recipe.service';
 
 
 @NgModule({
-  declarations: [RecipeFormComponent, RecipeListComponent, CookbookContainerComponent],
+  declarations: [
+    RecipeFormComponent,
+    RecipeListComponent,
+    CookbookContainerComponent,
+    RecipeContainerComponent
+  ],
   imports: [
     CommonModule,
     EffectsModule.forFeature([RecipeEffects, CookbookEffects]),

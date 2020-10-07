@@ -34,9 +34,9 @@
       </app-select>
       <app-input
         class="ingredients__row--input"
-        [name]="'name'"
+        [name]="'title'"
         [placeholder]="'recipe-form.placeholder.name' | translate:translations:currentLang"
-        [formControl]="getIngredientFormControl(ingredient, 'name')">
+        [formControl]="getIngredientFormControl(ingredient, 'title')">
       </app-input>
       <mat-slide-toggle
         class="ingredients__row--input ingredients__row--input-toggle"
@@ -69,7 +69,7 @@
   <app-button
     class="recipe-form__button"
     [buttonType]="'submit'"
-    [buttonText]="(recipe ? 'recipe-form.button.modify' : 'recipe-form.button.submit') | translate:translations:currentLang"
+    [buttonText]="(recipe ? 'button.modify' : 'button.submit') | translate:translations:currentLang"
     [isDisabled]="recipeForm.invalid"></app-button>
 </form>
 

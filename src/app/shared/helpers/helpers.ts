@@ -82,21 +82,23 @@ export function isJwtTokenExpired(token: string, now: Date = new Date()): boolea
 }
 
 export function convertRecipesApiToRecipes(recipes: RecipeApi[]): Recipe[] {
-  return recipes.map((recipe: RecipeApi) => {
-    return {
-      id: recipe.id,
-      title: recipe.title,
-      url: recipe.url,
-      ingredients: convertIngredientApiArrayToRecipeIngredientArray(recipe.ingredients)
-    };
-  });
+  return recipes.map((recipe: RecipeApi) => convertRecipeApiToRecipe(recipe));
+}
+
+export function convertRecipeApiToRecipe(recipe: RecipeApi): Recipe {
+  return {
+    id: recipe.id,
+    title: recipe.title,
+    url: recipe.url,
+    ingredients: convertIngredientApiArrayToRecipeIngredientArray(recipe.ingredients)
+  };
 }
 
 export function convertIngredientApiArrayToRecipeIngredientArray(ingredients: IngredientApi[]): RecipeIngredient[] {
   return ingredients.map((ingredient: IngredientApi) => {
     return {
       id: ingredient.id,
-      name: ingredient.title,
+      title: ingredient.title,
       unit: ingredient.unit,
       amount: ingredient.amount,
       isStapleFood: ingredient.isStapleFood || false

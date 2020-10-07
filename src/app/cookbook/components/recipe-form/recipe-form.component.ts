@@ -12,9 +12,9 @@ import { I18n, Language, Recipe, RecipeIngredient, SelectOption, Unit } from '..
 })
 export class RecipeFormComponent implements OnInit {
 
-  @Input() translations: I18n = {};
-  @Input() currentLang: Language = DEFAULT_LANGUAGE;
-  @Input() recipe: Recipe | undefined;
+  @Input() translations: I18n | null = {};
+  @Input() currentLang: Language | null = DEFAULT_LANGUAGE;
+  @Input() recipe: Recipe | null | undefined;
   @Output() recipeSaved: EventEmitter<Recipe> = new EventEmitter<Recipe>();
 
   recipeForm: FormGroup;
@@ -23,6 +23,7 @@ export class RecipeFormComponent implements OnInit {
 
   constructor(private translatePipe: TranslatePipe) {
     this.recipeForm = new FormGroup({
+      id: new FormControl(''),
       title: new FormControl('', [Validators.required]),
       url: new FormControl(''),
       ingredients: new FormArray([
@@ -40,34 +41,35 @@ export class RecipeFormComponent implements OnInit {
   fillForm(): void {
     if (!!this.recipe) {
       Object.keys(this.recipe).forEach((key: string) => {
-        if (key === 'ingredients') {
-          this.recipe?.ingredients.forEach((ingredient: RecipeIngredient, index: number) => {
-            if (index === 0) {
-              this.overwriteFirstIngredient(ingredient);
-            } else {
-              (this.recipeForm.controls.ingredients as FormArray)
-                .push(this.createNewIngredientFormGroup(
-                  ingredient.name,
-                  ingredient.amount,
-                  ingredient.unit,
-                  ingredient.isStapleFood)
-                );
-            }
-          });
-        } else {
-          // @ts-ignore
-          this.getFormControl(key).setValue(this.recipe[key]);
-        }
-      });
+          if (key === 'ingredients') {
+            this.recipe?.ingredients.forEach((ingredient: RecipeIngredient, index: number) => {
+              if (index === 0) {
+                this.overwriteFirstIngredient(ingredient);
+              } else {
+                (this.recipeForm.controls.ingredients as FormArray)
+                  .push(this.createNewIngredientFormGroup(
+                    ingredient.id,
+                    ingredient.title,
+                    ingredient.amount,
+                    ingredient.unit,
+                    ingredient.isStapleFood)
+                  );
+              }
+            });
+          } else {
+            // @ts-ignore
+            this.getFormControl(key).setValue(this.recipe[key]);
+          }
+        });
     }
   }
 
   overwriteFirstIngredient(ingredient: RecipeIngredient): void {
     Object.keys(ingredient).forEach((key: string) => {
-      ((this.recipeForm.controls.ingredients as FormArray).at(0) as FormGroup).controls[key]
-        // @ts-ignore
-        .setValue(ingredient[key]);
-    });
+        ((this.recipeForm.controls.ingredients as FormArray).at(0) as FormGroup).controls[key]
+          // @ts-ignore
+          .setValue(ingredient[key]);
+      });
   }
 
   getFormControl(key: string): FormControl {
@@ -78,9 +80,10 @@ export class RecipeFormComponent implements OnInit {
     return (ingredient as FormGroup).controls[key] as FormControl;
   }
 
-  createNewIngredientFormGroup(name?: string, amount?: number, unit?: Unit, isStapleFood?: boolean): FormGroup {
+  createNewIngredientFormGroup(id?: string, title?: string, amount?: number, unit?: Unit, isStapleFood?: boolean): FormGroup {
     return new FormGroup({
-      name: new FormControl(name || '', [Validators.required]),
+      id: new FormControl(id || ''),
+      title: new FormControl(title || '', [Validators.required]),
       amount: new FormControl(amount || null, [Validators.required, Validators.min(1)]),
       unit: new FormControl(unit || 'kg', [Validators.required]),
       isStapleFood: new FormControl(isStapleFood || false, [Validators.required])
@@ -88,9 +91,9 @@ export class RecipeFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    const recipe = this.recipeForm?.value;
-    recipe.ingredients.map((ingredient: RecipeIngredient) => ingredient.amount = +ingredient.amount);
-    this.recipeSaved.emit(recipe);
+    const recipeToSave = this.recipeForm?.value;
+    recipeToSave.ingredients.map((ingredient: RecipeIngredient) => ingredient.amount = +ingredient.amount);
+    this.recipeSaved.emit(recipeToSave);
   }
 
   addEmptyIngredientRow(): void {

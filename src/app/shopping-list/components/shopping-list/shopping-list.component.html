@@ -7,7 +7,7 @@
         [color]="'primary'"
         [disableRipple]="true"
         (change)="itemChecked(item, $event.checked)">
-        <span>{{item.amount}} {{item.unit | translate:translations:currentLang }} {{item.name}}</span>
+        <span>{{item.amount}} {{item.unit | translate:translations:currentLang }} {{item.title}}</span>
       </mat-checkbox>
       <fa-icon
         cdkDragHandle
