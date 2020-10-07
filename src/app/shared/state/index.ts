@@ -2,22 +2,28 @@ import { ActionReducerMap, createFeatureSelector, createSelector, MetaReducer } 
 import { AppState, initialAppState } from './states/app-state';
 import { appStateReducer } from './reducers/app-state.reducers';
 import { isJwtTokenExpired } from '../helpers/helpers';
+import { initialShoppingListState, ShoppingListState } from './states/shopping-list-state';
+import { shoppingListReducers } from './reducers/shopping-list.reducers';
 
 export interface GlobalState {
   appState: AppState;
+  shoppingListState: ShoppingListState;
 }
 
 export const initialState: GlobalState = {
-  appState: initialAppState
+  appState: initialAppState,
+  shoppingListState: initialShoppingListState,
 };
 
 export const reducers: ActionReducerMap<GlobalState> = {
-  appState: appStateReducer
+  appState: appStateReducer,
+  shoppingListState: shoppingListReducers,
 };
 
 export const metaReducers: MetaReducer<GlobalState>[] = [];
 
 export const selectAppState = createFeatureSelector<GlobalState, AppState>('appState');
+export const selectShoppingListState = createFeatureSelector<GlobalState, ShoppingListState>('shoppingListState');
 
 export const selectTranslations = createSelector(
   selectAppState,
@@ -42,4 +48,9 @@ export const selectRequestedUrlBeforeLoginWasRequired = createSelector(
 export const isLoggedIn = createSelector(
   selectAppState,
   (appState: AppState) => !!appState.user && !isJwtTokenExpired(appState.user.jwt)
+);
+
+export const selectShoppingListItems = createSelector(
+  selectShoppingListState,
+  (shoppingListState: ShoppingListState) => shoppingListState.items
 );

@@ -5,6 +5,11 @@ export interface LoginAction {
   credentials: LoginCredentials;
 }
 
+export interface LoadShoppingListItems {
+  type: string;
+  id: string;
+}
+
 export interface LoadI18nAction {
   type: string;
   language: Language;
