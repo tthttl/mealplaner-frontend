@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { I18n, Language } from '../../../shared/model/model';
-import { GlobalState, isLoggedIn, selectCurrentLanguage, selectTranslations } from '../../../shared/state';
-import { NavActions } from '../../../shared/state/app-actions';
+import { I18n, Language } from './shared/model/model';
+import { GlobalState, isLoggedIn, selectCurrentLanguage, selectTranslations } from './shared/state';
+import { NavActions } from './shared/state/app-actions';
 
 @Component({
   selector: 'app-root',

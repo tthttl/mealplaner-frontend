@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { I18n, Language } from '../../../shared/model/model';
+import { I18n, Language } from '../../shared/model/model';
 
 @Component({
   selector: 'app-navigation',

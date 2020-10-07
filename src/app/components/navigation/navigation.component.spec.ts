@@ -1,9 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NavigationComponent } from './navigation.component';
-import { TranslatePipe } from '../../../i18n/pipes/translate.pipe';
+import { TranslatePipe } from '../../i18n/pipes/translate.pipe';
 import { Directive, HostListener, Input } from '@angular/core';
-import { SharedModule } from '../../../shared/shared.module';
+import { SharedModule } from '../../shared/shared.module';
 
 /* tslint:disable */
 @Directive({

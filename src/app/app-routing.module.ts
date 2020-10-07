@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthModule } from '../auth/auth.module';
+import { AuthModule } from './auth/auth.module';
 
 
 const routes: Routes = [
@@ -10,11 +10,11 @@ const routes: Routes = [
   },
   {
     path: 'shopping-list',
-    loadChildren: () => import('../shopping-list/shopping-list.module').then(m => m.ShoppingListModule)
+    loadChildren: () => import('./shopping-list/shopping-list.module').then(m => m.ShoppingListModule)
   },
   {
     path: 'meal-planer',
-    loadChildren: () => import('../meal-planer/meal-planer.module').then(m => m.MealPlanerModule)
+    loadChildren: () => import('./meal-planer/meal-planer.module').then(m => m.MealPlanerModule)
   }
 ];
 
