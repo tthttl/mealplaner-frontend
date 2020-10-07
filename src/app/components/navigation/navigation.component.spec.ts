@@ -2,23 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NavigationComponent } from './navigation.component';
 import { TranslatePipe } from '../../i18n/pipes/translate.pipe';
-import { Directive, HostListener, Input } from '@angular/core';
 import { SharedModule } from '../../shared/shared.module';
-
-/* tslint:disable */
-@Directive({
-  selector: '[routerLink]'
-})
-export class RouterLinkDirectiveStub {
-  @Input('routerLink') linkParams: any;
-  navigatedTo: any = null;
-
-  @HostListener('click')
-  onClick(): void {
-    this.navigatedTo = this.linkParams;
-  }
-}
-/* tslint:enable*/
+import { RouterLinkDirectiveStub } from '../../../../testing/router-link-directive.stub';
 
 
 describe('NavigationComponent', () => {
