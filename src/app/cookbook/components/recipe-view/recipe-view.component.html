@@ -1,0 +1,23 @@
+<div>
+  <div mat-dialog-title>{{recipe.title}}</div>
+  <div *ngFor="let ingredient of recipe.ingredients" mat-dialog-content>
+    <div>{{ingredient.title}}</div>
+    <div>
+      <span>{{ingredient.amount}}</span>
+      <span>{{ingredient.unit}}</span>
+      <span>{{ingredient.isStapleFood}}</span>
+    </div>
+  </div>
+  <div class="button-group" mat-dialog-actions>
+    <app-button (click)="onEdit()"
+                [buttonText]="'button.modify' | translate : (translations$ | async) : (currentLang$ | async)"
+                [color]="'accent'"
+                class="button--padding"
+    >
+    </app-button>
+    <app-button [mat-dialog-close]="recipe"
+                [buttonText]="'button.add-to-shopping-list' | translate : (translations$ | async) : (currentLang$ | async)"
+    >
+    </app-button>
+  </div>
+</div>

@@ -7,7 +7,7 @@
   ></app-input>
   <div class="recipe" *ngFor="let recipe of recipes">
     <div class="recipe__row">
-      <div class="recipe__title-box">
+      <div class="recipe__title-box" (click)="onClick(recipe)">
         <span>{{recipe.title}}</span>
       </div>
       <div class="recipe__buttons-box">

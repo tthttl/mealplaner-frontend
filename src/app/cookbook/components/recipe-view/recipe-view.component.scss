@@ -1,0 +1,16 @@
+@import "../../../../styles/settings/breakpoints";
+
+.button-group{
+  display: flex;
+  justify-content: space-between;
+
+  .button--padding{
+    padding-right: 1rem;
+    padding-bottom: 1rem;
+
+    @include large{
+      padding-bottom: 0;
+    }
+
+  }
+}

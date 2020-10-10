@@ -12,11 +12,12 @@ import { I18n, Language, Recipe } from '../../../shared/model/model';
 export class RecipeListComponent implements OnInit, OnDestroy {
 
   @Input() translations: I18n | null = {};
-  @Input() currentLang: Language | null  = DEFAULT_LANGUAGE;
+  @Input() currentLang: Language | null = DEFAULT_LANGUAGE;
   @Input() recipes: Recipe[] | undefined | null;
   @Output() inputChanged: EventEmitter<string> = new EventEmitter<string>();
   @Output() editRecipe: EventEmitter<string> = new EventEmitter<string>();
   @Output() deleteRecipe: EventEmitter<string> = new EventEmitter<string>();
+  @Output() clickRecipe: EventEmitter<Recipe> = new EventEmitter<Recipe>();
 
   @ViewChild('searchField', {static: true, read: ElementRef}) searchField: ElementRef | undefined;
 
@@ -44,6 +45,10 @@ export class RecipeListComponent implements OnInit, OnDestroy {
     if (id) {
       this.deleteRecipe.emit(id);
     }
+  }
+
+  onClick(recipe: Recipe): void {
+    this.clickRecipe.emit(recipe);
   }
 
   ngOnDestroy(): void {

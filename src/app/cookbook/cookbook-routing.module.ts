@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthenticatedGuard } from '../shared/guards/authenticated.guard';
 import { CookbookContainerComponent } from './containers/cookbook-container/cookbook-container.component';
 import { RecipeContainerComponent } from './containers/recipe-container/recipe-container.component';
 
@@ -7,6 +8,7 @@ import { RecipeContainerComponent } from './containers/recipe-container/recipe-c
 const routes: Routes = [
   {
     path: '',
+    canActivate: [AuthenticatedGuard],
     component: CookbookContainerComponent
   },
   {
