@@ -41,35 +41,35 @@ export class RecipeFormComponent implements OnInit {
   fillForm(): void {
     if (!!this.recipe) {
       Object.keys(this.recipe).forEach((key: string) => {
-          if (key === 'ingredients') {
-            this.recipe?.ingredients.forEach((ingredient: RecipeIngredient, index: number) => {
-              if (index === 0) {
-                this.overwriteFirstIngredient(ingredient);
-              } else {
-                (this.recipeForm.controls.ingredients as FormArray)
-                  .push(this.createNewIngredientFormGroup(
-                    ingredient.id,
-                    ingredient.title,
-                    ingredient.amount,
-                    ingredient.unit,
-                    ingredient.isStapleFood)
-                  );
-              }
-            });
-          } else {
-            // @ts-ignore
-            this.getFormControl(key).setValue(this.recipe[key]);
-          }
-        });
+        if (key === 'ingredients') {
+          this.recipe?.ingredients.forEach((ingredient: RecipeIngredient, index: number) => {
+            if (index === 0) {
+              this.overwriteFirstIngredient(ingredient);
+            } else {
+              (this.recipeForm.controls.ingredients as FormArray)
+                .push(this.createNewIngredientFormGroup(
+                  ingredient.id,
+                  ingredient.title,
+                  ingredient.amount,
+                  ingredient.unit,
+                  ingredient.isStapleFood)
+                );
+            }
+          });
+        } else {
+          // @ts-ignore
+          this.getFormControl(key).setValue(this.recipe[key]);
+        }
+      });
     }
   }
 
   overwriteFirstIngredient(ingredient: RecipeIngredient): void {
     Object.keys(ingredient).forEach((key: string) => {
-        ((this.recipeForm.controls.ingredients as FormArray).at(0) as FormGroup).controls[key]
-          // @ts-ignore
-          .setValue(ingredient[key]);
-      });
+      ((this.recipeForm.controls.ingredients as FormArray).at(0) as FormGroup).controls[key]
+        // @ts-ignore
+        .setValue(ingredient[key]);
+    });
   }
 
   getFormControl(key: string): FormControl {
@@ -92,6 +92,9 @@ export class RecipeFormComponent implements OnInit {
 
   onSubmit(): void {
     const recipeToSave = this.recipeForm?.value;
+    if (!recipeToSave.id) {
+      delete recipeToSave.id;
+    }
     recipeToSave.ingredients.map((ingredient: RecipeIngredient) => {
       if (!ingredient.id) {
         delete ingredient.id;

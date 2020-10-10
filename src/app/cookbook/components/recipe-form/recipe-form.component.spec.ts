@@ -46,11 +46,11 @@ describe('RecipeFormComponent', () => {
   it('new ingredient button should be disabled when amount is invalid', () => {
     const button = hostElement.querySelector('button.icon-wrapper');
     const amountInput = hostElement.querySelector('input[ng-reflect-name="amount"]');
-    const nameInput = hostElement.querySelector('input[ng-reflect-name="name"]');
+    const titelInput = hostElement.querySelector('.ingredients input[ng-reflect-name="title"]');
     amountInput.value = 0;
     amountInput.dispatchEvent(new Event('input'));
-    nameInput.value = 'Beer';
-    nameInput.dispatchEvent(new Event('input'));
+    titelInput.value = 'Beer';
+    titelInput.dispatchEvent(new Event('input'));
     fixture.detectChanges();
 
     expect(button.disabled).toBeTruthy();
@@ -73,15 +73,15 @@ describe('RecipeFormComponent', () => {
     spyOn(component.recipeSaved, 'emit');
     const titleInput = hostElement.querySelector('input[ng-reflect-name="title"]');
     const amountInput = hostElement.querySelector('input[ng-reflect-name="amount"]');
-    const nameInput = hostElement.querySelector('input[ng-reflect-name="name"]');
+    const ingredientTitle = hostElement.querySelector('.ingredients input[ng-reflect-name="title"]');
     const select = hostElement.querySelector('select');
 
     titleInput.value = 'Recipe';
     titleInput.dispatchEvent(new Event('input'));
     amountInput.value = 1;
     amountInput.dispatchEvent(new Event('input'));
-    nameInput.value = 'Beer';
-    nameInput.dispatchEvent(new Event('input'));
+    ingredientTitle.value = 'Beer';
+    ingredientTitle.dispatchEvent(new Event('input'));
     select.value = select.options[7].value;
     select.dispatchEvent(new Event('change'));
     fixture.detectChanges();
@@ -95,7 +95,7 @@ describe('RecipeFormComponent', () => {
       url: '',
       ingredients: [
         {
-          name: 'Beer',
+          title: 'Beer',
           amount: 1,
           unit: 'l',
           isStapleFood: false,
@@ -112,7 +112,7 @@ describe('RecipeFormComponent', () => {
       url: 'URL',
       ingredients: [
         {
-          name: 'Beer',
+          title: 'Beer',
           amount: 1,
           unit: 'l',
           isStapleFood: false,
@@ -129,7 +129,7 @@ describe('RecipeFormComponent', () => {
       url: 'URL',
       ingredients: [
         {
-          name: 'Beer',
+          title: 'Beer',
           amount: 1,
           unit: 'l',
           isStapleFood: false,

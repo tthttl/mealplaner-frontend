@@ -1,11 +1,11 @@
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-
-import { ShoppingListComponent } from './shopping-list.component';
-import { By } from '@angular/platform-browser';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { By } from '@angular/platform-browser';
 import { TranslatePipe } from '../../../i18n/pipes/translate.pipe';
 import { ArrayItemMovedEvent, ShoppingListItem } from '../../../shared/model/model';
+
+import { ShoppingListComponent } from './shopping-list.component';
 
 describe('ShoppingListComponent', () => {
   let component: ShoppingListComponent;
@@ -31,10 +31,10 @@ describe('ShoppingListComponent', () => {
 
   it('should render shopping list', () => {
     component.items = [
-      {id: '1', name: 'Mehl', amount: 1, unit: 'kg', isChecked: false},
-      {id: '2', name: 'Mehl', amount: 1, unit: 'kg', isChecked: false},
-      {id: '3', name: 'Mehl', amount: 1, unit: 'kg', isChecked: false},
-      {id: '4', name: 'Mehl', amount: 1, unit: 'kg', isChecked: false},
+      {id: '1', title: 'Mehl', amount: 1, unit: 'kg', isChecked: false},
+      {id: '2', title: 'Mehl', amount: 1, unit: 'kg', isChecked: false},
+      {id: '3', title: 'Mehl', amount: 1, unit: 'kg', isChecked: false},
+      {id: '4', title: 'Mehl', amount: 1, unit: 'kg', isChecked: false},
     ];
 
     fixture.detectChanges();
@@ -44,7 +44,7 @@ describe('ShoppingListComponent', () => {
   });
 
   it('should emit deletion event', fakeAsync(() => {
-    const shoppingListItem: ShoppingListItem = {id: '1', name: 'Mehl', amount: 1, unit: 'kg', isChecked: false};
+    const shoppingListItem: ShoppingListItem = {id: '1', title: 'Mehl', amount: 1, unit: 'kg', isChecked: false};
 
     component.itemDeleted.subscribe((item: ShoppingListItem) => {
       expect(item).toEqual( {...shoppingListItem, isChecked: true});
@@ -55,7 +55,7 @@ describe('ShoppingListComponent', () => {
   }));
 
   it('should not emit deletion event when unchecked within debounce time', fakeAsync(() => {
-    const shoppingListItem: ShoppingListItem = {id: '1', name: 'Mehl', amount: 1, unit: 'kg', isChecked: false};
+    const shoppingListItem: ShoppingListItem = {id: '1', title: 'Mehl', amount: 1, unit: 'kg', isChecked: false};
 
     spyOn(component.itemDeleted, 'emit');
     component.itemChecked( shoppingListItem, true);
