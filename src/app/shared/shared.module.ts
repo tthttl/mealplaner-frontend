@@ -5,8 +5,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ButtonComponent } from './components/button/button.component';
 import { InputComponent } from './components/input/input.component';
 import { SelectComponent } from './components/select/select.component';
-import { I18nModule } from '../i18n/i18n.module';
-import { AuthRoutingModule } from '../auth/auth-routing.module';
 
 
 @NgModule({
@@ -19,8 +17,7 @@ import { AuthRoutingModule } from '../auth/auth-routing.module';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    FontAwesomeModule,
-    AuthRoutingModule
+    FontAwesomeModule
   ],
   exports: [
     ButtonComponent,

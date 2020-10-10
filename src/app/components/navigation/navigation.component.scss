@@ -1,5 +1,5 @@
-@import "../../../../styles/settings/colors";
-@import "../../../../styles/settings/breakpoints";
+@import "../../../styles/settings/colors";
+@import "../../../styles/settings/breakpoints";
 
 .main-navigation {
   background: $blue_100;
@@ -115,12 +115,15 @@
   }
 }
 
-// destkop-navigation__link-list
 .desktop-navigation {
   display: none;
   color: white;
   list-style: none;
   height: 100%;
+
+  @include large {
+    display: flex;
+  }
 
   &__link-list {
     color: white;
@@ -149,10 +152,6 @@
     display: flex;
     align-items: center;
     color: white;
-  }
-
-  @include large {
-    display: flex;
   }
 }
 

@@ -1,9 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MemoizedSelector } from '@ngrx/store';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { Language, I18n, Translations } from '../../../shared/model/model';
-import { TranslatePipe } from '../../../i18n/pipes/translate.pipe';
-import { GlobalState, selectCurrentLanguage, selectTranslations } from '../../../shared/state';
+import { Language, I18n, Translations } from '../../shared/model/model';
+import { TranslatePipe } from '../../i18n/pipes/translate.pipe';
+import { GlobalState, selectCurrentLanguage, selectTranslations } from '../../shared/state';
 
 import { BetaTeaserComponent } from './beta-teaser.component';
 

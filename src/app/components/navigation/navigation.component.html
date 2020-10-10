@@ -1,9 +1,9 @@
 <nav class="main-navigation">
   <div class="container main-navigation__content">
     <div class="main-navigation__wrapper">
-      <img class="main-navigation__logo" src="../../../../assets/logo-inverted.png" [routerLink]="['/']">
+      <img class="main-navigation__logo" src="../../../assets/logo-inverted.png" [routerLink]="['/']">
       <div class="desktop-navigation" *ngIf="isLoggedIn">
-        <ul class="desktop-navigation__link-list">
+        <ul class="desktop-navigation__link-list" data-test="desktop-navigation">
           <li class="desktop-navigation__link-list-element">
             <a [routerLink]="['/meal-planer']"
                class="desktop-navigation__link"
@@ -35,17 +35,20 @@
       <app-button *ngIf="isLoggedIn; else registerTemplate"
                   [buttonText]="'app.navigation.logout' | translate:translations:currentLang"
                   color="inverted" (click)="onLogout()"
-                  class="main-navigation__primary-action"></app-button>
+                  class="main-navigation__primary-action"
+                  data-test="logout-button"></app-button>
 
 
       <ng-template #registerTemplate>
         <a class="main-navigation__secondary-action"
-           [routerLink]="['/auth/login']">
+           [routerLink]="['/auth/login']"
+           data-test="login-link">
           {{'app.navigation.login' | translate:translations:currentLang}}
         </a>
 
         <a          [routerLink]="['/auth/register']"
-                    class="main-navigation__primary-action">
+                    class="main-navigation__primary-action"
+                    data-test="register-link">
           {{'app.navigation.register' | translate:translations:currentLang }}
         </a>
       </ng-template>
@@ -55,7 +58,7 @@
 
 
 <nav *ngIf="isLoggedIn" class="mobile-navigation">
-  <ul class=mobile-navigation__link-list>
+  <ul class=mobile-navigation__link-list data-test="mobile-navigation">
     <li class="mobile-navigation__link-list-element">
       <a class="mobile-navigation__link" [routerLink]="['/meal-planer']"
          routerLinkActive="mobile-navigation__link--active">

@@ -9,18 +9,18 @@ import { Store, StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './components/app/app.component';
+import { AppComponent } from './app.component';
 import { BetaTeaserComponent } from './components/beta-teaser/beta-teaser.component';
-import { I18nModule } from '../i18n/i18n.module';
-import { metaReducers, reducers } from '../shared/state';
-import { appInitializer } from '../app.initializer';
-import { I18nService } from '../i18n/services/i18n.service';
-import { JwtInterceptor } from '../shared/interceptors/jwt.interceptor';
-import { ErrorInterceptor } from '../shared/interceptors/error.interceptor';
-import { AuthService } from '../auth/services/auth.service';
-import { AuthModule } from '../auth/auth.module';
+import { I18nModule } from './i18n/i18n.module';
+import { metaReducers, reducers } from './shared/state';
+import { appInitializer } from './app.initializer';
+import { I18nService } from './i18n/services/i18n.service';
+import { JwtInterceptor } from './shared/interceptors/jwt.interceptor';
+import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
+import { AuthService } from './auth/services/auth.service';
+import { AuthModule } from './auth/auth.module';
 import { NavigationComponent } from './components/navigation/navigation.component';
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from './shared/shared.module';
 
 
 @NgModule({
