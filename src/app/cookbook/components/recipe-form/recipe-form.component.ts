@@ -92,7 +92,12 @@ export class RecipeFormComponent implements OnInit {
 
   onSubmit(): void {
     const recipeToSave = this.recipeForm?.value;
-    recipeToSave.ingredients.map((ingredient: RecipeIngredient) => ingredient.amount = +ingredient.amount);
+    recipeToSave.ingredients.map((ingredient: RecipeIngredient) => {
+      if (!ingredient.id) {
+        delete ingredient.id;
+      }
+      ingredient.amount = +ingredient.amount;
+    });
     this.recipeSaved.emit(recipeToSave);
   }
 
