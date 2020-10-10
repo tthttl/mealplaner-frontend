@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
 import { I18n, Language, Recipe } from '../../../shared/model/model';
 import { GlobalState, selectRecipes, selectTranslations } from '../../../shared/state';
-import { CookbookApiActions } from '../../actions';
+import { CookbookApiActions, RecipeApiActions, RecipeStateActions } from '../../actions';
 
 @Component({
   selector: 'app-cookbook-container',
@@ -17,6 +17,7 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
   currentLang$: Observable<Language>;
   recipes$: Observable<Recipe[]>;
   private destroy$: Subject<void> = new Subject<void>();
+  private timeoutHandlers: number[] = [];
 
   constructor(
     private store: Store<GlobalState>,
@@ -32,7 +33,21 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
   }
 
   onDeleteRecipe(recipeId: string): void {
-    // dispatch delete action
+    // show toaster + start timer => when undo is pressed clear timer
+    this.store.dispatch(RecipeStateActions.deleteRecipeFromState({recipeId}));
+    const handler: number = setTimeout(this.onDeleteTimeoutExpired(recipeId), 1000);
+    this.timeoutHandlers.push(handler);
+  }
+
+  onDeleteTimeoutExpired(recipeId: string): () => void {
+    return () => {
+      this.store.dispatch(RecipeApiActions.deleteRecipe({recipeId}));
+    };
+  }
+
+  onCancelDelete(handler: number): void {
+    clearTimeout(handler);
+    this.store.dispatch(RecipeApiActions.loadRecipes());
   }
 
   onEditRecipe(recipeId: string): void {

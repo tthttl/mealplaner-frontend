@@ -21,7 +21,7 @@ export class RecipeEffects {
 
   @Effect()
   loadRecipes = this.actions$.pipe(
-    ofType(RecipeApiActions.loadRecipes, CookbookApiActions.loadCookbookSuccess),
+    ofType(RecipeApiActions.loadRecipes, CookbookApiActions.loadCookbookSuccess, RecipeApiActions.deleteRecipeFailure),
     withLatestFrom(this.store.select(((state: GlobalState) => state.cookbookState.activeCookbookId))),
     switchMap(([_, activeCookbookId]) => this.recipeService.loadRecipes(activeCookbookId)
       .pipe(
@@ -57,6 +57,17 @@ export class RecipeEffects {
       .pipe(
         map((recipe: Recipe) => RecipeApiActions.editRecipeSuccess({editedRecipe: recipe})),
         catchError(() => of(RecipeApiActions.editRecipeFailure()))
+      )
+    )
+  );
+
+  @Effect()
+  deleteRecipe = this.actions$.pipe(
+    ofType(RecipeApiActions.deleteRecipe),
+    switchMap(({recipeId}: { recipeId: string }) => this.recipeService.deleteRecipe(recipeId)
+      .pipe(
+        map(() => RecipeApiActions.deleteRecipeSuccess({recipeId})),
+        catchError(() => of(RecipeApiActions.deleteRecipeFailure()))
       )
     )
   );

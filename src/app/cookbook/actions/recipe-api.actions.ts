@@ -28,3 +28,13 @@ export const editRecipeSuccess = createAction(
   props<{ editedRecipe: Recipe }>()
 );
 export const editRecipeFailure = createAction('[Cookbook Container] Edit Recipe Failure');
+
+export const deleteRecipe = createAction(
+  '[Cookbook Container] Delete Recipe',
+  props<{ recipeId: string }>()
+);
+export const deleteRecipeSuccess = createAction(
+  '[Cookbook Container] Delete Recipe Success',
+  props<{ recipeId: string }>()
+);
+export const deleteRecipeFailure = createAction('[Cookbook Container] Delete Recipe Failure');

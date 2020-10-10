@@ -29,4 +29,10 @@ export class RecipeService {
       map((editedRecipe: RecipeApi) => convertRecipeApiToRecipe(editedRecipe))
     );
   }
+
+  deleteRecipe(recipeId: string): Observable<string>{
+    return this.httpClient.delete(`${environment.apiUrl}/recipes/${recipeId}`, {
+      responseType: 'text'
+    });
+  }
 }
