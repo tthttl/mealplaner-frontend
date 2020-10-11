@@ -1,9 +1,12 @@
 import { FormControl } from '@angular/forms';
 import { TranslatePipe } from '../../i18n/pipes/translate.pipe';
-import { I18n } from '../model/model';
-import { I18n as I18nApi, UserApi } from '../model/model-api';
+import { Cookbook, I18n, Recipe, RecipeIngredient } from '../model/model';
+import { CookbookApi, I18n as I18nApi, IngredientApi, RecipeApi, UserApi } from '../model/model-api';
 import {
   changeElementPosition,
+  convertCookbookApisToCookbooks,
+  convertIngredientApiArrayToRecipeIngredientArray,
+  convertRecipeApiToRecipe,
   decodeJwtToken,
   isJwtTokenExpired,
   mapI18nApiToI18nClient,
@@ -164,6 +167,67 @@ describe('Helpers', () => {
     it('should change pos from 2 to 2', () => {
       expect(changeElementPosition(input, {previousIndex: 2, currentIndex: 2}))
         .toEqual([1, 2, 3, 4]);
+    });
+  });
+
+  describe('Cookbook converters', () => {
+    const ingredientApi: IngredientApi = {
+      id: '1',
+      title: 'Mehl',
+      unit: 'kg',
+      amount: 1,
+      isStapleFood: true
+    };
+
+    const ingredient: RecipeIngredient = {
+      id: '1',
+      title: 'Mehl',
+      unit: 'kg',
+      amount: 1,
+      isStapleFood: true
+    };
+
+    const recipeApi: RecipeApi = {
+      id: '1',
+      title: 'Recipe',
+      url: 'URL',
+      ingredients: [ingredientApi]
+    };
+
+    const recipe: Recipe = {
+      id: '1',
+      title: 'Recipe',
+      url: 'URL',
+      ingredients: [ingredient]
+    };
+
+    const cookbookApi: CookbookApi = {
+      id: '1',
+      title: 'Cookbook',
+    };
+
+    const cookbook: Cookbook = {
+      id: '1',
+      title: 'Cookbook',
+    };
+
+    describe('convertRecipeApiToRecipe', () => {
+      it('should convert', () => {
+        expect(convertRecipeApiToRecipe(recipeApi)).toEqual(recipe);
+      });
+    });
+
+    describe('convertIngredientApiArrayToRecipeIngredientArray', () => {
+      it('should convert', () => {
+        expect(convertIngredientApiArrayToRecipeIngredientArray([ingredientApi]))
+          .toEqual([ingredient]);
+      });
+    });
+
+    describe('convertCookbookApisToCookbooks', () => {
+      it('should convert', () => {
+        expect(convertCookbookApisToCookbooks([cookbookApi])).toEqual([cookbook]);
+      });
     });
   });
 });
