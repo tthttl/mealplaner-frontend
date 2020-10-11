@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DialogData, Recipe } from '../../../shared/model/model';
 
@@ -7,15 +7,12 @@ import { DialogData, Recipe } from '../../../shared/model/model';
   templateUrl: './recipe-view.component.html',
   styleUrls: ['./recipe-view.component.scss']
 })
-export class RecipeViewComponent implements OnInit {
+export class RecipeViewComponent {
 
   constructor(
     public dialogRef: MatDialogRef<RecipeViewComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: DialogData<Recipe>,
   ) {
-  }
-
-  ngOnInit(): void {
   }
 
   onEdit(): void {

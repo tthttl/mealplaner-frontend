@@ -16,12 +16,14 @@
                     [iconLeft]="'pen-square'"
                     [color]="'accent'"
                     (click)="onEditRecipe(recipe.id)"
+                    [e2eTestName]="'RECIPE-ROW-EDIT'"
         ></app-button>
         <app-button class="recipe__button"
                     [buttonText]="'button.delete' | translate:translations:currentLang"
                     [iconLeft]="'times'"
                     [color]="'warn'"
                     (click)="onDeleteRecipe(recipe.id)"
+                    [e2eTestName]="'RECIPE-ROW-DELETE'"
         ></app-button>
       </div>
     </div>
