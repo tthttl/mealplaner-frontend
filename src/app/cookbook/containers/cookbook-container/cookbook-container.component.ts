@@ -2,7 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { map, take, withLatestFrom } from 'rxjs/operators';
+import { TranslatePipe } from '../../../i18n/pipes/translate.pipe';
 import { I18n, Language, Recipe } from '../../../shared/model/model';
 import { DialogService } from '../../../shared/services/dialog.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
@@ -22,11 +23,14 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
   recipes$: Observable<Recipe[]>;
   private destroy$: Subject<void> = new Subject<void>();
 
+  private dialogTranslations: string[] = [];
+
   constructor(
     private store: Store<GlobalState>,
     private router: Router,
     private snackBarService: SnackbarService,
     private dialogService: DialogService,
+    private translatePipe: TranslatePipe,
   ) {
     this.translations$ = this.store.select(selectTranslations);
     this.currentLang$ = this.store.select((state: GlobalState) => state.appState.language);
@@ -35,6 +39,13 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.store.dispatch(CookbookApiActions.loadCookbook());
+    this.store.select(selectTranslations).pipe(
+      withLatestFrom(this.store.select((state: GlobalState) => state.appState.language))
+    ).subscribe(([translations, currentLanguage]: [I18n | null, Language]) => {
+      this.dialogTranslations.push(this.translatePipe.transform('ingredients.label-text', translations, currentLanguage));
+      this.dialogTranslations.push(this.translatePipe.transform('button.modify', translations, currentLanguage));
+      this.dialogTranslations.push(this.translatePipe.transform('button.add-to-mealplaner', translations, currentLanguage));
+    });
   }
 
   onDeleteRecipe(recipeId: string): void {
@@ -59,7 +70,10 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
   }
 
   onClickRecipe(recipe: Recipe): void {
-    const dialogRef = this.dialogService.openDialog(RecipeViewComponent, recipe);
+    const dialogRef = this.dialogService.openDialog(RecipeViewComponent, {
+      data: recipe,
+      translations: this.dialogTranslations
+    });
     dialogRef.afterClosed()
       .pipe(take(1))
       .subscribe((result: Recipe | undefined) => {

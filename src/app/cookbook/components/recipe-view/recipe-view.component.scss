@@ -1,16 +1,37 @@
 @import "../../../../styles/settings/breakpoints";
+@import "../../../../styles/settings/variables";
 
 .button-group{
-  display: flex;
-  justify-content: space-between;
+  margin-top: 1rem;
 
-  .button--padding{
-    padding-right: 1rem;
-    padding-bottom: 1rem;
+  .button--margin{
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+    outline: 0;
 
     @include large{
-      padding-bottom: 0;
+      margin-bottom: 0;
     }
 
+  }
+}
+
+.ingredient{
+  width: 100%;
+  display: block;
+  overflow: hidden;
+
+  .ingredient-column{
+    display: inline-block;
+    margin-right: 0.5rem;
+    padding-left: 0.5rem;
+
+    &:first-child{
+      padding-left: 0;
+    }
+
+    &:last-child{
+      margin-right: 0;
+    }
   }
 }

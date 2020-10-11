@@ -13,7 +13,7 @@
     [label]="'recipe-form.label.url' | translate:translations:currentLang"
     [formControl]="getFormControl('url')"></app-input>
 
-  <label class="ingredients-label">{{'recipe-form.ingredients.label-text' | translate:translations:currentLang}}</label>
+  <label class="ingredients-label">{{'ingredients.label-text' | translate:translations:currentLang}}</label>
   <div class="ingredients recipe-form__input">
     <div *ngFor="let ingredient of ingredients.controls; let last = last; let index = index"
          class="ingredients__row"

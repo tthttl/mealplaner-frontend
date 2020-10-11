@@ -92,6 +92,11 @@ export interface Recipe {
     readonly url?: string;
 }
 
+export interface DialogData<T extends object> {
+  readonly data: T;
+  readonly translations: string[];
+}
+
 export interface Cookbook {
     readonly id: string;
     readonly title: string;

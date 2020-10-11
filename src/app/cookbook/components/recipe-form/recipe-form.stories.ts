@@ -56,7 +56,7 @@ export const formData = {
       'recipe-form.label.title': 'Recipe Title',
       'recipe-form.placeholder.url': 'Link',
       'recipe-form.label.url': 'Link to Recipe',
-      'recipe-form.ingredients.label-text': 'Ingredients',
+      'ingredients.label-text': 'Ingredients',
       'recipe-form.placeholder.amount': 'Quantity',
       'recipe-form.placeholder.name': 'Name',
       'recipe-form.text.toggle': 'Basic Ingredient',
