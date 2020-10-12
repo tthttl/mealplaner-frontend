@@ -4,6 +4,7 @@ import { recipeStateReducer } from '../../cookbook/reducers/recipe-state.reducer
 import { CookbookState, initialCookbookState } from '../../cookbook/state/cookbook-state';
 import { initialRecipeState, RecipeState } from '../../cookbook/state/recipe-state';
 import { appStateReducer } from './reducers/app-state.reducers';
+import { isJwtTokenExpired } from '../helpers/helpers';
 import { AppState, initialAppState } from './states/app-state';
 
 export interface GlobalState {
@@ -55,6 +56,11 @@ export const selectUser = createSelector(
 export const selectRequestedUrlBeforeLoginWasRequired = createSelector(
   selectAppState,
   (appState: AppState) => appState.requestedUrlBeforeLoginWasRequired
+);
+
+export const isLoggedIn = createSelector(
+  selectAppState,
+  (appState: AppState) => !!appState.user && !isJwtTokenExpired(appState.user.jwt)
 );
 
 export const selectCookbooks = createSelector(

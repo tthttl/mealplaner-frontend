@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IconName } from '@fortawesome/fontawesome-common-types';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-button',

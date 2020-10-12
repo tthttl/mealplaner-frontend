@@ -6,6 +6,7 @@
   (click)="onClick($event)"
   [ngClass]="{
   'button--no-left-border-radius': isInputGroup,
+  'button--color-inverted': color === 'inverted' && !isDisabled,
   'button--color-accent': color === 'accent' && !isDisabled,
   'button--color-warning': color === 'warn' && !isDisabled,
   'button--color-disabled': isDisabled,

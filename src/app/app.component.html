@@ -1,11 +1,9 @@
-<a [routerLink]="'/auth/login'">Login</a>
-<br />
-<a [routerLink]="'/shopping-list'">ShoppingList</a>
-<br />
-<a [routerLink]="'/meal-planer'">MealPlaner</a>
-<br />
+<app-navigation
+  [isLoggedIn]="isLoggedIn | async"
+  [translations]="translations$ | async"
+  [currentLang]="currentLang$ | async"
+  (logout)="onLogout()"></app-navigation>
 
-<a [routerLink]="'/cookbook'">Cookbook</a>
-<br />
-
-<router-outlet></router-outlet>
+<div id="main-page">
+  <router-outlet></router-outlet>
+</div>

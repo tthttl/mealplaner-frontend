@@ -13,19 +13,22 @@ import { AppComponent } from './app.component';
 import { appInitializer } from './app.initializer';
 import { AuthModule } from './auth/auth.module';
 import { AuthService } from './auth/services/auth.service';
-import { BetaTeaserComponent } from './beta-teaser/beta-teaser.component';
+import { BetaTeaserComponent } from './components/beta-teaser/beta-teaser.component';
 import { CookbookModule } from './cookbook/cookbook.module';
 import { I18nModule } from './i18n/i18n.module';
 import { I18nService } from './i18n/services/i18n.service';
 import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
 import { JwtInterceptor } from './shared/interceptors/jwt.interceptor';
 import { metaReducers, reducers } from './shared/state';
+import { NavigationComponent } from './components/navigation/navigation.component';
+import { SharedModule } from './shared/shared.module';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     BetaTeaserComponent,
+    NavigationComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,7 +41,8 @@ import { metaReducers, reducers } from './shared/state';
     AuthModule,
     CookbookModule,
     EffectsModule.forRoot([]),
-    FontAwesomeModule
+    FontAwesomeModule,
+    SharedModule
   ],
   providers: [
     { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AuthService, I18nService, Store, Actions] },
