@@ -3,7 +3,7 @@ import { I18nApiActions } from '../../../i18n/actions';
 import { appStateReducer } from './app-state.reducers';
 import { initialAppState } from '../states/app-state';
 import { AuthApiActions } from '../../../auth/actions';
-import { AppInitializationActions, AuthenticatedGuardActions, ErrorInterceptorActions } from '../app-actions';
+import { AppInitializationActions, AuthenticatedGuardActions, ErrorInterceptorActions, NavActions } from '../app-actions';
 
 describe('i18nReducer', () => {
   describe('I18nApiActions.getI18nSuccess', () => {
@@ -139,6 +139,23 @@ describe('i18nReducer', () => {
           }
         },
         ErrorInterceptorActions.logout())).toEqual({
+        ...initialAppState,
+        user: null
+      });
+    });
+  });
+
+  describe('NavActions.logout', () => {
+    it('should remove user in store', () => {
+      expect(appStateReducer({
+          ...initialAppState,
+          user: {
+            name: 'Joe',
+            email: 'joe@doe.com',
+            jwt: 'jwt',
+          }
+        },
+        NavActions.logout())).toEqual({
         ...initialAppState,
         user: null
       });

@@ -140,17 +140,17 @@
         },
         {
             "name": "GlobalState",
-            "id": "interface-GlobalState-c46f5a9434ca782fb4b99812a051a0db",
+            "id": "interface-GlobalState-1eba3f00e92544974e97558cf5b344e3",
             "file": "src/app/shared/state/index.ts",
             "type": "interface",
-            "sourceCode": "import { ActionReducerMap, createFeatureSelector, createSelector, MetaReducer } from '@ngrx/store';\nimport { AppState, initialAppState } from './states/app-state';\nimport { appStateReducer } from './reducers/app-state.reducers';\n\nexport interface GlobalState {\n  appState: AppState;\n}\n\nexport const initialState: GlobalState = {\n  appState: initialAppState\n};\n\nexport const reducers: ActionReducerMap<GlobalState> = {\n  appState: appStateReducer\n};\n\nexport const metaReducers: MetaReducer<GlobalState>[] = [];\n\nexport const selectAppState = createFeatureSelector<GlobalState, AppState>('appState');\n\nexport const selectTranslations = createSelector(\n  selectAppState,\n  (appState: AppState) => appState.i18n\n);\n\nexport const selectCurrentLanguage = createSelector(\n  selectAppState,\n  (appState: AppState) => appState.language\n);\n\nexport const selectUser = createSelector(\n  selectAppState,\n  (appState: AppState) => appState.user\n);\n\nexport const selectRequestedUrlBeforeLoginWasRequired = createSelector(\n  selectAppState,\n  (appState: AppState) => appState.requestedUrlBeforeLoginWasRequired\n);\n",
+            "sourceCode": "import { ActionReducerMap, createFeatureSelector, createSelector, MetaReducer } from '@ngrx/store';\nimport { AppState, initialAppState } from './states/app-state';\nimport { appStateReducer } from './reducers/app-state.reducers';\nimport { isJwtTokenExpired } from '../helpers/helpers';\n\nexport interface GlobalState {\n  appState: AppState;\n}\n\nexport const initialState: GlobalState = {\n  appState: initialAppState\n};\n\nexport const reducers: ActionReducerMap<GlobalState> = {\n  appState: appStateReducer\n};\n\nexport const metaReducers: MetaReducer<GlobalState>[] = [];\n\nexport const selectAppState = createFeatureSelector<GlobalState, AppState>('appState');\n\nexport const selectTranslations = createSelector(\n  selectAppState,\n  (appState: AppState) => appState.i18n\n);\n\nexport const selectCurrentLanguage = createSelector(\n  selectAppState,\n  (appState: AppState) => appState.language\n);\n\nexport const selectUser = createSelector(\n  selectAppState,\n  (appState: AppState) => appState.user\n);\n\nexport const selectRequestedUrlBeforeLoginWasRequired = createSelector(\n  selectAppState,\n  (appState: AppState) => appState.requestedUrlBeforeLoginWasRequired\n);\n\nexport const isLoggedIn = createSelector(\n  selectAppState,\n  (appState: AppState) => !!appState.user && !isJwtTokenExpired(appState.user.jwt)\n);\n",
             "properties": [
                 {
                     "name": "appState",
                     "type": "AppState",
                     "optional": false,
                     "description": "",
-                    "line": 6
+                    "line": 7
                 }
             ],
             "indexSignatures": [],
@@ -454,30 +454,7 @@
         },
         {
             "name": "Translations",
-            "id": "interface-Translations-c0a4de18e3d01ab13b801bc4ce15eeb4",
-            "file": "src/app/shared/model/model-api.ts",
-            "type": "interface",
-            "sourceCode": "export type I18n = {\n  readonly lang: string;\n  readonly translations: Translations;\n};\n\nexport interface Translations {\n  readonly [key: string]: string;\n}\n\nexport interface UserApi {\n  jwt: string;\n  user: {\n    username: string,\n    email: string\n  };\n}\n",
-            "properties": [],
-            "indexSignatures": [
-                {
-                    "id": "index-declaration-c0a4de18e3d01ab13b801bc4ce15eeb4",
-                    "args": [
-                        {
-                            "name": "key",
-                            "type": "string"
-                        }
-                    ],
-                    "returnType": "string",
-                    "line": 6
-                }
-            ],
-            "kind": 159,
-            "methods": []
-        },
-        {
-            "name": "Translations",
-            "id": "interface-Translations-0ebe8cc114d83327df1109fc0db5923a-1",
+            "id": "interface-Translations-0ebe8cc114d83327df1109fc0db5923a",
             "file": "src/app/shared/model/model.ts",
             "type": "interface",
             "sourceCode": "import { SUPPORTED_LANGUAGES } from '../helpers/constants';\n\nexport type I18n = {\n  readonly [key: string]: Translations;\n};\n\nexport interface Translations {\n  readonly [key: string]: string;\n}\n\nexport type Language = typeof SUPPORTED_LANGUAGES.type;\n\nexport type Unit = 'kg' | 'g' | 'tableSpoon' | 'coffeeSpoon' | 'l' | 'dl' | 'ml' | 'pinch' | 'piece' | 'pack';\n\nexport interface Ingredient {\n  name: string;\n  amount: number;\n  unit: Unit;\n}\n\nexport interface ShoppingListItem extends Ingredient {\n  id: string;\n  isChecked: boolean;\n}\n\nexport interface ArrayItemMovedEvent {\n  currentIndex: number;\n  previousIndex: number;\n}\n\nexport interface SelectOption<T> {\n  value: T;\n  key?: string;\n  name?: string;\n}\n\nexport interface LoginCredentials {\n  identifier: string;\n  password: string;\n}\n\nexport interface User {\n  jwt: string;\n  name: string;\n  email: string;\n}\n\nexport interface JwtPayload {\n  id: string;\n  iat: number;\n  exp: number;\n}\n\nexport interface JwtRefreshResponse {\n  ok: boolean;\n  user: User | null;\n}\n\n// TypeScript will infer a string union type from the literal values passed to\n// this function. Without `extends string`, it would instead generalize them\n// to the common string type.\nexport const StringUnion = <UnionType extends string>(...values: UnionType[]) => {\n  Object.freeze(values);\n  const valueSet: Set<string> = new Set(values);\n\n  const guard = (value: string): value is UnionType => {\n    return valueSet.has(value);\n  };\n\n  const check = (value: string): UnionType => {\n    if (!guard(value)) {\n      const actual = JSON.stringify(value);\n      const expected = values.map(s => JSON.stringify(s)).join(' | ');\n      throw new TypeError(`Value '${actual}' is not assignable to type '${expected}'.`);\n    }\n    return value;\n  };\n\n  const unionNamespace = {guard, check, values};\n  return Object.freeze(unionNamespace as typeof unionNamespace & {type: UnionType});\n};\n\nexport interface RecipeIngredient extends Ingredient {\n  readonly isStapleFood: boolean;\n}\n\nexport interface Recipe {\n  readonly title: string;\n  readonly ingredients: RecipeIngredient [];\n  readonly url?: string;\n}\n",
@@ -493,6 +470,29 @@
                     ],
                     "returnType": "string",
                     "line": 7
+                }
+            ],
+            "kind": 159,
+            "methods": []
+        },
+        {
+            "name": "Translations",
+            "id": "interface-Translations-c0a4de18e3d01ab13b801bc4ce15eeb4-1",
+            "file": "src/app/shared/model/model-api.ts",
+            "type": "interface",
+            "sourceCode": "export type I18n = {\n  readonly lang: string;\n  readonly translations: Translations;\n};\n\nexport interface Translations {\n  readonly [key: string]: string;\n}\n\nexport interface UserApi {\n  jwt: string;\n  user: {\n    username: string,\n    email: string\n  };\n}\n",
+            "properties": [],
+            "indexSignatures": [
+                {
+                    "id": "index-declaration-c0a4de18e3d01ab13b801bc4ce15eeb4",
+                    "args": [
+                        {
+                            "name": "key",
+                            "type": "string"
+                        }
+                    ],
+                    "returnType": "string",
+                    "line": 6
                 }
             ],
             "kind": 159,
@@ -564,7 +564,7 @@
     "injectables": [
         {
             "name": "AuthApiEffects",
-            "id": "injectable-AuthApiEffects-cbeee3da4d50db8ce05e48876ff323ec",
+            "id": "injectable-AuthApiEffects-a4cb8e1cd491328e7a5661ed16d56950",
             "file": "src/app/auth/effects/auth-api.effects.ts",
             "properties": [
                 {
@@ -583,7 +583,7 @@
                 },
                 {
                     "name": "logout",
-                    "defaultValue": "this.actions$.pipe(\n    ofType(ErrorInterceptorActions.logout),\n    exhaustMap(() => this.authService.logout().pipe(\n      map(() => AuthApiActions.logoutSuccess()),\n      catchError(() => of(AuthApiActions.loginFailure()))\n    )),\n  )",
+                    "defaultValue": "this.actions$.pipe(\n    ofType(ErrorInterceptorActions.logout, NavActions.logout),\n    exhaustMap(() => this.authService.logout().pipe(\n      map(() => AuthApiActions.logoutSuccess()),\n      catchError(() => of(AuthApiActions.loginFailure()))\n    )),\n  )",
                     "type": "",
                     "optional": false,
                     "description": "",
@@ -640,7 +640,7 @@
             ],
             "methods": [],
             "description": "",
-            "sourceCode": "import { Injectable } from '@angular/core';\nimport { Actions, Effect, ofType } from '@ngrx/effects';\nimport { Store } from '@ngrx/store';\nimport { GlobalState, selectRequestedUrlBeforeLoginWasRequired } from '../../shared/state';\nimport { AuthApiActions, LoginPageActions, LoginServiceActions } from '../actions';\nimport { catchError, exhaustMap, map, tap, withLatestFrom } from 'rxjs/operators';\nimport { AuthService } from '../services/auth.service';\nimport { LoginAction } from '../../shared/model/model-action';\nimport { JwtRefreshResponse, User } from '../../shared/model/model';\nimport { of } from 'rxjs';\nimport { AppInitializationActions, ErrorInterceptorActions } from '../../shared/state/app-actions';\nimport { Router } from '@angular/router';\nimport { DEFAULT_REDIRECT_URL_FOR_LOGGED_IN_USER } from '../../shared/helpers/constants';\n\n@Injectable()\nexport class AuthApiEffects {\n  constructor(\n    private actions$: Actions,\n    private authService: AuthService,\n    private router: Router,\n    private store: Store<GlobalState>) {\n  }\n\n  @Effect()\n  login = this.actions$.pipe(\n    ofType(LoginPageActions.login),\n    exhaustMap(({credentials}: LoginAction) => this.authService.login(credentials).pipe(\n      map((user: User) => AuthApiActions.loginSuccess({user})),\n      catchError(() => of(AuthApiActions.loginFailure()))\n    )),\n  );\n\n  @Effect()\n  refreshToken = this.actions$.pipe(\n    ofType(AppInitializationActions.refreshToken, LoginServiceActions.refreshToken),\n    exhaustMap(() => this.authService.refreshToken().pipe(\n      map((jwtRenewal: JwtRefreshResponse) => {\n        return (jwtRenewal.ok && jwtRenewal.user) ?\n          AuthApiActions.refreshTokenSuccess({user: jwtRenewal.user}) : AuthApiActions.refreshTokenFailed();\n      }),\n      catchError(() => of(AuthApiActions.refreshTokenFailed()))\n    )),\n  );\n\n  @Effect()\n  logout = this.actions$.pipe(\n    ofType(ErrorInterceptorActions.logout),\n    exhaustMap(() => this.authService.logout().pipe(\n      map(() => AuthApiActions.logoutSuccess()),\n      catchError(() => of(AuthApiActions.loginFailure()))\n    )),\n  );\n\n  @Effect({dispatch: false})\n  redirectWhenLoggedIn = this.actions$.pipe(\n    ofType(AuthApiActions.loginSuccess),\n    withLatestFrom(this.store.select(selectRequestedUrlBeforeLoginWasRequired)),\n    tap(([_, url]) => {\n      this.router.navigate([url || DEFAULT_REDIRECT_URL_FOR_LOGGED_IN_USER]);\n    }),\n  );\n\n  @Effect({dispatch: false})\n  redirectWhenLoggedOut = this.actions$.pipe(\n    ofType(AuthApiActions.logoutSuccess),\n    withLatestFrom(this.store.select(selectRequestedUrlBeforeLoginWasRequired)),\n    tap(([_, url]) => {\n      this.router.navigate(['/']);\n    }),\n  );\n}\n",
+            "sourceCode": "import { Injectable } from '@angular/core';\nimport { Actions, Effect, ofType } from '@ngrx/effects';\nimport { Store } from '@ngrx/store';\nimport { GlobalState, selectRequestedUrlBeforeLoginWasRequired } from '../../shared/state';\nimport { AuthApiActions, LoginPageActions, LoginServiceActions } from '../actions';\nimport { catchError, exhaustMap, map, tap, withLatestFrom } from 'rxjs/operators';\nimport { AuthService } from '../services/auth.service';\nimport { LoginAction } from '../../shared/model/model-action';\nimport { JwtRefreshResponse, User } from '../../shared/model/model';\nimport { of } from 'rxjs';\nimport { AppInitializationActions, ErrorInterceptorActions, NavActions } from '../../shared/state/app-actions';\nimport { Router } from '@angular/router';\nimport { DEFAULT_REDIRECT_URL_FOR_LOGGED_IN_USER } from '../../shared/helpers/constants';\n\n@Injectable()\nexport class AuthApiEffects {\n  constructor(\n    private actions$: Actions,\n    private authService: AuthService,\n    private router: Router,\n    private store: Store<GlobalState>) {\n  }\n\n  @Effect()\n  login = this.actions$.pipe(\n    ofType(LoginPageActions.login),\n    exhaustMap(({credentials}: LoginAction) => this.authService.login(credentials).pipe(\n      map((user: User) => AuthApiActions.loginSuccess({user})),\n      catchError(() => of(AuthApiActions.loginFailure()))\n    )),\n  );\n\n  @Effect()\n  refreshToken = this.actions$.pipe(\n    ofType(AppInitializationActions.refreshToken, LoginServiceActions.refreshToken),\n    exhaustMap(() => this.authService.refreshToken().pipe(\n      map((jwtRenewal: JwtRefreshResponse) => {\n        return (jwtRenewal.ok && jwtRenewal.user) ?\n          AuthApiActions.refreshTokenSuccess({user: jwtRenewal.user}) : AuthApiActions.refreshTokenFailed();\n      }),\n      catchError(() => of(AuthApiActions.refreshTokenFailed()))\n    )),\n  );\n\n  @Effect()\n  logout = this.actions$.pipe(\n    ofType(ErrorInterceptorActions.logout, NavActions.logout),\n    exhaustMap(() => this.authService.logout().pipe(\n      map(() => AuthApiActions.logoutSuccess()),\n      catchError(() => of(AuthApiActions.loginFailure()))\n    )),\n  );\n\n  @Effect({dispatch: false})\n  redirectWhenLoggedIn = this.actions$.pipe(\n    ofType(AuthApiActions.loginSuccess),\n    withLatestFrom(this.store.select(selectRequestedUrlBeforeLoginWasRequired)),\n    tap(([_, url]) => {\n      this.router.navigate([url || DEFAULT_REDIRECT_URL_FOR_LOGGED_IN_USER]);\n    }),\n  );\n\n  @Effect({dispatch: false})\n  redirectWhenLoggedOut = this.actions$.pipe(\n    ofType(AuthApiActions.logoutSuccess),\n    withLatestFrom(this.store.select(selectRequestedUrlBeforeLoginWasRequired)),\n    tap(([_, url]) => {\n      this.router.navigate(['/']);\n    }),\n  );\n}\n",
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
@@ -966,11 +966,50 @@
             "hostListeners": []
         }
     ],
-    "directives": [],
+    "directives": [
+        {
+            "name": "RouterLinkDirectiveStub",
+            "id": "directive-RouterLinkDirectiveStub-c9217ce2763c98d52dd892c167c14067",
+            "file": "testing/router-link-directive.stub.ts",
+            "type": "directive",
+            "description": "",
+            "sourceCode": "import { Directive, HostListener, Input } from '@angular/core';\n\n@Directive({\n  selector: '[routerLink]'\n})\nexport class RouterLinkDirectiveStub {\n  @Input('routerLink') linkParams: any;\n  navigatedTo: any = null;\n\n  @HostListener('click')\n  onClick(): void {\n    this.navigatedTo = this.linkParams;\n  }\n}\n",
+            "selector": "[routerLink]",
+            "providers": [],
+            "inputsClass": [
+                {
+                    "name": "routerLink",
+                    "line": 8,
+                    "type": "any"
+                }
+            ],
+            "outputsClass": [],
+            "hostBindings": [],
+            "hostListeners": [
+                {
+                    "name": "click",
+                    "args": [],
+                    "argsDecorator": [],
+                    "line": 12
+                }
+            ],
+            "propertiesClass": [
+                {
+                    "name": "navigatedTo",
+                    "defaultValue": "null",
+                    "type": "any",
+                    "optional": false,
+                    "description": "",
+                    "line": 9
+                }
+            ],
+            "methodsClass": []
+        }
+    ],
     "components": [
         {
             "name": "AppComponent",
-            "id": "component-AppComponent-c987e7a2f049fb705517494e59bcce9d",
+            "id": "component-AppComponent-6a514fae88415aa3f87d60a137a5519c",
             "file": "src/app/app.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -990,29 +1029,46 @@
             "outputsClass": [],
             "propertiesClass": [
                 {
-                    "name": "showBetaTeaser",
-                    "defaultValue": "environment.showBetaTeaser",
-                    "type": "",
+                    "name": "currentLang$",
+                    "defaultValue": "this.store.select(selectCurrentLanguage)",
+                    "type": "Observable<Language | null>",
                     "optional": false,
                     "description": "",
-                    "line": 11
+                    "line": 15
                 },
                 {
-                    "name": "title",
-                    "defaultValue": "'mealplaner'",
-                    "type": "string",
+                    "name": "isLoggedIn",
+                    "defaultValue": "this.store.select(isLoggedIn)",
+                    "type": "Observable<boolean | null>",
                     "optional": false,
                     "description": "",
-                    "line": 10
+                    "line": 16
+                },
+                {
+                    "name": "translations$",
+                    "defaultValue": "this.store.select(selectTranslations)",
+                    "type": "Observable<I18n | null>",
+                    "optional": false,
+                    "description": "",
+                    "line": 14
                 }
             ],
-            "methodsClass": [],
+            "methodsClass": [
+                {
+                    "name": "onLogout",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 21
+                }
+            ],
             "hostBindings": [],
             "hostListeners": [],
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component } from '@angular/core';\nimport {environment} from '../environments/environment';\n\n@Component({\n  selector: 'app-root',\n  templateUrl: './app.component.html',\n  styleUrls: ['./app.component.scss']\n})\nexport class AppComponent {\n  title = 'mealplaner';\n  showBetaTeaser = environment.showBetaTeaser;\n}\n",
+            "sourceCode": "import { Component } from '@angular/core';\nimport { Store } from '@ngrx/store';\nimport { Observable } from 'rxjs';\nimport { I18n, Language } from './shared/model/model';\nimport { GlobalState, isLoggedIn, selectCurrentLanguage, selectTranslations } from './shared/state';\nimport { NavActions } from './shared/state/app-actions';\n\n@Component({\n  selector: 'app-root',\n  templateUrl: './app.component.html',\n  styleUrls: ['./app.component.scss']\n})\nexport class AppComponent {\n  translations$: Observable<I18n | null> = this.store.select(selectTranslations);\n  currentLang$: Observable<Language | null> = this.store.select(selectCurrentLanguage);\n  isLoggedIn: Observable<boolean | null> = this.store.select(isLoggedIn);\n\n  constructor(private store: Store<GlobalState>) {\n  }\n\n  onLogout(): void {\n    this.store.dispatch(NavActions.logout());\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -1021,12 +1077,32 @@
                 }
             ],
             "stylesData": "",
-            "templateData": "<a [routerLink]=\"'/auth/login'\">Login</a>\n<br />\n<a [routerLink]=\"'/shopping-list'\">ShoppingList</a>\n<br />\n<a [routerLink]=\"'/meal-planer'\">MealPlaner</a>\n<br />\n\n<a [routerLink]=\"'/cookbook'\">Cookbook</a>\n<br />\n\n<router-outlet></router-outlet>\n"
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [
+                    {
+                        "name": "store",
+                        "type": "Store<GlobalState>"
+                    }
+                ],
+                "line": 16,
+                "jsdoctags": [
+                    {
+                        "name": "store",
+                        "type": "Store<GlobalState>",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "templateData": "<app-navigation\n  [isLoggedIn]=\"isLoggedIn | async\"\n  [translations]=\"translations$ | async\"\n  [currentLang]=\"currentLang$ | async\"\n  (logout)=\"onLogout()\"></app-navigation>\n\n<div id=\"main-page\">\n  <router-outlet></router-outlet>\n</div>\n"
         },
         {
             "name": "BetaTeaserComponent",
-            "id": "component-BetaTeaserComponent-d17b6eaf001f90c5da56564d712f7bcd",
-            "file": "src/app/beta-teaser/beta-teaser.component.ts",
+            "id": "component-BetaTeaserComponent-23a6d6f56d062c80d200eee7b0ae0820",
+            "file": "src/app/components/beta-teaser/beta-teaser.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -1084,7 +1160,7 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Location } from '@angular/common';\nimport { Component, OnInit } from '@angular/core';\nimport { Store } from '@ngrx/store';\nimport { getI18n } from '../i18n/actions/i18n-api.actions';\nimport { GlobalState, selectCurrentLanguage, selectTranslations } from '../shared/state';\n\n@Component({\n  selector: 'app-beta-teaser',\n  templateUrl: './beta-teaser.component.html',\n  styleUrls: ['./beta-teaser.component.scss']\n})\nexport class BetaTeaserComponent implements OnInit {\n  url = 'https://mealplaner.app';\n  translations$ = this.store.select(selectTranslations);\n  currentLang$ = this.store.select(selectCurrentLanguage);\n\n  constructor(\n    private location: Location,\n    private store: Store<GlobalState>) {\n  }\n\n  ngOnInit(): void {\n    this.url = `https://mealplaner.app${this.location.path()}`;\n    // Todo don't load the translations here\n    this.store.dispatch(getI18n());\n  }\n}\n",
+            "sourceCode": "import { Location } from '@angular/common';\nimport { Component, OnInit } from '@angular/core';\nimport { Store } from '@ngrx/store';\nimport { getI18n } from '../../i18n/actions/i18n-api.actions';\nimport { GlobalState, selectCurrentLanguage, selectTranslations } from '../../shared/state';\n\n@Component({\n  selector: 'app-beta-teaser',\n  templateUrl: './beta-teaser.component.html',\n  styleUrls: ['./beta-teaser.component.scss']\n})\nexport class BetaTeaserComponent implements OnInit {\n  url = 'https://mealplaner.app';\n  translations$ = this.store.select(selectTranslations);\n  currentLang$ = this.store.select(selectCurrentLanguage);\n\n  constructor(\n    private location: Location,\n    private store: Store<GlobalState>) {\n  }\n\n  ngOnInit(): void {\n    this.url = `https://mealplaner.app${this.location.path()}`;\n    // Todo don't load the translations here\n    this.store.dispatch(getI18n());\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -1131,7 +1207,7 @@
         },
         {
             "name": "ButtonComponent",
-            "id": "component-ButtonComponent-a8b1947cafe0ec06475c323f25779d44",
+            "id": "component-ButtonComponent-c247e23ed8b0a5f9c92f364a1f7da365",
             "file": "src/app/shared/components/button/button.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -1151,54 +1227,54 @@
                 {
                     "name": "buttonText",
                     "defaultValue": "''",
-                    "line": 11
+                    "line": 12
                 },
                 {
                     "name": "buttonType",
                     "defaultValue": "'button'",
-                    "line": 12
+                    "line": 13
                 },
                 {
                     "name": "color",
                     "defaultValue": "'primary'",
-                    "line": 15
+                    "line": 16
                 },
                 {
                     "name": "e2eTestName",
                     "defaultValue": "''",
-                    "line": 14
+                    "line": 15
                 },
                 {
                     "name": "hasErrors",
                     "defaultValue": "false",
-                    "line": 19
+                    "line": 20
                 },
                 {
                     "name": "iconLeft",
-                    "line": 16,
+                    "line": 17,
                     "type": "IconName | undefined"
                 },
                 {
                     "name": "iconRight",
-                    "line": 17,
+                    "line": 18,
                     "type": "IconName | undefined"
                 },
                 {
                     "name": "isDisabled",
                     "defaultValue": "false",
-                    "line": 13
+                    "line": 14
                 },
                 {
                     "name": "isInputGroup",
                     "defaultValue": "false",
-                    "line": 18
+                    "line": 19
                 }
             ],
             "outputsClass": [
                 {
                     "name": "clicked",
                     "defaultValue": "new EventEmitter<MouseEvent>()",
-                    "line": 20,
+                    "line": 21,
                     "type": "EventEmitter<MouseEvent>"
                 }
             ],
@@ -1215,7 +1291,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 22,
+                    "line": 23,
                     "jsdoctags": [
                         {
                             "name": "event",
@@ -1232,16 +1308,16 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, EventEmitter, Input, Output } from '@angular/core';\nimport { IconName } from '@fortawesome/fontawesome-common-types';\n\n@Component({\n  selector: 'app-button',\n  templateUrl: './button.component.html',\n  styleUrls: ['./button.component.scss']\n})\nexport class ButtonComponent {\n\n  @Input() buttonText = '';\n  @Input() buttonType = 'button';\n  @Input() isDisabled = false;\n  @Input() e2eTestName = '';\n  @Input() color = 'primary';\n  @Input() iconLeft: IconName | undefined;\n  @Input() iconRight: IconName | undefined;\n  @Input() isInputGroup = false;\n  @Input() hasErrors = false;\n  @Output() clicked: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();\n\n  onClick(event: MouseEvent): void {\n    this.clicked.emit(event);\n  }\n\n}\n",
+            "sourceCode": "import { Component, EventEmitter, Input, Output } from '@angular/core';\nimport { IconName } from '@fortawesome/fontawesome-common-types';\nimport { RouterLink } from '@angular/router';\n\n@Component({\n  selector: 'app-button',\n  templateUrl: './button.component.html',\n  styleUrls: ['./button.component.scss']\n})\nexport class ButtonComponent {\n\n  @Input() buttonText = '';\n  @Input() buttonType = 'button';\n  @Input() isDisabled = false;\n  @Input() e2eTestName = '';\n  @Input() color = 'primary';\n  @Input() iconLeft: IconName | undefined;\n  @Input() iconRight: IconName | undefined;\n  @Input() isInputGroup = false;\n  @Input() hasErrors = false;\n  @Output() clicked: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();\n\n  onClick(event: MouseEvent): void {\n    this.clicked.emit(event);\n  }\n\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": "@import \"../../../../styles/material_theme\";\n@import \"../../../../styles/settings/colors\";\n@import \"../../../../styles/mixins/forms\";\n\n.button{\n  background-color: $blue_70;\n  color: $blue-grey_10;\n   @include button();\n\n  &:hover{\n    background-color: $blue_60;\n  }\n\n  &:active {\n    background-color: $blue_80;\n  }\n\n  &--no-left-border-radius{\n    border-radius: 0 4px 4px 0;\n  }\n\n  &--color-accent{\n    background-color: $cyan_70;\n    color:$cyan_10;\n\n    &:hover{\n      background-color: $cyan_60;\n    }\n\n    &:active {\n      background-color: $cyan_80;\n    }\n  }\n\n  &--color-warning{\n    background-color: $red_70;\n    color: $red_10;\n\n    &:hover{\n      background-color: $red_60;\n    }\n\n    &:active {\n      background-color: $red_80;\n    }\n  }\n\n  &--color-disabled{\n    background-color: $blue-grey_50;\n    cursor: not-allowed;\n\n    &:hover,\n    &:active{\n      background-color: $blue-grey_50;\n    }\n\n  }\n\n  &--warning-border{\n    border: 2px solid $red_70;\n    border-left: none;\n  }\n\n  .icon-left{\n    padding-right: 0.5rem;\n  }\n\n  .icon-right{\n    padding-left: 0.5rem;\n  }\n\n}\n",
+                    "data": "@import \"../../../../styles/material_theme\";\n@import \"../../../../styles/settings/colors\";\n@import \"../../../../styles/mixins/forms\";\n\n.button{\n  background-color: $blue_70;\n  color: $blue-grey_10;\n   @include button();\n\n  &:hover{\n    background-color: $blue_60;\n  }\n\n  &:active {\n    background-color: $blue_80;\n  }\n\n  &--no-left-border-radius{\n    border-radius: 0 4px 4px 0;\n  }\n\n  &--color-inverted{\n    background-color: #FFFFFF;\n    color: $blue_100;\n    font-weight: 400;\n\n    &:hover{\n      background-color: $blue-grey_10;\n    }\n\n    &:active {\n      background-color: $blue-grey_10;\n    }\n  }\n\n  &--color-accent{\n    background-color: $cyan_70;\n    color:$cyan_10;\n\n    &:hover{\n      background-color: $cyan_60;\n    }\n\n    &:active {\n      background-color: $cyan_80;\n    }\n  }\n\n  &--color-warning{\n    background-color: $red_70;\n    color: $red_10;\n\n    &:hover{\n      background-color: $red_60;\n    }\n\n    &:active {\n      background-color: $red_80;\n    }\n  }\n\n  &--color-disabled{\n    background-color: $blue-grey_50;\n    cursor: not-allowed;\n\n    &:hover,\n    &:active{\n      background-color: $blue-grey_50;\n    }\n\n  }\n\n  &--warning-border{\n    border: 2px solid $red_70;\n    border-left: none;\n  }\n\n  .icon-left{\n    padding-right: 0.5rem;\n  }\n\n  .icon-right{\n    padding-left: 0.5rem;\n  }\n\n}\n",
                     "styleUrl": "./button.component.scss"
                 }
             ],
             "stylesData": "",
-            "templateData": "<button\n  class=\"button\"\n  [disabled]=\"isDisabled\"\n  [attr.data-test]=\"e2eTestName\"\n  [type]=\"buttonType\"\n  (click)=\"onClick($event)\"\n  [ngClass]=\"{\n  'button--no-left-border-radius': isInputGroup,\n  'button--color-accent': color === 'accent' && !isDisabled,\n  'button--color-warning': color === 'warn' && !isDisabled,\n  'button--color-disabled': isDisabled,\n  'button--warning-border': isInputGroup && hasErrors\n  }\"\n>\n  <fa-icon *ngIf=\"iconLeft\"\n           [icon]=\"['fas', iconLeft]\"\n           class=\"icon-left\"\n  ></fa-icon>\n  {{buttonText}}\n  <fa-icon *ngIf=\"iconRight\"\n           [icon]=\"['fas', iconRight]\"\n           class=\"icon-right\"\n  ></fa-icon>\n</button>\n"
+            "templateData": "<button\n  class=\"button\"\n  [disabled]=\"isDisabled\"\n  [attr.data-test]=\"e2eTestName\"\n  [type]=\"buttonType\"\n  (click)=\"onClick($event)\"\n  [ngClass]=\"{\n  'button--no-left-border-radius': isInputGroup,\n  'button--color-inverted': color === 'inverted' && !isDisabled,\n  'button--color-accent': color === 'accent' && !isDisabled,\n  'button--color-warning': color === 'warn' && !isDisabled,\n  'button--color-disabled': isDisabled,\n  'button--warning-border': isInputGroup && hasErrors\n  }\"\n>\n  <fa-icon *ngIf=\"iconLeft\"\n           [icon]=\"['fas', iconLeft]\"\n           class=\"icon-left\"\n  ></fa-icon>\n  {{buttonText}}\n  <fa-icon *ngIf=\"iconRight\"\n           [icon]=\"['fas', iconRight]\"\n           class=\"icon-right\"\n  ></fa-icon>\n</button>\n"
         },
         {
             "name": "InputComponent",
@@ -1833,6 +1909,96 @@
                 "OnInit"
             ],
             "templateData": "<p>mealplaner-container works!</p>\n"
+        },
+        {
+            "name": "NavigationComponent",
+            "id": "component-NavigationComponent-21392c418863bfcd91975df7f42151bc",
+            "file": "src/app/components/navigation/navigation.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-navigation",
+            "styleUrls": [
+                "./navigation.component.scss"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./navigation.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [
+                {
+                    "name": "currentLang",
+                    "defaultValue": "null",
+                    "line": 11,
+                    "type": "Language | null"
+                },
+                {
+                    "name": "isLoggedIn",
+                    "defaultValue": "null",
+                    "line": 12,
+                    "type": "boolean | null"
+                },
+                {
+                    "name": "translations",
+                    "defaultValue": "null",
+                    "line": 10,
+                    "type": "I18n | null"
+                }
+            ],
+            "outputsClass": [
+                {
+                    "name": "logout",
+                    "defaultValue": "new EventEmitter()",
+                    "line": 13,
+                    "type": "EventEmitter<null>"
+                }
+            ],
+            "propertiesClass": [],
+            "methodsClass": [
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 17
+                },
+                {
+                    "name": "onLogout",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 20
+                }
+            ],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';\nimport { I18n, Language } from '../../shared/model/model';\n\n@Component({\n  selector: 'app-navigation',\n  templateUrl: './navigation.component.html',\n  styleUrls: ['./navigation.component.scss']\n})\nexport class NavigationComponent implements OnInit {\n  @Input() translations: I18n | null = null;\n  @Input() currentLang: Language | null = null;\n  @Input() isLoggedIn: boolean | null = null;\n  @Output() logout: EventEmitter<null> = new EventEmitter();\n\n  constructor() { }\n\n  ngOnInit(): void {\n  }\n\n  onLogout(): void {\n    this.logout.emit();\n  }\n\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "@import \"../../../styles/settings/colors\";\n@import \"../../../styles/settings/breakpoints\";\n\n.main-navigation {\n  background: $blue_100;\n  width: 100%;\n  height: 3.5rem;\n  position: fixed;\n  top: 0;\n  display: flex;\n  align-items: center;\n\n  &__logo {\n    height: 2rem;\n    width: auto;\n    padding-right: 2rem;\n  }\n\n  &__content {\n    display: flex;\n    height: 100%;\n    align-items: center;\n    justify-content: space-between;\n  }\n\n  &__actions {\n    height: 2rem;\n    display: flex;\n  }\n\n  &__wrapper {\n    display: flex;\n    height: 100%;\n    align-items: center;\n  }\n\n  &__secondary-action {\n    color: white;\n    padding-right: 1.5rem;\n    display: flex;\n    align-items: center;\n    text-decoration: none;\n  }\n\n  &__primary-action {\n    background: white;\n    height: 100%;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    border-radius: 4px;\n    color: $blue_100;\n    text-decoration: none;\n    width: 7rem;\n  }\n}\n\n\n.mobile-navigation {\n  position: fixed;\n  background: #FFFFFF;\n  bottom: 0;\n  height: 4.5rem;\n  width: 100%;\n  box-shadow: 0px -4px 6px 0px rgba(224, 224, 224, 1);\n  border-bottom: 0.3rem solid $blue-grey_20;\n\n  @include large {\n    display: none;\n  }\n\n  &__link-list {\n    list-style: none;\n    display: flex;\n    margin-top: 0.4rem;\n  }\n\n  &__link-list-element {\n    flex: 1 1 0;\n    display: flex;\n    flex-direction: column;\n    text-decoration: none;\n    text-align: center;\n  }\n\n  &__link-icon {\n    color: $blue_80;\n    font-size: 1.8rem;\n  }\n\n  &__link-text {\n    color: $blue_80;\n    font-size: 0.8rem;\n    margin-top: -0.3rem;\n    display: block;\n    margin-bottom: 0.3rem;\n  }\n\n\n  &__link {\n    text-decoration: none;\n  }\n\n  &__link--active {\n    text-decoration: none;\n\n    .mobile-navigation__status {\n      width: 5.5rem;\n      margin: 0 auto;\n      background-color: $blue_80;\n      height: 0.3rem;\n      position: relative;\n      bottom: 0;\n    }\n  }\n}\n\n.desktop-navigation {\n  display: none;\n  color: white;\n  list-style: none;\n  height: 100%;\n\n  @include large {\n    display: flex;\n  }\n\n  &__link-list {\n    color: white;\n    list-style: none;\n    display: flex;\n    height: 100%;\n  }\n\n  &__link {\n    color: #FFFFFF;\n    text-decoration: none;\n    height: 100%;\n    display: flex;\n    align-items: center;\n    border-bottom: 4px solid transparent;\n  }\n\n  &__link--active {\n    border-bottom: 4px solid $blue-grey_10;\n  }\n\n  &__link-list-element {\n    padding-left: 1rem;\n    padding-right: 1rem;\n    height: 100%;\n    display: flex;\n    align-items: center;\n    color: white;\n  }\n}\n\n\n",
+                    "styleUrl": "./navigation.component.scss"
+                }
+            ],
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [],
+                "line": 13
+            },
+            "implements": [
+                "OnInit"
+            ],
+            "templateData": "<nav class=\"main-navigation\">\n  <div class=\"container main-navigation__content\">\n    <div class=\"main-navigation__wrapper\">\n      <img class=\"main-navigation__logo\" src=\"../../../assets/logo-inverted.png\" [routerLink]=\"['/']\">\n      <div class=\"desktop-navigation\" *ngIf=\"isLoggedIn\">\n        <ul class=\"desktop-navigation__link-list\" data-test=\"desktop-navigation\">\n          <li class=\"desktop-navigation__link-list-element\">\n            <a [routerLink]=\"['/meal-planer']\"\n               class=\"desktop-navigation__link\"\n               routerLinkActive=\"desktop-navigation__link--active\">\n              {{'app.navigation.planer' | translate:translations:currentLang}}\n            </a>\n          </li>\n          <li class=\"desktop-navigation__link-list-element\">\n            <a [routerLink]=\"['/cook-book']\"\n               class=\"desktop-navigation__link\"\n               routerLinkActive=\"desktop-navigation__link--active\">\n              {{'app.navigation.menus' | translate:translations:currentLang}}\n            </a>\n          </li>\n          <li class=\"desktop-navigation__link-list-element\">\n            <a [routerLink]=\"['/shopping-list']\"\n               class=\"desktop-navigation__link\"\n               routerLinkActive=\"desktop-navigation__link--active\">\n              {{'app.navigation.shopping-list' | translate:translations:currentLang}}\n            </a>\n          </li>\n        </ul>\n      </div>\n    </div>\n\n    <div class=\"main-navigation__actions\">\n\n\n      <app-button *ngIf=\"isLoggedIn; else registerTemplate\"\n                  [buttonText]=\"'app.navigation.logout' | translate:translations:currentLang\"\n                  color=\"inverted\" (click)=\"onLogout()\"\n                  class=\"main-navigation__primary-action\"\n                  data-test=\"logout-button\"></app-button>\n\n\n      <ng-template #registerTemplate>\n        <a class=\"main-navigation__secondary-action\"\n           [routerLink]=\"['/auth/login']\"\n           data-test=\"login-link\">\n          {{'app.navigation.login' | translate:translations:currentLang}}\n        </a>\n\n        <a          [routerLink]=\"['/auth/register']\"\n                    class=\"main-navigation__primary-action\"\n                    data-test=\"register-link\">\n          {{'app.navigation.register' | translate:translations:currentLang }}\n        </a>\n      </ng-template>\n    </div>\n  </div>\n</nav>\n\n\n<nav *ngIf=\"isLoggedIn\" class=\"mobile-navigation\">\n  <ul class=mobile-navigation__link-list data-test=\"mobile-navigation\">\n    <li class=\"mobile-navigation__link-list-element\">\n      <a class=\"mobile-navigation__link\" [routerLink]=\"['/meal-planer']\"\n         routerLinkActive=\"mobile-navigation__link--active\">\n        <fa-icon class=\"shopping-list__ellipsis mobile-navigation__link-icon\"\n                 [icon]=\"['fas','calendar-alt']\"></fa-icon>\n        <span\n          class=\"mobile-navigation__link-text\">{{'app.navigation.planer' | translate:translations:currentLang}}</span>\n        <div\n          class=\"mobile-navigation__status\"></div>\n      </a>\n    </li>\n\n    <li class=\"mobile-navigation__link-list-element\">\n      <a class=\"mobile-navigation__link\" [routerLink]=\"['/cook-book']\"\n         routerLinkActive=\"mobile-navigation__link--active\">\n        <fa-icon class=\"shopping-list__ellipsis mobile-navigation__link-icon\"\n                 [icon]=\"['fas','hamburger']\"></fa-icon>\n        <span\n          class=\"mobile-navigation__link-text\">{{'app.navigation.menus' | translate:translations:currentLang}}</span>\n        <div class=\"mobile-navigation__status\"></div>\n      </a>\n    </li>\n\n    <li class=\"mobile-navigation__link-list-element\">\n      <a class=\"mobile-navigation__link\" [routerLink]=\"['/shopping-list']\"\n         routerLinkActive=\"mobile-navigation__link--active\">\n        <fa-icon class=\"shopping-list__ellipsis mobile-navigation__link-icon\"\n                 [icon]=\"['fas','shopping-cart']\"></fa-icon>\n        <span\n          class=\"mobile-navigation__link-text\">{{'app.navigation.shopping-list' | translate:translations:currentLang}}</span>\n        <div class=\"mobile-navigation__status\"></div>\n      </a>\n    </li>\n  </ul>\n</nav>\n"
         },
         {
             "name": "RecipeFormComponent",
@@ -2849,6 +3015,9 @@
                         },
                         {
                             "name": "BetaTeaserComponent"
+                        },
+                        {
+                            "name": "NavigationComponent"
                         }
                     ]
                 },
@@ -2863,6 +3032,9 @@
                         },
                         {
                             "name": "I18nModule"
+                        },
+                        {
+                            "name": "SharedModule"
                         }
                     ]
                 },
@@ -3312,41 +3484,9 @@
                 "name": "actionsData",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/auth/components/login-form/login-form.stories.ts",
-                "type": "object",
-                "defaultValue": "{\n  credentialsReceived: action('credentialsReceived')\n}"
-            },
-            {
-                "name": "actionsData",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/input/input.stories.ts",
-                "type": "object",
-                "defaultValue": "{\n  clicked: action('clicked'),\n}"
-            },
-            {
-                "name": "actionsData",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/cookbook/components/recipe-form/recipe-form.stories.ts",
-                "type": "object",
-                "defaultValue": "{\n  recipeSaved: action('recipeSaved')\n}"
-            },
-            {
-                "name": "actionsData",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/select/select.stories.ts",
                 "type": "object",
                 "defaultValue": "{\n  valueChanged: action('valueChanged'),\n}"
-            },
-            {
-                "name": "actionsData",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts",
-                "type": "object",
-                "defaultValue": "{\n  itemAdded: action('itemAdded'),\n}"
             },
             {
                 "name": "actionsData",
@@ -3365,12 +3505,52 @@
                 "defaultValue": "{\n  clicked: action('clicked')\n}"
             },
             {
+                "name": "actionsData",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/components/navigation/navigation.stories.ts",
+                "type": "object",
+                "defaultValue": "{\n  logout: action('clicked')\n}"
+            },
+            {
+                "name": "actionsData",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/cookbook/components/recipe-form/recipe-form.stories.ts",
+                "type": "object",
+                "defaultValue": "{\n  recipeSaved: action('recipeSaved')\n}"
+            },
+            {
+                "name": "actionsData",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts",
+                "type": "object",
+                "defaultValue": "{\n  itemAdded: action('itemAdded'),\n}"
+            },
+            {
+                "name": "actionsData",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/input/input.stories.ts",
+                "type": "object",
+                "defaultValue": "{\n  clicked: action('clicked'),\n}"
+            },
+            {
+                "name": "actionsData",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/auth/components/login-form/login-form.stories.ts",
+                "type": "object",
+                "defaultValue": "{\n  credentialsReceived: action('credentialsReceived')\n}"
+            },
+            {
                 "name": "appStateReducer",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/shared/state/reducers/app-state.reducers.ts",
                 "type": "",
-                "defaultValue": "createReducer<AppState, Action>(\n  initialAppState,\n  on(\n    I18nApiActions.getI18nSuccess,\n    (state, {i18n}: { i18n: I18n }) => {\n      return {\n        ...state,\n        i18n: {\n          ...state.i18n,\n          ...i18n\n        }\n      };\n    }),\n  on(\n    AuthApiActions.refreshTokenSuccess,\n    (state, {user}: { user: User }) => {\n      return {\n        ...state,\n        user: {\n          ...user\n        }\n      };\n    }),\n  on(\n    AuthApiActions.refreshTokenFailed,\n    (state) => {\n      return {\n        ...state,\n        user: null\n      };\n    }),\n  on(\n    AuthApiActions.loginSuccess,\n    (state, {user}: { user: User }) => {\n      return {\n        ...state,\n        user: {\n          ...user\n        },\n      };\n    }),\n  on(\n    AuthenticatedGuardActions.setRequestedUrlBeforeLoginWasRequired,\n    (state, {url}: { url: string }) => {\n      return {\n        ...state,\n        requestedUrlBeforeLoginWasRequired: url\n      };\n    }),\n  on(\n    AppInitializationActions.setLanguage,\n    (state, {language}: { language: Language }) => {\n      return {\n        ...state,\n        language,\n      };\n    }),\n  on(\n    ErrorInterceptorActions.logout,\n    (state) => {\n      return {\n        ...state,\n        user: null,\n      };\n    })\n)"
+                "defaultValue": "createReducer<AppState, Action>(\n  initialAppState,\n  on(\n    I18nApiActions.getI18nSuccess,\n    (state, {i18n}: { i18n: I18n }) => {\n      return {\n        ...state,\n        i18n: {\n          ...state.i18n,\n          ...i18n\n        }\n      };\n    }),\n  on(\n    AuthApiActions.refreshTokenSuccess,\n    (state, {user}: { user: User }) => {\n      return {\n        ...state,\n        user: {\n          ...user\n        }\n      };\n    }),\n  on(\n    AuthApiActions.refreshTokenFailed,\n    (state) => {\n      return {\n        ...state,\n        user: null\n      };\n    }),\n  on(\n    AuthApiActions.loginSuccess,\n    (state, {user}: { user: User }) => {\n      return {\n        ...state,\n        user: {\n          ...user\n        },\n      };\n    }),\n  on(\n    AuthenticatedGuardActions.setRequestedUrlBeforeLoginWasRequired,\n    (state, {url}: { url: string }) => {\n      return {\n        ...state,\n        requestedUrlBeforeLoginWasRequired: url\n      };\n    }),\n  on(\n    AppInitializationActions.setLanguage,\n    (state, {language}: { language: Language }) => {\n      return {\n        ...state,\n        language,\n      };\n    }),\n  on(\n    ErrorInterceptorActions.logout,\n    NavActions.logout,\n    (state) => {\n      return {\n        ...state,\n        user: null,\n      };\n    })\n)"
             },
             {
                 "name": "buttonData",
@@ -3379,6 +3559,14 @@
                 "file": "src/app/shared/components/button/button.stories.ts",
                 "type": "object",
                 "defaultValue": "{\n  text: 'Primary',\n  isDisabled: false,\n  e2eTestName: 'buttonTest'\n}"
+            },
+            {
+                "name": "buttonData",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/components/navigation/navigation.stories.ts",
+                "type": "object",
+                "defaultValue": "{\n  isLoggedIn: false,\n  currentLang: 'de',\n  translations: {\n    de: {\n      'app.navigation.login': 'Login',\n      'app.navigation.logout': 'Abmelden',\n      'app.navigation.register': 'Registrieren',\n      'app.navigation.planer': 'Menuplaner',\n      'app.navigation.menus': 'Menüs',\n      'app.navigation.shopping-list': 'Einkaufsliste',\n    }\n  }\n}"
             },
             {
                 "name": "context",
@@ -3392,6 +3580,14 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/button/button.stories.ts",
+                "type": "",
+                "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: buttonData.text,\n    isDisabled: buttonData.isDisabled,\n    e2eTestName: buttonData.e2eTestName,\n    clicked: actionsData.clicked\n  }\n})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts",
                 "type": "",
                 "defaultValue": "() => ({\n  component: ShoppingListFormComponent,\n  props: {\n    ...taskData,\n    ...actionsData\n  },\n})"
@@ -3400,17 +3596,17 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/cookbook/components/recipe-form/recipe-form.stories.ts",
+                "file": "src/app/shared/components/input/input.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: RecipeFormComponent,\n  props: {\n    ...formData,\n    ...actionsData\n  }\n})"
+                "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: '',\n    errors: []\n  }\n})"
             },
             {
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/input/input.stories.ts",
+                "file": "src/app/cookbook/components/recipe-form/recipe-form.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: '',\n    errors: []\n  }\n})"
+                "defaultValue": "() => ({\n  component: RecipeFormComponent,\n  props: {\n    ...formData,\n    ...actionsData\n  }\n})"
             },
             {
                 "name": "Default",
@@ -3427,14 +3623,6 @@
                 "file": "src/app/shared/components/select/select.stories.ts",
                 "type": "",
                 "defaultValue": "() => ({\n  component: SelectComponent,\n  props: {\n    ...inputData,\n    ...actionsData,\n  }\n})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/button/button.stories.ts",
-                "type": "",
-                "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: buttonData.text,\n    isDisabled: buttonData.isDisabled,\n    e2eTestName: buttonData.e2eTestName,\n    clicked: actionsData.clicked\n  }\n})"
             },
             {
                 "name": "DEFAULT_LANGUAGE",
@@ -3456,17 +3644,17 @@
                 "name": "Disabled",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/button/button.stories.ts",
+                "file": "src/app/shared/components/select/select.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Disabled',\n    isDisabled: true,\n    e2eTestName: buttonData.e2eTestName,\n    clicked: actionsData.clicked,\n  }\n})"
+                "defaultValue": "() => ({\n  component: SelectComponent,\n  props: {\n    ...inputData,\n    isDisabled: true,\n    ...actionsData,\n  }\n})"
             },
             {
                 "name": "Disabled",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/select/select.stories.ts",
+                "file": "src/app/shared/components/button/button.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: SelectComponent,\n  props: {\n    ...inputData,\n    isDisabled: true,\n    ...actionsData,\n  }\n})"
+                "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Disabled',\n    isDisabled: true,\n    e2eTestName: buttonData.e2eTestName,\n    clicked: actionsData.clicked,\n  }\n})"
             },
             {
                 "name": "Edit",
@@ -3488,14 +3676,6 @@
                 "name": "environment",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/environments/environment.qa.ts",
-                "type": "object",
-                "defaultValue": "{\n  production: false,\n  showBetaTeaser: false,\n  apiUrl: 'https://api.mealplaner.app',\n  authUrl: 'https://api.mealplaner.app',\n}"
-            },
-            {
-                "name": "environment",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/environments/environment.ts",
                 "type": "object",
                 "defaultValue": "{\n  production: false,\n  showBetaTeaser: true,\n  apiUrl: 'http://localhost:4200/api',\n  authUrl: 'http://localhost:4200',\n}"
@@ -3507,6 +3687,14 @@
                 "file": "src/environments/environment.prod.ts",
                 "type": "object",
                 "defaultValue": "{\n  production: true,\n  showBetaTeaser: false,\n  apiUrl: 'https://api.mealplaner.app',\n  authUrl: 'https://api.mealplaner.app',\n}"
+            },
+            {
+                "name": "environment",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/environments/environment.qa.ts",
+                "type": "object",
+                "defaultValue": "{\n  production: false,\n  showBetaTeaser: false,\n  apiUrl: 'https://api.mealplaner.app',\n  authUrl: 'https://api.mealplaner.app',\n}"
             },
             {
                 "name": "formData",
@@ -3592,17 +3780,41 @@
                 "name": "inputData",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/input/input.stories.ts",
+                "file": "src/app/shared/components/select/select.stories.ts",
                 "type": "object",
-                "defaultValue": "{\n  isDisabled: false,\n  e2eTestName: 'test',\n  label: 'Label',\n  errors: ['Ooops!', 'An error has occured!'],\n  placeholder: 'Placeholder',\n  formControl: createFormControl()\n}"
+                "defaultValue": "{\n  options: [\n    {key: 'Tesla', value: 'Tesla'},\n    {key: 'Audi', value: 'Audi'},\n    {key: 'Skoda', value: 'Skoda'},\n    {key: 'BMW', value: 'BMW'},\n  ],\n  isDisabled: false,\n}"
             },
             {
                 "name": "inputData",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/select/select.stories.ts",
+                "file": "src/app/shared/components/input/input.stories.ts",
                 "type": "object",
-                "defaultValue": "{\n  options: [\n    {key: 'Tesla', value: 'Tesla'},\n    {key: 'Audi', value: 'Audi'},\n    {key: 'Skoda', value: 'Skoda'},\n    {key: 'BMW', value: 'BMW'},\n  ],\n  isDisabled: false,\n}"
+                "defaultValue": "{\n  isDisabled: false,\n  e2eTestName: 'test',\n  label: 'Label',\n  errors: ['Ooops!', 'An error has occured!'],\n  placeholder: 'Placeholder',\n  formControl: createFormControl()\n}"
+            },
+            {
+                "name": "isLoggedIn",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/state/index.ts",
+                "type": "",
+                "defaultValue": "createSelector(\n  selectAppState,\n  (appState: AppState) => !!appState.user && !isJwtTokenExpired(appState.user.jwt)\n)"
+            },
+            {
+                "name": "LoggedIn",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/components/navigation/navigation.stories.ts",
+                "type": "",
+                "defaultValue": "() => ({\n  component: NavigationComponent,\n  props: {\n    ...buttonData,\n    isLoggedIn: true,\n    ...actionsData,\n  }\n})"
+            },
+            {
+                "name": "LoggedOut",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/components/navigation/navigation.stories.ts",
+                "type": "",
+                "defaultValue": "() => ({\n  component: NavigationComponent,\n  props: {\n    ...buttonData,\n    ...actionsData,\n  }\n})"
             },
             {
                 "name": "login",
@@ -3640,6 +3852,14 @@
                 "name": "logout",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/state/app-actions/navigation.actions.ts",
+                "type": "",
+                "defaultValue": "createAction('[Nav] Logout')"
+            },
+            {
+                "name": "logout",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/state/app-actions/error-interceptor.actions.ts",
                 "type": "",
                 "defaultValue": "createAction('[Error Interceptor] Logout')"
@@ -3667,6 +3887,14 @@
                 "file": "src/app/shared/state/index.ts",
                 "type": "MetaReducer[]",
                 "defaultValue": "[]"
+            },
+            {
+                "name": "Primary",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/components/navigation/navigation.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
             },
             {
                 "name": "reducers",
@@ -3810,6 +4038,14 @@
                 "file": "src/app/shopping-list/components/shopping-list/shopping-list.stories.ts",
                 "type": "literal type",
                 "defaultValue": "{\n  items: [\n    {id: '1', name: 'Mehl', amount: 1, unit: 'kg', isChecked: false},\n    {id: '2', name: 'Zucker', amount: 50, unit: 'g', isChecked: false},\n    {id: '3', name: 'Eier', amount: 1, unit: 'piece', isChecked: false},\n    {id: '4', name: 'Slaz', amount: 5, unit: 'coffeeSpoon', isChecked: false},\n  ],\n  translations: {\n    de: {\n      piece: '',\n      tableSpoon: 'Esslöffel',\n      coffeeSpoon: 'Kaffelöffel',\n      pinch: 'Prise',\n    }\n  }\n}"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/components/navigation/navigation.stories.ts",
+                "type": "any",
+                "defaultValue": "(args: NavigationComponent) => ({\n  component: NavigationComponent,\n  props: args,\n})"
             },
             {
                 "name": "Warning",
@@ -4159,7 +4395,7 @@
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
                 "rawtype": "literal type",
-                "file": "src/app/shared/model/model-api.ts",
+                "file": "src/app/shared/model/model.ts",
                 "description": "",
                 "kind": 165
             },
@@ -4168,7 +4404,7 @@
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
                 "rawtype": "literal type",
-                "file": "src/app/shared/model/model.ts",
+                "file": "src/app/shared/model/model-api.ts",
                 "description": "",
                 "kind": 165
             },
@@ -4259,38 +4495,198 @@
                     "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Warning',\n    isDisabled: buttonData.isDisabled,\n    e2eTestName: buttonData.e2eTestName,\n    clicked: actionsData.clicked,\n    color: 'warn'\n  }\n})"
                 }
             ],
-            "src/app/auth/components/login-form/login-form.stories.ts": [
+            "src/app/shared/components/select/select.stories.ts": [
                 {
                     "name": "actionsData",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/auth/components/login-form/login-form.stories.ts",
+                    "file": "src/app/shared/components/select/select.stories.ts",
                     "type": "object",
-                    "defaultValue": "{\n  credentialsReceived: action('credentialsReceived')\n}"
+                    "defaultValue": "{\n  valueChanged: action('valueChanged'),\n}"
+                },
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/select/select.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: SelectComponent,\n  props: {\n    ...inputData,\n    ...actionsData,\n  }\n})"
+                },
+                {
+                    "name": "Disabled",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/select/select.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: SelectComponent,\n  props: {\n    ...inputData,\n    isDisabled: true,\n    ...actionsData,\n  }\n})"
+                },
+                {
+                    "name": "inputData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/select/select.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  options: [\n    {key: 'Tesla', value: 'Tesla'},\n    {key: 'Audi', value: 'Audi'},\n    {key: 'Skoda', value: 'Skoda'},\n    {key: 'BMW', value: 'BMW'},\n  ],\n  isDisabled: false,\n}"
+                },
+                {
+                    "name": "WithErrors",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/select/select.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: SelectComponent,\n  props: {\n    ...inputData,\n    errors: ['An error has occured!'],\n    ...actionsData,\n  }\n})"
+                },
+                {
+                    "name": "WithLabel",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/select/select.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: SelectComponent,\n  props: {\n    ...inputData,\n    label: 'Label',\n    ...actionsData,\n  }\n})"
+                },
+                {
+                    "name": "WithObjectValues",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/select/select.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: SelectComponent,\n  props: {\n    ...inputData,\n    options: [\n      {key: 'Tesla Key', value: {brand: 'Tesla'}},\n      {key: 'Audi Key', value: {brand: 'Audi'}},\n      {key: 'Skoda', value: {brand: 'Skoda'}},\n      {key: 'BMW', value: {brand: 'BMW'}},\n    ],\n    ...actionsData,\n  }\n})"
+                }
+            ],
+            "src/app/shopping-list/components/shopping-list/shopping-list.stories.ts": [
+                {
+                    "name": "actionsData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shopping-list/components/shopping-list/shopping-list.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  itemDeleted: action('itemDeleted'),\n  listItemMoved: action('listItemMoved'),\n}"
+                },
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shopping-list/components/shopping-list/shopping-list.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: ShoppingListComponent,\n  props: {\n    ...taskData,\n    ...actionsData\n  },\n})"
+                },
+                {
+                    "name": "taskData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shopping-list/components/shopping-list/shopping-list.stories.ts",
+                    "type": "literal type",
+                    "defaultValue": "{\n  items: [\n    {id: '1', name: 'Mehl', amount: 1, unit: 'kg', isChecked: false},\n    {id: '2', name: 'Zucker', amount: 50, unit: 'g', isChecked: false},\n    {id: '3', name: 'Eier', amount: 1, unit: 'piece', isChecked: false},\n    {id: '4', name: 'Slaz', amount: 5, unit: 'coffeeSpoon', isChecked: false},\n  ],\n  translations: {\n    de: {\n      piece: '',\n      tableSpoon: 'Esslöffel',\n      coffeeSpoon: 'Kaffelöffel',\n      pinch: 'Prise',\n    }\n  }\n}"
+                }
+            ],
+            "src/app/components/navigation/navigation.stories.ts": [
+                {
+                    "name": "actionsData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/components/navigation/navigation.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  logout: action('clicked')\n}"
+                },
+                {
+                    "name": "buttonData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/components/navigation/navigation.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  isLoggedIn: false,\n  currentLang: 'de',\n  translations: {\n    de: {\n      'app.navigation.login': 'Login',\n      'app.navigation.logout': 'Abmelden',\n      'app.navigation.register': 'Registrieren',\n      'app.navigation.planer': 'Menuplaner',\n      'app.navigation.menus': 'Menüs',\n      'app.navigation.shopping-list': 'Einkaufsliste',\n    }\n  }\n}"
+                },
+                {
+                    "name": "LoggedIn",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/components/navigation/navigation.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: NavigationComponent,\n  props: {\n    ...buttonData,\n    isLoggedIn: true,\n    ...actionsData,\n  }\n})"
+                },
+                {
+                    "name": "LoggedOut",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/components/navigation/navigation.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: NavigationComponent,\n  props: {\n    ...buttonData,\n    ...actionsData,\n  }\n})"
+                },
+                {
+                    "name": "Primary",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/components/navigation/navigation.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/components/navigation/navigation.stories.ts",
+                    "type": "any",
+                    "defaultValue": "(args: NavigationComponent) => ({\n  component: NavigationComponent,\n  props: args,\n})"
+                }
+            ],
+            "src/app/cookbook/components/recipe-form/recipe-form.stories.ts": [
+                {
+                    "name": "actionsData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/cookbook/components/recipe-form/recipe-form.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  recipeSaved: action('recipeSaved')\n}"
+                },
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/cookbook/components/recipe-form/recipe-form.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: RecipeFormComponent,\n  props: {\n    ...formData,\n    ...actionsData\n  }\n})"
+                },
+                {
+                    "name": "Edit",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/cookbook/components/recipe-form/recipe-form.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: RecipeFormComponent,\n  props: {\n    ...formData,\n    ...actionsData,\n    recipe: {\n      title: 'Beef & beer pie',\n      url: 'https://www.bbcgoodfood.com/recipes/beef-beer-pie',\n      ingredients: [\n        {\n          name: 'Beer',\n          amount: 1,\n          unit: 'l',\n          isStapleFood: true,\n        },\n        {\n          name: 'Beef',\n          amount: 1,\n          unit: 'kg',\n          isStapleFood: false,\n        }\n      ]\n    }\n  }\n})"
                 },
                 {
                     "name": "formData",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/auth/components/login-form/login-form.stories.ts",
+                    "file": "src/app/cookbook/components/recipe-form/recipe-form.stories.ts",
                     "type": "object",
-                    "defaultValue": "{\n  translations: {\n    de: {\n      email: 'Email Adresse',\n      password: 'Passwort',\n      login: 'Anmelden',\n      register: 'Registrieren',\n      'errors.validation.email.required': 'Bitte geben Sie Ihre Email Adresse ein',\n      'errors.validation.email.pattern': 'Valid Email Format braucht @ ein . dann mindestens 2 Zeichen',\n      'errors.validation.password.required': 'Bitte geben Sie Ihre Passwort ein',\n      'errors.validation.password.minlength': 'Passwort muss mindestens 4 character lang sein',\n      'errors.validation.password.pattern': 'Passwort braucht klein und gross Buchstaben und ein Zahl'\n      }\n    }\n}"
-                },
+                    "defaultValue": "{\n  translations: {\n    de: {\n      'recipe-form.placeholder.title': 'Title',\n      'recipe-form.label.title': 'Recipe Title',\n      'recipe-form.placeholder.url': 'Link',\n      'recipe-form.label.url': 'Link to Recipe',\n      'recipe-form.ingredients.label-text': 'Ingredients',\n      'recipe-form.placeholder.amount': 'Quantity',\n      'recipe-form.placeholder.name': 'Name',\n      'recipe-form.text.toggle': 'Basic Ingredient',\n      'recipe-form.button.delete': 'Delete',\n      'recipe-form.button.new-ingredient': 'Add new Ingredient',\n      'recipe-form.button.submit': 'Create',\n      'errors.validation.title.required': 'Titel is required',\n      'recipe-form.button.modify': 'Edit'\n    }\n  }\n}"
+                }
+            ],
+            "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts": [
                 {
-                    "name": "Login",
+                    "name": "actionsData",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/auth/components/login-form/login-form.stories.ts",
-                    "type": "",
-                    "defaultValue": "() => ({\n  component: LoginFormComponent,\n  props: {\n    credentialsReceived: actionsData.credentialsReceived,\n    translations: formData.translations\n  }\n})"
+                    "file": "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  itemAdded: action('itemAdded'),\n}"
                 },
                 {
-                    "name": "Register",
+                    "name": "Default",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/auth/components/login-form/login-form.stories.ts",
+                    "file": "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts",
                     "type": "",
-                    "defaultValue": "() => ({\n  component: LoginFormComponent,\n  props: {\n    credentialsReceived: actionsData.credentialsReceived,\n    translations: formData.translations,\n    buttonText: 'register'\n  }\n})"
+                    "defaultValue": "() => ({\n  component: ShoppingListFormComponent,\n  props: {\n    ...taskData,\n    ...actionsData\n  },\n})"
+                },
+                {
+                    "name": "taskData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  translations: {\n    de: {\n      'shoppingList.addForm.amount': 'Menge',\n      'shoppingList.addForm.product': 'Zucker',\n      'shoppingList.addForm.piece': 'Stück',\n      'shoppingList.addForm.pack': 'Packung',\n      'shoppingList.addForm.addLabel': 'Hinzufügen',\n    }\n  },\n  currentLang: 'de'\n}"
                 }
             ],
             "src/app/shared/components/input/input.stories.ts": [
@@ -4359,148 +4755,38 @@
                     "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: '',\n    buttonText: 'Click',\n    errors: [],\n    clicked: actionsData.clicked\n  }\n})"
                 }
             ],
-            "src/app/cookbook/components/recipe-form/recipe-form.stories.ts": [
+            "src/app/auth/components/login-form/login-form.stories.ts": [
                 {
                     "name": "actionsData",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/cookbook/components/recipe-form/recipe-form.stories.ts",
+                    "file": "src/app/auth/components/login-form/login-form.stories.ts",
                     "type": "object",
-                    "defaultValue": "{\n  recipeSaved: action('recipeSaved')\n}"
-                },
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/cookbook/components/recipe-form/recipe-form.stories.ts",
-                    "type": "",
-                    "defaultValue": "() => ({\n  component: RecipeFormComponent,\n  props: {\n    ...formData,\n    ...actionsData\n  }\n})"
-                },
-                {
-                    "name": "Edit",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/cookbook/components/recipe-form/recipe-form.stories.ts",
-                    "type": "",
-                    "defaultValue": "() => ({\n  component: RecipeFormComponent,\n  props: {\n    ...formData,\n    ...actionsData,\n    recipe: {\n      title: 'Beef & beer pie',\n      url: 'https://www.bbcgoodfood.com/recipes/beef-beer-pie',\n      ingredients: [\n        {\n          name: 'Beer',\n          amount: 1,\n          unit: 'l',\n          isStapleFood: true,\n        },\n        {\n          name: 'Beef',\n          amount: 1,\n          unit: 'kg',\n          isStapleFood: false,\n        }\n      ]\n    }\n  }\n})"
+                    "defaultValue": "{\n  credentialsReceived: action('credentialsReceived')\n}"
                 },
                 {
                     "name": "formData",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/cookbook/components/recipe-form/recipe-form.stories.ts",
+                    "file": "src/app/auth/components/login-form/login-form.stories.ts",
                     "type": "object",
-                    "defaultValue": "{\n  translations: {\n    de: {\n      'recipe-form.placeholder.title': 'Title',\n      'recipe-form.label.title': 'Recipe Title',\n      'recipe-form.placeholder.url': 'Link',\n      'recipe-form.label.url': 'Link to Recipe',\n      'recipe-form.ingredients.label-text': 'Ingredients',\n      'recipe-form.placeholder.amount': 'Quantity',\n      'recipe-form.placeholder.name': 'Name',\n      'recipe-form.text.toggle': 'Basic Ingredient',\n      'recipe-form.button.delete': 'Delete',\n      'recipe-form.button.new-ingredient': 'Add new Ingredient',\n      'recipe-form.button.submit': 'Create',\n      'errors.validation.title.required': 'Titel is required',\n      'recipe-form.button.modify': 'Edit'\n    }\n  }\n}"
-                }
-            ],
-            "src/app/shared/components/select/select.stories.ts": [
-                {
-                    "name": "actionsData",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/select/select.stories.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  valueChanged: action('valueChanged'),\n}"
+                    "defaultValue": "{\n  translations: {\n    de: {\n      email: 'Email Adresse',\n      password: 'Passwort',\n      login: 'Anmelden',\n      register: 'Registrieren',\n      'errors.validation.email.required': 'Bitte geben Sie Ihre Email Adresse ein',\n      'errors.validation.email.pattern': 'Valid Email Format braucht @ ein . dann mindestens 2 Zeichen',\n      'errors.validation.password.required': 'Bitte geben Sie Ihre Passwort ein',\n      'errors.validation.password.minlength': 'Passwort muss mindestens 4 character lang sein',\n      'errors.validation.password.pattern': 'Passwort braucht klein und gross Buchstaben und ein Zahl'\n      }\n    }\n}"
                 },
                 {
-                    "name": "Default",
+                    "name": "Login",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/shared/components/select/select.stories.ts",
+                    "file": "src/app/auth/components/login-form/login-form.stories.ts",
                     "type": "",
-                    "defaultValue": "() => ({\n  component: SelectComponent,\n  props: {\n    ...inputData,\n    ...actionsData,\n  }\n})"
+                    "defaultValue": "() => ({\n  component: LoginFormComponent,\n  props: {\n    credentialsReceived: actionsData.credentialsReceived,\n    translations: formData.translations\n  }\n})"
                 },
                 {
-                    "name": "Disabled",
+                    "name": "Register",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/shared/components/select/select.stories.ts",
+                    "file": "src/app/auth/components/login-form/login-form.stories.ts",
                     "type": "",
-                    "defaultValue": "() => ({\n  component: SelectComponent,\n  props: {\n    ...inputData,\n    isDisabled: true,\n    ...actionsData,\n  }\n})"
-                },
-                {
-                    "name": "inputData",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/select/select.stories.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  options: [\n    {key: 'Tesla', value: 'Tesla'},\n    {key: 'Audi', value: 'Audi'},\n    {key: 'Skoda', value: 'Skoda'},\n    {key: 'BMW', value: 'BMW'},\n  ],\n  isDisabled: false,\n}"
-                },
-                {
-                    "name": "WithErrors",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/select/select.stories.ts",
-                    "type": "",
-                    "defaultValue": "() => ({\n  component: SelectComponent,\n  props: {\n    ...inputData,\n    errors: ['An error has occured!'],\n    ...actionsData,\n  }\n})"
-                },
-                {
-                    "name": "WithLabel",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/select/select.stories.ts",
-                    "type": "",
-                    "defaultValue": "() => ({\n  component: SelectComponent,\n  props: {\n    ...inputData,\n    label: 'Label',\n    ...actionsData,\n  }\n})"
-                },
-                {
-                    "name": "WithObjectValues",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/select/select.stories.ts",
-                    "type": "",
-                    "defaultValue": "() => ({\n  component: SelectComponent,\n  props: {\n    ...inputData,\n    options: [\n      {key: 'Tesla Key', value: {brand: 'Tesla'}},\n      {key: 'Audi Key', value: {brand: 'Audi'}},\n      {key: 'Skoda', value: {brand: 'Skoda'}},\n      {key: 'BMW', value: {brand: 'BMW'}},\n    ],\n    ...actionsData,\n  }\n})"
-                }
-            ],
-            "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts": [
-                {
-                    "name": "actionsData",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  itemAdded: action('itemAdded'),\n}"
-                },
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts",
-                    "type": "",
-                    "defaultValue": "() => ({\n  component: ShoppingListFormComponent,\n  props: {\n    ...taskData,\n    ...actionsData\n  },\n})"
-                },
-                {
-                    "name": "taskData",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  translations: {\n    de: {\n      'shoppingList.addForm.amount': 'Menge',\n      'shoppingList.addForm.product': 'Zucker',\n      'shoppingList.addForm.piece': 'Stück',\n      'shoppingList.addForm.pack': 'Packung',\n      'shoppingList.addForm.addLabel': 'Hinzufügen',\n    }\n  },\n  currentLang: 'de'\n}"
-                }
-            ],
-            "src/app/shopping-list/components/shopping-list/shopping-list.stories.ts": [
-                {
-                    "name": "actionsData",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shopping-list/components/shopping-list/shopping-list.stories.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  itemDeleted: action('itemDeleted'),\n  listItemMoved: action('listItemMoved'),\n}"
-                },
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shopping-list/components/shopping-list/shopping-list.stories.ts",
-                    "type": "",
-                    "defaultValue": "() => ({\n  component: ShoppingListComponent,\n  props: {\n    ...taskData,\n    ...actionsData\n  },\n})"
-                },
-                {
-                    "name": "taskData",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shopping-list/components/shopping-list/shopping-list.stories.ts",
-                    "type": "literal type",
-                    "defaultValue": "{\n  items: [\n    {id: '1', name: 'Mehl', amount: 1, unit: 'kg', isChecked: false},\n    {id: '2', name: 'Zucker', amount: 50, unit: 'g', isChecked: false},\n    {id: '3', name: 'Eier', amount: 1, unit: 'piece', isChecked: false},\n    {id: '4', name: 'Slaz', amount: 5, unit: 'coffeeSpoon', isChecked: false},\n  ],\n  translations: {\n    de: {\n      piece: '',\n      tableSpoon: 'Esslöffel',\n      coffeeSpoon: 'Kaffelöffel',\n      pinch: 'Prise',\n    }\n  }\n}"
+                    "defaultValue": "() => ({\n  component: LoginFormComponent,\n  props: {\n    credentialsReceived: actionsData.credentialsReceived,\n    translations: formData.translations,\n    buttonText: 'register'\n  }\n})"
                 }
             ],
             "src/app/shared/state/reducers/app-state.reducers.ts": [
@@ -4510,7 +4796,7 @@
                     "subtype": "variable",
                     "file": "src/app/shared/state/reducers/app-state.reducers.ts",
                     "type": "",
-                    "defaultValue": "createReducer<AppState, Action>(\n  initialAppState,\n  on(\n    I18nApiActions.getI18nSuccess,\n    (state, {i18n}: { i18n: I18n }) => {\n      return {\n        ...state,\n        i18n: {\n          ...state.i18n,\n          ...i18n\n        }\n      };\n    }),\n  on(\n    AuthApiActions.refreshTokenSuccess,\n    (state, {user}: { user: User }) => {\n      return {\n        ...state,\n        user: {\n          ...user\n        }\n      };\n    }),\n  on(\n    AuthApiActions.refreshTokenFailed,\n    (state) => {\n      return {\n        ...state,\n        user: null\n      };\n    }),\n  on(\n    AuthApiActions.loginSuccess,\n    (state, {user}: { user: User }) => {\n      return {\n        ...state,\n        user: {\n          ...user\n        },\n      };\n    }),\n  on(\n    AuthenticatedGuardActions.setRequestedUrlBeforeLoginWasRequired,\n    (state, {url}: { url: string }) => {\n      return {\n        ...state,\n        requestedUrlBeforeLoginWasRequired: url\n      };\n    }),\n  on(\n    AppInitializationActions.setLanguage,\n    (state, {language}: { language: Language }) => {\n      return {\n        ...state,\n        language,\n      };\n    }),\n  on(\n    ErrorInterceptorActions.logout,\n    (state) => {\n      return {\n        ...state,\n        user: null,\n      };\n    })\n)"
+                    "defaultValue": "createReducer<AppState, Action>(\n  initialAppState,\n  on(\n    I18nApiActions.getI18nSuccess,\n    (state, {i18n}: { i18n: I18n }) => {\n      return {\n        ...state,\n        i18n: {\n          ...state.i18n,\n          ...i18n\n        }\n      };\n    }),\n  on(\n    AuthApiActions.refreshTokenSuccess,\n    (state, {user}: { user: User }) => {\n      return {\n        ...state,\n        user: {\n          ...user\n        }\n      };\n    }),\n  on(\n    AuthApiActions.refreshTokenFailed,\n    (state) => {\n      return {\n        ...state,\n        user: null\n      };\n    }),\n  on(\n    AuthApiActions.loginSuccess,\n    (state, {user}: { user: User }) => {\n      return {\n        ...state,\n        user: {\n          ...user\n        },\n      };\n    }),\n  on(\n    AuthenticatedGuardActions.setRequestedUrlBeforeLoginWasRequired,\n    (state, {url}: { url: string }) => {\n      return {\n        ...state,\n        requestedUrlBeforeLoginWasRequired: url\n      };\n    }),\n  on(\n    AppInitializationActions.setLanguage,\n    (state, {language}: { language: Language }) => {\n      return {\n        ...state,\n        language,\n      };\n    }),\n  on(\n    ErrorInterceptorActions.logout,\n    NavActions.logout,\n    (state) => {\n      return {\n        ...state,\n        user: null,\n      };\n    })\n)"
                 }
             ],
             "src/test.ts": [
@@ -4564,16 +4850,6 @@
                     "defaultValue": "StringUnion('de', 'en')"
                 }
             ],
-            "src/environments/environment.qa.ts": [
-                {
-                    "name": "environment",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/environments/environment.qa.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  production: false,\n  showBetaTeaser: false,\n  apiUrl: 'https://api.mealplaner.app',\n  authUrl: 'https://api.mealplaner.app',\n}"
-                }
-            ],
             "src/environments/environment.ts": [
                 {
                     "name": "environment",
@@ -4592,6 +4868,16 @@
                     "file": "src/environments/environment.prod.ts",
                     "type": "object",
                     "defaultValue": "{\n  production: true,\n  showBetaTeaser: false,\n  apiUrl: 'https://api.mealplaner.app',\n  authUrl: 'https://api.mealplaner.app',\n}"
+                }
+            ],
+            "src/environments/environment.qa.ts": [
+                {
+                    "name": "environment",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/environments/environment.qa.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  production: false,\n  showBetaTeaser: false,\n  apiUrl: 'https://api.mealplaner.app',\n  authUrl: 'https://api.mealplaner.app',\n}"
                 }
             ],
             "src/app/i18n/actions/i18n-api.actions.ts": [
@@ -4664,6 +4950,14 @@
                     "file": "src/app/shared/state/index.ts",
                     "type": "GlobalState",
                     "defaultValue": "{\n  appState: initialAppState\n}"
+                },
+                {
+                    "name": "isLoggedIn",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/state/index.ts",
+                    "type": "",
+                    "defaultValue": "createSelector(\n  selectAppState,\n  (appState: AppState) => !!appState.user && !isJwtTokenExpired(appState.user.jwt)\n)"
                 },
                 {
                     "name": "metaReducers",
@@ -4780,6 +5074,16 @@
                     "file": "src/app/auth/actions/auth-api.actions.ts",
                     "type": "",
                     "defaultValue": "createAction('[Auth API] Refresh Token Success', props<{ user: User }>())"
+                }
+            ],
+            "src/app/shared/state/app-actions/navigation.actions.ts": [
+                {
+                    "name": "logout",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/state/app-actions/navigation.actions.ts",
+                    "type": "",
+                    "defaultValue": "createAction('[Nav] Logout')"
                 }
             ],
             "src/app/shared/state/app-actions/error-interceptor.actions.ts": [
@@ -5104,17 +5408,6 @@
         },
         "groupedEnumerations": {},
         "groupedTypeAliases": {
-            "src/app/shared/model/model-api.ts": [
-                {
-                    "name": "I18n",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "literal type",
-                    "file": "src/app/shared/model/model-api.ts",
-                    "description": "",
-                    "kind": 165
-                }
-            ],
             "src/app/shared/model/model.ts": [
                 {
                     "name": "I18n",
@@ -5143,6 +5436,17 @@
                     "description": "",
                     "kind": 168
                 }
+            ],
+            "src/app/shared/model/model-api.ts": [
+                {
+                    "name": "I18n",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "literal type",
+                    "file": "src/app/shared/model/model-api.ts",
+                    "description": "",
+                    "kind": 165
+                }
             ]
         }
     },
@@ -5165,6 +5469,13 @@
                     {
                         "path": "login",
                         "component": "LoginContainerComponent",
+                        "canActivate": [
+                            "LoggedOutGuard"
+                        ]
+                    },
+                    {
+                        "path": "register",
+                        "component": "RegisterContainerComponent",
                         "canActivate": [
                             "LoggedOutGuard"
                         ]
@@ -5193,7 +5504,7 @@
                 "linktype": "component",
                 "name": "AppComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/3",
+                "coverageCount": "0/6",
                 "status": "low"
             },
             {
@@ -5371,12 +5682,81 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/beta-teaser/beta-teaser.component.ts",
+                "filePath": "src/app/components/beta-teaser/beta-teaser.component.ts",
                 "type": "component",
                 "linktype": "component",
                 "name": "BetaTeaserComponent",
                 "coveragePercent": 0,
                 "coverageCount": "0/6",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/components/navigation/navigation.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "NavigationComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/8",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/components/navigation/navigation.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "actionsData",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/components/navigation/navigation.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "buttonData",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/components/navigation/navigation.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "LoggedIn",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/components/navigation/navigation.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "LoggedOut",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/components/navigation/navigation.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Primary",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/components/navigation/navigation.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
                 "status": "low"
             },
             {
@@ -6095,6 +6475,16 @@
                 "status": "low"
             },
             {
+                "filePath": "src/app/shared/state/app-actions/navigation.actions.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "logout",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
                 "filePath": "src/app/shared/state/index.ts",
                 "type": "interface",
                 "linktype": "interface",
@@ -6109,6 +6499,16 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "initialState",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/state/index.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "isLoggedIn",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -6356,6 +6756,15 @@
                 "name": "require",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "testing/router-link-directive.stub.ts",
+                "type": "directive",
+                "linktype": "directive",
+                "name": "RouterLinkDirectiveStub",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
                 "status": "low"
             }
         ]

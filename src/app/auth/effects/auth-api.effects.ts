@@ -8,7 +8,7 @@ import { AuthService } from '../services/auth.service';
 import { LoginAction } from '../../shared/model/model-action';
 import { JwtRefreshResponse, User } from '../../shared/model/model';
 import { of } from 'rxjs';
-import { AppInitializationActions, ErrorInterceptorActions } from '../../shared/state/app-actions';
+import { AppInitializationActions, ErrorInterceptorActions, NavActions } from '../../shared/state/app-actions';
 import { Router } from '@angular/router';
 import { DEFAULT_REDIRECT_URL_FOR_LOGGED_IN_USER } from '../../shared/helpers/constants';
 
@@ -44,7 +44,7 @@ export class AuthApiEffects {
 
   @Effect()
   logout = this.actions$.pipe(
-    ofType(ErrorInterceptorActions.logout),
+    ofType(ErrorInterceptorActions.logout, NavActions.logout),
     exhaustMap(() => this.authService.logout().pipe(
       map(() => AuthApiActions.logoutSuccess()),
       catchError(() => of(AuthApiActions.loginFailure()))

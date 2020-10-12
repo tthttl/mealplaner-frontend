@@ -3,7 +3,7 @@ import { I18n, Language, User } from '../../model/model';
 import { AppState, initialAppState } from '../states/app-state';
 import { AuthApiActions } from '../../../auth/actions';
 import { I18nApiActions } from '../../../i18n/actions';
-import { AppInitializationActions, AuthenticatedGuardActions, ErrorInterceptorActions } from '../app-actions';
+import { AppInitializationActions, AuthenticatedGuardActions, ErrorInterceptorActions, NavActions } from '../app-actions';
 
 
 export const appStateReducer = createReducer<AppState, Action>(
@@ -65,6 +65,7 @@ export const appStateReducer = createReducer<AppState, Action>(
     }),
   on(
     ErrorInterceptorActions.logout,
+    NavActions.logout,
     (state) => {
       return {
         ...state,

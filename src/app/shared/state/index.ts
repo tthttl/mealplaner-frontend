@@ -1,6 +1,7 @@
 import { ActionReducerMap, createFeatureSelector, createSelector, MetaReducer } from '@ngrx/store';
 import { AppState, initialAppState } from './states/app-state';
 import { appStateReducer } from './reducers/app-state.reducers';
+import { isJwtTokenExpired } from '../helpers/helpers';
 
 export interface GlobalState {
   appState: AppState;
@@ -36,4 +37,9 @@ export const selectUser = createSelector(
 export const selectRequestedUrlBeforeLoginWasRequired = createSelector(
   selectAppState,
   (appState: AppState) => appState.requestedUrlBeforeLoginWasRequired
+);
+
+export const isLoggedIn = createSelector(
+  selectAppState,
+  (appState: AppState) => !!appState.user && !isJwtTokenExpired(appState.user.jwt)
 );

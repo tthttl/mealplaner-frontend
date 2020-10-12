@@ -1,8 +1,8 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { getI18n } from '../i18n/actions/i18n-api.actions';
-import { GlobalState, selectCurrentLanguage, selectTranslations } from '../shared/state';
+import { getI18n } from '../../i18n/actions/i18n-api.actions';
+import { GlobalState, selectCurrentLanguage, selectTranslations } from '../../shared/state';
 
 @Component({
   selector: 'app-beta-teaser',
