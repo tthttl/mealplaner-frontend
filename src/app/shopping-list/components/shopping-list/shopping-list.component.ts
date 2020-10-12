@@ -8,24 +8,15 @@ import { DEFAULT_LANGUAGE } from '../../../shared/helpers/constants';
   styleUrls: ['./shopping-list.component.scss']
 })
 export class ShoppingListComponent{
-  @Input() items: ShoppingListItem[] = [];
+  @Input() items: ShoppingListItem[] | null = [];
   @Input() translations: I18n = {};
   @Input() currentLang: Language = DEFAULT_LANGUAGE;
   @Output() itemDeleted: EventEmitter<ShoppingListItem> = new EventEmitter();
   @Output() listItemMoved: EventEmitter<ArrayItemMovedEvent> = new EventEmitter();
 
-  deleteBuffer: {[key: string]: number} = {};
-  deletionDelayInMilliseconds = 1500;
-
 
   itemChecked(item: ShoppingListItem, isChecked: boolean): void {
-    item.isChecked = isChecked;
-
-    if (isChecked) {
-      this.deleteBuffer[item.id] = window.setTimeout(() => this.itemDeleted.emit(item), this.deletionDelayInMilliseconds);
-    } else {
-      clearTimeout(this.deleteBuffer[item.id]);
-    }
+    this.itemDeleted.emit(item);
   }
 
   drop({previousIndex, currentIndex}: ArrayItemMovedEvent): void {
