@@ -27,7 +27,7 @@ export class ShoppingListFormComponent implements OnInit {
       unit:  new FormControl('pack', [
         Validators.required,
       ]),
-      name:  new FormControl('', [
+      title:  new FormControl('', [
         Validators.required,
       ]),
     });
