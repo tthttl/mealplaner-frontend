@@ -2,7 +2,14 @@ import { FormControl } from '@angular/forms';
 import { TranslatePipe } from '../../i18n/pipes/translate.pipe';
 import { I18n } from '../model/model';
 import { I18n as I18nApi, UserApi } from '../model/model-api';
-import { decodeJwtToken, isJwtTokenExpired, mapI18nApiToI18nClient, mapUserApiToUserClient, translateValidationErrors } from './helpers';
+import {
+  changeElementPosition,
+  decodeJwtToken,
+  isJwtTokenExpired,
+  mapI18nApiToI18nClient,
+  mapUserApiToUserClient,
+  translateValidationErrors
+} from './helpers';
 import createSpyObj = jasmine.createSpyObj;
 
 describe('Helpers', () => {
@@ -138,6 +145,25 @@ describe('Helpers', () => {
     it('should return false when expiration date is not a valid Date', () => {
       const invalidJwtToken = 'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjEzMTIiLCJpYXQiOjE2MDA5MzMwNTMsImV4cCI6IkZDTCJ9.XXX';
       expect(isJwtTokenExpired(invalidJwtToken, new Date(1600933100000 /* Thu Sep 24 2020 09:38:20  */))).toBeFalse();
+    });
+  });
+
+  describe('changeElementPosition', () => {
+    let input: number[] = [];
+    beforeEach(() => {
+      input = [1, 2, 3, 4];
+    });
+    it('should change pos from 3 to 0', () => {
+      expect(changeElementPosition(input, {previousIndex: 3, currentIndex: 0}))
+        .toEqual([4, 1, 2, 3]);
+    });
+    it('should change pos from 0 to 3', () => {
+      expect(changeElementPosition(input, {previousIndex: 0, currentIndex: 3}))
+        .toEqual([2, 3, 4, 1]);
+    });
+    it('should change pos from 2 to 2', () => {
+      expect(changeElementPosition(input, {previousIndex: 2, currentIndex: 2}))
+        .toEqual([1, 2, 3, 4]);
     });
   });
 });

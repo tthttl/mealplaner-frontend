@@ -1,0 +1,77 @@
+<form class="recipe-form" [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+  <app-input
+    class="recipe-form__input recipe-form--input-title"
+    [name]="'title'"
+    [placeholder]="'recipe-form.placeholder.title' | translate:translations:currentLang"
+    [label]="'recipe-form.label.title' | translate:translations:currentLang"
+    [errors]="getErrorsFor('title')"
+    [formControl]="getFormControl('title')"></app-input>
+  <app-input
+    class="recipe-form__input recipe-form--input-url"
+    [name]="'url'"
+    [placeholder]="'recipe-form.placeholder.url' | translate:translations:currentLang"
+    [label]="'recipe-form.label.url' | translate:translations:currentLang"
+    [formControl]="getFormControl('url')"></app-input>
+
+  <label class="ingredients-label">{{'recipe-form.ingredients.label-text' | translate:translations:currentLang}}</label>
+  <div class="ingredients recipe-form__input">
+    <div *ngFor="let ingredient of ingredients.controls; let last = last; let index = index"
+         class="ingredients__row"
+         [ngClass]="{'ingredients__row--last': last}">
+      <app-input
+        class="ingredients__row--input ingredients__row--input-amount"
+        [type]="'number'"
+        [minValue]="0"
+        [name]="'amount'"
+        [placeholder]="'recipe-form.placeholder.amount' | translate:translations:currentLang"
+        [formControl]="getIngredientFormControl(ingredient, 'amount')">
+      </app-input>
+      <app-select
+        class="ingredients__row--input ingredients__row--input-unit"
+        [options]="units"
+        [name]="'unit'"
+        [formControl]="getIngredientFormControl(ingredient, 'unit')">
+      </app-select>
+      <app-input
+        class="ingredients__row--input"
+        [name]="'name'"
+        [placeholder]="'recipe-form.placeholder.name' | translate:translations:currentLang"
+        [formControl]="getIngredientFormControl(ingredient, 'name')">
+      </app-input>
+      <mat-slide-toggle
+        class="ingredients__row--input ingredients__row--input-toggle"
+        [color]="'primary'"
+        [formControl]="getIngredientFormControl(ingredient, 'isStapleFood')">
+        {{'recipe-form.text.toggle' | translate:translations:currentLang}}
+      </mat-slide-toggle>
+      <button
+        class="icon-wrapper"
+        (click)="deleteIngredient(index)"
+        [disabled]="ingredients?.length === 1"
+        [ngClass]="{'icon-wrapper--disabled': ingredients?.length === 1}">
+        <fa-icon
+          class="delete-icon"
+          [ngClass]="{'delete-icon--disabled': ingredients?.length === 1}"
+          [icon]="['fas', 'times']">
+        </fa-icon>
+        <span class="delete-text">{{'recipe-form.button.delete' | translate:translations:currentLang}}</span>
+      </button>
+    </div>
+    <app-button
+      class="ingredients__button"
+      [buttonText]="'recipe-form.button.new-ingredient' | translate:translations:currentLang"
+      [isDisabled]="ingredients.invalid"
+      [color]="'accent'"
+      (clicked)="addEmptyIngredientRow()">
+    </app-button>
+  </div>
+
+  <app-button
+    class="recipe-form__button"
+    [buttonType]="'submit'"
+    [buttonText]="(recipe ? 'recipe-form.button.modify' : 'recipe-form.button.submit') | translate:translations:currentLang"
+    [isDisabled]="recipeForm.invalid"></app-button>
+</form>
+
+
+

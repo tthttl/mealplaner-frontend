@@ -18,7 +18,7 @@ export interface Ingredient {
   unit: Unit;
 }
 
-export interface ShoppingListItem extends Ingredient{
+export interface ShoppingListItem extends Ingredient {
   id: string;
   isChecked: boolean;
 }
@@ -79,3 +79,13 @@ export const StringUnion = <UnionType extends string>(...values: UnionType[]) =>
   const unionNamespace = {guard, check, values};
   return Object.freeze(unionNamespace as typeof unionNamespace & {type: UnionType});
 };
+
+export interface RecipeIngredient extends Ingredient {
+  readonly isStapleFood: boolean;
+}
+
+export interface Recipe {
+  readonly title: string;
+  readonly ingredients: RecipeIngredient [];
+  readonly url?: string;
+}
