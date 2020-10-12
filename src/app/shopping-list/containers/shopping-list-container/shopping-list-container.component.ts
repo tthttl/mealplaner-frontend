@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { I18n } from '../../../shared/model/model';
-import { GlobalState, selectShoppingListItems, selectShoppingListState, selectTranslations } from '../../../shared/state';
+import {
+  AddShoppingListItemEvent,
+  ArrayItemMovedEvent,
+  DeleteShoppingListItemEvent,
+  ShoppingList,
+  ShoppingListItem, ShoppingListItemMovedEvent
+} from '../../../shared/model/model';
+import { activeShoppingListId, GlobalState, selectCurrentShoppingListItems, selectShoppingLists } from '../../../shared/state';
 import { ShoppingListContainerActions } from '../../actions';
 import { Store } from '@ngrx/store';
 
@@ -12,12 +18,30 @@ import { Store } from '@ngrx/store';
 })
 export class ShoppingListContainerComponent implements OnInit {
 
-  shoppingListItems$: Observable<I18n | null> = this.store.select(selectShoppingListItems);
+  shoppingListsItems$: Observable<ShoppingListItem[]> = this.store.select(selectCurrentShoppingListItems);
+  shoppingLists$: Observable<ShoppingList[] | null> = this.store.select(selectShoppingLists);
+  activeShoppingListId$: Observable<string | undefined> = this.store.select(activeShoppingListId);
 
-  constructor(private store: Store<GlobalState>) { }
-
-  ngOnInit(): void {
-    this.store.dispatch(ShoppingListContainerActions.loadShoppingListItems({id: '5f400b62cd5f2298899f8f43'}));
+  constructor(private store: Store<GlobalState>) {
   }
 
+  ngOnInit(): void {
+    this.store.dispatch(ShoppingListContainerActions.loadShoppingLists());
+  }
+
+  onShoppingListChange(shoppingListId: string): void {
+    this.store.dispatch(ShoppingListContainerActions.changeShoppingList({shoppingListId}));
+  }
+
+  onShoppingListItemAdded({shoppingListId, shoppingListItem}: AddShoppingListItemEvent): void {
+    this.store.dispatch(ShoppingListContainerActions.addShoppingListItem({shoppingListId, shoppingListItem}));
+  }
+
+  onShoppingListItemDeleted({shoppingListId, shoppingListItem}: DeleteShoppingListItemEvent): void {
+    this.store.dispatch(ShoppingListContainerActions.deleteShoppingListItem({shoppingListId, shoppingListItem}));
+  }
+
+  onShoppingListItemMoved({shoppingListId, previousIndex, currentIndex}: ShoppingListItemMovedEvent): void {
+    this.store.dispatch(ShoppingListContainerActions.moveShoppingListItem({shoppingListId, previousIndex, currentIndex}));
+  }
 }

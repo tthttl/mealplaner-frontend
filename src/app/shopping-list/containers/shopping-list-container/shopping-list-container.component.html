@@ -1,3 +1,9 @@
 <app-shopping-list-page
-  [shoppingListItems]="shoppingListItems$ | async">
+  [shoppingLists]="shoppingLists$ | async"
+  [activeShoppingListId]="activeShoppingListId$ | async"
+  [shoppingListItems]="shoppingListsItems$ | async"
+  (changeShoppingList)="onShoppingListChange($event)"
+  (addShoppingListItem)="onShoppingListItemAdded($event)"
+  (deleteShoppingListItem)="onShoppingListItemDeleted($event)"
+  (moveShoppingListItem)="onShoppingListItemMoved($event)">
 </app-shopping-list-page>
