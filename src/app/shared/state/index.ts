@@ -45,12 +45,28 @@ export const selectRequestedUrlBeforeLoginWasRequired = createSelector(
   (appState: AppState) => appState.requestedUrlBeforeLoginWasRequired
 );
 
+export const selectUserID = createSelector(
+  selectAppState,
+  (appState: AppState) => appState.user?.id,
+);
+
 export const isLoggedIn = createSelector(
   selectAppState,
   (appState: AppState) => !!appState.user && !isJwtTokenExpired(appState.user.jwt)
 );
 
-export const selectShoppingListItems = createSelector(
+export const selectShoppingLists = createSelector(
   selectShoppingListState,
-  (shoppingListState: ShoppingListState) => shoppingListState.items
+  (shoppingListState: ShoppingListState) => shoppingListState.shoppingLists.items
 );
+
+export const activeShoppingListId = createSelector(
+  selectShoppingListState,
+  (shoppingListState: ShoppingListState) => shoppingListState.activeShoppingList
+);
+
+export const selectCurrentShoppingListItems = createSelector(
+  selectShoppingListState,
+  (shoppingListState: ShoppingListState) => shoppingListState.shoppingListItems[shoppingListState.activeShoppingList || ''] || []
+);
+

@@ -30,12 +30,12 @@ export interface ShoppingListItem extends Ingredient{
 }
 
 export interface AddShoppingListItemEvent {
-  shoppingList: string;
+  shoppingListId: string;
   shoppingListItem: ShoppingListItem;
 }
 
 export interface DeleteShoppingListItemEvent {
-  shoppingList: string;
+  shoppingListId: string;
   shoppingListItem: ShoppingListItem;
 }
 
@@ -45,7 +45,7 @@ export interface ArrayItemMovedEvent {
 }
 
 export interface ShoppingListItemMovedEvent extends ArrayItemMovedEvent {
-  shoppingList: string;
+  shoppingListId: string;
 }
 
 export interface SelectOption<T> {

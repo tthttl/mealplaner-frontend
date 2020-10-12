@@ -1,10 +1,17 @@
-import { Language, I18n, User, ShoppingListItem } from '../../model/model';
-import { DEFAULT_LANGUAGE } from '../../helpers/constants';
+import { ShoppingList, ShoppingListItem } from '../../model/model';
 
 export interface ShoppingListState {
-  readonly items: ShoppingListItem[];
+  readonly shoppingLists: {
+    items: ShoppingList[];
+  };
+  readonly shoppingListItems: { [key: string]: ShoppingListItem[] };
+  readonly activeShoppingList: string | undefined;
 }
 
 export const initialShoppingListState: ShoppingListState = {
-  items: []
+  shoppingLists: {
+    items: [],
+  },
+  shoppingListItems: {},
+  activeShoppingList: undefined,
 };
