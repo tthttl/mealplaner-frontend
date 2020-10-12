@@ -41,6 +41,7 @@ export interface LoginCredentials {
 
 export interface User {
   jwt: string;
+  id: string;
   name: string;
   email: string;
 }

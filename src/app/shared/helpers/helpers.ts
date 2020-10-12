@@ -14,6 +14,7 @@ export function mapI18nApiToI18nClient(i18nApi: I18nApi): I18nClient {
 export function mapUserApiToUserClient(userApi: UserApi): User {
   return {
     jwt: userApi.jwt,
+    id: userApi.user._id,
     name: userApi.user.username,
     email: userApi.user.email,
   };

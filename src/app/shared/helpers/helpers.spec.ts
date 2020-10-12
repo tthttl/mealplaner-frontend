@@ -107,12 +107,14 @@ describe('Helpers', () => {
     const userApi: UserApi = {
       jwt: 'jwt',
       user: {
+        _id: '0',
         username: 'Joe',
         email: 'joe@doe.ch'
       },
     };
     it('should convert to User', () => {
       expect(mapUserApiToUserClient(userApi)).toEqual({
+        id: '0',
         jwt: 'jwt',
         name: 'Joe',
         email: 'joe@doe.ch'
