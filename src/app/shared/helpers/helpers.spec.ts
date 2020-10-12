@@ -2,7 +2,14 @@ import { FormControl } from '@angular/forms';
 import { TranslatePipe } from '../../i18n/pipes/translate.pipe';
 import { I18n } from '../model/model';
 import { I18n as I18nApi, UserApi } from '../model/model-api';
-import { decodeJwtToken, isJwtTokenExpired, mapI18nApiToI18nClient, mapUserApiToUserClient, translateValidationErrors } from './helpers';
+import {
+  decodeJwtToken,
+  isJwtTokenExpired,
+  mapI18nApiToI18nClient,
+  mapUserApiToUserClient,
+  moveItemInArray,
+  translateValidationErrors
+} from './helpers';
 import createSpyObj = jasmine.createSpyObj;
 
 describe('Helpers', () => {
@@ -138,6 +145,21 @@ describe('Helpers', () => {
     it('should return false when expiration date is not a valid Date', () => {
       const invalidJwtToken = 'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjEzMTIiLCJpYXQiOjE2MDA5MzMwNTMsImV4cCI6IkZDTCJ9.XXX';
       expect(isJwtTokenExpired(invalidJwtToken, new Date(1600933100000 /* Thu Sep 24 2020 09:38:20  */))).toBeFalse();
+    });
+  });
+
+  describe('moveItemInArray', () => {
+    it('should move item to end of the array', () => {
+      expect(moveItemInArray([0, 1, 2, 3, 4], 0, 4)).toEqual([1, 2, 3, 4, 0]);
+    });
+    it('should move item to start of the array', () => {
+      expect(moveItemInArray([0, 1, 2, 3, 4], 4, 0)).toEqual([4, 0, 1, 2, 3]);
+    });
+    it('should move item to forward within the the array', () => {
+      expect(moveItemInArray([0, 1, 2, 3, 4], 1, 3)).toEqual([0, 2, 3, 1, 4]);
+    });
+    it('should move item to backwords within the the array', () => {
+      expect(moveItemInArray([0, 1, 2, 3, 4], 3, 1)).toEqual([0, 3, 1, 2, 4]);
     });
   });
 });

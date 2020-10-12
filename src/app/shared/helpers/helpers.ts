@@ -51,3 +51,10 @@ export function isJwtTokenExpired(token: string, now: Date = new Date()): boolea
   return isAfter(now, tokenExpirationDate);
 }
 
+export function moveItemInArray<T>(array: T[], previousIndex: number, currentIndex: number): T[] {
+  const copy = [...array];
+  const element = array[previousIndex];
+  copy.splice(previousIndex, 1);
+  copy.splice(currentIndex, 0, element);
+  return copy;
+}
