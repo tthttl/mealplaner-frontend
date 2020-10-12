@@ -5,7 +5,7 @@ export interface LoginAction {
   credentials: LoginCredentials;
 }
 
-export interface LoadShoppingListItems {
+export interface SetActiveShoppingList {
   type: string;
   id: string;
 }

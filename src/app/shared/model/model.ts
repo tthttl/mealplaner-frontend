@@ -18,14 +18,34 @@ export interface Ingredient {
   unit: Unit;
 }
 
+export interface ShoppingList {
+  id: string;
+  title: string;
+}
+
 export interface ShoppingListItem extends Ingredient{
   id: string;
+  order?: number;
   isChecked: boolean;
+}
+
+export interface AddShoppingListItemEvent {
+  shoppingList: string;
+  shoppingListItem: ShoppingListItem;
+}
+
+export interface DeleteShoppingListItemEvent {
+  shoppingList: string;
+  shoppingListItem: ShoppingListItem;
 }
 
 export interface ArrayItemMovedEvent {
   currentIndex: number;
   previousIndex: number;
+}
+
+export interface ShoppingListItemMovedEvent extends ArrayItemMovedEvent {
+  shoppingList: string;
 }
 
 export interface SelectOption<T> {
