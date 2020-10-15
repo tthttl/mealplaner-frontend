@@ -24,9 +24,10 @@ export interface ShoppingList {
 }
 
 export interface ShoppingListItem extends Ingredient{
-  id: string;
+  id?: string;
+  shoppingList: string;
   order?: number;
-  isChecked: boolean;
+  isChecked?: boolean;
 }
 
 export interface AddShoppingListItemEvent {

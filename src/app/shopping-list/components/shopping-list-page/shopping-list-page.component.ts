@@ -19,7 +19,7 @@ export class ShoppingListPageComponent implements OnInit {
   @Input() activeShoppingListId: string | undefined | null = undefined;
 
   @Output() changeShoppingList: EventEmitter<string> = new EventEmitter();
-  @Output() addShoppingListItem: EventEmitter<AddShoppingListItemEvent> = new EventEmitter();
+  @Output() addShoppingListItem: EventEmitter<ShoppingListItem> = new EventEmitter();
   @Output() deleteShoppingListItem: EventEmitter<DeleteShoppingListItemEvent> = new EventEmitter();
   @Output() moveShoppingListItem: EventEmitter<ShoppingListItemMovedEvent> = new EventEmitter();
 
@@ -35,7 +35,7 @@ export class ShoppingListPageComponent implements OnInit {
 
   onItemAdded(shoppingListItem: ShoppingListItem): void {
     if (this.activeShoppingListId) {
-      this.addShoppingListItem.emit({shoppingListItem, shoppingListId: this.activeShoppingListId});
+      this.addShoppingListItem.emit({...shoppingListItem, shoppingList: this.activeShoppingListId});
     }
   }
 

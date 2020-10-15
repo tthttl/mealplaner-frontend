@@ -9,12 +9,12 @@ export const loadShoppingListItems = createAction('[Shopping List Container] Loa
 
 export const addShoppingListItem = createAction(
   '[Shopping List Container] Add Shopping List Items',
-  props<{ shoppingListId: string, shoppingListItem: ShoppingListItem }>()
+  props<{ shoppingListItem: ShoppingListItem }>()
 );
 
 export const deleteShoppingListItem = createAction(
   '[Shopping List Container] Delete Shopping List Items',
-  props<{ shoppingListId: string, shoppingListItem: ShoppingListItem }>()
+  props<{ shoppingListItem: ShoppingListItem }>()
 );
 
 export const moveShoppingListItem = createAction(

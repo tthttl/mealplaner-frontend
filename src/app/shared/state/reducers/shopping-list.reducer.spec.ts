@@ -3,7 +3,7 @@ import { shoppingListReducers } from './shopping-list.reducers';
 import { initialShoppingListState } from '../states/shopping-list-state';
 import { ShoppingListApiActions, ShoppingListContainerActions, ShoppingListEffectActions } from '../../../shopping-list/actions';
 
-describe('i18nReducer', () => {
+describe('shoppingListReducers', () => {
   describe('I18nApiActions.getI18nSuccess', () => {
     it('should add shopping lists to the state', () => {
       const shoppingLists: ShoppingList[] = [{id: '1', title: 'test-1'}, {id: '2', title: 'test-2'}];
@@ -44,8 +44,8 @@ describe('i18nReducer', () => {
   describe('ShoppingListApiActions.loadShoppingListItemsSuccess', () => {
     it('should add shopping list item for one list', () => {
       const shoppingListItems: ShoppingListItem[] = [
-        {title: 'Apple', amount: 1, unit: 'kg', id: '42', order: 2, isChecked: false},
-        {title: 'Banana', amount: 1, unit: 'kg', id: '1', order: 1, isChecked: false},
+        {title: 'Apple', shoppingList: '32', amount: 1, unit: 'kg', id: '42', order: 2, isChecked: false},
+        {title: 'Banana', shoppingList: '32', amount: 1, unit: 'kg', id: '1', order: 1, isChecked: false},
       ];
 
       expect(shoppingListReducers({...initialShoppingListState}, ShoppingListApiActions.loadShoppingListItemsSuccess({
@@ -62,12 +62,12 @@ describe('i18nReducer', () => {
   describe('ShoppingListContainerActions.addShoppingListItem', () => {
     it('should optimistically add item to shopping list', () => {
       const shoppingListItems: ShoppingListItem[] = [
-        {title: 'Apple', amount: 1, unit: 'kg', id: '42', order: 2, isChecked: false},
-        {title: 'Banana', amount: 1, unit: 'kg', id: '1', order: 1, isChecked: false},
+        {title: 'Apple', shoppingList: '1234', amount: 1, unit: 'kg', id: '42', order: 2, isChecked: false},
+        {title: 'Banana', shoppingList: '1234', amount: 1, unit: 'kg', id: '1', order: 1, isChecked: false},
       ];
 
       const shoppingListItem: ShoppingListItem = {
-        title: 'Cherries', amount: 1, unit: 'kg', id: '1', isChecked: false
+        title: 'Cherries', shoppingList: '1234', amount: 1, unit: 'kg', id: '1', isChecked: false
       };
 
       expect(
@@ -77,7 +77,7 @@ describe('i18nReducer', () => {
               1234: [...shoppingListItems]
             }
           },
-          ShoppingListContainerActions.addShoppingListItem({shoppingListId: '1234', shoppingListItem})
+          ShoppingListContainerActions.addShoppingListItem({shoppingListItem})
         )).toEqual({
         ...initialShoppingListState,
         shoppingListItems: {
@@ -90,8 +90,8 @@ describe('i18nReducer', () => {
   describe('ShoppingListContainerActions.deleteShoppingListItem', () => {
     it('should optimistically remove item from shopping list', () => {
       const shoppingListItems: ShoppingListItem[] = [
-        {title: 'Apple', amount: 1, unit: 'kg', id: '42', order: 2, isChecked: false},
-        {title: 'Banana', amount: 1, unit: 'kg', id: '1', order: 1, isChecked: false},
+        {title: 'Apple', shoppingList: '1234', amount: 1, unit: 'kg', id: '42', order: 2, isChecked: false},
+        {title: 'Banana', shoppingList: '1234', amount: 1, unit: 'kg', id: '1', order: 1, isChecked: false},
       ];
 
       expect(
@@ -101,7 +101,7 @@ describe('i18nReducer', () => {
               1234: [...shoppingListItems]
             }
           },
-          ShoppingListContainerActions.deleteShoppingListItem({shoppingListId: '1234', shoppingListItem: shoppingListItems[0]})
+          ShoppingListContainerActions.deleteShoppingListItem({shoppingListItem: shoppingListItems[0]})
         )).toEqual({
         ...initialShoppingListState,
         shoppingListItems: {
@@ -114,9 +114,9 @@ describe('i18nReducer', () => {
   describe('ShoppingListContainerActions.moveShoppingListItem', () => {
     it('should optimistically update order of shopping list', () => {
       const shoppingListItems: ShoppingListItem[] = [
-        {title: 'Cherries', amount: 1, unit: 'kg', id: '1', order: 3, isChecked: false},
-        {title: 'Apple', amount: 1, unit: 'kg', id: '42', order: 2, isChecked: false},
-        {title: 'Banana', amount: 1, unit: 'kg', id: '1', order: 1, isChecked: false},
+        {title: 'Cherries', shoppingList: '42', amount: 1, unit: 'kg', id: '1', order: 3, isChecked: false},
+        {title: 'Apple', shoppingList: '42', amount: 1, unit: 'kg', id: '42', order: 2, isChecked: false},
+        {title: 'Banana', shoppingList: '42', amount: 1, unit: 'kg', id: '1', order: 1, isChecked: false},
       ];
 
       expect(
@@ -131,9 +131,9 @@ describe('i18nReducer', () => {
         ...initialShoppingListState,
         shoppingListItems: {
           1234: [
-            {title: 'Apple', amount: 1, unit: 'kg', id: '42', order: 2, isChecked: false},
-            {title: 'Cherries', amount: 1, unit: 'kg', id: '1', order: 3, isChecked: false},
-            {title: 'Banana', amount: 1, unit: 'kg', id: '1', order: 1, isChecked: false},
+            {title: 'Apple', shoppingList: '42', amount: 1, unit: 'kg', id: '42', order: 2, isChecked: false},
+            {title: 'Cherries', shoppingList: '42', amount: 1, unit: 'kg', id: '1', order: 3, isChecked: false},
+            {title: 'Banana', shoppingList: '42', amount: 1, unit: 'kg', id: '1', order: 1, isChecked: false},
           ]
         }
       });

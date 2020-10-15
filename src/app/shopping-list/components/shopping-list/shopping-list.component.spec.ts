@@ -32,10 +32,10 @@ describe('ShoppingListComponent', () => {
 
   it('should render shopping list', () => {
     component.items = [
-      {id: '1', title: 'Mehl', amount: 1, unit: 'kg', isChecked: false},
-      {id: '2', title: 'Mehl', amount: 1, unit: 'kg', isChecked: false},
-      {id: '3', title: 'Mehl', amount: 1, unit: 'kg', isChecked: false},
-      {id: '4', title: 'Mehl', amount: 1, unit: 'kg', isChecked: false},
+      {id: '1', shoppingList: '42', title: 'Mehl', amount: 1, unit: 'kg', isChecked: false},
+      {id: '2', shoppingList: '42', title: 'Mehl', amount: 1, unit: 'kg', isChecked: false},
+      {id: '3', shoppingList: '42', title: 'Mehl', amount: 1, unit: 'kg', isChecked: false},
+      {id: '4', shoppingList: '42', title: 'Mehl', amount: 1, unit: 'kg', isChecked: false},
     ];
 
     fixture.detectChanges();
@@ -45,7 +45,7 @@ describe('ShoppingListComponent', () => {
   });
 
   it('should emit deletion event', () => {
-    const shoppingListItem: ShoppingListItem = {id: '1', title: 'Mehl', amount: 1, unit: 'kg', isChecked: false};
+    const shoppingListItem: ShoppingListItem = {id: '1', shoppingList: '42', title: 'Mehl', amount: 1, unit: 'kg', isChecked: false};
 
     component.items = [
       shoppingListItem

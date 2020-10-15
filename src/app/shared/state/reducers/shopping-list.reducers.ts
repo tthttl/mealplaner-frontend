@@ -47,24 +47,26 @@ export const shoppingListReducers = createReducer<ShoppingListState, Action>(
     }),
   on(
     ShoppingListContainerActions.addShoppingListItem,
-    (state: ShoppingListState, {shoppingListId, shoppingListItem}: AddShoppingListItemAction) => {
+    (state: ShoppingListState, {shoppingListItem}: AddShoppingListItemAction) => {
+      console.log('here', shoppingListItem);
       return {
         ...state,
         shoppingListItems: {
           ...state.shoppingListItems,
-          [shoppingListId]: [shoppingListItem, ...state.shoppingListItems[shoppingListId]],
+          [shoppingListItem.shoppingList]: [shoppingListItem, ...state.shoppingListItems[shoppingListItem.shoppingList]],
         }
       };
     }
   ),
   on(
     ShoppingListContainerActions.deleteShoppingListItem,
-    (state: ShoppingListState, {shoppingListId, shoppingListItem}: DeleteShoppingListItemAction) => {
+    (state: ShoppingListState, {shoppingListItem}: DeleteShoppingListItemAction) => {
       return {
         ...state,
         shoppingListItems: {
           ...state.shoppingListItems,
-          [shoppingListId]: state.shoppingListItems[shoppingListId].filter((current) => current.id !== shoppingListItem.id),
+          [shoppingListItem.shoppingList]: state.shoppingListItems[shoppingListItem.shoppingList]
+            .filter((current) => current.id !== shoppingListItem.id),
         }
       };
     }

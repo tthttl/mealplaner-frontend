@@ -33,12 +33,12 @@ export class ShoppingListContainerComponent implements OnInit {
     this.store.dispatch(ShoppingListContainerActions.changeShoppingList({shoppingListId}));
   }
 
-  onShoppingListItemAdded({shoppingListId, shoppingListItem}: AddShoppingListItemEvent): void {
-    this.store.dispatch(ShoppingListContainerActions.addShoppingListItem({shoppingListId, shoppingListItem}));
+  onShoppingListItemAdded(shoppingListItem: ShoppingListItem): void {
+    this.store.dispatch(ShoppingListContainerActions.addShoppingListItem({shoppingListItem}));
   }
 
   onShoppingListItemDeleted({shoppingListId, shoppingListItem}: DeleteShoppingListItemEvent): void {
-    this.store.dispatch(ShoppingListContainerActions.deleteShoppingListItem({shoppingListId, shoppingListItem}));
+    this.store.dispatch(ShoppingListContainerActions.deleteShoppingListItem({shoppingListItem}));
   }
 
   onShoppingListItemMoved({shoppingListId, previousIndex, currentIndex}: ShoppingListItemMovedEvent): void {

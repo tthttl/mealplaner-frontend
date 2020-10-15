@@ -7,7 +7,7 @@ import { I18n as I18nClient } from '../../shared/model/model';
 import { mapI18nApiToI18nClient } from '../../shared/helpers/helpers';
 
 
-describe('StudentsService', () => {
+describe('I18nService', () => {
   let injector: TestBed;
   let service: I18nService;
   let httpMock: HttpTestingController;

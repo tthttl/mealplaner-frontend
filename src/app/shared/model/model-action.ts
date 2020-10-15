@@ -38,13 +38,11 @@ export interface ChangeShoppingListAction {
 
 export interface AddShoppingListItemAction {
   type: string;
-  shoppingListId: string;
   shoppingListItem: ShoppingListItem;
 }
 
 export interface DeleteShoppingListItemAction {
   type: string;
-  shoppingListId: string;
   shoppingListItem: ShoppingListItem;
 }
 
