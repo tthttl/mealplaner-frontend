@@ -1,7 +1,7 @@
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { ShoppingListService } from './shopping-list.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { ShoppingList, ShoppingListItem } from '../../shared/model/model';
+import { BasicShoppingListItem, ShoppingList, ShoppingListItem } from '../../shared/model/model';
 import { environment } from '../../../environments/environment';
 
 describe('ShoppingListService', () => {
@@ -51,8 +51,8 @@ describe('ShoppingListService', () => {
   });
 
   it('addShoppingListItem() should return item with backend id', () => {
-    const shoppingListItem: ShoppingListItem = {
-      title: 'Apple', amount: 1, unit: 'kg', shoppingList: '32', order: 2
+    const shoppingListItem: BasicShoppingListItem = {
+      title: 'Apple', amount: 1, unit: 'kg', shoppingList: '32',
     };
 
     service.addShoppingListItem(shoppingListItem).subscribe((res) => {

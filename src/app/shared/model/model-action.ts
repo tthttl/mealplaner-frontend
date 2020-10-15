@@ -1,4 +1,4 @@
-import { Language, LoginCredentials, ShoppingList, ShoppingListItem, ShoppingListItemMovedEvent } from './model';
+import { BasicShoppingListItem, Language, LoginCredentials, ShoppingList, ShoppingListItem, ShoppingListItemMovedEvent } from './model';
 
 export interface LoginAction {
   type: string;
@@ -38,9 +38,16 @@ export interface ChangeShoppingListAction {
 
 export interface AddShoppingListItemAction {
   type: string;
-  shoppingListItem: ShoppingListItem;
+  optimisticId: string;
+  shoppingListItem: BasicShoppingListItem;
 }
 
+
+export interface AddShoppingListItemSuccessAction {
+  type: string;
+  optimisticId: string;
+  shoppingListItem: ShoppingListItem;
+}
 export interface DeleteShoppingListItemAction {
   type: string;
   shoppingListItem: ShoppingListItem;

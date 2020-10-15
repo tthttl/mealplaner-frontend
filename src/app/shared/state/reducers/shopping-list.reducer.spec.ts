@@ -67,7 +67,7 @@ describe('shoppingListReducers', () => {
       ];
 
       const shoppingListItem: ShoppingListItem = {
-        title: 'Cherries', shoppingList: '1234', amount: 1, unit: 'kg', id: '1', isChecked: false
+        title: 'Cherries', shoppingList: '1234', amount: 1, unit: 'kg', id: 'optimisticId', isChecked: false
       };
 
       expect(
@@ -77,11 +77,11 @@ describe('shoppingListReducers', () => {
               1234: [...shoppingListItems]
             }
           },
-          ShoppingListContainerActions.addShoppingListItem({shoppingListItem})
+          ShoppingListContainerActions.addShoppingListItem({optimisticId: 'optimisticId', shoppingListItem})
         )).toEqual({
         ...initialShoppingListState,
         shoppingListItems: {
-          1234: [shoppingListItem, ...shoppingListItems]
+          1234: [{...shoppingListItem}, ...shoppingListItems]
         }
       });
     });
@@ -110,6 +110,37 @@ describe('shoppingListReducers', () => {
       });
     });
   });
+
+  describe('ShoppingListApiActions.addShoppingListItemSuccess,\n', () => {
+    it('should update optimistic ID with with from Server', () => {
+      const shoppingListItems: ShoppingListItem[] = [
+        {id: 'optimistic', title: 'Apple', shoppingList: '1234', amount: 1, unit: 'kg', order: 2, isChecked: false},
+        {id: '1', title: 'Banana', shoppingList: '1234', amount: 1, unit: 'kg', order: 1, isChecked: false},
+      ];
+
+      expect(
+        shoppingListReducers({
+            ...initialShoppingListState,
+            shoppingListItems: {
+              1234: [...shoppingListItems]
+            }
+          },
+          ShoppingListApiActions.addShoppingListItemSuccess({
+            optimisticId: 'optimistic',
+            shoppingListItem: {id: 'backendId', title: 'Apple', shoppingList: '1234', amount: 1, unit: 'kg', order: 2, isChecked: false}
+          })
+        )).toEqual({
+        ...initialShoppingListState,
+        shoppingListItems: {
+          1234: [
+            {id: 'backendId', title: 'Apple', shoppingList: '1234', amount: 1, unit: 'kg', order: 2, isChecked: false},
+            shoppingListItems[1]
+          ]
+        }
+      });
+    });
+  });
+
 
   describe('ShoppingListContainerActions.moveShoppingListItem', () => {
     it('should optimistically update order of shopping list', () => {

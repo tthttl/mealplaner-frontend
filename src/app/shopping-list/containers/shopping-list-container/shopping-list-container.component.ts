@@ -1,15 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
-  AddShoppingListItemEvent,
-  ArrayItemMovedEvent,
+  BasicShoppingListItem,
   DeleteShoppingListItemEvent,
+  I18n,
+  Language,
   ShoppingList,
-  ShoppingListItem, ShoppingListItemMovedEvent
+  ShoppingListItem,
+  ShoppingListItemMovedEvent
 } from '../../../shared/model/model';
-import { activeShoppingListId, GlobalState, selectCurrentShoppingListItems, selectShoppingLists } from '../../../shared/state';
+import {
+  activeShoppingListId,
+  GlobalState,
+  selectCurrentLanguage,
+  selectCurrentShoppingListItems,
+  selectShoppingLists,
+  selectTranslations
+} from '../../../shared/state';
 import { ShoppingListContainerActions } from '../../actions';
 import { Store } from '@ngrx/store';
+import { v4 as uuid } from 'uuid';
 
 @Component({
   selector: 'app-shopping-list-container',
@@ -18,6 +28,8 @@ import { Store } from '@ngrx/store';
 })
 export class ShoppingListContainerComponent implements OnInit {
 
+  translations$: Observable<I18n | null> = this.store.select(selectTranslations);
+  currentLanguage$: Observable<Language> = this.store.select(selectCurrentLanguage);
   shoppingListsItems$: Observable<ShoppingListItem[]> = this.store.select(selectCurrentShoppingListItems);
   shoppingLists$: Observable<ShoppingList[] | null> = this.store.select(selectShoppingLists);
   activeShoppingListId$: Observable<string | undefined> = this.store.select(activeShoppingListId);
@@ -33,8 +45,8 @@ export class ShoppingListContainerComponent implements OnInit {
     this.store.dispatch(ShoppingListContainerActions.changeShoppingList({shoppingListId}));
   }
 
-  onShoppingListItemAdded(shoppingListItem: ShoppingListItem): void {
-    this.store.dispatch(ShoppingListContainerActions.addShoppingListItem({shoppingListItem}));
+  onShoppingListItemAdded(shoppingListItem: BasicShoppingListItem): void {
+    this.store.dispatch(ShoppingListContainerActions.addShoppingListItem({optimisticId: uuid(), shoppingListItem}));
   }
 
   onShoppingListItemDeleted({shoppingListId, shoppingListItem}: DeleteShoppingListItemEvent): void {

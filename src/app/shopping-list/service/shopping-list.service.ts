@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { ShoppingList, ShoppingListItem } from '../../shared/model/model';
+import { BasicShoppingListItem, ShoppingList, ShoppingListItem } from '../../shared/model/model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,7 @@ export class ShoppingListService {
     return this.httpClient.get<ShoppingListItem[]>(`${environment.apiUrl}/shopping-list-items?shoppingList=${shoppingListId}`);
   }
 
-  addShoppingListItem(shoppingListItem: ShoppingListItem): Observable<ShoppingListItem> {
+  addShoppingListItem(shoppingListItem: BasicShoppingListItem): Observable<ShoppingListItem> {
     return this.httpClient.post<ShoppingListItem>(`${environment.apiUrl}/shopping-list-items`, shoppingListItem);
   }
 

@@ -20,6 +20,8 @@ export class ShoppingListComponent{
   }
 
   drop({previousIndex, currentIndex}: ArrayItemMovedEvent): void {
-    this.listItemMoved.emit({currentIndex, previousIndex});
+    if ( currentIndex !== previousIndex) {
+      this.listItemMoved.emit({currentIndex, previousIndex});
+    }
   }
 }

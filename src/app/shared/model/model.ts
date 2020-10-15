@@ -24,11 +24,13 @@ export interface ShoppingList {
 }
 
 export interface ShoppingListItem extends Ingredient{
-  id?: string;
+  id: string;
   shoppingList: string;
   order?: number;
   isChecked?: boolean;
 }
+
+export type BasicShoppingListItem = Omit<ShoppingListItem, 'id' | 'order'>;
 
 export interface AddShoppingListItemEvent {
   shoppingListId: string;

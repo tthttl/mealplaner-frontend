@@ -3,7 +3,7 @@ import { initialShoppingListState, ShoppingListState } from '../states/shopping-
 import { ShoppingListApiActions, ShoppingListContainerActions, ShoppingListEffectActions } from '../../../shopping-list/actions';
 import { moveItemInArray } from '../../helpers/helpers';
 import {
-  AddShoppingListItemAction,
+  AddShoppingListItemAction, AddShoppingListItemSuccessAction,
   ChangeShoppingListAction,
   DeleteShoppingListItemAction,
   LoadShoppingListItemsSuccessAction,
@@ -47,13 +47,29 @@ export const shoppingListReducers = createReducer<ShoppingListState, Action>(
     }),
   on(
     ShoppingListContainerActions.addShoppingListItem,
-    (state: ShoppingListState, {shoppingListItem}: AddShoppingListItemAction) => {
-      console.log('here', shoppingListItem);
+    (state: ShoppingListState, {optimisticId, shoppingListItem}: AddShoppingListItemAction) => {
       return {
         ...state,
         shoppingListItems: {
           ...state.shoppingListItems,
-          [shoppingListItem.shoppingList]: [shoppingListItem, ...state.shoppingListItems[shoppingListItem.shoppingList]],
+          [shoppingListItem.shoppingList]: [
+            {...shoppingListItem, id: optimisticId},
+            ...state.shoppingListItems[shoppingListItem.shoppingList]
+          ],
+        }
+      };
+    }
+  ),
+  on(
+    ShoppingListApiActions.addShoppingListItemSuccess,
+    (state: ShoppingListState, action: AddShoppingListItemSuccessAction) => {
+      return {
+        ...state,
+        shoppingListItems: {
+          ...state.shoppingListItems,
+          [action.shoppingListItem.shoppingList]: state.shoppingListItems[action.shoppingListItem.shoppingList].map(shoppingListItem => {
+            return shoppingListItem.id === action.optimisticId ? action.shoppingListItem : shoppingListItem;
+          })
         }
       };
     }

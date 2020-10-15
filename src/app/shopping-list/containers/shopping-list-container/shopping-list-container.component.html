@@ -2,6 +2,8 @@
   [shoppingLists]="shoppingLists$ | async"
   [activeShoppingListId]="activeShoppingListId$ | async"
   [shoppingListItems]="shoppingListsItems$ | async"
+  [translations]="translations$ | async"
+  [currentLanguage]="currentLanguage$ | async"
   (changeShoppingList)="onShoppingListChange($event)"
   (addShoppingListItem)="onShoppingListItemAdded($event)"
   (deleteShoppingListItem)="onShoppingListItemDeleted($event)"

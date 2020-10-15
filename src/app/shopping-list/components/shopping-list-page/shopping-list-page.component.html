@@ -7,7 +7,7 @@
       </li>
     </ul>
   </div>
-  <app-shopping-list-form (itemAdded)="onItemAdded($event)">
+  <app-shopping-list-form [translations]="translations" [currentLang]="currentLanguage" (itemAdded)="onItemAdded($event)">
   </app-shopping-list-form>
   <app-shopping-list
   [items]="shoppingListItems"

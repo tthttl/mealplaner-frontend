@@ -1,15 +1,15 @@
 import { createAction, props } from '@ngrx/store';
-import { AddShoppingListItemEvent, ShoppingListItem } from '../../shared/model/model';
+import { BasicShoppingListItem, ShoppingListItem } from '../../shared/model/model';
 
 export const loadShoppingLists = createAction('[Shopping List Container] Load Shopping Lists');
 
-export const changeShoppingList = createAction( '[Shopping List Container] Change Shopping List', props<{shoppingListId: string}>());
+export const changeShoppingList = createAction('[Shopping List Container] Change Shopping List', props<{ shoppingListId: string }>());
 
 export const loadShoppingListItems = createAction('[Shopping List Container] Load Shopping List Items', props<{ id: string }>());
 
 export const addShoppingListItem = createAction(
   '[Shopping List Container] Add Shopping List Items',
-  props<{ shoppingListItem: ShoppingListItem }>()
+  props<{ optimisticId: string, shoppingListItem: BasicShoppingListItem }>()
 );
 
 export const deleteShoppingListItem = createAction(

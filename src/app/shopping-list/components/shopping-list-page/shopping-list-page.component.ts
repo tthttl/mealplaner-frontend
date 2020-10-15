@@ -1,12 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   AddShoppingListItemEvent,
-  ArrayItemMovedEvent,
-  DeleteShoppingListItemEvent,
+  ArrayItemMovedEvent, BasicShoppingListItem,
+  DeleteShoppingListItemEvent, I18n, Language,
   ShoppingList,
   ShoppingListItem,
   ShoppingListItemMovedEvent
 } from '../../../shared/model/model';
+import { DEFAULT_LANGUAGE } from '../../../shared/helpers/constants';
 
 @Component({
   selector: 'app-shopping-list-page',
@@ -17,9 +18,11 @@ export class ShoppingListPageComponent implements OnInit {
   @Input() shoppingLists: ShoppingList[] | null = [];
   @Input() shoppingListItems: ShoppingListItem[] | null = [];
   @Input() activeShoppingListId: string | undefined | null = undefined;
+  @Input() translations: I18n | null = {};
+  @Input() currentLanguage: Language | null = DEFAULT_LANGUAGE;
 
   @Output() changeShoppingList: EventEmitter<string> = new EventEmitter();
-  @Output() addShoppingListItem: EventEmitter<ShoppingListItem> = new EventEmitter();
+  @Output() addShoppingListItem: EventEmitter<BasicShoppingListItem> = new EventEmitter();
   @Output() deleteShoppingListItem: EventEmitter<DeleteShoppingListItemEvent> = new EventEmitter();
   @Output() moveShoppingListItem: EventEmitter<ShoppingListItemMovedEvent> = new EventEmitter();
 
@@ -33,7 +36,7 @@ export class ShoppingListPageComponent implements OnInit {
     this.changeShoppingList.emit(id);
   }
 
-  onItemAdded(shoppingListItem: ShoppingListItem): void {
+  onItemAdded(shoppingListItem: BasicShoppingListItem): void {
     if (this.activeShoppingListId) {
       this.addShoppingListItem.emit({...shoppingListItem, shoppingList: this.activeShoppingListId});
     }
