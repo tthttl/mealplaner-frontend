@@ -31,25 +31,6 @@ export function translateValidationErrors(formControl: FormControl,
   return [];
 }
 
-export function changeElementPosition<T>(input: T[], {previousIndex, currentIndex}: ArrayItemMovedEvent): T[] {
-  const tempList: T[] = [...input];
-  const result: T[] = [];
-  const elementDragged = input[previousIndex];
-  tempList.splice(previousIndex, 1);
-
-  if (currentIndex === tempList.length) {
-    result.push(...[...tempList, elementDragged]);
-  } else {
-    tempList.forEach((item, index) => {
-      if (index === currentIndex) {
-        result.push(elementDragged);
-      }
-      result.push(item);
-    });
-  }
-
-  return result;
-}
 
 export function decodeJwtToken(token: string): JwtPayload {
   const base64Url = token.split('.')[1];
