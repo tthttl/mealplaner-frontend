@@ -12,6 +12,7 @@ const dialogData: DialogData<Recipe> = {
   data: {
     id: '1',
     title: 'Apple Pie',
+    cookbookId: 'cookbookId',
     ingredients: [
       {
         amount: 1,
