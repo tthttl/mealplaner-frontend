@@ -11,6 +11,7 @@ import {
   isJwtTokenExpired,
   mapI18nApiToI18nClient,
   mapUserApiToUserClient,
+  sortAlphabetically,
   translateValidationErrors
 } from './helpers';
 import createSpyObj = jasmine.createSpyObj;
@@ -231,5 +232,17 @@ describe('Helpers', () => {
         expect(convertCookbookApisToCookbooks([cookbookApi])).toEqual([cookbook]);
       });
     });
+  });
+});
+
+describe(`${sortAlphabetically}`, () => {
+  it('should be 1', () => {
+    expect(sortAlphabetically('a', 'b')).toEqual(-1);
+  });
+  it('should be -1', () => {
+    expect(sortAlphabetically('b', 'a')).toEqual(1);
+  });
+  it('should be 0', () => {
+    expect(sortAlphabetically('a', 'a')).toEqual(0);
   });
 });

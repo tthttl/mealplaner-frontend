@@ -1,4 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
+import { sortAlphabetically } from '../../shared/helpers/helpers';
 import {
   Cookbook,
   CreateRecipeAction,
@@ -27,7 +28,7 @@ export const cookbookStateReducer = createReducer<CookbookState, Action>(
       ...state,
       recipes: {
         ...state.recipes,
-        [cookbookId]: recipes
+        [cookbookId]: recipes.slice().sort((a: Recipe, b: Recipe) => sortAlphabetically(a.title, b.title))
       }
     };
   }),
@@ -37,6 +38,7 @@ export const cookbookStateReducer = createReducer<CookbookState, Action>(
       recipes: {
         ...state.recipes,
         [recipeToSave.cookbookId]: [...state.recipes[recipeToSave.cookbookId], {...recipeToSave, id: optimisticId}]
+          .sort((a: Recipe, b: Recipe) => sortAlphabetically(a.title, b.title))
       }
     };
   }),
@@ -75,7 +77,7 @@ export const cookbookStateReducer = createReducer<CookbookState, Action>(
           } else {
             return item;
           }
-        })
+        }).sort((a: Recipe, b: Recipe) => sortAlphabetically(a.title, b.title))
       }
     };
   }),
@@ -94,6 +96,7 @@ export const cookbookStateReducer = createReducer<CookbookState, Action>(
       recipes: {
         ...state.recipes,
         [recipe.cookbookId]: [...state.recipes[recipe.cookbookId], recipe]
+          .sort((a: Recipe, b: Recipe) => sortAlphabetically(a.title, b.title))
       }
     };
   })
