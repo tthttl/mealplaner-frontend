@@ -22,6 +22,7 @@ describe(`${RecipeService}`, () => {
   const recipeApiA: RecipeApi = {
     id: 'A',
     title: 'recipeA',
+    cookbookId: 'cookbookId',
     ingredients: [ingredient]
   };
   const cookbookId = 'cookbookId';

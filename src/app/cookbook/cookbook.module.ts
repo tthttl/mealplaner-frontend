@@ -16,7 +16,6 @@ import { CookbookContainerComponent } from './containers/cookbook-container/cook
 import { RecipeContainerComponent } from './containers/recipe-container/recipe-container.component';
 import { CookbookRoutingModule } from './cookbook-routing.module';
 import { CookbookEffects } from './effects/cookbook.effects';
-import { RecipeEffects } from './effects/recipe.effects';
 import { CookbookService } from './services/cookbook.service';
 import { RecipeService } from './services/recipe.service';
 
@@ -31,7 +30,7 @@ import { RecipeService } from './services/recipe.service';
   ],
   imports: [
     CommonModule,
-    EffectsModule.forFeature([RecipeEffects, CookbookEffects]),
+    EffectsModule.forFeature([CookbookEffects]),
     CookbookRoutingModule,
     SharedModule,
     ReactiveFormsModule,

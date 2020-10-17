@@ -21,6 +21,7 @@ export interface RecipeApi {
   readonly id: string;
   readonly title: string;
   readonly url?: string;
+  readonly cookbookId: string;
   readonly ingredients: IngredientApi[];
 }
 

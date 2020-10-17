@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap, take } from 'rxjs/operators';
+import { v4 as uuid } from 'uuid';
 import { I18n, Language, Recipe } from '../../../shared/model/model';
-import { GlobalState, selectRecipes, selectTranslations } from '../../../shared/state';
-import { RecipeApiActions } from '../../actions';
+import { GlobalState, selectActiveCookbook, selectTranslations } from '../../../shared/state';
+import { CookbookActions } from '../../actions';
 
 @Component({
   selector: 'app-recipe-container',
@@ -31,7 +32,10 @@ export class RecipeContainerComponent implements OnInit {
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
     if (this.id) {
-      this.recipe$ = this.store.select(selectRecipes).pipe(
+      this.recipe$ = this.store.select(selectActiveCookbook).pipe(
+        switchMap((activeCookbookId: string) => this.store
+          .select((state: GlobalState) => state.cookbookState.recipes[activeCookbookId])
+        ),
         map((recipes: Recipe[]) => {
           return recipes.find((recipe: Recipe) => recipe.id === this.id);
         })
@@ -41,8 +45,17 @@ export class RecipeContainerComponent implements OnInit {
 
   onRecipeSaved(recipe: Recipe): void {
     !!this.id ?
-      this.store.dispatch(RecipeApiActions.editRecipe({recipeToEdit: recipe})) :
-      this.store.dispatch(RecipeApiActions.createRecipe({recipeToSave: recipe}));
+      this.store.dispatch(CookbookActions.editRecipe({recipeToEdit: recipe})) :
+      this.store.select(selectActiveCookbook).pipe(
+        take(1)
+      ).subscribe((activeCookbookId: string) => this.store.dispatch(CookbookActions.createRecipe({
+          optimisticId: uuid(),
+          recipeToSave: {
+            ...recipe,
+            cookbookId: activeCookbookId
+          }
+        }))
+      );
   }
 
 }

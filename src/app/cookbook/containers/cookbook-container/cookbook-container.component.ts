@@ -2,13 +2,13 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
-import { map, take, withLatestFrom } from 'rxjs/operators';
+import { map, switchMap, take, withLatestFrom } from 'rxjs/operators';
 import { TranslatePipe } from '../../../i18n/pipes/translate.pipe';
 import { I18n, Language, Recipe } from '../../../shared/model/model';
 import { DialogService } from '../../../shared/services/dialog.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
-import { GlobalState, selectRecipes, selectTranslations } from '../../../shared/state';
-import { CookbookApiActions, RecipeApiActions, RecipeStateActions } from '../../actions';
+import { GlobalState, selectActiveCookbook, selectTranslations } from '../../../shared/state';
+import { CookbookActions, CookbookApiActions } from '../../actions';
 import { RecipeViewComponent } from '../../components/recipe-view/recipe-view.component';
 
 @Component({
@@ -34,11 +34,11 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
   ) {
     this.translations$ = this.store.select(selectTranslations);
     this.currentLang$ = this.store.select((state: GlobalState) => state.appState.language);
-    this.recipes$ = this.store.select(selectRecipes);
+    this.recipes$ = this.selectRecipes();
   }
 
   ngOnInit(): void {
-    this.store.dispatch(CookbookApiActions.loadCookbook());
+    this.store.dispatch(CookbookActions.loadCookbook());
     this.store.select(selectTranslations).pipe(
       withLatestFrom(this.store.select((state: GlobalState) => state.appState.language))
     ).subscribe(([translations, currentLanguage]: [I18n | null, Language]) => {
@@ -48,25 +48,25 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
     });
   }
 
-  onDeleteRecipe(recipeId: string): void {
+  onDeleteRecipe(recipe: Recipe): void {
     const snackBarRef = this.snackBarService.openSnackBar('message.undo', 'message.action');
-    this.store.dispatch(RecipeStateActions.deleteRecipeFromState({recipeId}));
+    this.store.dispatch(CookbookActions.deleteRecipeFromState({recipeToDelete: recipe}));
     snackBarRef.afterDismissed().pipe(take(1))
       .subscribe(({dismissedByAction}) => {
         if (dismissedByAction) {
-          this.store.dispatch(RecipeApiActions.loadRecipes());
+          this.store.dispatch(CookbookApiActions.undoDeleteRecipeFromState({recipe}));
         } else {
-          this.store.dispatch(RecipeApiActions.deleteRecipe({recipeId}));
+          this.store.dispatch(CookbookActions.deleteRecipe({recipe}));
         }
       });
   }
 
   onEditRecipe(recipeId: string): void {
-    this.router.navigate([`/recipe/${recipeId}`]);
+    this.router.navigate([`cookbook/recipe/${recipeId}`]);
   }
 
   onCreate(): void {
-    this.router.navigate(['/recipe']);
+    this.router.navigate(['cookbook/recipe']);
   }
 
   onClickRecipe(recipe: Recipe): void {
@@ -84,10 +84,17 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
   }
 
   onInputChanged(searchTerm: string): void {
-    this.recipes$ = this.store.select(selectRecipes).pipe(
+    this.recipes$ = this.selectRecipes().pipe(
       map((recipes: Recipe[]) => {
         return recipes.filter((recipe: Recipe) => recipe.title.toLowerCase().includes(searchTerm.toLowerCase()));
       })
+    );
+  }
+
+  selectRecipes(): Observable<Recipe[]> {
+    return this.store.select(selectActiveCookbook).pipe(
+      switchMap((activeCookbookId: string) => this.store
+        .select((state: GlobalState) => state.cookbookState.recipes[activeCookbookId]))
     );
   }
 

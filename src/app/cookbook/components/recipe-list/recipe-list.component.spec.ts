@@ -82,7 +82,7 @@ describe('RecipeListComponent', () => {
 
     deleteButton.click();
 
-    expect(component.deleteRecipe.emit).toHaveBeenCalledWith(formData.recipes[0].id);
+    expect(component.deleteRecipe.emit).toHaveBeenCalledWith(formData.recipes[0] as Recipe);
   });
 
   it('should emit clickRecipe', () => {

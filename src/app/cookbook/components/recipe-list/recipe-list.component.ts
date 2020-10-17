@@ -16,7 +16,7 @@ export class RecipeListComponent implements OnInit, OnDestroy {
   @Input() recipes: Recipe[] | undefined | null;
   @Output() inputChanged: EventEmitter<string> = new EventEmitter<string>();
   @Output() editRecipe: EventEmitter<string> = new EventEmitter<string>();
-  @Output() deleteRecipe: EventEmitter<string> = new EventEmitter<string>();
+  @Output() deleteRecipe: EventEmitter<Recipe> = new EventEmitter<Recipe>();
   @Output() clickRecipe: EventEmitter<Recipe> = new EventEmitter<Recipe>();
 
   @ViewChild('searchField', {static: true, read: ElementRef}) searchField: ElementRef | undefined;
@@ -41,10 +41,8 @@ export class RecipeListComponent implements OnInit, OnDestroy {
     }
   }
 
-  onDeleteRecipe(id: string | undefined): void {
-    if (id) {
-      this.deleteRecipe.emit(id);
-    }
+  onDeleteRecipe(recipe: Recipe): void {
+      this.deleteRecipe.emit(recipe);
   }
 
   onClick(recipe: Recipe): void {

@@ -93,6 +93,7 @@ describe('RecipeFormComponent', () => {
     expect(component.recipeSaved.emit).toHaveBeenCalledWith({
       title: 'Recipe',
       url: '',
+      cookbookId: '',
       ingredients: [
         {
           title: 'Beer',
@@ -110,6 +111,7 @@ describe('RecipeFormComponent', () => {
     component.recipe = {
       title: 'Recipe',
       url: 'URL',
+      cookbookId: 'cookbookId',
       ingredients: [
         {
           title: 'Beer',
@@ -127,6 +129,7 @@ describe('RecipeFormComponent', () => {
     expect(component.recipeSaved.emit).toHaveBeenCalledWith({
       title: 'Recipe',
       url: 'URL',
+      cookbookId: 'cookbookId',
       ingredients: [
         {
           title: 'Beer',

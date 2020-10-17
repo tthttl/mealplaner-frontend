@@ -1,5 +1,4 @@
 import * as CookbookApiActions from './cookbook-api.actions';
-import * as RecipeApiActions from './recipe-api.actions';
-import * as RecipeStateActions from './recipe-state.actions';
+import * as CookbookActions from './cookbook.actions';
 
-export { RecipeApiActions, CookbookApiActions, RecipeStateActions };
+export { CookbookApiActions, CookbookActions };

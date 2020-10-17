@@ -24,6 +24,7 @@ export class RecipeFormComponent implements OnInit {
   constructor(private translatePipe: TranslatePipe) {
     this.recipeForm = new FormGroup({
       id: new FormControl(''),
+      cookbookId: new FormControl(''),
       title: new FormControl('', [Validators.required]),
       url: new FormControl(''),
       ingredients: new FormArray([
@@ -91,7 +92,7 @@ export class RecipeFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    const recipeToSave = this.recipeForm?.value;
+    const recipeToSave: Recipe = this.recipeForm?.value;
     if (!recipeToSave.id) {
       delete recipeToSave.id;
     }

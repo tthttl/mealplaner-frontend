@@ -8,7 +8,6 @@ import { RecipeContainerComponent } from './containers/recipe-container/recipe-c
 const routes: Routes = [
   {
     path: '',
-    pathMatch: 'full',
     canActivate: [AuthenticatedGuard],
     component: CookbookContainerComponent,
   },

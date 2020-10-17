@@ -90,6 +90,7 @@ export function convertRecipeApiToRecipe(recipe: RecipeApi): Recipe {
     id: recipe.id,
     title: recipe.title,
     url: recipe.url,
+    cookbookId: recipe.cookbookId,
     ingredients: convertIngredientApiArrayToRecipeIngredientArray(recipe.ingredients)
   };
 }

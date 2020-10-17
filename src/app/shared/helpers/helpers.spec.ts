@@ -191,6 +191,7 @@ describe('Helpers', () => {
       id: '1',
       title: 'Recipe',
       url: 'URL',
+      cookbookId: 'cookbookId',
       ingredients: [ingredientApi]
     };
 
@@ -198,6 +199,7 @@ describe('Helpers', () => {
       id: '1',
       title: 'Recipe',
       url: 'URL',
+      cookbookId: 'cookbookId',
       ingredients: [ingredient]
     };
 

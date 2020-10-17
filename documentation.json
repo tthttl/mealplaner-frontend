@@ -2187,7 +2187,7 @@
         },
         {
             "name": "CookbookContainerComponent",
-            "id": "component-CookbookContainerComponent-02dcfe6d2c25b814e8371325d85e77bb",
+            "id": "component-CookbookContainerComponent-bfbda92a53f5c21b77b266f035e59340",
             "file": "src/app/cookbook/containers/cookbook-container/cookbook-container.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -2369,7 +2369,7 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, OnDestroy, OnInit } from '@angular/core';\nimport { Router } from '@angular/router';\nimport { Store } from '@ngrx/store';\nimport { Observable, Subject } from 'rxjs';\nimport { map, take, withLatestFrom } from 'rxjs/operators';\nimport { TranslatePipe } from '../../../i18n/pipes/translate.pipe';\nimport { I18n, Language, Recipe } from '../../../shared/model/model';\nimport { DialogService } from '../../../shared/services/dialog.service';\nimport { SnackbarService } from '../../../shared/services/snackbar.service';\nimport { GlobalState, selectRecipes, selectTranslations } from '../../../shared/state';\nimport { CookbookApiActions, RecipeApiActions, RecipeStateActions } from '../../actions';\nimport { RecipeViewComponent } from '../../components/recipe-view/recipe-view.component';\n\n@Component({\n  selector: 'app-cookbook-container',\n  templateUrl: './cookbook-container.component.html',\n  styleUrls: ['./cookbook-container.component.scss']\n})\nexport class CookbookContainerComponent implements OnInit, OnDestroy {\n\n  translations$: Observable<I18n | null>;\n  currentLang$: Observable<Language>;\n  recipes$: Observable<Recipe[]>;\n  private destroy$: Subject<void> = new Subject<void>();\n\n  private dialogTranslations: string[] = [];\n\n  constructor(\n    private store: Store<GlobalState>,\n    private router: Router,\n    private snackBarService: SnackbarService,\n    private dialogService: DialogService,\n    private translatePipe: TranslatePipe,\n  ) {\n    this.translations$ = this.store.select(selectTranslations);\n    this.currentLang$ = this.store.select((state: GlobalState) => state.appState.language);\n    this.recipes$ = this.store.select(selectRecipes);\n  }\n\n  ngOnInit(): void {\n    this.store.dispatch(CookbookApiActions.loadCookbook());\n    this.store.select(selectTranslations).pipe(\n      withLatestFrom(this.store.select((state: GlobalState) => state.appState.language))\n    ).subscribe(([translations, currentLanguage]: [I18n | null, Language]) => {\n      this.dialogTranslations.push(this.translatePipe.transform('ingredients.label-text', translations, currentLanguage));\n      this.dialogTranslations.push(this.translatePipe.transform('button.modify', translations, currentLanguage));\n      this.dialogTranslations.push(this.translatePipe.transform('button.add-to-mealplaner', translations, currentLanguage));\n    });\n  }\n\n  onDeleteRecipe(recipeId: string): void {\n    const snackBarRef = this.snackBarService.openSnackBar('message.undo', 'message.action');\n    this.store.dispatch(RecipeStateActions.deleteRecipeFromState({recipeId}));\n    snackBarRef.afterDismissed().pipe(take(1))\n      .subscribe(({dismissedByAction}) => {\n        if (dismissedByAction) {\n          this.store.dispatch(RecipeApiActions.loadRecipes());\n        } else {\n          this.store.dispatch(RecipeApiActions.deleteRecipe({recipeId}));\n        }\n      });\n  }\n\n  onEditRecipe(recipeId: string): void {\n    this.router.navigate([`/recipe/${recipeId}`]);\n  }\n\n  onCreate(): void {\n    this.router.navigate(['/recipe']);\n  }\n\n  onClickRecipe(recipe: Recipe): void {\n    const dialogRef = this.dialogService.openDialog(RecipeViewComponent, {\n      data: recipe,\n      translations: this.dialogTranslations\n    });\n    dialogRef.afterClosed()\n      .pipe(take(1))\n      .subscribe((result: Recipe | undefined) => {\n        if (result) {\n          console.log(result); // dispatch AddToMealplaner action\n        }\n      });\n  }\n\n  onInputChanged(searchTerm: string): void {\n    this.recipes$ = this.store.select(selectRecipes).pipe(\n      map((recipes: Recipe[]) => {\n        return recipes.filter((recipe: Recipe) => recipe.title.toLowerCase().includes(searchTerm.toLowerCase()));\n      })\n    );\n  }\n\n  ngOnDestroy(): void {\n    this.destroy$.next();\n    this.destroy$.complete();\n  }\n\n}\n",
+            "sourceCode": "import { Component, OnDestroy, OnInit } from '@angular/core';\nimport { Router } from '@angular/router';\nimport { Store } from '@ngrx/store';\nimport { Observable, Subject } from 'rxjs';\nimport { map, take, withLatestFrom } from 'rxjs/operators';\nimport { TranslatePipe } from '../../../i18n/pipes/translate.pipe';\nimport { I18n, Language, Recipe } from '../../../shared/model/model';\nimport { DialogService } from '../../../shared/services/dialog.service';\nimport { SnackbarService } from '../../../shared/services/snackbar.service';\nimport { GlobalState, selectRecipes, selectTranslations } from '../../../shared/state';\nimport { CookbookApiActions, RecipeApiActions, RecipeStateActions } from '../../actions';\nimport { RecipeViewComponent } from '../../components/recipe-view/recipe-view.component';\n\n@Component({\n  selector: 'app-cookbook-container',\n  templateUrl: './cookbook-container.component.html',\n  styleUrls: ['./cookbook-container.component.scss']\n})\nexport class CookbookContainerComponent implements OnInit, OnDestroy {\n\n  translations$: Observable<I18n | null>;\n  currentLang$: Observable<Language>;\n  recipes$: Observable<Recipe[]>;\n  private destroy$: Subject<void> = new Subject<void>();\n\n  private dialogTranslations: string[] = [];\n\n  constructor(\n    private store: Store<GlobalState>,\n    private router: Router,\n    private snackBarService: SnackbarService,\n    private dialogService: DialogService,\n    private translatePipe: TranslatePipe,\n  ) {\n    this.translations$ = this.store.select(selectTranslations);\n    this.currentLang$ = this.store.select((state: GlobalState) => state.appState.language);\n    this.recipes$ = this.store.select(selectRecipes);\n  }\n\n  ngOnInit(): void {\n    this.store.dispatch(CookbookApiActions.loadCookbook());\n    this.store.select(selectTranslations).pipe(\n      withLatestFrom(this.store.select((state: GlobalState) => state.appState.language))\n    ).subscribe(([translations, currentLanguage]: [I18n | null, Language]) => {\n      this.dialogTranslations.push(this.translatePipe.transform('ingredients.label-text', translations, currentLanguage));\n      this.dialogTranslations.push(this.translatePipe.transform('button.modify', translations, currentLanguage));\n      this.dialogTranslations.push(this.translatePipe.transform('button.add-to-mealplaner', translations, currentLanguage));\n    });\n  }\n\n  onDeleteRecipe(recipeId: string): void {\n    const snackBarRef = this.snackBarService.openSnackBar('message.undo', 'message.action');\n    this.store.dispatch(RecipeStateActions.deleteRecipeFromState({recipeId}));\n    snackBarRef.afterDismissed().pipe(take(1))\n      .subscribe(({dismissedByAction}) => {\n        if (dismissedByAction) {\n          this.store.dispatch(RecipeApiActions.loadRecipes());\n        } else {\n          this.store.dispatch(RecipeApiActions.deleteRecipe({recipeId}));\n        }\n      });\n  }\n\n  onEditRecipe(recipeId: string): void {\n    this.router.navigate([`cookbook/recipe/${recipeId}`]);\n  }\n\n  onCreate(): void {\n    this.router.navigate(['cookbook/recipe']);\n  }\n\n  onClickRecipe(recipe: Recipe): void {\n    const dialogRef = this.dialogService.openDialog(RecipeViewComponent, {\n      data: recipe,\n      translations: this.dialogTranslations\n    });\n    dialogRef.afterClosed()\n      .pipe(take(1))\n      .subscribe((result: Recipe | undefined) => {\n        if (result) {\n          console.log(result); // dispatch AddToMealplaner action\n        }\n      });\n  }\n\n  onInputChanged(searchTerm: string): void {\n    this.recipes$ = this.store.select(selectRecipes).pipe(\n      map((recipes: Recipe[]) => {\n        return recipes.filter((recipe: Recipe) => recipe.title.toLowerCase().includes(searchTerm.toLowerCase()));\n      })\n    );\n  }\n\n  ngOnDestroy(): void {\n    this.destroy$.next();\n    this.destroy$.complete();\n  }\n\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -2841,7 +2841,7 @@
         },
         {
             "name": "LoginFormComponent",
-            "id": "component-LoginFormComponent-af64b8413f8d535ac14eb15ea4d83d7c",
+            "id": "component-LoginFormComponent-056bd77fc312195beae62494240d80f9",
             "file": "src/app/auth/components/login-form/login-form.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -2952,7 +2952,7 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, EventEmitter, Input, Output } from '@angular/core';\nimport { FormControl, FormGroup, Validators } from '@angular/forms';\nimport { TranslatePipe } from '../../../i18n/pipes/translate.pipe';\nimport { DEFAULT_LANGUAGE } from '../../../shared/helpers/constants';\nimport { translateValidationErrors } from '../../../shared/helpers/helpers';\nimport { I18n, Language, LoginCredentials } from '../../../shared/model/model';\nimport * as CustomValidators from '../../../shared/validators/custom-validators.validator';\n\n@Component({\n  selector: 'app-login-form',\n  templateUrl: './login-form.component.html',\n  styleUrls: ['./login-form.component.scss']\n})\nexport class LoginFormComponent {\n\n  @Input() buttonText = 'login';\n  @Input() translations: I18n | null = {};\n  @Input() currentLang: Language | null = DEFAULT_LANGUAGE;\n  @Output() credentialsReceived: EventEmitter<LoginCredentials> = new EventEmitter();\n\n  loginForm: FormGroup;\n\n  constructor(private translatePipe: TranslatePipe) {\n    this.loginForm = new FormGroup({\n      identifier: new FormControl('', [\n        Validators.required,\n        CustomValidators.email,\n      ]),\n      password: new FormControl('', [\n        Validators.required,\n        Validators.minLength(4),\n      ])\n    });\n  }\n\n  getFormControl(key: string): FormControl {\n    return this.loginForm?.controls[key] as FormControl;\n  }\n\n  onSubmit(): void {\n    this.credentialsReceived.emit(this.loginForm?.value);\n  }\n\n  getErrorsFor(key: string): string[] {\n    return translateValidationErrors(\n      this.getFormControl(key),\n      this.translatePipe,\n      this.translations,\n      this.currentLang);\n  }\n\n}\n",
+            "sourceCode": "import { Component, EventEmitter, Input, Output } from '@angular/core';\nimport { FormControl, FormGroup, Validators } from '@angular/forms';\nimport { TranslatePipe } from '../../../i18n/pipes/translate.pipe';\nimport { DEFAULT_LANGUAGE } from '../../../shared/helpers/constants';\nimport { translateValidationErrors } from '../../../shared/helpers/helpers';\nimport { I18n, Language, LoginCredentials } from '../../../shared/model/model';\nimport * as CustomValidators from '../../../shared/validators/custom-validators.validator';\n\n@Component({\n  selector: 'app-login-form',\n  templateUrl: './login-form.component.html',\n  styleUrls: ['./login-form.component.scss']\n})\nexport class LoginFormComponent {\n\n  @Input() buttonText = 'login';\n  @Input() translations: I18n | null = {};\n  @Input() currentLang: Language | null = DEFAULT_LANGUAGE;\n  @Output() credentialsReceived: EventEmitter<LoginCredentials> = new EventEmitter();\n\n  loginForm: FormGroup;\n\n  constructor(private translatePipe: TranslatePipe) {\n    this.loginForm = new FormGroup({\n      identifier: new FormControl('attila@mealplaner.app', [\n        Validators.required,\n        CustomValidators.email,\n      ]),\n      password: new FormControl('123456', [\n        Validators.required,\n        Validators.minLength(4),\n      ])\n    });\n  }\n\n  getFormControl(key: string): FormControl {\n    return this.loginForm?.controls[key] as FormControl;\n  }\n\n  onSubmit(): void {\n    this.credentialsReceived.emit(this.loginForm?.value);\n  }\n\n  getErrorsFor(key: string): string[] {\n    return translateValidationErrors(\n      this.getFormControl(key),\n      this.translatePipe,\n      this.translations,\n      this.currentLang);\n  }\n\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -3127,7 +3127,7 @@
             "implements": [
                 "OnInit"
             ],
-            "templateData": "<nav class=\"main-navigation\">\n  <div class=\"container main-navigation__content\">\n    <div class=\"main-navigation__wrapper\">\n      <img class=\"main-navigation__logo\" src=\"../../../assets/logo-inverted.png\" [routerLink]=\"['/']\">\n      <div class=\"desktop-navigation\" *ngIf=\"isLoggedIn\">\n        <ul class=\"desktop-navigation__link-list\" data-test=\"desktop-navigation\">\n          <li class=\"desktop-navigation__link-list-element\">\n            <a [routerLink]=\"['/meal-planer']\"\n               class=\"desktop-navigation__link\"\n               routerLinkActive=\"desktop-navigation__link--active\">\n              {{'app.navigation.planer' | translate:translations:currentLang}}\n            </a>\n          </li>\n          <li class=\"desktop-navigation__link-list-element\">\n            <a [routerLink]=\"['/cook-book']\"\n               class=\"desktop-navigation__link\"\n               routerLinkActive=\"desktop-navigation__link--active\">\n              {{'app.navigation.menus' | translate:translations:currentLang}}\n            </a>\n          </li>\n          <li class=\"desktop-navigation__link-list-element\">\n            <a [routerLink]=\"['/shopping-list']\"\n               class=\"desktop-navigation__link\"\n               routerLinkActive=\"desktop-navigation__link--active\">\n              {{'app.navigation.shopping-list' | translate:translations:currentLang}}\n            </a>\n          </li>\n        </ul>\n      </div>\n    </div>\n\n    <div class=\"main-navigation__actions\">\n\n\n      <app-button *ngIf=\"isLoggedIn; else registerTemplate\"\n                  [buttonText]=\"'app.navigation.logout' | translate:translations:currentLang\"\n                  color=\"inverted\" (click)=\"onLogout()\"\n                  class=\"main-navigation__primary-action\"\n                  data-test=\"logout-button\"></app-button>\n\n\n      <ng-template #registerTemplate>\n        <a class=\"main-navigation__secondary-action\"\n           [routerLink]=\"['/auth/login']\"\n           data-test=\"login-link\">\n          {{'app.navigation.login' | translate:translations:currentLang}}\n        </a>\n\n        <a          [routerLink]=\"['/auth/register']\"\n                    class=\"main-navigation__primary-action\"\n                    data-test=\"register-link\">\n          {{'app.navigation.register' | translate:translations:currentLang }}\n        </a>\n      </ng-template>\n    </div>\n  </div>\n</nav>\n\n\n<nav *ngIf=\"isLoggedIn\" class=\"mobile-navigation\">\n  <ul class=mobile-navigation__link-list data-test=\"mobile-navigation\">\n    <li class=\"mobile-navigation__link-list-element\">\n      <a class=\"mobile-navigation__link\" [routerLink]=\"['/meal-planer']\"\n         routerLinkActive=\"mobile-navigation__link--active\">\n        <fa-icon class=\"shopping-list__ellipsis mobile-navigation__link-icon\"\n                 [icon]=\"['fas','calendar-alt']\"></fa-icon>\n        <span\n          class=\"mobile-navigation__link-text\">{{'app.navigation.planer' | translate:translations:currentLang}}</span>\n        <div\n          class=\"mobile-navigation__status\"></div>\n      </a>\n    </li>\n\n    <li class=\"mobile-navigation__link-list-element\">\n      <a class=\"mobile-navigation__link\" [routerLink]=\"['/cook-book']\"\n         routerLinkActive=\"mobile-navigation__link--active\">\n        <fa-icon class=\"shopping-list__ellipsis mobile-navigation__link-icon\"\n                 [icon]=\"['fas','hamburger']\"></fa-icon>\n        <span\n          class=\"mobile-navigation__link-text\">{{'app.navigation.menus' | translate:translations:currentLang}}</span>\n        <div class=\"mobile-navigation__status\"></div>\n      </a>\n    </li>\n\n    <li class=\"mobile-navigation__link-list-element\">\n      <a class=\"mobile-navigation__link\" [routerLink]=\"['/shopping-list']\"\n         routerLinkActive=\"mobile-navigation__link--active\">\n        <fa-icon class=\"shopping-list__ellipsis mobile-navigation__link-icon\"\n                 [icon]=\"['fas','shopping-cart']\"></fa-icon>\n        <span\n          class=\"mobile-navigation__link-text\">{{'app.navigation.shopping-list' | translate:translations:currentLang}}</span>\n        <div class=\"mobile-navigation__status\"></div>\n      </a>\n    </li>\n  </ul>\n</nav>\n"
+            "templateData": "<nav class=\"main-navigation\">\n  <div class=\"container main-navigation__content\">\n    <div class=\"main-navigation__wrapper\">\n      <img class=\"main-navigation__logo\" src=\"../../../assets/logo-inverted.png\" [routerLink]=\"['/']\">\n      <div class=\"desktop-navigation\" *ngIf=\"isLoggedIn\">\n        <ul class=\"desktop-navigation__link-list\" data-test=\"desktop-navigation\">\n          <li class=\"desktop-navigation__link-list-element\">\n            <a [routerLink]=\"['/meal-planer']\"\n               class=\"desktop-navigation__link\"\n               routerLinkActive=\"desktop-navigation__link--active\">\n              {{'app.navigation.planer' | translate:translations:currentLang}}\n            </a>\n          </li>\n          <li class=\"desktop-navigation__link-list-element\">\n            <a [routerLink]=\"['/cookbook']\"\n               class=\"desktop-navigation__link\"\n               routerLinkActive=\"desktop-navigation__link--active\">\n              {{'app.navigation.menus' | translate:translations:currentLang}}\n            </a>\n          </li>\n          <li class=\"desktop-navigation__link-list-element\">\n            <a [routerLink]=\"['/shopping-list']\"\n               class=\"desktop-navigation__link\"\n               routerLinkActive=\"desktop-navigation__link--active\">\n              {{'app.navigation.shopping-list' | translate:translations:currentLang}}\n            </a>\n          </li>\n        </ul>\n      </div>\n    </div>\n\n    <div class=\"main-navigation__actions\">\n\n\n      <app-button *ngIf=\"isLoggedIn; else registerTemplate\"\n                  [buttonText]=\"'app.navigation.logout' | translate:translations:currentLang\"\n                  color=\"inverted\" (click)=\"onLogout()\"\n                  class=\"main-navigation__primary-action\"\n                  data-test=\"logout-button\"></app-button>\n\n\n      <ng-template #registerTemplate>\n        <a class=\"main-navigation__secondary-action\"\n           [routerLink]=\"['/auth/login']\"\n           data-test=\"login-link\">\n          {{'app.navigation.login' | translate:translations:currentLang}}\n        </a>\n\n        <a          [routerLink]=\"['/auth/register']\"\n                    class=\"main-navigation__primary-action\"\n                    data-test=\"register-link\">\n          {{'app.navigation.register' | translate:translations:currentLang }}\n        </a>\n      </ng-template>\n    </div>\n  </div>\n</nav>\n\n\n<nav *ngIf=\"isLoggedIn\" class=\"mobile-navigation\">\n  <ul class=mobile-navigation__link-list data-test=\"mobile-navigation\">\n    <li class=\"mobile-navigation__link-list-element\">\n      <a class=\"mobile-navigation__link\" [routerLink]=\"['/meal-planer']\"\n         routerLinkActive=\"mobile-navigation__link--active\">\n        <fa-icon class=\"shopping-list__ellipsis mobile-navigation__link-icon\"\n                 [icon]=\"['fas','calendar-alt']\"></fa-icon>\n        <span\n          class=\"mobile-navigation__link-text\">{{'app.navigation.planer' | translate:translations:currentLang}}</span>\n        <div\n          class=\"mobile-navigation__status\"></div>\n      </a>\n    </li>\n\n    <li class=\"mobile-navigation__link-list-element\">\n      <a class=\"mobile-navigation__link\" [routerLink]=\"['/cook-book']\"\n         routerLinkActive=\"mobile-navigation__link--active\">\n        <fa-icon class=\"shopping-list__ellipsis mobile-navigation__link-icon\"\n                 [icon]=\"['fas','hamburger']\"></fa-icon>\n        <span\n          class=\"mobile-navigation__link-text\">{{'app.navigation.menus' | translate:translations:currentLang}}</span>\n        <div class=\"mobile-navigation__status\"></div>\n      </a>\n    </li>\n\n    <li class=\"mobile-navigation__link-list-element\">\n      <a class=\"mobile-navigation__link\" [routerLink]=\"['/shopping-list']\"\n         routerLinkActive=\"mobile-navigation__link--active\">\n        <fa-icon class=\"shopping-list__ellipsis mobile-navigation__link-icon\"\n                 [icon]=\"['fas','shopping-cart']\"></fa-icon>\n        <span\n          class=\"mobile-navigation__link-text\">{{'app.navigation.shopping-list' | translate:translations:currentLang}}</span>\n        <div class=\"mobile-navigation__status\"></div>\n      </a>\n    </li>\n  </ul>\n</nav>\n"
         },
         {
             "name": "RecipeContainerComponent",
@@ -5093,14 +5093,6 @@
                 "name": "actionsData",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/auth/components/login-form/login-form.stories.ts",
-                "type": "object",
-                "defaultValue": "{\n  credentialsReceived: action('credentialsReceived')\n}"
-            },
-            {
-                "name": "actionsData",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/input/input.stories.ts",
                 "type": "object",
                 "defaultValue": "{\n  clicked: action('clicked'),\n}"
@@ -5117,9 +5109,9 @@
                 "name": "actionsData",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts",
+                "file": "src/app/auth/components/login-form/login-form.stories.ts",
                 "type": "object",
-                "defaultValue": "{\n  itemAdded: action('itemAdded'),\n}"
+                "defaultValue": "{\n  credentialsReceived: action('credentialsReceived')\n}"
             },
             {
                 "name": "actionsData",
@@ -5133,17 +5125,9 @@
                 "name": "actionsData",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shopping-list/components/shopping-list/shopping-list.stories.ts",
+                "file": "src/app/cookbook/components/recipe-form/recipe-form.stories.ts",
                 "type": "object",
-                "defaultValue": "{\n  itemDeleted: action('itemDeleted'),\n  listItemMoved: action('listItemMoved'),\n}"
-            },
-            {
-                "name": "actionsData",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/select/select.stories.ts",
-                "type": "object",
-                "defaultValue": "{\n  valueChanged: action('valueChanged'),\n}"
+                "defaultValue": "{\n  recipeSaved: action('recipeSaved')\n}"
             },
             {
                 "name": "actionsData",
@@ -5157,9 +5141,25 @@
                 "name": "actionsData",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/cookbook/components/recipe-form/recipe-form.stories.ts",
+                "file": "src/app/shared/components/select/select.stories.ts",
                 "type": "object",
-                "defaultValue": "{\n  recipeSaved: action('recipeSaved')\n}"
+                "defaultValue": "{\n  valueChanged: action('valueChanged'),\n}"
+            },
+            {
+                "name": "actionsData",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shopping-list/components/shopping-list/shopping-list.stories.ts",
+                "type": "object",
+                "defaultValue": "{\n  itemDeleted: action('itemDeleted'),\n  listItemMoved: action('listItemMoved'),\n}"
+            },
+            {
+                "name": "actionsData",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts",
+                "type": "object",
+                "defaultValue": "{\n  itemAdded: action('itemAdded'),\n}"
             },
             {
                 "name": "appStateReducer",
@@ -5229,14 +5229,6 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/input/input.stories.ts",
-                "type": "",
-                "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: '',\n    errors: []\n  }\n})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/cookbook/components/recipe-view/recipe-view.stories.ts",
                 "type": "",
                 "defaultValue": "() => ({\n  component: RecipeViewComponent,\n  props: {}\n})"
@@ -5245,17 +5237,17 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/cookbook/components/recipe-form/recipe-form.stories.ts",
+                "file": "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: RecipeFormComponent,\n  props: {\n    ...formData,\n    ...actionsData\n  }\n})"
+                "defaultValue": "() => ({\n  component: ShoppingListFormComponent,\n  props: {\n    ...taskData,\n    ...actionsData\n  },\n})"
             },
             {
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/button/button.stories.ts",
+                "file": "src/app/shared/components/input/input.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: buttonData.text,\n    isDisabled: buttonData.isDisabled,\n    e2eTestName: buttonData.e2eTestName,\n    clicked: actionsData.clicked\n  }\n})"
+                "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: '',\n    errors: []\n  }\n})"
             },
             {
                 "name": "Default",
@@ -5264,6 +5256,14 @@
                 "file": "src/app/cookbook/components/recipe-list/recipe-list.stories.ts",
                 "type": "",
                 "defaultValue": "() => ({\n  component: RecipeListComponent,\n  props: {\n    ...formData,\n    ...actionsData\n  }\n})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/cookbook/components/recipe-form/recipe-form.stories.ts",
+                "type": "",
+                "defaultValue": "() => ({\n  component: RecipeFormComponent,\n  props: {\n    ...formData,\n    ...actionsData\n  }\n})"
             },
             {
                 "name": "Default",
@@ -5285,9 +5285,9 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts",
+                "file": "src/app/shared/components/button/button.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: ShoppingListFormComponent,\n  props: {\n    ...taskData,\n    ...actionsData\n  },\n})"
+                "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: buttonData.text,\n    isDisabled: buttonData.isDisabled,\n    e2eTestName: buttonData.e2eTestName,\n    clicked: actionsData.clicked\n  }\n})"
             },
             {
                 "name": "DEFAULT_LANGUAGE",
@@ -5405,9 +5405,9 @@
                 "name": "environment",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/environments/environment.qa.ts",
+                "file": "src/environments/environment.prod.ts",
                 "type": "object",
-                "defaultValue": "{\n  production: false,\n  showBetaTeaser: false,\n  apiUrl: 'https://api.mealplaner.app',\n  authUrl: 'https://api.mealplaner.app',\n}"
+                "defaultValue": "{\n  production: true,\n  showBetaTeaser: false,\n  apiUrl: 'https://api.mealplaner.app',\n  authUrl: 'https://api.mealplaner.app',\n}"
             },
             {
                 "name": "environment",
@@ -5421,9 +5421,9 @@
                 "name": "environment",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/environments/environment.prod.ts",
+                "file": "src/environments/environment.qa.ts",
                 "type": "object",
-                "defaultValue": "{\n  production: true,\n  showBetaTeaser: false,\n  apiUrl: 'https://api.mealplaner.app',\n  authUrl: 'https://api.mealplaner.app',\n}"
+                "defaultValue": "{\n  production: false,\n  showBetaTeaser: false,\n  apiUrl: 'https://api.mealplaner.app',\n  authUrl: 'https://api.mealplaner.app',\n}"
             },
             {
                 "name": "formData",
@@ -5437,17 +5437,17 @@
                 "name": "formData",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/cookbook/components/recipe-list/recipe-list.stories.ts",
+                "file": "src/app/cookbook/components/recipe-form/recipe-form.stories.ts",
                 "type": "object",
-                "defaultValue": "{\n  translations: {\n    de: {\n      'input.search': 'Suchen',\n      'button.edit': 'Bearbeiten',\n      'button.delete': 'Löschen'\n    }\n  },\n  recipes: [\n    {\n      id: '1',\n      title: 'Chocolate chip cookie'\n    },\n    {\n      id: '2',\n      title: 'Cheesecake'\n    },\n    {\n      id: '3',\n      title: 'Muffin'\n    }\n  ]\n}"
+                "defaultValue": "{\n  translations: {\n    de: {\n      'recipe-form.placeholder.title': 'Title',\n      'recipe-form.label.title': 'Recipe Title',\n      'recipe-form.placeholder.url': 'Link',\n      'recipe-form.label.url': 'Link to Recipe',\n      'ingredients.label-text': 'Ingredients',\n      'recipe-form.placeholder.amount': 'Quantity',\n      'recipe-form.placeholder.name': 'Name',\n      'recipe-form.text.toggle': 'Basic Ingredient',\n      'recipe-form.button.delete': 'Delete',\n      'recipe-form.button.new-ingredient': 'Add new Ingredient',\n      'recipe-form.button.submit': 'Create',\n      'errors.validation.title.required': 'Titel is required',\n      'recipe-form.button.modify': 'Edit'\n    }\n  }\n}"
             },
             {
                 "name": "formData",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/cookbook/components/recipe-form/recipe-form.stories.ts",
+                "file": "src/app/cookbook/components/recipe-list/recipe-list.stories.ts",
                 "type": "object",
-                "defaultValue": "{\n  translations: {\n    de: {\n      'recipe-form.placeholder.title': 'Title',\n      'recipe-form.label.title': 'Recipe Title',\n      'recipe-form.placeholder.url': 'Link',\n      'recipe-form.label.url': 'Link to Recipe',\n      'ingredients.label-text': 'Ingredients',\n      'recipe-form.placeholder.amount': 'Quantity',\n      'recipe-form.placeholder.name': 'Name',\n      'recipe-form.text.toggle': 'Basic Ingredient',\n      'recipe-form.button.delete': 'Delete',\n      'recipe-form.button.new-ingredient': 'Add new Ingredient',\n      'recipe-form.button.submit': 'Create',\n      'errors.validation.title.required': 'Titel is required',\n      'recipe-form.button.modify': 'Edit'\n    }\n  }\n}"
+                "defaultValue": "{\n  translations: {\n    de: {\n      'input.search': 'Suchen',\n      'button.edit': 'Bearbeiten',\n      'button.delete': 'Löschen'\n    }\n  },\n  recipes: [\n    {\n      id: '1',\n      title: 'Chocolate chip cookie'\n    },\n    {\n      id: '2',\n      title: 'Cheesecake'\n    },\n    {\n      id: '3',\n      title: 'Muffin'\n    }\n  ]\n}"
             },
             {
                 "name": "getI18n",
@@ -5717,17 +5717,17 @@
                 "name": "refreshToken",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/auth/actions/login-service.actions.ts",
+                "file": "src/app/shared/state/app-actions/app-initialization.actions.ts",
                 "type": "",
-                "defaultValue": "createAction('[Auth Service] Refresh Token')"
+                "defaultValue": "createAction('[App Initialization] Refresh JWT Token')"
             },
             {
                 "name": "refreshToken",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/state/app-actions/app-initialization.actions.ts",
+                "file": "src/app/auth/actions/login-service.actions.ts",
                 "type": "",
-                "defaultValue": "createAction('[App Initialization] Refresh JWT Token')"
+                "defaultValue": "createAction('[Auth Service] Refresh Token')"
             },
             {
                 "name": "refreshTokenFailed",
@@ -5868,17 +5868,17 @@
                 "name": "taskData",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts",
-                "type": "object",
-                "defaultValue": "{\n  translations: {\n    de: {\n      'shoppingList.addForm.amount': 'Menge',\n      'shoppingList.addForm.product': 'Zucker',\n      'shoppingList.addForm.piece': 'Stück',\n      'shoppingList.addForm.pack': 'Packung',\n      'shoppingList.addForm.addLabel': 'Hinzufügen',\n    }\n  },\n  currentLang: 'de'\n}"
+                "file": "src/app/shopping-list/components/shopping-list/shopping-list.stories.ts",
+                "type": "literal type",
+                "defaultValue": "{\n  items: [\n    {id: '1', title: 'Mehl', amount: 1, unit: 'kg', isChecked: false},\n    {id: '2', title: 'Zucker', amount: 50, unit: 'g', isChecked: false},\n    {id: '3', title: 'Eier', amount: 1, unit: 'piece', isChecked: false},\n    {id: '4', title: 'Slaz', amount: 5, unit: 'coffeeSpoon', isChecked: false},\n  ],\n  translations: {\n    de: {\n      piece: '',\n      tableSpoon: 'Esslöffel',\n      coffeeSpoon: 'Kaffelöffel',\n      pinch: 'Prise',\n    }\n  }\n}"
             },
             {
                 "name": "taskData",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shopping-list/components/shopping-list/shopping-list.stories.ts",
-                "type": "literal type",
-                "defaultValue": "{\n  items: [\n    {id: '1', title: 'Mehl', amount: 1, unit: 'kg', isChecked: false},\n    {id: '2', title: 'Zucker', amount: 50, unit: 'g', isChecked: false},\n    {id: '3', title: 'Eier', amount: 1, unit: 'piece', isChecked: false},\n    {id: '4', title: 'Slaz', amount: 5, unit: 'coffeeSpoon', isChecked: false},\n  ],\n  translations: {\n    de: {\n      piece: '',\n      tableSpoon: 'Esslöffel',\n      coffeeSpoon: 'Kaffelöffel',\n      pinch: 'Prise',\n    }\n  }\n}"
+                "file": "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts",
+                "type": "object",
+                "defaultValue": "{\n  translations: {\n    de: {\n      'shoppingList.addForm.amount': 'Menge',\n      'shoppingList.addForm.product': 'Zucker',\n      'shoppingList.addForm.piece': 'Stück',\n      'shoppingList.addForm.pack': 'Packung',\n      'shoppingList.addForm.addLabel': 'Hinzufügen',\n    }\n  },\n  currentLang: 'de'\n}"
             },
             {
                 "name": "Template",
@@ -6123,6 +6123,15 @@
             },
             {
                 "name": "createFormControl",
+                "file": "src/app/shared/components/input/input.stories.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "description": "",
+                "args": [],
+                "returnType": "FormControl"
+            },
+            {
+                "name": "createFormControl",
                 "file": "src/app/shared/components/select/select.stories.ts",
                 "ctype": "miscellaneous",
                 "subtype": "function",
@@ -6141,15 +6150,6 @@
                         }
                     }
                 ]
-            },
-            {
-                "name": "createFormControl",
-                "file": "src/app/shared/components/input/input.stories.ts",
-                "ctype": "miscellaneous",
-                "subtype": "function",
-                "description": "",
-                "args": [],
-                "returnType": "FormControl"
             },
             {
                 "name": "decodeJwtToken",
@@ -6420,40 +6420,6 @@
                     "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Warning',\n    isDisabled: buttonData.isDisabled,\n    e2eTestName: buttonData.e2eTestName,\n    clicked: actionsData.clicked,\n    color: 'warn'\n  }\n})"
                 }
             ],
-            "src/app/auth/components/login-form/login-form.stories.ts": [
-                {
-                    "name": "actionsData",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/auth/components/login-form/login-form.stories.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  credentialsReceived: action('credentialsReceived')\n}"
-                },
-                {
-                    "name": "formData",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/auth/components/login-form/login-form.stories.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  translations: {\n    de: {\n      email: 'Email Adresse',\n      password: 'Passwort',\n      login: 'Anmelden',\n      register: 'Registrieren',\n      'errors.validation.email.required': 'Bitte geben Sie Ihre Email Adresse ein',\n      'errors.validation.email.pattern': 'Valid Email Format braucht @ ein . dann mindestens 2 Zeichen',\n      'errors.validation.password.required': 'Bitte geben Sie Ihre Passwort ein',\n      'errors.validation.password.minlength': 'Passwort muss mindestens 4 character lang sein',\n      'errors.validation.password.pattern': 'Passwort braucht klein und gross Buchstaben und ein Zahl'\n      }\n    }\n}"
-                },
-                {
-                    "name": "Login",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/auth/components/login-form/login-form.stories.ts",
-                    "type": "",
-                    "defaultValue": "() => ({\n  component: LoginFormComponent,\n  props: {\n    credentialsReceived: actionsData.credentialsReceived,\n    translations: formData.translations\n  }\n})"
-                },
-                {
-                    "name": "Register",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/auth/components/login-form/login-form.stories.ts",
-                    "type": "",
-                    "defaultValue": "() => ({\n  component: LoginFormComponent,\n  props: {\n    credentialsReceived: actionsData.credentialsReceived,\n    translations: formData.translations,\n    buttonText: 'register'\n  }\n})"
-                }
-            ],
             "src/app/shared/components/input/input.stories.ts": [
                 {
                     "name": "actionsData",
@@ -6570,30 +6536,38 @@
                     "defaultValue": "(args: NavigationComponent) => ({\n  component: NavigationComponent,\n  props: args,\n})"
                 }
             ],
-            "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts": [
+            "src/app/auth/components/login-form/login-form.stories.ts": [
                 {
                     "name": "actionsData",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts",
+                    "file": "src/app/auth/components/login-form/login-form.stories.ts",
                     "type": "object",
-                    "defaultValue": "{\n  itemAdded: action('itemAdded'),\n}"
+                    "defaultValue": "{\n  credentialsReceived: action('credentialsReceived')\n}"
                 },
                 {
-                    "name": "Default",
+                    "name": "formData",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts",
+                    "file": "src/app/auth/components/login-form/login-form.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  translations: {\n    de: {\n      email: 'Email Adresse',\n      password: 'Passwort',\n      login: 'Anmelden',\n      register: 'Registrieren',\n      'errors.validation.email.required': 'Bitte geben Sie Ihre Email Adresse ein',\n      'errors.validation.email.pattern': 'Valid Email Format braucht @ ein . dann mindestens 2 Zeichen',\n      'errors.validation.password.required': 'Bitte geben Sie Ihre Passwort ein',\n      'errors.validation.password.minlength': 'Passwort muss mindestens 4 character lang sein',\n      'errors.validation.password.pattern': 'Passwort braucht klein und gross Buchstaben und ein Zahl'\n      }\n    }\n}"
+                },
+                {
+                    "name": "Login",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/auth/components/login-form/login-form.stories.ts",
                     "type": "",
-                    "defaultValue": "() => ({\n  component: ShoppingListFormComponent,\n  props: {\n    ...taskData,\n    ...actionsData\n  },\n})"
+                    "defaultValue": "() => ({\n  component: LoginFormComponent,\n  props: {\n    credentialsReceived: actionsData.credentialsReceived,\n    translations: formData.translations\n  }\n})"
                 },
                 {
-                    "name": "taskData",
+                    "name": "Register",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  translations: {\n    de: {\n      'shoppingList.addForm.amount': 'Menge',\n      'shoppingList.addForm.product': 'Zucker',\n      'shoppingList.addForm.piece': 'Stück',\n      'shoppingList.addForm.pack': 'Packung',\n      'shoppingList.addForm.addLabel': 'Hinzufügen',\n    }\n  },\n  currentLang: 'de'\n}"
+                    "file": "src/app/auth/components/login-form/login-form.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: LoginFormComponent,\n  props: {\n    credentialsReceived: actionsData.credentialsReceived,\n    translations: formData.translations,\n    buttonText: 'register'\n  }\n})"
                 }
             ],
             "src/app/cookbook/components/recipe-list/recipe-list.stories.ts": [
@@ -6622,30 +6596,38 @@
                     "defaultValue": "{\n  translations: {\n    de: {\n      'input.search': 'Suchen',\n      'button.edit': 'Bearbeiten',\n      'button.delete': 'Löschen'\n    }\n  },\n  recipes: [\n    {\n      id: '1',\n      title: 'Chocolate chip cookie'\n    },\n    {\n      id: '2',\n      title: 'Cheesecake'\n    },\n    {\n      id: '3',\n      title: 'Muffin'\n    }\n  ]\n}"
                 }
             ],
-            "src/app/shopping-list/components/shopping-list/shopping-list.stories.ts": [
+            "src/app/cookbook/components/recipe-form/recipe-form.stories.ts": [
                 {
                     "name": "actionsData",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/shopping-list/components/shopping-list/shopping-list.stories.ts",
+                    "file": "src/app/cookbook/components/recipe-form/recipe-form.stories.ts",
                     "type": "object",
-                    "defaultValue": "{\n  itemDeleted: action('itemDeleted'),\n  listItemMoved: action('listItemMoved'),\n}"
+                    "defaultValue": "{\n  recipeSaved: action('recipeSaved')\n}"
                 },
                 {
                     "name": "Default",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/shopping-list/components/shopping-list/shopping-list.stories.ts",
+                    "file": "src/app/cookbook/components/recipe-form/recipe-form.stories.ts",
                     "type": "",
-                    "defaultValue": "() => ({\n  component: ShoppingListComponent,\n  props: {\n    ...taskData,\n    ...actionsData\n  },\n})"
+                    "defaultValue": "() => ({\n  component: RecipeFormComponent,\n  props: {\n    ...formData,\n    ...actionsData\n  }\n})"
                 },
                 {
-                    "name": "taskData",
+                    "name": "Edit",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/shopping-list/components/shopping-list/shopping-list.stories.ts",
-                    "type": "literal type",
-                    "defaultValue": "{\n  items: [\n    {id: '1', title: 'Mehl', amount: 1, unit: 'kg', isChecked: false},\n    {id: '2', title: 'Zucker', amount: 50, unit: 'g', isChecked: false},\n    {id: '3', title: 'Eier', amount: 1, unit: 'piece', isChecked: false},\n    {id: '4', title: 'Slaz', amount: 5, unit: 'coffeeSpoon', isChecked: false},\n  ],\n  translations: {\n    de: {\n      piece: '',\n      tableSpoon: 'Esslöffel',\n      coffeeSpoon: 'Kaffelöffel',\n      pinch: 'Prise',\n    }\n  }\n}"
+                    "file": "src/app/cookbook/components/recipe-form/recipe-form.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: RecipeFormComponent,\n  props: {\n    ...formData,\n    ...actionsData,\n    recipe: {\n      title: 'Beef & beer pie',\n      url: 'https://www.bbcgoodfood.com/recipes/beef-beer-pie',\n      ingredients: [\n        {\n          name: 'Beer',\n          amount: 1,\n          unit: 'l',\n          isStapleFood: true,\n        },\n        {\n          name: 'Beef',\n          amount: 1,\n          unit: 'kg',\n          isStapleFood: false,\n        }\n      ]\n    }\n  }\n})"
+                },
+                {
+                    "name": "formData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/cookbook/components/recipe-form/recipe-form.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  translations: {\n    de: {\n      'recipe-form.placeholder.title': 'Title',\n      'recipe-form.label.title': 'Recipe Title',\n      'recipe-form.placeholder.url': 'Link',\n      'recipe-form.label.url': 'Link to Recipe',\n      'ingredients.label-text': 'Ingredients',\n      'recipe-form.placeholder.amount': 'Quantity',\n      'recipe-form.placeholder.name': 'Name',\n      'recipe-form.text.toggle': 'Basic Ingredient',\n      'recipe-form.button.delete': 'Delete',\n      'recipe-form.button.new-ingredient': 'Add new Ingredient',\n      'recipe-form.button.submit': 'Create',\n      'errors.validation.title.required': 'Titel is required',\n      'recipe-form.button.modify': 'Edit'\n    }\n  }\n}"
                 }
             ],
             "src/app/shared/components/select/select.stories.ts": [
@@ -6706,38 +6688,56 @@
                     "defaultValue": "() => ({\n  component: SelectComponent,\n  props: {\n    ...inputData,\n    options: [\n      {key: 'Tesla Key', value: {brand: 'Tesla'}},\n      {key: 'Audi Key', value: {brand: 'Audi'}},\n      {key: 'Skoda', value: {brand: 'Skoda'}},\n      {key: 'BMW', value: {brand: 'BMW'}},\n    ],\n    ...actionsData,\n  }\n})"
                 }
             ],
-            "src/app/cookbook/components/recipe-form/recipe-form.stories.ts": [
+            "src/app/shopping-list/components/shopping-list/shopping-list.stories.ts": [
                 {
                     "name": "actionsData",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/cookbook/components/recipe-form/recipe-form.stories.ts",
+                    "file": "src/app/shopping-list/components/shopping-list/shopping-list.stories.ts",
                     "type": "object",
-                    "defaultValue": "{\n  recipeSaved: action('recipeSaved')\n}"
+                    "defaultValue": "{\n  itemDeleted: action('itemDeleted'),\n  listItemMoved: action('listItemMoved'),\n}"
                 },
                 {
                     "name": "Default",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/cookbook/components/recipe-form/recipe-form.stories.ts",
+                    "file": "src/app/shopping-list/components/shopping-list/shopping-list.stories.ts",
                     "type": "",
-                    "defaultValue": "() => ({\n  component: RecipeFormComponent,\n  props: {\n    ...formData,\n    ...actionsData\n  }\n})"
+                    "defaultValue": "() => ({\n  component: ShoppingListComponent,\n  props: {\n    ...taskData,\n    ...actionsData\n  },\n})"
                 },
                 {
-                    "name": "Edit",
+                    "name": "taskData",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/cookbook/components/recipe-form/recipe-form.stories.ts",
-                    "type": "",
-                    "defaultValue": "() => ({\n  component: RecipeFormComponent,\n  props: {\n    ...formData,\n    ...actionsData,\n    recipe: {\n      title: 'Beef & beer pie',\n      url: 'https://www.bbcgoodfood.com/recipes/beef-beer-pie',\n      ingredients: [\n        {\n          name: 'Beer',\n          amount: 1,\n          unit: 'l',\n          isStapleFood: true,\n        },\n        {\n          name: 'Beef',\n          amount: 1,\n          unit: 'kg',\n          isStapleFood: false,\n        }\n      ]\n    }\n  }\n})"
-                },
+                    "file": "src/app/shopping-list/components/shopping-list/shopping-list.stories.ts",
+                    "type": "literal type",
+                    "defaultValue": "{\n  items: [\n    {id: '1', title: 'Mehl', amount: 1, unit: 'kg', isChecked: false},\n    {id: '2', title: 'Zucker', amount: 50, unit: 'g', isChecked: false},\n    {id: '3', title: 'Eier', amount: 1, unit: 'piece', isChecked: false},\n    {id: '4', title: 'Slaz', amount: 5, unit: 'coffeeSpoon', isChecked: false},\n  ],\n  translations: {\n    de: {\n      piece: '',\n      tableSpoon: 'Esslöffel',\n      coffeeSpoon: 'Kaffelöffel',\n      pinch: 'Prise',\n    }\n  }\n}"
+                }
+            ],
+            "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts": [
                 {
-                    "name": "formData",
+                    "name": "actionsData",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/cookbook/components/recipe-form/recipe-form.stories.ts",
+                    "file": "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts",
                     "type": "object",
-                    "defaultValue": "{\n  translations: {\n    de: {\n      'recipe-form.placeholder.title': 'Title',\n      'recipe-form.label.title': 'Recipe Title',\n      'recipe-form.placeholder.url': 'Link',\n      'recipe-form.label.url': 'Link to Recipe',\n      'ingredients.label-text': 'Ingredients',\n      'recipe-form.placeholder.amount': 'Quantity',\n      'recipe-form.placeholder.name': 'Name',\n      'recipe-form.text.toggle': 'Basic Ingredient',\n      'recipe-form.button.delete': 'Delete',\n      'recipe-form.button.new-ingredient': 'Add new Ingredient',\n      'recipe-form.button.submit': 'Create',\n      'errors.validation.title.required': 'Titel is required',\n      'recipe-form.button.modify': 'Edit'\n    }\n  }\n}"
+                    "defaultValue": "{\n  itemAdded: action('itemAdded'),\n}"
+                },
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: ShoppingListFormComponent,\n  props: {\n    ...taskData,\n    ...actionsData\n  },\n})"
+                },
+                {
+                    "name": "taskData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  translations: {\n    de: {\n      'shoppingList.addForm.amount': 'Menge',\n      'shoppingList.addForm.product': 'Zucker',\n      'shoppingList.addForm.piece': 'Stück',\n      'shoppingList.addForm.pack': 'Packung',\n      'shoppingList.addForm.addLabel': 'Hinzufügen',\n    }\n  },\n  currentLang: 'de'\n}"
                 }
             ],
             "src/app/shared/state/reducers/app-state.reducers.ts": [
@@ -6937,14 +6937,14 @@
                     "defaultValue": "createAction('[Cookbook Container] Delete Recipe from State', props<{ recipeId: string }>())"
                 }
             ],
-            "src/environments/environment.qa.ts": [
+            "src/environments/environment.prod.ts": [
                 {
                     "name": "environment",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/environments/environment.qa.ts",
+                    "file": "src/environments/environment.prod.ts",
                     "type": "object",
-                    "defaultValue": "{\n  production: false,\n  showBetaTeaser: false,\n  apiUrl: 'https://api.mealplaner.app',\n  authUrl: 'https://api.mealplaner.app',\n}"
+                    "defaultValue": "{\n  production: true,\n  showBetaTeaser: false,\n  apiUrl: 'https://api.mealplaner.app',\n  authUrl: 'https://api.mealplaner.app',\n}"
                 }
             ],
             "src/environments/environment.ts": [
@@ -6957,14 +6957,14 @@
                     "defaultValue": "{\n  production: false,\n  showBetaTeaser: true,\n  apiUrl: 'http://localhost:4200/api',\n  authUrl: 'http://localhost:4200',\n}"
                 }
             ],
-            "src/environments/environment.prod.ts": [
+            "src/environments/environment.qa.ts": [
                 {
                     "name": "environment",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/environments/environment.prod.ts",
+                    "file": "src/environments/environment.qa.ts",
                     "type": "object",
-                    "defaultValue": "{\n  production: true,\n  showBetaTeaser: false,\n  apiUrl: 'https://api.mealplaner.app',\n  authUrl: 'https://api.mealplaner.app',\n}"
+                    "defaultValue": "{\n  production: false,\n  showBetaTeaser: false,\n  apiUrl: 'https://api.mealplaner.app',\n  authUrl: 'https://api.mealplaner.app',\n}"
                 }
             ],
             "src/app/i18n/actions/i18n-api.actions.ts": [
@@ -7607,6 +7607,17 @@
                     ]
                 }
             ],
+            "src/app/shared/components/input/input.stories.ts": [
+                {
+                    "name": "createFormControl",
+                    "file": "src/app/shared/components/input/input.stories.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "description": "",
+                    "args": [],
+                    "returnType": "FormControl"
+                }
+            ],
             "src/app/shared/components/select/select.stories.ts": [
                 {
                     "name": "createFormControl",
@@ -7628,17 +7639,6 @@
                             }
                         }
                     ]
-                }
-            ],
-            "src/app/shared/components/input/input.stories.ts": [
-                {
-                    "name": "createFormControl",
-                    "file": "src/app/shared/components/input/input.stories.ts",
-                    "ctype": "miscellaneous",
-                    "subtype": "function",
-                    "description": "",
-                    "args": [],
-                    "returnType": "FormControl"
                 }
             ],
             "src/app/shared/validators/custom-validators.validator.ts": [
@@ -7756,10 +7756,16 @@
                     },
                     {
                         "path": "recipe/:id",
+                        "canActivate": [
+                            "AuthenticatedGuard"
+                        ],
                         "component": "RecipeContainerComponent"
                     },
                     {
                         "path": "recipe",
+                        "canActivate": [
+                            "AuthenticatedGuard"
+                        ],
                         "component": "RecipeContainerComponent"
                     }
                 ],

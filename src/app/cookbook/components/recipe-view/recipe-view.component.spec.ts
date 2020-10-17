@@ -13,6 +13,7 @@ describe('RecipeViewComponent', () => {
     data: {
       id: '1',
       title: 'title',
+      cookbookId: 'cookbookId',
       ingredients: [
         {
           amount: 1,
