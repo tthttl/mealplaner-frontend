@@ -45,6 +45,7 @@ describe('i18nReducer', () => {
       expect(appStateReducer({
           ...initialAppState,
           user: {
+            id: '0',
             name: 'Joe',
             email: 'joe@doe.com',
             jwt: 'jwtToExpire'
@@ -52,6 +53,7 @@ describe('i18nReducer', () => {
         },
         AuthApiActions.refreshTokenSuccess({
           user: {
+            id: '0',
             name: 'Joe',
             email: 'joe@doe.com',
             jwt: 'jwtRenewed'
@@ -59,6 +61,7 @@ describe('i18nReducer', () => {
         }))).toEqual({
         ...initialAppState,
         user: {
+          id: '0',
           name: 'Joe',
           email: 'joe@doe.com',
           jwt: 'jwtRenewed'
@@ -72,6 +75,7 @@ describe('i18nReducer', () => {
       expect(appStateReducer({
           ...initialAppState,
           user: {
+            id: '0',
             name: 'Joe',
             email: 'joe@doe.com',
             jwt: 'jwtToExpire'
@@ -90,12 +94,14 @@ describe('i18nReducer', () => {
           ...initialAppState,
         },
         AuthApiActions.loginSuccess({user: {
+            id: '0',
             name: 'Joe',
             email: 'joe@doe.com',
             jwt: 'jwt'
           }}))).toEqual({
         ...initialAppState,
         user: {
+          id: '0',
           name: 'Joe',
           email: 'joe@doe.com',
           jwt: 'jwt'
@@ -133,6 +139,7 @@ describe('i18nReducer', () => {
       expect(appStateReducer({
           ...initialAppState,
           user: {
+            id: '0',
             name: 'Joe',
             email: 'joe@doe.com',
             jwt: 'jwt',
@@ -150,6 +157,7 @@ describe('i18nReducer', () => {
       expect(appStateReducer({
           ...initialAppState,
           user: {
+            id: '0',
             name: 'Joe',
             email: 'joe@doe.com',
             jwt: 'jwt',

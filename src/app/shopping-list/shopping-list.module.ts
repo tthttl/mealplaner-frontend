@@ -10,10 +10,14 @@ import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ShoppingListContainerComponent } from './containers/shopping-list-container/shopping-list-container.component';
 import { ShoppingListRoutingModule } from './shopping-list-routing.module';
+import { ShoppingListPageComponent } from './components/shopping-list-page/shopping-list-page.component';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthApiEffects } from '../auth/effects/auth-api.effects';
+import { ShoppingListApiEffects } from './effects/shopping-list-api.effects';
 
 
 @NgModule({
-  declarations: [ShoppingListComponent, ShoppingListFormComponent, ShoppingListContainerComponent],
+  declarations: [ShoppingListComponent, ShoppingListFormComponent, ShoppingListContainerComponent, ShoppingListPageComponent],
   imports: [
     CommonModule,
     DragDropModule,
@@ -23,6 +27,7 @@ import { ShoppingListRoutingModule } from './shopping-list-routing.module';
     SharedModule,
     ReactiveFormsModule,
     ShoppingListRoutingModule,
+    EffectsModule.forFeature([ShoppingListApiEffects])
   ]
 })
 export class ShoppingListModule {

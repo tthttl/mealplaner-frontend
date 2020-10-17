@@ -6,6 +6,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { TranslatePipe } from '../../../i18n/pipes/translate.pipe';
 import { ArrayItemMovedEvent, ShoppingListItem } from '../../../shared/model/model';
+import { LoginFormComponent } from '../../../auth/components/login-form/login-form.component';
 
 describe('ShoppingListComponent', () => {
   let component: ShoppingListComponent;
@@ -31,10 +32,10 @@ describe('ShoppingListComponent', () => {
 
   it('should render shopping list', () => {
     component.items = [
-      {id: '1', name: 'Mehl', amount: 1, unit: 'kg', isChecked: false},
-      {id: '2', name: 'Mehl', amount: 1, unit: 'kg', isChecked: false},
-      {id: '3', name: 'Mehl', amount: 1, unit: 'kg', isChecked: false},
-      {id: '4', name: 'Mehl', amount: 1, unit: 'kg', isChecked: false},
+      {id: '1', shoppingList: '42', title: 'Mehl', amount: 1, unit: 'kg', isChecked: false},
+      {id: '2', shoppingList: '42', title: 'Mehl', amount: 1, unit: 'kg', isChecked: false},
+      {id: '3', shoppingList: '42', title: 'Mehl', amount: 1, unit: 'kg', isChecked: false},
+      {id: '4', shoppingList: '42', title: 'Mehl', amount: 1, unit: 'kg', isChecked: false},
     ];
 
     fixture.detectChanges();
@@ -43,27 +44,24 @@ describe('ShoppingListComponent', () => {
     expect(listItems.length).toBe(4);
   });
 
-  it('should emit deletion event', fakeAsync(() => {
-    const shoppingListItem: ShoppingListItem = {id: '1', name: 'Mehl', amount: 1, unit: 'kg', isChecked: false};
+  it('should emit deletion event', () => {
+    const shoppingListItem: ShoppingListItem = {id: '1', shoppingList: '42', title: 'Mehl', amount: 1, unit: 'kg', isChecked: false};
+
+    component.items = [
+      shoppingListItem
+    ];
+
+    fixture.detectChanges();
 
     component.itemDeleted.subscribe((item: ShoppingListItem) => {
-      expect(item).toEqual( {...shoppingListItem, isChecked: true});
+      expect(item).toEqual( {...shoppingListItem});
     });
 
-    component.itemChecked( shoppingListItem, true);
-    tick(1500);
-  }));
+    const hostElement = fixture.nativeElement;
+    const checkbox = hostElement.querySelector('.mat-checkbox-label');
+    checkbox.click();
+  });
 
-  it('should not emit deletion event when unchecked within debounce time', fakeAsync(() => {
-    const shoppingListItem: ShoppingListItem = {id: '1', name: 'Mehl', amount: 1, unit: 'kg', isChecked: false};
-
-    spyOn(component.itemDeleted, 'emit');
-    component.itemChecked( shoppingListItem, true);
-    tick(1000);
-    component.itemChecked( {...shoppingListItem, isChecked: true}, false);
-    tick(500);
-    expect(component.itemDeleted.emit).toHaveBeenCalledTimes(0);
-  }));
 
   it('should emit listItemMoved event', fakeAsync(() => {
     component.listItemMoved.subscribe((item: ArrayItemMovedEvent) => {

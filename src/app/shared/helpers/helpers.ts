@@ -14,6 +14,7 @@ export function mapI18nApiToI18nClient(i18nApi: I18nApi): I18nClient {
 export function mapUserApiToUserClient(userApi: UserApi): User {
   return {
     jwt: userApi.jwt,
+    id: userApi.user._id,
     name: userApi.user.username,
     email: userApi.user.email,
   };
@@ -30,25 +31,6 @@ export function translateValidationErrors(formControl: FormControl,
   return [];
 }
 
-export function changeElementPosition<T>(input: T[], {previousIndex, currentIndex}: ArrayItemMovedEvent): T[] {
-  const tempList: T[] = [...input];
-  const result: T[] = [];
-  const elementDragged = input[previousIndex];
-  tempList.splice(previousIndex, 1);
-
-  if (currentIndex === tempList.length) {
-    result.push(...[...tempList, elementDragged]);
-  } else {
-    tempList.forEach((item, index) => {
-      if (index === currentIndex) {
-        result.push(elementDragged);
-      }
-      result.push(item);
-    });
-  }
-
-  return result;
-}
 
 export function decodeJwtToken(token: string): JwtPayload {
   const base64Url = token.split('.')[1];
@@ -69,4 +51,12 @@ export function isJwtTokenExpired(token: string, now: Date = new Date()): boolea
   }
 
   return isAfter(now, tokenExpirationDate);
+}
+
+export function moveItemInArray<T>(array: T[], previousIndex: number, currentIndex: number): T[] {
+  const copy = [...array];
+  const element = array[previousIndex];
+  copy.splice(previousIndex, 1);
+  copy.splice(currentIndex, 0, element);
+  return copy;
 }

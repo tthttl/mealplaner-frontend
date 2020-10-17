@@ -43,6 +43,7 @@ describe('AuthService', () => {
   it('login() should return User', () => {
     const mockUserApi: UserApi = {
       user: {
+        _id: '0',
         username: 'Joe',
         email: 'joe@doe.com',
       },
@@ -62,6 +63,7 @@ describe('AuthService', () => {
     const mockJwtRenewal: JwtRefreshResponse = {
       ok: true,
       user: {
+        id: '0',
         name: 'Joe',
         email: 'joe@doe.com',
         jwt: validJwt

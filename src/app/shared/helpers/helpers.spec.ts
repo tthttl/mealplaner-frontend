@@ -3,11 +3,11 @@ import { TranslatePipe } from '../../i18n/pipes/translate.pipe';
 import { I18n } from '../model/model';
 import { I18n as I18nApi, UserApi } from '../model/model-api';
 import {
-  changeElementPosition,
   decodeJwtToken,
   isJwtTokenExpired,
   mapI18nApiToI18nClient,
   mapUserApiToUserClient,
+  moveItemInArray,
   translateValidationErrors
 } from './helpers';
 import createSpyObj = jasmine.createSpyObj;
@@ -107,12 +107,14 @@ describe('Helpers', () => {
     const userApi: UserApi = {
       jwt: 'jwt',
       user: {
+        _id: '0',
         username: 'Joe',
         email: 'joe@doe.ch'
       },
     };
     it('should convert to User', () => {
       expect(mapUserApiToUserClient(userApi)).toEqual({
+        id: '0',
         jwt: 'jwt',
         name: 'Joe',
         email: 'joe@doe.ch'
@@ -148,22 +150,18 @@ describe('Helpers', () => {
     });
   });
 
-  describe('changeElementPosition', () => {
-    let input: number[] = [];
-    beforeEach(() => {
-      input = [1, 2, 3, 4];
+  describe('moveItemInArray', () => {
+    it('should move item to end of the array', () => {
+      expect(moveItemInArray([0, 1, 2, 3, 4], 0, 4)).toEqual([1, 2, 3, 4, 0]);
     });
-    it('should change pos from 3 to 0', () => {
-      expect(changeElementPosition(input, {previousIndex: 3, currentIndex: 0}))
-        .toEqual([4, 1, 2, 3]);
+    it('should move item to start of the array', () => {
+      expect(moveItemInArray([0, 1, 2, 3, 4], 4, 0)).toEqual([4, 0, 1, 2, 3]);
     });
-    it('should change pos from 0 to 3', () => {
-      expect(changeElementPosition(input, {previousIndex: 0, currentIndex: 3}))
-        .toEqual([2, 3, 4, 1]);
+    it('should move item to forward within the the array', () => {
+      expect(moveItemInArray([0, 1, 2, 3, 4], 1, 3)).toEqual([0, 2, 3, 1, 4]);
     });
-    it('should change pos from 2 to 2', () => {
-      expect(changeElementPosition(input, {previousIndex: 2, currentIndex: 2}))
-        .toEqual([1, 2, 3, 4]);
+    it('should move item to backwords within the the array', () => {
+      expect(moveItemInArray([0, 1, 2, 3, 4], 3, 1)).toEqual([0, 3, 1, 2, 4]);
     });
   });
 });
