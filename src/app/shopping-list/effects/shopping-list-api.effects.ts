@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { GlobalState, selectCurrentShoppingListItems, selectUserID } from '../../shared/state';
+import { GlobalState, selectCurrentShoppingListItems, selectUser, selectUserID } from '../../shared/state';
 import { ShoppingListApiActions, ShoppingListContainerActions, ShoppingListEffectActions } from '../actions';
-import { catchError, concatMap, exhaustMap, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import { catchError, concatMap, exhaustMap, filter, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import { ChangeShoppingListAction, SetActiveShoppingListAction, ShoppingListItemMovedAction } from '../../shared/model/model-action';
 import { ShoppingList, ShoppingListItem, ShoppingListItemMovedEvent } from '../../shared/model/model';
 import { forkJoin, Observable, of } from 'rxjs';
 import { ShoppingListService } from '../service/shopping-list.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
 
 @Injectable()
 export class ShoppingListApiEffects {
@@ -21,23 +21,24 @@ export class ShoppingListApiEffects {
   }
 
   @Effect()
-  getShoppingLists = this.actions$.pipe(
+  getShoppingLists$ = this.actions$.pipe(
     ofType(ShoppingListContainerActions.loadShoppingLists),
     withLatestFrom(this.store.select(selectUserID)),
-    exhaustMap(([_, userId]) => this.shoppingListService.getShoppingLists(userId || '').pipe(
+    filter(([_, userId]) => !!userId),
+    exhaustMap(([_, userId]) => this.shoppingListService.getShoppingLists(userId!).pipe(
       map((shoppingLists: ShoppingList[]) => ShoppingListApiActions.loadShoppingListsSuccess({shoppingLists})),
-      catchError(() => of(ShoppingListApiActions.loadShoppingListItemsFailure()))
+      catchError(() => of(ShoppingListApiActions.loadShoppingListsFailure()))
     )),
   );
 
   @Effect()
-  setCurrentShoppingList = this.actions$.pipe(
+  chooseCurrentShoppingList$ = this.actions$.pipe(
     ofType(ShoppingListApiActions.loadShoppingListsSuccess),
     switchMap(({shoppingLists}) => {
-      const requestedSoppingListId = this.activatedRoute.snapshot.queryParams.id;
+      const requestedShoppingListId = this.activatedRoute.snapshot.queryParams.shoppingListId;
       const shoppingListsIds = shoppingLists.map((shoppingList) => shoppingList.id);
-      const selectedShoppingListId  = requestedSoppingListId && shoppingListsIds.includes(requestedSoppingListId) ?
-        requestedSoppingListId : shoppingListsIds[0];
+      const selectedShoppingListId  = requestedShoppingListId && shoppingListsIds.includes(requestedShoppingListId) ?
+        requestedShoppingListId : shoppingListsIds[0];
 
       return of(ShoppingListEffectActions.setActiveShoppingList({shoppingListId: selectedShoppingListId})
       );
@@ -45,7 +46,7 @@ export class ShoppingListApiEffects {
   );
 
   @Effect({dispatch: false})
-  setQueryParameterForActiveShoppingList = this.actions$.pipe(
+  setQueryParameterForActiveShoppingList$ = this.actions$.pipe(
     ofType(ShoppingListEffectActions.setActiveShoppingList, ShoppingListContainerActions.changeShoppingList),
     tap(({shoppingListId}) => {
       this.router.navigate([], {relativeTo: this.activatedRoute, queryParams: {shoppingListId}});
@@ -53,7 +54,7 @@ export class ShoppingListApiEffects {
   );
 
   @Effect()
-  getShoppingListItems = this.actions$.pipe(
+  getShoppingListItems$ = this.actions$.pipe(
     ofType(ShoppingListEffectActions.setActiveShoppingList, ShoppingListContainerActions.changeShoppingList),
     exhaustMap(({shoppingListId}: SetActiveShoppingListAction | ChangeShoppingListAction) => {
       return this.shoppingListService.getShoppingListItems(shoppingListId).pipe(
@@ -66,7 +67,7 @@ export class ShoppingListApiEffects {
   );
 
   @Effect()
-  addShoppingListItem = this.actions$.pipe(
+  addShoppingListItem$ = this.actions$.pipe(
     ofType(ShoppingListContainerActions.addShoppingListItem),
     concatMap(({optimisticId, shoppingListItem}) => this.shoppingListService.addShoppingListItem(shoppingListItem).pipe(
       map((shoppingListItemApi: ShoppingListItem) => {
@@ -77,7 +78,7 @@ export class ShoppingListApiEffects {
   );
 
   @Effect()
-  deleteShoppingListItem = this.actions$.pipe(
+  deleteShoppingListItem$ = this.actions$.pipe(
     ofType(ShoppingListContainerActions.deleteShoppingListItem),
     concatMap(({shoppingListItem}) => this.shoppingListService.deleteShoppingListItem(shoppingListItem.id).pipe(
       map(() => {
@@ -88,12 +89,12 @@ export class ShoppingListApiEffects {
   );
 
   @Effect({dispatch: false})
-  moveShoppingListItem = this.actions$.pipe(
+  moveShoppingListItem$ = this.actions$.pipe(
     ofType(ShoppingListContainerActions.moveShoppingListItem),
     withLatestFrom(this.store.select(selectCurrentShoppingListItems)),
     map(([{shoppingListId, previousIndex, currentIndex}, shoppingListItems]): ShoppingListItem[] => {
-      const [fromIndex, to] = [previousIndex, currentIndex].sort();
-      const itemsToUpdate = shoppingListItems.slice(fromIndex, to + 1);
+      const [fromIndex, toIndex] = [previousIndex, currentIndex].sort();
+      const itemsToUpdate = shoppingListItems.slice(fromIndex, toIndex + 1);
       const maxOrder = Math.max(...itemsToUpdate.map((shoppingListItem: ShoppingListItem) => shoppingListItem.order || 0));
 
       return itemsToUpdate
@@ -103,7 +104,12 @@ export class ShoppingListApiEffects {
       return shoppingListItems.map(shoppingListItem => this.shoppingListService.updateShoppingListItem(shoppingListItem));
     }),
     concatMap((updateObservables: Observable<ShoppingListItem>[]) => {
-      return forkJoin(updateObservables).pipe(
+      console.log('here', updateObservables);
+
+      const a = forkJoin(updateObservables);
+      console.log('a', a);
+
+      return a.pipe(
         map(() => ShoppingListApiActions.updateShoppingListItemSuccess()),
         catchError(() => of(ShoppingListApiActions.updateShoppingListItemFailure({updateObservables}))));
     })

@@ -4,7 +4,7 @@ import { initialShoppingListState } from '../states/shopping-list-state';
 import { ShoppingListApiActions, ShoppingListContainerActions, ShoppingListEffectActions } from '../../../shopping-list/actions';
 
 describe('shoppingListReducers', () => {
-  describe('I18nApiActions.getI18nSuccess', () => {
+  describe('ShoppingListApiActions.loadShoppingListsSuccess', () => {
     it('should add shopping lists to the state', () => {
       const shoppingLists: ShoppingList[] = [{id: '1', title: 'test-1'}, {id: '2', title: 'test-2'}];
 
@@ -59,7 +59,7 @@ describe('shoppingListReducers', () => {
     });
   });
 
-  describe('ShoppingListContainerActions.addShoppingListItem', () => {
+  describe('ShoppingListContainerActions.addShoppingListItem$', () => {
     it('should optimistically add item to shopping list', () => {
       const shoppingListItems: ShoppingListItem[] = [
         {title: 'Apple', shoppingList: '1234', amount: 1, unit: 'kg', id: '42', order: 2, isChecked: false},
@@ -87,7 +87,7 @@ describe('shoppingListReducers', () => {
     });
   });
 
-  describe('ShoppingListContainerActions.deleteShoppingListItem', () => {
+  describe('ShoppingListContainerActions.deleteShoppingListItem$', () => {
     it('should optimistically remove item from shopping list', () => {
       const shoppingListItems: ShoppingListItem[] = [
         {title: 'Apple', shoppingList: '1234', amount: 1, unit: 'kg', id: '42', order: 2, isChecked: false},
@@ -142,7 +142,7 @@ describe('shoppingListReducers', () => {
   });
 
 
-  describe('ShoppingListContainerActions.moveShoppingListItem', () => {
+  describe('ShoppingListContainerActions.moveShoppingListItem$', () => {
     it('should optimistically update order of shopping list', () => {
       const shoppingListItems: ShoppingListItem[] = [
         {title: 'Cherries', shoppingList: '42', amount: 1, unit: 'kg', id: '1', order: 3, isChecked: false},

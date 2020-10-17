@@ -53,7 +53,7 @@ export const shoppingListReducers = createReducer<ShoppingListState, Action>(
         shoppingListItems: {
           ...state.shoppingListItems,
           [shoppingListItem.shoppingList]: [
-            {...shoppingListItem, id: optimisticId},
+            {id: optimisticId, ...shoppingListItem},
             ...state.shoppingListItems[shoppingListItem.shoppingList]
           ],
         }

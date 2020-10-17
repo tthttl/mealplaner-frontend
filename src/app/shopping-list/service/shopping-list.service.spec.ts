@@ -78,7 +78,7 @@ describe('ShoppingListService', () => {
     req.flush(shoppingListItem);
   });
 
-  it('deleteShoppingListItem() should return success message', () => {
+  it('deleteShoppingListItem$() should return success message', () => {
     service.deleteShoppingListItem('shoppingListItemId').subscribe((res) => {
       expect(res).toEqual({DELETED: true});
     });
