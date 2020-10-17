@@ -3,7 +3,6 @@ import { TranslatePipe } from '../../i18n/pipes/translate.pipe';
 import { Cookbook, I18n, Recipe, RecipeIngredient } from '../model/model';
 import { CookbookApi, I18n as I18nApi, IngredientApi, RecipeApi, UserApi } from '../model/model-api';
 import {
-  changeElementPosition,
   convertCookbookApisToCookbooks,
   convertIngredientApiArrayToRecipeIngredientArray,
   convertRecipeApiToRecipe,
@@ -11,8 +10,8 @@ import {
   isJwtTokenExpired,
   mapI18nApiToI18nClient,
   mapUserApiToUserClient,
-  sortAlphabetically,
   moveItemInArray,
+  sortAlphabetically,
   translateValidationErrors
 } from './helpers';
 import createSpyObj = jasmine.createSpyObj;

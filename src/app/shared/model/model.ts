@@ -105,7 +105,7 @@ export const StringUnion = <UnionType extends string>(...values: UnionType[]) =>
 };
 
 export interface RecipeIngredient extends Ingredient {
-  readonly id?: string;
+  id?: string;
   readonly isStapleFood: boolean;
 }
 
