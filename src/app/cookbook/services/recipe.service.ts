@@ -30,9 +30,8 @@ export class RecipeService {
     );
   }
 
-  deleteRecipe(recipeId: string): Observable<string>{
-    return this.httpClient.delete(`${environment.apiUrl}/recipes/${recipeId}`, {
-      responseType: 'text'
-    });
+  deleteRecipe(recipeId: string): Observable<boolean> {
+    return this.httpClient.delete<{ DELETED: boolean }>(`${environment.apiUrl}/recipes/${recipeId}`)
+      .pipe(map((result: { DELETED: boolean }) => result.DELETED));
   }
 }

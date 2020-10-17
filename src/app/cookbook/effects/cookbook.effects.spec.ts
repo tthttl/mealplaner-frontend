@@ -82,22 +82,6 @@ describe('Cookbook Effects', () => {
     });
   });
 
-  it('loadRecipes should return success action when triggered by deleteRecipeFailure', () => {
-    cookbookEffects = createEffects(CookbookApiActions.deleteRecipeFailure.type);
-    recipeService.loadRecipes.and.returnValue(of([] as Recipe[]));
-    cookbookEffects.loadRecipes.subscribe((action: Action) => {
-      expect(action.type).toEqual(CookbookApiActions.loadRecipesSuccess.type);
-    });
-  });
-
-  it('loadRecipes should return failure action when triggered by deleteRecipeFailure', () => {
-    cookbookEffects = createEffects(CookbookApiActions.deleteRecipeFailure.type);
-    recipeService.loadRecipes.and.returnValue(throwError('error'));
-    cookbookEffects.loadRecipes.subscribe((action: Action) => {
-      expect(action.type).toEqual(CookbookApiActions.loadRecipesFailure.type);
-    });
-  });
-
   it('loadRecipes should return success action when triggered by loadCookbookSuccess', () => {
     cookbookEffects = createEffects(CookbookApiActions.loadCookbookSuccess.type);
     recipeService.loadRecipes.and.returnValue(of([] as Recipe[]));
@@ -148,7 +132,7 @@ describe('Cookbook Effects', () => {
 
   it('deleteRecipe should return success action', () => {
     cookbookEffects = createEffects(CookbookActions.deleteRecipe.type, recipeA as Recipe);
-    recipeService.deleteRecipe.and.returnValue(of('DELETE'));
+    recipeService.deleteRecipe.and.returnValue(of(true));
     cookbookEffects.deleteRecipe.subscribe((action: Action) => {
       expect(action.type).toEqual(CookbookApiActions.deleteRecipeSuccess.type);
     });

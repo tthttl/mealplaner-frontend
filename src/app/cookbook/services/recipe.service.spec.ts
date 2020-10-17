@@ -70,15 +70,15 @@ describe(`${RecipeService}`, () => {
     request.flush(recipeApiA);
   });
 
-  it('deleteRecipe should edit Recipes', () => {
+  it('deleteRecipe should delete Recipes', () => {
     recipeService.deleteRecipe(recipeApiA.id)
-      .subscribe((result: string) => {
-        expect(result).toEqual('DELETE');
+      .subscribe((result: boolean) => {
+        expect(result).toEqual(true);
       });
 
     const request = httpClientMock.expectOne(`${environment.apiUrl}/recipes/${recipeApiA.id}`);
     expect(request.request.method).toEqual('DELETE');
-    request.flush('DELETE');
+    request.flush({DELETED: true});
   });
 
 });
