@@ -1,9 +1,10 @@
 @import "../../../../styles/settings/colors";
+@import "../../../../styles/settings/variables";
 
 .form-wrapper{
   padding: 1rem;
   border: 1px solid $blue_80;
-  border-radius: 4px;
+  border-radius: $border-radius-default;
 
   .login-form__input {
     display: block;

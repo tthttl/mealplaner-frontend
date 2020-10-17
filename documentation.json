@@ -114,10 +114,10 @@
         },
         {
             "name": "ArrayItemMovedEvent",
-            "id": "interface-ArrayItemMovedEvent-44681d5fa9ebfc49ba82ed190b5c80ad",
+            "id": "interface-ArrayItemMovedEvent-0ebe8cc114d83327df1109fc0db5923a",
             "file": "src/app/shared/model/model.ts",
             "type": "interface",
-            "sourceCode": "import { SUPPORTED_LANGUAGES } from '../helpers/constants';\n\nexport type I18n = {\n  readonly [key: string]: Translations;\n};\n\nexport interface Translations {\n  readonly [key: string]: string;\n}\n\nexport type Language = typeof SUPPORTED_LANGUAGES.type;\n\nexport type Unit = 'kg' | 'g' | 'tableSpoon' | 'coffeeSpoon' | 'l' | 'dl' | 'ml' | 'pinch' | 'piece' | 'pack';\n\nexport interface Ingredient {\n  name: string;\n  amount: number;\n  unit: Unit;\n}\n\nexport interface ShoppingListItem extends Ingredient{\n  id: string;\n  isChecked: boolean;\n}\n\nexport interface ArrayItemMovedEvent {\n  currentIndex: number;\n  previousIndex: number;\n}\n\nexport interface SelectOption<T> {\n  value: T;\n  key?: string;\n  name?: string;\n}\n\nexport interface LoginCredentials {\n  identifier: string;\n  password: string;\n}\n\nexport interface User {\n  jwt: string;\n  name: string;\n  email: string;\n}\n\nexport interface JwtPayload {\n  id: string;\n  iat: number;\n  exp: number;\n}\n\nexport interface JwtRefreshResponse {\n  ok: boolean;\n  user: User | null;\n}\n\n// TypeScript will infer a string union type from the literal values passed to\n// this function. Without `extends string`, it would instead generalize them\n// to the common string type.\nexport const StringUnion = <UnionType extends string>(...values: UnionType[]) => {\n  Object.freeze(values);\n  const valueSet: Set<string> = new Set(values);\n\n  const guard = (value: string): value is UnionType => {\n    return valueSet.has(value);\n  };\n\n  const check = (value: string): UnionType => {\n    if (!guard(value)) {\n      const actual = JSON.stringify(value);\n      const expected = values.map(s => JSON.stringify(s)).join(' | ');\n      throw new TypeError(`Value '${actual}' is not assignable to type '${expected}'.`);\n    }\n    return value;\n  };\n\n  const unionNamespace = {guard, check, values};\n  return Object.freeze(unionNamespace as typeof unionNamespace & {type: UnionType});\n};\n",
+            "sourceCode": "import { SUPPORTED_LANGUAGES } from '../helpers/constants';\n\nexport type I18n = {\n  readonly [key: string]: Translations;\n};\n\nexport interface Translations {\n  readonly [key: string]: string;\n}\n\nexport type Language = typeof SUPPORTED_LANGUAGES.type;\n\nexport type Unit = 'kg' | 'g' | 'tableSpoon' | 'coffeeSpoon' | 'l' | 'dl' | 'ml' | 'pinch' | 'piece' | 'pack';\n\nexport interface Ingredient {\n  name: string;\n  amount: number;\n  unit: Unit;\n}\n\nexport interface ShoppingListItem extends Ingredient {\n  id: string;\n  isChecked: boolean;\n}\n\nexport interface ArrayItemMovedEvent {\n  currentIndex: number;\n  previousIndex: number;\n}\n\nexport interface SelectOption<T> {\n  value: T;\n  key?: string;\n  name?: string;\n}\n\nexport interface LoginCredentials {\n  identifier: string;\n  password: string;\n}\n\nexport interface User {\n  jwt: string;\n  name: string;\n  email: string;\n}\n\nexport interface JwtPayload {\n  id: string;\n  iat: number;\n  exp: number;\n}\n\nexport interface JwtRefreshResponse {\n  ok: boolean;\n  user: User | null;\n}\n\n// TypeScript will infer a string union type from the literal values passed to\n// this function. Without `extends string`, it would instead generalize them\n// to the common string type.\nexport const StringUnion = <UnionType extends string>(...values: UnionType[]) => {\n  Object.freeze(values);\n  const valueSet: Set<string> = new Set(values);\n\n  const guard = (value: string): value is UnionType => {\n    return valueSet.has(value);\n  };\n\n  const check = (value: string): UnionType => {\n    if (!guard(value)) {\n      const actual = JSON.stringify(value);\n      const expected = values.map(s => JSON.stringify(s)).join(' | ');\n      throw new TypeError(`Value '${actual}' is not assignable to type '${expected}'.`);\n    }\n    return value;\n  };\n\n  const unionNamespace = {guard, check, values};\n  return Object.freeze(unionNamespace as typeof unionNamespace & {type: UnionType});\n};\n\nexport interface RecipeIngredient extends Ingredient {\n  readonly isStapleFood: boolean;\n}\n\nexport interface Recipe {\n  readonly title: string;\n  readonly ingredients: RecipeIngredient [];\n  readonly url?: string;\n}\n",
             "properties": [
                 {
                     "name": "currentIndex",
@@ -159,10 +159,10 @@
         },
         {
             "name": "Ingredient",
-            "id": "interface-Ingredient-44681d5fa9ebfc49ba82ed190b5c80ad",
+            "id": "interface-Ingredient-0ebe8cc114d83327df1109fc0db5923a",
             "file": "src/app/shared/model/model.ts",
             "type": "interface",
-            "sourceCode": "import { SUPPORTED_LANGUAGES } from '../helpers/constants';\n\nexport type I18n = {\n  readonly [key: string]: Translations;\n};\n\nexport interface Translations {\n  readonly [key: string]: string;\n}\n\nexport type Language = typeof SUPPORTED_LANGUAGES.type;\n\nexport type Unit = 'kg' | 'g' | 'tableSpoon' | 'coffeeSpoon' | 'l' | 'dl' | 'ml' | 'pinch' | 'piece' | 'pack';\n\nexport interface Ingredient {\n  name: string;\n  amount: number;\n  unit: Unit;\n}\n\nexport interface ShoppingListItem extends Ingredient{\n  id: string;\n  isChecked: boolean;\n}\n\nexport interface ArrayItemMovedEvent {\n  currentIndex: number;\n  previousIndex: number;\n}\n\nexport interface SelectOption<T> {\n  value: T;\n  key?: string;\n  name?: string;\n}\n\nexport interface LoginCredentials {\n  identifier: string;\n  password: string;\n}\n\nexport interface User {\n  jwt: string;\n  name: string;\n  email: string;\n}\n\nexport interface JwtPayload {\n  id: string;\n  iat: number;\n  exp: number;\n}\n\nexport interface JwtRefreshResponse {\n  ok: boolean;\n  user: User | null;\n}\n\n// TypeScript will infer a string union type from the literal values passed to\n// this function. Without `extends string`, it would instead generalize them\n// to the common string type.\nexport const StringUnion = <UnionType extends string>(...values: UnionType[]) => {\n  Object.freeze(values);\n  const valueSet: Set<string> = new Set(values);\n\n  const guard = (value: string): value is UnionType => {\n    return valueSet.has(value);\n  };\n\n  const check = (value: string): UnionType => {\n    if (!guard(value)) {\n      const actual = JSON.stringify(value);\n      const expected = values.map(s => JSON.stringify(s)).join(' | ');\n      throw new TypeError(`Value '${actual}' is not assignable to type '${expected}'.`);\n    }\n    return value;\n  };\n\n  const unionNamespace = {guard, check, values};\n  return Object.freeze(unionNamespace as typeof unionNamespace & {type: UnionType});\n};\n",
+            "sourceCode": "import { SUPPORTED_LANGUAGES } from '../helpers/constants';\n\nexport type I18n = {\n  readonly [key: string]: Translations;\n};\n\nexport interface Translations {\n  readonly [key: string]: string;\n}\n\nexport type Language = typeof SUPPORTED_LANGUAGES.type;\n\nexport type Unit = 'kg' | 'g' | 'tableSpoon' | 'coffeeSpoon' | 'l' | 'dl' | 'ml' | 'pinch' | 'piece' | 'pack';\n\nexport interface Ingredient {\n  name: string;\n  amount: number;\n  unit: Unit;\n}\n\nexport interface ShoppingListItem extends Ingredient {\n  id: string;\n  isChecked: boolean;\n}\n\nexport interface ArrayItemMovedEvent {\n  currentIndex: number;\n  previousIndex: number;\n}\n\nexport interface SelectOption<T> {\n  value: T;\n  key?: string;\n  name?: string;\n}\n\nexport interface LoginCredentials {\n  identifier: string;\n  password: string;\n}\n\nexport interface User {\n  jwt: string;\n  name: string;\n  email: string;\n}\n\nexport interface JwtPayload {\n  id: string;\n  iat: number;\n  exp: number;\n}\n\nexport interface JwtRefreshResponse {\n  ok: boolean;\n  user: User | null;\n}\n\n// TypeScript will infer a string union type from the literal values passed to\n// this function. Without `extends string`, it would instead generalize them\n// to the common string type.\nexport const StringUnion = <UnionType extends string>(...values: UnionType[]) => {\n  Object.freeze(values);\n  const valueSet: Set<string> = new Set(values);\n\n  const guard = (value: string): value is UnionType => {\n    return valueSet.has(value);\n  };\n\n  const check = (value: string): UnionType => {\n    if (!guard(value)) {\n      const actual = JSON.stringify(value);\n      const expected = values.map(s => JSON.stringify(s)).join(' | ');\n      throw new TypeError(`Value '${actual}' is not assignable to type '${expected}'.`);\n    }\n    return value;\n  };\n\n  const unionNamespace = {guard, check, values};\n  return Object.freeze(unionNamespace as typeof unionNamespace & {type: UnionType});\n};\n\nexport interface RecipeIngredient extends Ingredient {\n  readonly isStapleFood: boolean;\n}\n\nexport interface Recipe {\n  readonly title: string;\n  readonly ingredients: RecipeIngredient [];\n  readonly url?: string;\n}\n",
             "properties": [
                 {
                     "name": "amount",
@@ -192,10 +192,10 @@
         },
         {
             "name": "JwtPayload",
-            "id": "interface-JwtPayload-44681d5fa9ebfc49ba82ed190b5c80ad",
+            "id": "interface-JwtPayload-0ebe8cc114d83327df1109fc0db5923a",
             "file": "src/app/shared/model/model.ts",
             "type": "interface",
-            "sourceCode": "import { SUPPORTED_LANGUAGES } from '../helpers/constants';\n\nexport type I18n = {\n  readonly [key: string]: Translations;\n};\n\nexport interface Translations {\n  readonly [key: string]: string;\n}\n\nexport type Language = typeof SUPPORTED_LANGUAGES.type;\n\nexport type Unit = 'kg' | 'g' | 'tableSpoon' | 'coffeeSpoon' | 'l' | 'dl' | 'ml' | 'pinch' | 'piece' | 'pack';\n\nexport interface Ingredient {\n  name: string;\n  amount: number;\n  unit: Unit;\n}\n\nexport interface ShoppingListItem extends Ingredient{\n  id: string;\n  isChecked: boolean;\n}\n\nexport interface ArrayItemMovedEvent {\n  currentIndex: number;\n  previousIndex: number;\n}\n\nexport interface SelectOption<T> {\n  value: T;\n  key?: string;\n  name?: string;\n}\n\nexport interface LoginCredentials {\n  identifier: string;\n  password: string;\n}\n\nexport interface User {\n  jwt: string;\n  name: string;\n  email: string;\n}\n\nexport interface JwtPayload {\n  id: string;\n  iat: number;\n  exp: number;\n}\n\nexport interface JwtRefreshResponse {\n  ok: boolean;\n  user: User | null;\n}\n\n// TypeScript will infer a string union type from the literal values passed to\n// this function. Without `extends string`, it would instead generalize them\n// to the common string type.\nexport const StringUnion = <UnionType extends string>(...values: UnionType[]) => {\n  Object.freeze(values);\n  const valueSet: Set<string> = new Set(values);\n\n  const guard = (value: string): value is UnionType => {\n    return valueSet.has(value);\n  };\n\n  const check = (value: string): UnionType => {\n    if (!guard(value)) {\n      const actual = JSON.stringify(value);\n      const expected = values.map(s => JSON.stringify(s)).join(' | ');\n      throw new TypeError(`Value '${actual}' is not assignable to type '${expected}'.`);\n    }\n    return value;\n  };\n\n  const unionNamespace = {guard, check, values};\n  return Object.freeze(unionNamespace as typeof unionNamespace & {type: UnionType});\n};\n",
+            "sourceCode": "import { SUPPORTED_LANGUAGES } from '../helpers/constants';\n\nexport type I18n = {\n  readonly [key: string]: Translations;\n};\n\nexport interface Translations {\n  readonly [key: string]: string;\n}\n\nexport type Language = typeof SUPPORTED_LANGUAGES.type;\n\nexport type Unit = 'kg' | 'g' | 'tableSpoon' | 'coffeeSpoon' | 'l' | 'dl' | 'ml' | 'pinch' | 'piece' | 'pack';\n\nexport interface Ingredient {\n  name: string;\n  amount: number;\n  unit: Unit;\n}\n\nexport interface ShoppingListItem extends Ingredient {\n  id: string;\n  isChecked: boolean;\n}\n\nexport interface ArrayItemMovedEvent {\n  currentIndex: number;\n  previousIndex: number;\n}\n\nexport interface SelectOption<T> {\n  value: T;\n  key?: string;\n  name?: string;\n}\n\nexport interface LoginCredentials {\n  identifier: string;\n  password: string;\n}\n\nexport interface User {\n  jwt: string;\n  name: string;\n  email: string;\n}\n\nexport interface JwtPayload {\n  id: string;\n  iat: number;\n  exp: number;\n}\n\nexport interface JwtRefreshResponse {\n  ok: boolean;\n  user: User | null;\n}\n\n// TypeScript will infer a string union type from the literal values passed to\n// this function. Without `extends string`, it would instead generalize them\n// to the common string type.\nexport const StringUnion = <UnionType extends string>(...values: UnionType[]) => {\n  Object.freeze(values);\n  const valueSet: Set<string> = new Set(values);\n\n  const guard = (value: string): value is UnionType => {\n    return valueSet.has(value);\n  };\n\n  const check = (value: string): UnionType => {\n    if (!guard(value)) {\n      const actual = JSON.stringify(value);\n      const expected = values.map(s => JSON.stringify(s)).join(' | ');\n      throw new TypeError(`Value '${actual}' is not assignable to type '${expected}'.`);\n    }\n    return value;\n  };\n\n  const unionNamespace = {guard, check, values};\n  return Object.freeze(unionNamespace as typeof unionNamespace & {type: UnionType});\n};\n\nexport interface RecipeIngredient extends Ingredient {\n  readonly isStapleFood: boolean;\n}\n\nexport interface Recipe {\n  readonly title: string;\n  readonly ingredients: RecipeIngredient [];\n  readonly url?: string;\n}\n",
             "properties": [
                 {
                     "name": "exp",
@@ -225,10 +225,10 @@
         },
         {
             "name": "JwtRefreshResponse",
-            "id": "interface-JwtRefreshResponse-44681d5fa9ebfc49ba82ed190b5c80ad",
+            "id": "interface-JwtRefreshResponse-0ebe8cc114d83327df1109fc0db5923a",
             "file": "src/app/shared/model/model.ts",
             "type": "interface",
-            "sourceCode": "import { SUPPORTED_LANGUAGES } from '../helpers/constants';\n\nexport type I18n = {\n  readonly [key: string]: Translations;\n};\n\nexport interface Translations {\n  readonly [key: string]: string;\n}\n\nexport type Language = typeof SUPPORTED_LANGUAGES.type;\n\nexport type Unit = 'kg' | 'g' | 'tableSpoon' | 'coffeeSpoon' | 'l' | 'dl' | 'ml' | 'pinch' | 'piece' | 'pack';\n\nexport interface Ingredient {\n  name: string;\n  amount: number;\n  unit: Unit;\n}\n\nexport interface ShoppingListItem extends Ingredient{\n  id: string;\n  isChecked: boolean;\n}\n\nexport interface ArrayItemMovedEvent {\n  currentIndex: number;\n  previousIndex: number;\n}\n\nexport interface SelectOption<T> {\n  value: T;\n  key?: string;\n  name?: string;\n}\n\nexport interface LoginCredentials {\n  identifier: string;\n  password: string;\n}\n\nexport interface User {\n  jwt: string;\n  name: string;\n  email: string;\n}\n\nexport interface JwtPayload {\n  id: string;\n  iat: number;\n  exp: number;\n}\n\nexport interface JwtRefreshResponse {\n  ok: boolean;\n  user: User | null;\n}\n\n// TypeScript will infer a string union type from the literal values passed to\n// this function. Without `extends string`, it would instead generalize them\n// to the common string type.\nexport const StringUnion = <UnionType extends string>(...values: UnionType[]) => {\n  Object.freeze(values);\n  const valueSet: Set<string> = new Set(values);\n\n  const guard = (value: string): value is UnionType => {\n    return valueSet.has(value);\n  };\n\n  const check = (value: string): UnionType => {\n    if (!guard(value)) {\n      const actual = JSON.stringify(value);\n      const expected = values.map(s => JSON.stringify(s)).join(' | ');\n      throw new TypeError(`Value '${actual}' is not assignable to type '${expected}'.`);\n    }\n    return value;\n  };\n\n  const unionNamespace = {guard, check, values};\n  return Object.freeze(unionNamespace as typeof unionNamespace & {type: UnionType});\n};\n",
+            "sourceCode": "import { SUPPORTED_LANGUAGES } from '../helpers/constants';\n\nexport type I18n = {\n  readonly [key: string]: Translations;\n};\n\nexport interface Translations {\n  readonly [key: string]: string;\n}\n\nexport type Language = typeof SUPPORTED_LANGUAGES.type;\n\nexport type Unit = 'kg' | 'g' | 'tableSpoon' | 'coffeeSpoon' | 'l' | 'dl' | 'ml' | 'pinch' | 'piece' | 'pack';\n\nexport interface Ingredient {\n  name: string;\n  amount: number;\n  unit: Unit;\n}\n\nexport interface ShoppingListItem extends Ingredient {\n  id: string;\n  isChecked: boolean;\n}\n\nexport interface ArrayItemMovedEvent {\n  currentIndex: number;\n  previousIndex: number;\n}\n\nexport interface SelectOption<T> {\n  value: T;\n  key?: string;\n  name?: string;\n}\n\nexport interface LoginCredentials {\n  identifier: string;\n  password: string;\n}\n\nexport interface User {\n  jwt: string;\n  name: string;\n  email: string;\n}\n\nexport interface JwtPayload {\n  id: string;\n  iat: number;\n  exp: number;\n}\n\nexport interface JwtRefreshResponse {\n  ok: boolean;\n  user: User | null;\n}\n\n// TypeScript will infer a string union type from the literal values passed to\n// this function. Without `extends string`, it would instead generalize them\n// to the common string type.\nexport const StringUnion = <UnionType extends string>(...values: UnionType[]) => {\n  Object.freeze(values);\n  const valueSet: Set<string> = new Set(values);\n\n  const guard = (value: string): value is UnionType => {\n    return valueSet.has(value);\n  };\n\n  const check = (value: string): UnionType => {\n    if (!guard(value)) {\n      const actual = JSON.stringify(value);\n      const expected = values.map(s => JSON.stringify(s)).join(' | ');\n      throw new TypeError(`Value '${actual}' is not assignable to type '${expected}'.`);\n    }\n    return value;\n  };\n\n  const unionNamespace = {guard, check, values};\n  return Object.freeze(unionNamespace as typeof unionNamespace & {type: UnionType});\n};\n\nexport interface RecipeIngredient extends Ingredient {\n  readonly isStapleFood: boolean;\n}\n\nexport interface Recipe {\n  readonly title: string;\n  readonly ingredients: RecipeIngredient [];\n  readonly url?: string;\n}\n",
             "properties": [
                 {
                     "name": "ok",
@@ -303,10 +303,10 @@
         },
         {
             "name": "LoginCredentials",
-            "id": "interface-LoginCredentials-44681d5fa9ebfc49ba82ed190b5c80ad",
+            "id": "interface-LoginCredentials-0ebe8cc114d83327df1109fc0db5923a",
             "file": "src/app/shared/model/model.ts",
             "type": "interface",
-            "sourceCode": "import { SUPPORTED_LANGUAGES } from '../helpers/constants';\n\nexport type I18n = {\n  readonly [key: string]: Translations;\n};\n\nexport interface Translations {\n  readonly [key: string]: string;\n}\n\nexport type Language = typeof SUPPORTED_LANGUAGES.type;\n\nexport type Unit = 'kg' | 'g' | 'tableSpoon' | 'coffeeSpoon' | 'l' | 'dl' | 'ml' | 'pinch' | 'piece' | 'pack';\n\nexport interface Ingredient {\n  name: string;\n  amount: number;\n  unit: Unit;\n}\n\nexport interface ShoppingListItem extends Ingredient{\n  id: string;\n  isChecked: boolean;\n}\n\nexport interface ArrayItemMovedEvent {\n  currentIndex: number;\n  previousIndex: number;\n}\n\nexport interface SelectOption<T> {\n  value: T;\n  key?: string;\n  name?: string;\n}\n\nexport interface LoginCredentials {\n  identifier: string;\n  password: string;\n}\n\nexport interface User {\n  jwt: string;\n  name: string;\n  email: string;\n}\n\nexport interface JwtPayload {\n  id: string;\n  iat: number;\n  exp: number;\n}\n\nexport interface JwtRefreshResponse {\n  ok: boolean;\n  user: User | null;\n}\n\n// TypeScript will infer a string union type from the literal values passed to\n// this function. Without `extends string`, it would instead generalize them\n// to the common string type.\nexport const StringUnion = <UnionType extends string>(...values: UnionType[]) => {\n  Object.freeze(values);\n  const valueSet: Set<string> = new Set(values);\n\n  const guard = (value: string): value is UnionType => {\n    return valueSet.has(value);\n  };\n\n  const check = (value: string): UnionType => {\n    if (!guard(value)) {\n      const actual = JSON.stringify(value);\n      const expected = values.map(s => JSON.stringify(s)).join(' | ');\n      throw new TypeError(`Value '${actual}' is not assignable to type '${expected}'.`);\n    }\n    return value;\n  };\n\n  const unionNamespace = {guard, check, values};\n  return Object.freeze(unionNamespace as typeof unionNamespace & {type: UnionType});\n};\n",
+            "sourceCode": "import { SUPPORTED_LANGUAGES } from '../helpers/constants';\n\nexport type I18n = {\n  readonly [key: string]: Translations;\n};\n\nexport interface Translations {\n  readonly [key: string]: string;\n}\n\nexport type Language = typeof SUPPORTED_LANGUAGES.type;\n\nexport type Unit = 'kg' | 'g' | 'tableSpoon' | 'coffeeSpoon' | 'l' | 'dl' | 'ml' | 'pinch' | 'piece' | 'pack';\n\nexport interface Ingredient {\n  name: string;\n  amount: number;\n  unit: Unit;\n}\n\nexport interface ShoppingListItem extends Ingredient {\n  id: string;\n  isChecked: boolean;\n}\n\nexport interface ArrayItemMovedEvent {\n  currentIndex: number;\n  previousIndex: number;\n}\n\nexport interface SelectOption<T> {\n  value: T;\n  key?: string;\n  name?: string;\n}\n\nexport interface LoginCredentials {\n  identifier: string;\n  password: string;\n}\n\nexport interface User {\n  jwt: string;\n  name: string;\n  email: string;\n}\n\nexport interface JwtPayload {\n  id: string;\n  iat: number;\n  exp: number;\n}\n\nexport interface JwtRefreshResponse {\n  ok: boolean;\n  user: User | null;\n}\n\n// TypeScript will infer a string union type from the literal values passed to\n// this function. Without `extends string`, it would instead generalize them\n// to the common string type.\nexport const StringUnion = <UnionType extends string>(...values: UnionType[]) => {\n  Object.freeze(values);\n  const valueSet: Set<string> = new Set(values);\n\n  const guard = (value: string): value is UnionType => {\n    return valueSet.has(value);\n  };\n\n  const check = (value: string): UnionType => {\n    if (!guard(value)) {\n      const actual = JSON.stringify(value);\n      const expected = values.map(s => JSON.stringify(s)).join(' | ');\n      throw new TypeError(`Value '${actual}' is not assignable to type '${expected}'.`);\n    }\n    return value;\n  };\n\n  const unionNamespace = {guard, check, values};\n  return Object.freeze(unionNamespace as typeof unionNamespace & {type: UnionType});\n};\n\nexport interface RecipeIngredient extends Ingredient {\n  readonly isStapleFood: boolean;\n}\n\nexport interface Recipe {\n  readonly title: string;\n  readonly ingredients: RecipeIngredient [];\n  readonly url?: string;\n}\n",
             "properties": [
                 {
                     "name": "identifier",
@@ -328,11 +328,76 @@
             "methods": []
         },
         {
-            "name": "SelectOption",
-            "id": "interface-SelectOption-44681d5fa9ebfc49ba82ed190b5c80ad",
+            "name": "Recipe",
+            "id": "interface-Recipe-0ebe8cc114d83327df1109fc0db5923a",
             "file": "src/app/shared/model/model.ts",
             "type": "interface",
-            "sourceCode": "import { SUPPORTED_LANGUAGES } from '../helpers/constants';\n\nexport type I18n = {\n  readonly [key: string]: Translations;\n};\n\nexport interface Translations {\n  readonly [key: string]: string;\n}\n\nexport type Language = typeof SUPPORTED_LANGUAGES.type;\n\nexport type Unit = 'kg' | 'g' | 'tableSpoon' | 'coffeeSpoon' | 'l' | 'dl' | 'ml' | 'pinch' | 'piece' | 'pack';\n\nexport interface Ingredient {\n  name: string;\n  amount: number;\n  unit: Unit;\n}\n\nexport interface ShoppingListItem extends Ingredient{\n  id: string;\n  isChecked: boolean;\n}\n\nexport interface ArrayItemMovedEvent {\n  currentIndex: number;\n  previousIndex: number;\n}\n\nexport interface SelectOption<T> {\n  value: T;\n  key?: string;\n  name?: string;\n}\n\nexport interface LoginCredentials {\n  identifier: string;\n  password: string;\n}\n\nexport interface User {\n  jwt: string;\n  name: string;\n  email: string;\n}\n\nexport interface JwtPayload {\n  id: string;\n  iat: number;\n  exp: number;\n}\n\nexport interface JwtRefreshResponse {\n  ok: boolean;\n  user: User | null;\n}\n\n// TypeScript will infer a string union type from the literal values passed to\n// this function. Without `extends string`, it would instead generalize them\n// to the common string type.\nexport const StringUnion = <UnionType extends string>(...values: UnionType[]) => {\n  Object.freeze(values);\n  const valueSet: Set<string> = new Set(values);\n\n  const guard = (value: string): value is UnionType => {\n    return valueSet.has(value);\n  };\n\n  const check = (value: string): UnionType => {\n    if (!guard(value)) {\n      const actual = JSON.stringify(value);\n      const expected = values.map(s => JSON.stringify(s)).join(' | ');\n      throw new TypeError(`Value '${actual}' is not assignable to type '${expected}'.`);\n    }\n    return value;\n  };\n\n  const unionNamespace = {guard, check, values};\n  return Object.freeze(unionNamespace as typeof unionNamespace & {type: UnionType});\n};\n",
+            "sourceCode": "import { SUPPORTED_LANGUAGES } from '../helpers/constants';\n\nexport type I18n = {\n  readonly [key: string]: Translations;\n};\n\nexport interface Translations {\n  readonly [key: string]: string;\n}\n\nexport type Language = typeof SUPPORTED_LANGUAGES.type;\n\nexport type Unit = 'kg' | 'g' | 'tableSpoon' | 'coffeeSpoon' | 'l' | 'dl' | 'ml' | 'pinch' | 'piece' | 'pack';\n\nexport interface Ingredient {\n  name: string;\n  amount: number;\n  unit: Unit;\n}\n\nexport interface ShoppingListItem extends Ingredient {\n  id: string;\n  isChecked: boolean;\n}\n\nexport interface ArrayItemMovedEvent {\n  currentIndex: number;\n  previousIndex: number;\n}\n\nexport interface SelectOption<T> {\n  value: T;\n  key?: string;\n  name?: string;\n}\n\nexport interface LoginCredentials {\n  identifier: string;\n  password: string;\n}\n\nexport interface User {\n  jwt: string;\n  name: string;\n  email: string;\n}\n\nexport interface JwtPayload {\n  id: string;\n  iat: number;\n  exp: number;\n}\n\nexport interface JwtRefreshResponse {\n  ok: boolean;\n  user: User | null;\n}\n\n// TypeScript will infer a string union type from the literal values passed to\n// this function. Without `extends string`, it would instead generalize them\n// to the common string type.\nexport const StringUnion = <UnionType extends string>(...values: UnionType[]) => {\n  Object.freeze(values);\n  const valueSet: Set<string> = new Set(values);\n\n  const guard = (value: string): value is UnionType => {\n    return valueSet.has(value);\n  };\n\n  const check = (value: string): UnionType => {\n    if (!guard(value)) {\n      const actual = JSON.stringify(value);\n      const expected = values.map(s => JSON.stringify(s)).join(' | ');\n      throw new TypeError(`Value '${actual}' is not assignable to type '${expected}'.`);\n    }\n    return value;\n  };\n\n  const unionNamespace = {guard, check, values};\n  return Object.freeze(unionNamespace as typeof unionNamespace & {type: UnionType});\n};\n\nexport interface RecipeIngredient extends Ingredient {\n  readonly isStapleFood: boolean;\n}\n\nexport interface Recipe {\n  readonly title: string;\n  readonly ingredients: RecipeIngredient [];\n  readonly url?: string;\n}\n",
+            "properties": [
+                {
+                    "name": "ingredients",
+                    "type": "RecipeIngredient[]",
+                    "optional": false,
+                    "description": "",
+                    "line": 89,
+                    "modifierKind": [
+                        132
+                    ]
+                },
+                {
+                    "name": "title",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 88,
+                    "modifierKind": [
+                        132
+                    ]
+                },
+                {
+                    "name": "url",
+                    "type": "string",
+                    "optional": true,
+                    "description": "",
+                    "line": 90,
+                    "modifierKind": [
+                        132
+                    ]
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 150,
+            "methods": []
+        },
+        {
+            "name": "RecipeIngredient",
+            "id": "interface-RecipeIngredient-0ebe8cc114d83327df1109fc0db5923a",
+            "file": "src/app/shared/model/model.ts",
+            "type": "interface",
+            "sourceCode": "import { SUPPORTED_LANGUAGES } from '../helpers/constants';\n\nexport type I18n = {\n  readonly [key: string]: Translations;\n};\n\nexport interface Translations {\n  readonly [key: string]: string;\n}\n\nexport type Language = typeof SUPPORTED_LANGUAGES.type;\n\nexport type Unit = 'kg' | 'g' | 'tableSpoon' | 'coffeeSpoon' | 'l' | 'dl' | 'ml' | 'pinch' | 'piece' | 'pack';\n\nexport interface Ingredient {\n  name: string;\n  amount: number;\n  unit: Unit;\n}\n\nexport interface ShoppingListItem extends Ingredient {\n  id: string;\n  isChecked: boolean;\n}\n\nexport interface ArrayItemMovedEvent {\n  currentIndex: number;\n  previousIndex: number;\n}\n\nexport interface SelectOption<T> {\n  value: T;\n  key?: string;\n  name?: string;\n}\n\nexport interface LoginCredentials {\n  identifier: string;\n  password: string;\n}\n\nexport interface User {\n  jwt: string;\n  name: string;\n  email: string;\n}\n\nexport interface JwtPayload {\n  id: string;\n  iat: number;\n  exp: number;\n}\n\nexport interface JwtRefreshResponse {\n  ok: boolean;\n  user: User | null;\n}\n\n// TypeScript will infer a string union type from the literal values passed to\n// this function. Without `extends string`, it would instead generalize them\n// to the common string type.\nexport const StringUnion = <UnionType extends string>(...values: UnionType[]) => {\n  Object.freeze(values);\n  const valueSet: Set<string> = new Set(values);\n\n  const guard = (value: string): value is UnionType => {\n    return valueSet.has(value);\n  };\n\n  const check = (value: string): UnionType => {\n    if (!guard(value)) {\n      const actual = JSON.stringify(value);\n      const expected = values.map(s => JSON.stringify(s)).join(' | ');\n      throw new TypeError(`Value '${actual}' is not assignable to type '${expected}'.`);\n    }\n    return value;\n  };\n\n  const unionNamespace = {guard, check, values};\n  return Object.freeze(unionNamespace as typeof unionNamespace & {type: UnionType});\n};\n\nexport interface RecipeIngredient extends Ingredient {\n  readonly isStapleFood: boolean;\n}\n\nexport interface Recipe {\n  readonly title: string;\n  readonly ingredients: RecipeIngredient [];\n  readonly url?: string;\n}\n",
+            "properties": [
+                {
+                    "name": "isStapleFood",
+                    "type": "boolean",
+                    "optional": false,
+                    "description": "",
+                    "line": 84,
+                    "modifierKind": [
+                        132
+                    ]
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 150,
+            "methods": [],
+            "extends": "Ingredient"
+        },
+        {
+            "name": "SelectOption",
+            "id": "interface-SelectOption-0ebe8cc114d83327df1109fc0db5923a",
+            "file": "src/app/shared/model/model.ts",
+            "type": "interface",
+            "sourceCode": "import { SUPPORTED_LANGUAGES } from '../helpers/constants';\n\nexport type I18n = {\n  readonly [key: string]: Translations;\n};\n\nexport interface Translations {\n  readonly [key: string]: string;\n}\n\nexport type Language = typeof SUPPORTED_LANGUAGES.type;\n\nexport type Unit = 'kg' | 'g' | 'tableSpoon' | 'coffeeSpoon' | 'l' | 'dl' | 'ml' | 'pinch' | 'piece' | 'pack';\n\nexport interface Ingredient {\n  name: string;\n  amount: number;\n  unit: Unit;\n}\n\nexport interface ShoppingListItem extends Ingredient {\n  id: string;\n  isChecked: boolean;\n}\n\nexport interface ArrayItemMovedEvent {\n  currentIndex: number;\n  previousIndex: number;\n}\n\nexport interface SelectOption<T> {\n  value: T;\n  key?: string;\n  name?: string;\n}\n\nexport interface LoginCredentials {\n  identifier: string;\n  password: string;\n}\n\nexport interface User {\n  jwt: string;\n  name: string;\n  email: string;\n}\n\nexport interface JwtPayload {\n  id: string;\n  iat: number;\n  exp: number;\n}\n\nexport interface JwtRefreshResponse {\n  ok: boolean;\n  user: User | null;\n}\n\n// TypeScript will infer a string union type from the literal values passed to\n// this function. Without `extends string`, it would instead generalize them\n// to the common string type.\nexport const StringUnion = <UnionType extends string>(...values: UnionType[]) => {\n  Object.freeze(values);\n  const valueSet: Set<string> = new Set(values);\n\n  const guard = (value: string): value is UnionType => {\n    return valueSet.has(value);\n  };\n\n  const check = (value: string): UnionType => {\n    if (!guard(value)) {\n      const actual = JSON.stringify(value);\n      const expected = values.map(s => JSON.stringify(s)).join(' | ');\n      throw new TypeError(`Value '${actual}' is not assignable to type '${expected}'.`);\n    }\n    return value;\n  };\n\n  const unionNamespace = {guard, check, values};\n  return Object.freeze(unionNamespace as typeof unionNamespace & {type: UnionType});\n};\n\nexport interface RecipeIngredient extends Ingredient {\n  readonly isStapleFood: boolean;\n}\n\nexport interface Recipe {\n  readonly title: string;\n  readonly ingredients: RecipeIngredient [];\n  readonly url?: string;\n}\n",
             "properties": [
                 {
                     "name": "key",
@@ -362,10 +427,10 @@
         },
         {
             "name": "ShoppingListItem",
-            "id": "interface-ShoppingListItem-44681d5fa9ebfc49ba82ed190b5c80ad",
+            "id": "interface-ShoppingListItem-0ebe8cc114d83327df1109fc0db5923a",
             "file": "src/app/shared/model/model.ts",
             "type": "interface",
-            "sourceCode": "import { SUPPORTED_LANGUAGES } from '../helpers/constants';\n\nexport type I18n = {\n  readonly [key: string]: Translations;\n};\n\nexport interface Translations {\n  readonly [key: string]: string;\n}\n\nexport type Language = typeof SUPPORTED_LANGUAGES.type;\n\nexport type Unit = 'kg' | 'g' | 'tableSpoon' | 'coffeeSpoon' | 'l' | 'dl' | 'ml' | 'pinch' | 'piece' | 'pack';\n\nexport interface Ingredient {\n  name: string;\n  amount: number;\n  unit: Unit;\n}\n\nexport interface ShoppingListItem extends Ingredient{\n  id: string;\n  isChecked: boolean;\n}\n\nexport interface ArrayItemMovedEvent {\n  currentIndex: number;\n  previousIndex: number;\n}\n\nexport interface SelectOption<T> {\n  value: T;\n  key?: string;\n  name?: string;\n}\n\nexport interface LoginCredentials {\n  identifier: string;\n  password: string;\n}\n\nexport interface User {\n  jwt: string;\n  name: string;\n  email: string;\n}\n\nexport interface JwtPayload {\n  id: string;\n  iat: number;\n  exp: number;\n}\n\nexport interface JwtRefreshResponse {\n  ok: boolean;\n  user: User | null;\n}\n\n// TypeScript will infer a string union type from the literal values passed to\n// this function. Without `extends string`, it would instead generalize them\n// to the common string type.\nexport const StringUnion = <UnionType extends string>(...values: UnionType[]) => {\n  Object.freeze(values);\n  const valueSet: Set<string> = new Set(values);\n\n  const guard = (value: string): value is UnionType => {\n    return valueSet.has(value);\n  };\n\n  const check = (value: string): UnionType => {\n    if (!guard(value)) {\n      const actual = JSON.stringify(value);\n      const expected = values.map(s => JSON.stringify(s)).join(' | ');\n      throw new TypeError(`Value '${actual}' is not assignable to type '${expected}'.`);\n    }\n    return value;\n  };\n\n  const unionNamespace = {guard, check, values};\n  return Object.freeze(unionNamespace as typeof unionNamespace & {type: UnionType});\n};\n",
+            "sourceCode": "import { SUPPORTED_LANGUAGES } from '../helpers/constants';\n\nexport type I18n = {\n  readonly [key: string]: Translations;\n};\n\nexport interface Translations {\n  readonly [key: string]: string;\n}\n\nexport type Language = typeof SUPPORTED_LANGUAGES.type;\n\nexport type Unit = 'kg' | 'g' | 'tableSpoon' | 'coffeeSpoon' | 'l' | 'dl' | 'ml' | 'pinch' | 'piece' | 'pack';\n\nexport interface Ingredient {\n  name: string;\n  amount: number;\n  unit: Unit;\n}\n\nexport interface ShoppingListItem extends Ingredient {\n  id: string;\n  isChecked: boolean;\n}\n\nexport interface ArrayItemMovedEvent {\n  currentIndex: number;\n  previousIndex: number;\n}\n\nexport interface SelectOption<T> {\n  value: T;\n  key?: string;\n  name?: string;\n}\n\nexport interface LoginCredentials {\n  identifier: string;\n  password: string;\n}\n\nexport interface User {\n  jwt: string;\n  name: string;\n  email: string;\n}\n\nexport interface JwtPayload {\n  id: string;\n  iat: number;\n  exp: number;\n}\n\nexport interface JwtRefreshResponse {\n  ok: boolean;\n  user: User | null;\n}\n\n// TypeScript will infer a string union type from the literal values passed to\n// this function. Without `extends string`, it would instead generalize them\n// to the common string type.\nexport const StringUnion = <UnionType extends string>(...values: UnionType[]) => {\n  Object.freeze(values);\n  const valueSet: Set<string> = new Set(values);\n\n  const guard = (value: string): value is UnionType => {\n    return valueSet.has(value);\n  };\n\n  const check = (value: string): UnionType => {\n    if (!guard(value)) {\n      const actual = JSON.stringify(value);\n      const expected = values.map(s => JSON.stringify(s)).join(' | ');\n      throw new TypeError(`Value '${actual}' is not assignable to type '${expected}'.`);\n    }\n    return value;\n  };\n\n  const unionNamespace = {guard, check, values};\n  return Object.freeze(unionNamespace as typeof unionNamespace & {type: UnionType});\n};\n\nexport interface RecipeIngredient extends Ingredient {\n  readonly isStapleFood: boolean;\n}\n\nexport interface Recipe {\n  readonly title: string;\n  readonly ingredients: RecipeIngredient [];\n  readonly url?: string;\n}\n",
             "properties": [
                 {
                     "name": "id",
@@ -389,7 +454,30 @@
         },
         {
             "name": "Translations",
-            "id": "interface-Translations-c0a4de18e3d01ab13b801bc4ce15eeb4",
+            "id": "interface-Translations-0ebe8cc114d83327df1109fc0db5923a",
+            "file": "src/app/shared/model/model.ts",
+            "type": "interface",
+            "sourceCode": "import { SUPPORTED_LANGUAGES } from '../helpers/constants';\n\nexport type I18n = {\n  readonly [key: string]: Translations;\n};\n\nexport interface Translations {\n  readonly [key: string]: string;\n}\n\nexport type Language = typeof SUPPORTED_LANGUAGES.type;\n\nexport type Unit = 'kg' | 'g' | 'tableSpoon' | 'coffeeSpoon' | 'l' | 'dl' | 'ml' | 'pinch' | 'piece' | 'pack';\n\nexport interface Ingredient {\n  name: string;\n  amount: number;\n  unit: Unit;\n}\n\nexport interface ShoppingListItem extends Ingredient {\n  id: string;\n  isChecked: boolean;\n}\n\nexport interface ArrayItemMovedEvent {\n  currentIndex: number;\n  previousIndex: number;\n}\n\nexport interface SelectOption<T> {\n  value: T;\n  key?: string;\n  name?: string;\n}\n\nexport interface LoginCredentials {\n  identifier: string;\n  password: string;\n}\n\nexport interface User {\n  jwt: string;\n  name: string;\n  email: string;\n}\n\nexport interface JwtPayload {\n  id: string;\n  iat: number;\n  exp: number;\n}\n\nexport interface JwtRefreshResponse {\n  ok: boolean;\n  user: User | null;\n}\n\n// TypeScript will infer a string union type from the literal values passed to\n// this function. Without `extends string`, it would instead generalize them\n// to the common string type.\nexport const StringUnion = <UnionType extends string>(...values: UnionType[]) => {\n  Object.freeze(values);\n  const valueSet: Set<string> = new Set(values);\n\n  const guard = (value: string): value is UnionType => {\n    return valueSet.has(value);\n  };\n\n  const check = (value: string): UnionType => {\n    if (!guard(value)) {\n      const actual = JSON.stringify(value);\n      const expected = values.map(s => JSON.stringify(s)).join(' | ');\n      throw new TypeError(`Value '${actual}' is not assignable to type '${expected}'.`);\n    }\n    return value;\n  };\n\n  const unionNamespace = {guard, check, values};\n  return Object.freeze(unionNamespace as typeof unionNamespace & {type: UnionType});\n};\n\nexport interface RecipeIngredient extends Ingredient {\n  readonly isStapleFood: boolean;\n}\n\nexport interface Recipe {\n  readonly title: string;\n  readonly ingredients: RecipeIngredient [];\n  readonly url?: string;\n}\n",
+            "properties": [],
+            "indexSignatures": [
+                {
+                    "id": "index-declaration-0ebe8cc114d83327df1109fc0db5923a",
+                    "args": [
+                        {
+                            "name": "key",
+                            "type": "string"
+                        }
+                    ],
+                    "returnType": "string",
+                    "line": 7
+                }
+            ],
+            "kind": 159,
+            "methods": []
+        },
+        {
+            "name": "Translations",
+            "id": "interface-Translations-c0a4de18e3d01ab13b801bc4ce15eeb4-1",
             "file": "src/app/shared/model/model-api.ts",
             "type": "interface",
             "sourceCode": "export type I18n = {\n  readonly lang: string;\n  readonly translations: Translations;\n};\n\nexport interface Translations {\n  readonly [key: string]: string;\n}\n\nexport interface UserApi {\n  jwt: string;\n  user: {\n    username: string,\n    email: string\n  };\n}\n",
@@ -408,29 +496,6 @@
                 }
             ],
             "kind": 159,
-            "methods": []
-        },
-        {
-            "name": "Translations",
-            "id": "interface-Translations-44681d5fa9ebfc49ba82ed190b5c80ad-1",
-            "file": "src/app/shared/model/model.ts",
-            "type": "interface",
-            "sourceCode": "import { SUPPORTED_LANGUAGES } from '../helpers/constants';\n\nexport type I18n = {\n  readonly [key: string]: Translations;\n};\n\nexport interface Translations {\n  readonly [key: string]: string;\n}\n\nexport type Language = typeof SUPPORTED_LANGUAGES.type;\n\nexport type Unit = 'kg' | 'g' | 'tableSpoon' | 'coffeeSpoon' | 'l' | 'dl' | 'ml' | 'pinch' | 'piece' | 'pack';\n\nexport interface Ingredient {\n  name: string;\n  amount: number;\n  unit: Unit;\n}\n\nexport interface ShoppingListItem extends Ingredient{\n  id: string;\n  isChecked: boolean;\n}\n\nexport interface ArrayItemMovedEvent {\n  currentIndex: number;\n  previousIndex: number;\n}\n\nexport interface SelectOption<T> {\n  value: T;\n  key?: string;\n  name?: string;\n}\n\nexport interface LoginCredentials {\n  identifier: string;\n  password: string;\n}\n\nexport interface User {\n  jwt: string;\n  name: string;\n  email: string;\n}\n\nexport interface JwtPayload {\n  id: string;\n  iat: number;\n  exp: number;\n}\n\nexport interface JwtRefreshResponse {\n  ok: boolean;\n  user: User | null;\n}\n\n// TypeScript will infer a string union type from the literal values passed to\n// this function. Without `extends string`, it would instead generalize them\n// to the common string type.\nexport const StringUnion = <UnionType extends string>(...values: UnionType[]) => {\n  Object.freeze(values);\n  const valueSet: Set<string> = new Set(values);\n\n  const guard = (value: string): value is UnionType => {\n    return valueSet.has(value);\n  };\n\n  const check = (value: string): UnionType => {\n    if (!guard(value)) {\n      const actual = JSON.stringify(value);\n      const expected = values.map(s => JSON.stringify(s)).join(' | ');\n      throw new TypeError(`Value '${actual}' is not assignable to type '${expected}'.`);\n    }\n    return value;\n  };\n\n  const unionNamespace = {guard, check, values};\n  return Object.freeze(unionNamespace as typeof unionNamespace & {type: UnionType});\n};\n",
-            "properties": [],
-            "indexSignatures": [
-                {
-                    "id": "index-declaration-44681d5fa9ebfc49ba82ed190b5c80ad",
-                    "args": [
-                        {
-                            "name": "key",
-                            "type": "string"
-                        }
-                    ],
-                    "returnType": "string",
-                    "line": 7
-                }
-            ],
-            "kind": 159,
             "methods": [],
             "isDuplicate": true,
             "duplicateId": 1,
@@ -438,10 +503,10 @@
         },
         {
             "name": "User",
-            "id": "interface-User-44681d5fa9ebfc49ba82ed190b5c80ad",
+            "id": "interface-User-0ebe8cc114d83327df1109fc0db5923a",
             "file": "src/app/shared/model/model.ts",
             "type": "interface",
-            "sourceCode": "import { SUPPORTED_LANGUAGES } from '../helpers/constants';\n\nexport type I18n = {\n  readonly [key: string]: Translations;\n};\n\nexport interface Translations {\n  readonly [key: string]: string;\n}\n\nexport type Language = typeof SUPPORTED_LANGUAGES.type;\n\nexport type Unit = 'kg' | 'g' | 'tableSpoon' | 'coffeeSpoon' | 'l' | 'dl' | 'ml' | 'pinch' | 'piece' | 'pack';\n\nexport interface Ingredient {\n  name: string;\n  amount: number;\n  unit: Unit;\n}\n\nexport interface ShoppingListItem extends Ingredient{\n  id: string;\n  isChecked: boolean;\n}\n\nexport interface ArrayItemMovedEvent {\n  currentIndex: number;\n  previousIndex: number;\n}\n\nexport interface SelectOption<T> {\n  value: T;\n  key?: string;\n  name?: string;\n}\n\nexport interface LoginCredentials {\n  identifier: string;\n  password: string;\n}\n\nexport interface User {\n  jwt: string;\n  name: string;\n  email: string;\n}\n\nexport interface JwtPayload {\n  id: string;\n  iat: number;\n  exp: number;\n}\n\nexport interface JwtRefreshResponse {\n  ok: boolean;\n  user: User | null;\n}\n\n// TypeScript will infer a string union type from the literal values passed to\n// this function. Without `extends string`, it would instead generalize them\n// to the common string type.\nexport const StringUnion = <UnionType extends string>(...values: UnionType[]) => {\n  Object.freeze(values);\n  const valueSet: Set<string> = new Set(values);\n\n  const guard = (value: string): value is UnionType => {\n    return valueSet.has(value);\n  };\n\n  const check = (value: string): UnionType => {\n    if (!guard(value)) {\n      const actual = JSON.stringify(value);\n      const expected = values.map(s => JSON.stringify(s)).join(' | ');\n      throw new TypeError(`Value '${actual}' is not assignable to type '${expected}'.`);\n    }\n    return value;\n  };\n\n  const unionNamespace = {guard, check, values};\n  return Object.freeze(unionNamespace as typeof unionNamespace & {type: UnionType});\n};\n",
+            "sourceCode": "import { SUPPORTED_LANGUAGES } from '../helpers/constants';\n\nexport type I18n = {\n  readonly [key: string]: Translations;\n};\n\nexport interface Translations {\n  readonly [key: string]: string;\n}\n\nexport type Language = typeof SUPPORTED_LANGUAGES.type;\n\nexport type Unit = 'kg' | 'g' | 'tableSpoon' | 'coffeeSpoon' | 'l' | 'dl' | 'ml' | 'pinch' | 'piece' | 'pack';\n\nexport interface Ingredient {\n  name: string;\n  amount: number;\n  unit: Unit;\n}\n\nexport interface ShoppingListItem extends Ingredient {\n  id: string;\n  isChecked: boolean;\n}\n\nexport interface ArrayItemMovedEvent {\n  currentIndex: number;\n  previousIndex: number;\n}\n\nexport interface SelectOption<T> {\n  value: T;\n  key?: string;\n  name?: string;\n}\n\nexport interface LoginCredentials {\n  identifier: string;\n  password: string;\n}\n\nexport interface User {\n  jwt: string;\n  name: string;\n  email: string;\n}\n\nexport interface JwtPayload {\n  id: string;\n  iat: number;\n  exp: number;\n}\n\nexport interface JwtRefreshResponse {\n  ok: boolean;\n  user: User | null;\n}\n\n// TypeScript will infer a string union type from the literal values passed to\n// this function. Without `extends string`, it would instead generalize them\n// to the common string type.\nexport const StringUnion = <UnionType extends string>(...values: UnionType[]) => {\n  Object.freeze(values);\n  const valueSet: Set<string> = new Set(values);\n\n  const guard = (value: string): value is UnionType => {\n    return valueSet.has(value);\n  };\n\n  const check = (value: string): UnionType => {\n    if (!guard(value)) {\n      const actual = JSON.stringify(value);\n      const expected = values.map(s => JSON.stringify(s)).join(' | ');\n      throw new TypeError(`Value '${actual}' is not assignable to type '${expected}'.`);\n    }\n    return value;\n  };\n\n  const unionNamespace = {guard, check, values};\n  return Object.freeze(unionNamespace as typeof unionNamespace & {type: UnionType});\n};\n\nexport interface RecipeIngredient extends Ingredient {\n  readonly isStapleFood: boolean;\n}\n\nexport interface Recipe {\n  readonly title: string;\n  readonly ingredients: RecipeIngredient [];\n  readonly url?: string;\n}\n",
             "properties": [
                 {
                     "name": "email",
@@ -1247,7 +1312,7 @@
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": "@import \"../../../../styles/material_theme\";\n@import \"../../../../styles/settings/colors\";\n\n.button{\n  width: 100%;\n  height: 100%;\n  background-color: $blue_70;\n  border-radius: 4px;\n  border-style:none;\n  border-width:0;\n  box-sizing:border-box;\n  color: $blue-grey_10;\n  cursor:pointer;\n  display:inline-block;\n  font-family:Roboto, sans-serif;\n  font-size:1rem;\n  font-stretch:100%;\n  font-style:normal;\n  font-weight:500;\n  line-height:2rem;\n  margin:0;\n  outline-style:none;\n  outline-width:0;\n  overflow:visible;\n  padding-left:1rem;\n  padding-right:1rem;\n  position:relative;\n  text-align:center;\n  vertical-align:baseline;\n  white-space:nowrap;\n  transition-duration: 0.2s;\n\n  &:hover{\n    background-color: $blue_60;\n  }\n\n  &:active {\n    background-color: $blue_80;\n  }\n\n  &--no-left-border-radius{\n    border-radius: 0 4px 4px 0;\n  }\n\n  &--color-inverted{\n    background-color: #FFFFFF;\n    color: $blue_100;\n    font-weight: 400;\n\n    &:hover{\n      background-color: $blue-grey_10;\n    }\n\n    &:active {\n      background-color: $blue-grey_10;\n    }\n  }\n\n  &--color-accent{\n    background-color: $cyan_70;\n    color:$cyan_10;\n\n    &:hover{\n      background-color: $cyan_60;\n    }\n\n    &:active {\n      background-color: $cyan_80;\n    }\n  }\n\n  &--color-warning{\n    background-color: $red_70;\n    color: $red_10;\n\n    &:hover{\n      background-color: $red_60;\n    }\n\n    &:active {\n      background-color: $red_80;\n    }\n  }\n\n  &--color-disabled{\n    background-color: $blue-grey_50;\n    cursor: not-allowed;\n\n    &:hover,\n    &:active{\n      background-color: $blue-grey_50;\n    }\n\n  }\n\n  &--warning-border{\n    border: 2px solid $red_70;\n    border-left: none;\n  }\n\n  .icon-left{\n    padding-right: 0.5rem;\n  }\n\n  .icon-right{\n    padding-left: 0.5rem;\n  }\n\n}\n",
+                    "data": "@import \"../../../../styles/material_theme\";\n@import \"../../../../styles/settings/colors\";\n@import \"../../../../styles/mixins/forms\";\n\n.button{\n  background-color: $blue_70;\n  color: $blue-grey_10;\n   @include button();\n\n  &:hover{\n    background-color: $blue_60;\n  }\n\n  &:active {\n    background-color: $blue_80;\n  }\n\n  &--no-left-border-radius{\n    border-radius: 0 4px 4px 0;\n  }\n\n  &--color-inverted{\n    background-color: #FFFFFF;\n    color: $blue_100;\n    font-weight: 400;\n\n    &:hover{\n      background-color: $blue-grey_10;\n    }\n\n    &:active {\n      background-color: $blue-grey_10;\n    }\n  }\n\n  &--color-accent{\n    background-color: $cyan_70;\n    color:$cyan_10;\n\n    &:hover{\n      background-color: $cyan_60;\n    }\n\n    &:active {\n      background-color: $cyan_80;\n    }\n  }\n\n  &--color-warning{\n    background-color: $red_70;\n    color: $red_10;\n\n    &:hover{\n      background-color: $red_60;\n    }\n\n    &:active {\n      background-color: $red_80;\n    }\n  }\n\n  &--color-disabled{\n    background-color: $blue-grey_50;\n    cursor: not-allowed;\n\n    &:hover,\n    &:active{\n      background-color: $blue-grey_50;\n    }\n\n  }\n\n  &--warning-border{\n    border: 2px solid $red_70;\n    border-left: none;\n  }\n\n  .icon-left{\n    padding-right: 0.5rem;\n  }\n\n  .icon-right{\n    padding-left: 0.5rem;\n  }\n\n}\n",
                     "styleUrl": "./button.component.scss"
                 }
             ],
@@ -1256,7 +1321,7 @@
         },
         {
             "name": "InputComponent",
-            "id": "component-InputComponent-6583a8d3274194bbd0ef8c8bc9527b99",
+            "id": "component-InputComponent-da401a55a41976aba202adee8d87ca38",
             "file": "src/app/shared/components/input/input.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -1522,11 +1587,11 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';\nimport { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';\nimport { v4 as uuid } from 'uuid';\n\n@Component({\n  selector: 'app-input',\n  templateUrl: './input.component.html',\n  styleUrls: ['./input.component.scss'],\n  providers: [\n    {\n      provide: NG_VALUE_ACCESSOR,\n      useExisting: forwardRef(() => InputComponent),\n      multi: true\n    }\n  ]})\nexport class InputComponent implements ControlValueAccessor {\n\n  @Input() buttonText = '';\n  @Input() buttonType = 'button';\n  @Input() buttonTestName = '';\n  @Input() color = 'primary';\n  @Input() iconLeft: string | undefined;\n  @Input() minValue: number | null = null;\n\n  @Input() type = 'text';\n  @Input() name = '';\n  @Input() label: string | undefined;\n  @Input() errors: string[] = [];\n  @Input() isDisabled = false;\n  @Input() autocomplete = 'on';\n  @Input() placeholder = '';\n  @Input() e2eTestName = '';\n  @Output() clicked: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();\n\n  inputId: string = uuid();\n\n  currentValue: string | number = '';\n\n  onChange(option: string | number): void {\n    this.propagateChange(option);\n  }\n\n  onBlur(): void {\n    this.markAsTouched();\n  }\n\n  onClicked(event: MouseEvent): void {\n    this.clicked.emit(event);\n  }\n\n  propagateChange = (value: string | number) => {};\n  markAsTouched = () => {};\n\n  registerOnChange(fn: () => {}): void {\n    this.propagateChange = fn;\n  }\n\n  registerOnTouched(fn: () => {}): void {\n    this.markAsTouched = fn;\n  }\n\n  writeValue(value: string | number): void {\n    if (value !== undefined) {\n      this.currentValue = value;\n    }\n  }\n\n\n}\n",
+            "sourceCode": "import { Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';\nimport { v4 as uuid } from 'uuid';\n\n@Component({\n  selector: 'app-input',\n  templateUrl: './input.component.html',\n  styleUrls: ['./input.component.scss'],\n  providers: [\n    {\n      provide: NG_VALUE_ACCESSOR,\n      useExisting: forwardRef(() => InputComponent),\n      multi: true\n    }\n  ]})\nexport class InputComponent implements ControlValueAccessor {\n\n  @Input() buttonText = '';\n  @Input() buttonType = 'button';\n  @Input() buttonTestName = '';\n  @Input() color = 'primary';\n  @Input() iconLeft: string | undefined;\n  @Input() minValue: number | null = null;\n\n  @Input() type = 'text';\n  @Input() name = '';\n  @Input() label: string | undefined;\n  @Input() errors: string[] = [];\n  @Input() isDisabled = false;\n  @Input() autocomplete = 'on';\n  @Input() placeholder = '';\n  @Input() e2eTestName = '';\n  @Output() clicked: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();\n\n  inputId: string = uuid();\n\n  currentValue: string | number = '';\n\n  onChange(option: string | number): void {\n    this.propagateChange(option);\n  }\n\n  onBlur(): void {\n    this.markAsTouched();\n  }\n\n  onClicked(event: MouseEvent): void {\n    this.clicked.emit(event);\n  }\n\n  propagateChange = (value: string | number) => {};\n  markAsTouched = () => {};\n\n  registerOnChange(fn: () => {}): void {\n    this.propagateChange = fn;\n  }\n\n  registerOnTouched(fn: () => {}): void {\n    this.markAsTouched = fn;\n  }\n\n  writeValue(value: string | number): void {\n    if (value !== undefined) {\n      this.currentValue = value;\n    }\n  }\n\n\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": "@import \"../../../../styles/settings/colors\";\n@import \"../../../../styles/material_theme\";\n@import \"../../../../styles/mixins/forms\";\n\n\n\n.input-group {\n  display: flex;\n  justify-content: center;\n  font-family: 'Roboto', sans-serif;\n\n  .input {\n    width: 100%;\n    display: flex;\n    flex-direction: column;\n\n    .field-wrapper {\n      display: flex;\n      flex-direction: row;\n      justify-content: flex-start;\n    }\n\n    &__label {\n      @include label;\n    }\n\n    &__field {\n      @include form-field;\n\n      &--border-accent {\n        border: 2px solid $cyan_70;\n      }\n\n      &--short {\n        border-right: none;\n        border-radius: 4px 0 0 4px;\n      }\n\n    }\n\n    &__button {\n      flex: 0 0 20%;\n      border-radius: 0 4px 4px 0;\n    }\n\n    &__error {\n      @include form-errors;\n    }\n  }\n}\n",
+                    "data": "@import \"../../../../styles/settings/colors\";\n@import \"../../../../styles/material_theme\";\n@import \"../../../../styles/mixins/forms\";\n\n\n\n.input-group {\n  display: flex;\n  justify-content: center;\n\n  .input {\n    width: 100%;\n    display: flex;\n    flex-direction: column;\n\n    .field-wrapper {\n      display: flex;\n      flex-direction: row;\n      justify-content: flex-start;\n    }\n\n    &__label {\n      @include label;\n    }\n\n    &__field {\n      @include form-field;\n\n      &--border-accent {\n        border: 2px solid $cyan_70;\n      }\n\n      &--short {\n        border-right: none;\n        border-radius: 4px 0 0 4px;\n      }\n\n    }\n\n    &__button {\n      flex: 0 0 20%;\n      border-radius: 0 4px 4px 0;\n    }\n\n    &__error {\n      @include form-errors;\n    }\n  }\n}\n",
                     "styleUrl": "./input.component.scss"
                 }
             ],
@@ -1762,7 +1827,7 @@
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": "@import \"../../../../styles/settings/colors\";\n\n.form-wrapper{\n  padding: 1rem;\n  border: 1px solid $blue_80;\n  border-radius: 4px;\n\n  .login-form__input {\n    display: block;\n    margin-bottom: 0.5rem;\n  }\n\n  .form-button{\n    display: block;\n    margin-top: 1rem;\n  }\n}\n",
+                    "data": "@import \"../../../../styles/settings/colors\";\n@import \"../../../../styles/settings/variables\";\n\n.form-wrapper{\n  padding: 1rem;\n  border: 1px solid $blue_80;\n  border-radius: $border-radius-default;\n\n  .login-form__input {\n    display: block;\n    margin-bottom: 0.5rem;\n  }\n\n  .form-button{\n    display: block;\n    margin-top: 1rem;\n  }\n}\n",
                     "styleUrl": "./login-form.component.scss"
                 }
             ],
@@ -1936,6 +2001,340 @@
             "templateData": "<nav class=\"main-navigation\">\n  <div class=\"container main-navigation__content\">\n    <div class=\"main-navigation__wrapper\">\n      <img class=\"main-navigation__logo\" src=\"../../../assets/logo-inverted.png\" [routerLink]=\"['/']\">\n      <div class=\"desktop-navigation\" *ngIf=\"isLoggedIn\">\n        <ul class=\"desktop-navigation__link-list\" data-test=\"desktop-navigation\">\n          <li class=\"desktop-navigation__link-list-element\">\n            <a [routerLink]=\"['/meal-planer']\"\n               class=\"desktop-navigation__link\"\n               routerLinkActive=\"desktop-navigation__link--active\">\n              {{'app.navigation.planer' | translate:translations:currentLang}}\n            </a>\n          </li>\n          <li class=\"desktop-navigation__link-list-element\">\n            <a [routerLink]=\"['/cook-book']\"\n               class=\"desktop-navigation__link\"\n               routerLinkActive=\"desktop-navigation__link--active\">\n              {{'app.navigation.menus' | translate:translations:currentLang}}\n            </a>\n          </li>\n          <li class=\"desktop-navigation__link-list-element\">\n            <a [routerLink]=\"['/shopping-list']\"\n               class=\"desktop-navigation__link\"\n               routerLinkActive=\"desktop-navigation__link--active\">\n              {{'app.navigation.shopping-list' | translate:translations:currentLang}}\n            </a>\n          </li>\n        </ul>\n      </div>\n    </div>\n\n    <div class=\"main-navigation__actions\">\n\n\n      <app-button *ngIf=\"isLoggedIn; else registerTemplate\"\n                  [buttonText]=\"'app.navigation.logout' | translate:translations:currentLang\"\n                  color=\"inverted\" (click)=\"onLogout()\"\n                  class=\"main-navigation__primary-action\"\n                  data-test=\"logout-button\"></app-button>\n\n\n      <ng-template #registerTemplate>\n        <a class=\"main-navigation__secondary-action\"\n           [routerLink]=\"['/auth/login']\"\n           data-test=\"login-link\">\n          {{'app.navigation.login' | translate:translations:currentLang}}\n        </a>\n\n        <a          [routerLink]=\"['/auth/register']\"\n                    class=\"main-navigation__primary-action\"\n                    data-test=\"register-link\">\n          {{'app.navigation.register' | translate:translations:currentLang }}\n        </a>\n      </ng-template>\n    </div>\n  </div>\n</nav>\n\n\n<nav *ngIf=\"isLoggedIn\" class=\"mobile-navigation\">\n  <ul class=mobile-navigation__link-list data-test=\"mobile-navigation\">\n    <li class=\"mobile-navigation__link-list-element\">\n      <a class=\"mobile-navigation__link\" [routerLink]=\"['/meal-planer']\"\n         routerLinkActive=\"mobile-navigation__link--active\">\n        <fa-icon class=\"shopping-list__ellipsis mobile-navigation__link-icon\"\n                 [icon]=\"['fas','calendar-alt']\"></fa-icon>\n        <span\n          class=\"mobile-navigation__link-text\">{{'app.navigation.planer' | translate:translations:currentLang}}</span>\n        <div\n          class=\"mobile-navigation__status\"></div>\n      </a>\n    </li>\n\n    <li class=\"mobile-navigation__link-list-element\">\n      <a class=\"mobile-navigation__link\" [routerLink]=\"['/cook-book']\"\n         routerLinkActive=\"mobile-navigation__link--active\">\n        <fa-icon class=\"shopping-list__ellipsis mobile-navigation__link-icon\"\n                 [icon]=\"['fas','hamburger']\"></fa-icon>\n        <span\n          class=\"mobile-navigation__link-text\">{{'app.navigation.menus' | translate:translations:currentLang}}</span>\n        <div class=\"mobile-navigation__status\"></div>\n      </a>\n    </li>\n\n    <li class=\"mobile-navigation__link-list-element\">\n      <a class=\"mobile-navigation__link\" [routerLink]=\"['/shopping-list']\"\n         routerLinkActive=\"mobile-navigation__link--active\">\n        <fa-icon class=\"shopping-list__ellipsis mobile-navigation__link-icon\"\n                 [icon]=\"['fas','shopping-cart']\"></fa-icon>\n        <span\n          class=\"mobile-navigation__link-text\">{{'app.navigation.shopping-list' | translate:translations:currentLang}}</span>\n        <div class=\"mobile-navigation__status\"></div>\n      </a>\n    </li>\n  </ul>\n</nav>\n"
         },
         {
+            "name": "RecipeFormComponent",
+            "id": "component-RecipeFormComponent-978c0727e06550029b99eb6ab00704bd",
+            "file": "src/app/cookbook/components/recipe-form/recipe-form.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-recipe-form",
+            "styleUrls": [
+                "./recipe-form.component.scss"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./recipe-form.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [
+                {
+                    "name": "currentLang",
+                    "defaultValue": "DEFAULT_LANGUAGE",
+                    "line": 16,
+                    "type": "Language"
+                },
+                {
+                    "name": "recipe",
+                    "line": 17,
+                    "type": "Recipe | undefined"
+                },
+                {
+                    "name": "translations",
+                    "defaultValue": "{}",
+                    "line": 15,
+                    "type": "I18n"
+                }
+            ],
+            "outputsClass": [
+                {
+                    "name": "recipeSaved",
+                    "defaultValue": "new EventEmitter<Recipe>()",
+                    "line": 18,
+                    "type": "EventEmitter<Recipe>"
+                }
+            ],
+            "propertiesClass": [
+                {
+                    "name": "ingredients",
+                    "type": "FormArray",
+                    "optional": false,
+                    "description": "",
+                    "line": 21
+                },
+                {
+                    "name": "recipeForm",
+                    "type": "FormGroup",
+                    "optional": false,
+                    "description": "",
+                    "line": 20
+                },
+                {
+                    "name": "units",
+                    "defaultValue": "[]",
+                    "type": "SelectOption<string>[]",
+                    "optional": false,
+                    "description": "",
+                    "line": 22
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "addEmptyIngredientRow",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 96
+                },
+                {
+                    "name": "createNewIngredientFormGroup",
+                    "args": [
+                        {
+                            "name": "name",
+                            "type": "string",
+                            "optional": true
+                        },
+                        {
+                            "name": "amount",
+                            "type": "number",
+                            "optional": true
+                        },
+                        {
+                            "name": "unit",
+                            "type": "Unit",
+                            "optional": true
+                        },
+                        {
+                            "name": "isStapleFood",
+                            "type": "boolean",
+                            "optional": true
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "FormGroup",
+                    "typeParameters": [],
+                    "line": 81,
+                    "jsdoctags": [
+                        {
+                            "name": "name",
+                            "type": "string",
+                            "optional": true,
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "amount",
+                            "type": "number",
+                            "optional": true,
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "unit",
+                            "type": "Unit",
+                            "optional": true,
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "isStapleFood",
+                            "type": "boolean",
+                            "optional": true,
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "createUnits",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "SelectOption[]",
+                    "typeParameters": [],
+                    "line": 112
+                },
+                {
+                    "name": "deleteIngredient",
+                    "args": [
+                        {
+                            "name": "index",
+                            "type": "number"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 100,
+                    "jsdoctags": [
+                        {
+                            "name": "index",
+                            "type": "number",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "fillForm",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 40
+                },
+                {
+                    "name": "getErrorsFor",
+                    "args": [
+                        {
+                            "name": "key",
+                            "type": "string"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "string[]",
+                    "typeParameters": [],
+                    "line": 104,
+                    "jsdoctags": [
+                        {
+                            "name": "key",
+                            "type": "string",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "getFormControl",
+                    "args": [
+                        {
+                            "name": "key",
+                            "type": "string"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "FormControl",
+                    "typeParameters": [],
+                    "line": 73,
+                    "jsdoctags": [
+                        {
+                            "name": "key",
+                            "type": "string",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "getIngredientFormControl",
+                    "args": [
+                        {
+                            "name": "ingredient",
+                            "type": "AbstractControl"
+                        },
+                        {
+                            "name": "key",
+                            "type": "string"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "FormControl",
+                    "typeParameters": [],
+                    "line": 77,
+                    "jsdoctags": [
+                        {
+                            "name": "ingredient",
+                            "type": "AbstractControl",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "key",
+                            "type": "string",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 35
+                },
+                {
+                    "name": "onSubmit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 90
+                },
+                {
+                    "name": "overwriteFirstIngredient",
+                    "args": [
+                        {
+                            "name": "ingredient",
+                            "type": "RecipeIngredient"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 65,
+                    "jsdoctags": [
+                        {
+                            "name": "ingredient",
+                            "type": "RecipeIngredient",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';\nimport { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';\nimport { TranslatePipe } from '../../../i18n/pipes/translate.pipe';\nimport { DEFAULT_LANGUAGE } from '../../../shared/helpers/constants';\nimport { translateValidationErrors } from '../../../shared/helpers/helpers';\nimport { I18n, Language, Recipe, RecipeIngredient, SelectOption, Unit } from '../../../shared/model/model';\n\n@Component({\n  selector: 'app-recipe-form',\n  templateUrl: './recipe-form.component.html',\n  styleUrls: ['./recipe-form.component.scss']\n})\nexport class RecipeFormComponent implements OnInit {\n\n  @Input() translations: I18n = {};\n  @Input() currentLang: Language = DEFAULT_LANGUAGE;\n  @Input() recipe: Recipe | undefined;\n  @Output() recipeSaved: EventEmitter<Recipe> = new EventEmitter<Recipe>();\n\n  recipeForm: FormGroup;\n  ingredients: FormArray;\n  units: SelectOption<string>[] = [];\n\n  constructor(private translatePipe: TranslatePipe) {\n    this.recipeForm = new FormGroup({\n      title: new FormControl('', [Validators.required]),\n      url: new FormControl(''),\n      ingredients: new FormArray([\n        this.createNewIngredientFormGroup()\n      ])\n    });\n    this.ingredients = this.recipeForm?.controls.ingredients as FormArray;\n  }\n\n  ngOnInit(): void {\n    this.units = this.createUnits();\n    this.fillForm();\n  }\n\n  fillForm(): void {\n    if (!!this.recipe) {\n      Object.keys(this.recipe).forEach((key: string) => {\n        if (key === 'ingredients') {\n          this.recipe?.ingredients.forEach((ingredient: RecipeIngredient, index: number) => {\n            if (index === 0) {\n              this.overwriteFirstIngredient(ingredient);\n            } else {\n              (this.recipeForm.controls.ingredients as FormArray)\n                .push(this.createNewIngredientFormGroup(\n                  ingredient.name,\n                  ingredient.amount,\n                  ingredient.unit,\n                  ingredient.isStapleFood)\n                );\n            }\n          });\n        } else {\n          // @ts-ignore\n          this.getFormControl(key).setValue(this.recipe[key]);\n        }\n      });\n    }\n  }\n\n  overwriteFirstIngredient(ingredient: RecipeIngredient): void {\n    Object.keys(ingredient).forEach((key: string) => {\n      ((this.recipeForm.controls.ingredients as FormArray).at(0) as FormGroup).controls[key]\n        // @ts-ignore\n        .setValue(ingredient[key]);\n    });\n  }\n\n  getFormControl(key: string): FormControl {\n    return this.recipeForm?.controls[key] as FormControl;\n  }\n\n  getIngredientFormControl(ingredient: AbstractControl, key: string): FormControl {\n    return (ingredient as FormGroup).controls[key] as FormControl;\n  }\n\n  createNewIngredientFormGroup(name?: string, amount?: number, unit?: Unit, isStapleFood?: boolean): FormGroup {\n    return new FormGroup({\n      name: new FormControl(name || '', [Validators.required]),\n      amount: new FormControl(amount || null, [Validators.required, Validators.min(1)]),\n      unit: new FormControl(unit || 'kg', [Validators.required]),\n      isStapleFood: new FormControl(isStapleFood || false, [Validators.required])\n    });\n  }\n\n  onSubmit(): void {\n    const recipe = this.recipeForm?.value;\n    recipe.ingredients.map((ingredient: RecipeIngredient) => ingredient.amount = +ingredient.amount);\n    this.recipeSaved.emit(recipe);\n  }\n\n  addEmptyIngredientRow(): void {\n    this.ingredients.push(this.createNewIngredientFormGroup());\n  }\n\n  deleteIngredient(index: number): void {\n    (this.recipeForm?.controls.ingredients as FormArray).removeAt(index);\n  }\n\n  getErrorsFor(key: string): string[] {\n    return translateValidationErrors(\n      this.getFormControl(key),\n      this.translatePipe,\n      this.translations,\n      this.currentLang);\n  }\n\n  createUnits(): SelectOption<string>[] {\n    return [\n      {\n        value: 'tableSpoon',\n        key: this.translatePipe.transform('forms.units.tablespoon', this.translations, this.currentLang)\n      },\n      {\n        value: 'coffeeSpoon',\n        key: this.translatePipe.transform('forms.units.coffee-spoon', this.translations, this.currentLang)\n      },\n      {\n        value: 'pinch',\n        key: this.translatePipe.transform('forms.units.pinch', this.translations, this.currentLang)\n      },\n      {\n        value: 'pack',\n        key: this.translatePipe.transform('forms.units.pack', this.translations, this.currentLang)\n      },\n      {\n        value: 'piece',\n        key: this.translatePipe.transform('forms.units.piece', this.translations, this.currentLang)\n      },\n      {value: 'kg', key: 'kg'},\n      {value: 'g', key: 'g'},\n      {value: 'l', key: 'l'},\n      {value: 'dl', key: 'dl'},\n      {value: 'ml', key: 'ml'},\n    ];\n  }\n\n\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "@import \"../../../../styles/settings/colors\";\n@import \"../../../../styles/settings/breakpoints\";\n@import \"../../../../styles/mixins/forms\";\n@import \"../../../../styles/settings/variables\";\n\n.recipe-form {\n\n  &__input {\n    display: block;\n    margin-bottom: 1rem;\n  }\n\n  &__button {\n    display: block;\n    margin-top: 2rem;\n  }\n\n  .ingredients-label{\n    @include label;\n  }\n\n}\n\n.ingredients {\n  width: 100%;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  overflow: hidden;\n  border: $border-primary;\n  border-radius: $border-radius-default;\n\n  &__button{\n    margin: 0 2rem 1rem 2rem;\n  }\n\n  &__row {\n    width: 100%;\n    display: flex;\n    flex-direction: column;\n    overflow: hidden;\n    //mixin\n    border-bottom: 1px solid $blue_70;\n    padding: 1rem 2rem;\n\n    @include large {\n      flex-direction: row;\n    }\n\n    &--last {\n      border-bottom: none;\n    }\n\n    &--input-amount {\n      @include large {\n        max-width: 8rem;\n      }\n    }\n\n    &--input {\n      padding-bottom: 1rem;\n      flex: 1 1 auto;\n\n      @include large {\n        padding-bottom: 0;\n        padding-right: 1rem;\n\n        &:last-child {\n          padding-right: 0;\n        }\n      }\n    }\n\n    &--input-unit {\n      @include large {\n        max-width: 8.5rem;\n      }\n    }\n\n    &--input-toggle {\n      margin-bottom: 1rem;\n      color: $blue_70;\n      @include large {\n        max-width: 10rem;\n        margin: auto 0;\n      }\n    }\n\n  }\n\n  .icon-wrapper {\n    background-color: $red_70;\n    border-radius: $border-radius-default;\n    @include button();\n\n    &--disabled {\n      background-color: $blue-grey_50;\n      cursor: not-allowed;\n    }\n\n    @include large {\n      background: none;\n      border: none;\n      width: fit-content;\n      height: unset;\n    }\n\n    .delete-icon {\n      color: $red_70;\n      cursor: pointer;\n      margin: auto;\n      font-size: 1.5rem;\n      visibility: hidden;\n\n      @include large() {\n        visibility: visible;\n      }\n\n      &--disabled {\n        color: $blue-grey_10;\n        cursor: not-allowed;\n\n        @include large {\n          color: $blue-grey_50;\n        }\n      }\n    }\n\n    .delete-text {\n      color: $blue-grey_10;\n\n      @include large() {\n        display: none;\n      }\n    }\n  }\n\n}\n\n\n",
+                    "styleUrl": "./recipe-form.component.scss"
+                }
+            ],
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [
+                    {
+                        "name": "translatePipe",
+                        "type": "TranslatePipe"
+                    }
+                ],
+                "line": 22,
+                "jsdoctags": [
+                    {
+                        "name": "translatePipe",
+                        "type": "TranslatePipe",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "implements": [
+                "OnInit"
+            ],
+            "templateData": "<form class=\"recipe-form\" [formGroup]=\"recipeForm\" (ngSubmit)=\"onSubmit()\">\n  <app-input\n    class=\"recipe-form__input recipe-form--input-title\"\n    [name]=\"'title'\"\n    [placeholder]=\"'recipe-form.placeholder.title' | translate:translations:currentLang\"\n    [label]=\"'recipe-form.label.title' | translate:translations:currentLang\"\n    [errors]=\"getErrorsFor('title')\"\n    [formControl]=\"getFormControl('title')\"></app-input>\n  <app-input\n    class=\"recipe-form__input recipe-form--input-url\"\n    [name]=\"'url'\"\n    [placeholder]=\"'recipe-form.placeholder.url' | translate:translations:currentLang\"\n    [label]=\"'recipe-form.label.url' | translate:translations:currentLang\"\n    [formControl]=\"getFormControl('url')\"></app-input>\n\n  <label class=\"ingredients-label\">{{'recipe-form.ingredients.label-text' | translate:translations:currentLang}}</label>\n  <div class=\"ingredients recipe-form__input\">\n    <div *ngFor=\"let ingredient of ingredients.controls; let last = last; let index = index\"\n         class=\"ingredients__row\"\n         [ngClass]=\"{'ingredients__row--last': last}\">\n      <app-input\n        class=\"ingredients__row--input ingredients__row--input-amount\"\n        [type]=\"'number'\"\n        [minValue]=\"0\"\n        [name]=\"'amount'\"\n        [placeholder]=\"'recipe-form.placeholder.amount' | translate:translations:currentLang\"\n        [formControl]=\"getIngredientFormControl(ingredient, 'amount')\">\n      </app-input>\n      <app-select\n        class=\"ingredients__row--input ingredients__row--input-unit\"\n        [options]=\"units\"\n        [name]=\"'unit'\"\n        [formControl]=\"getIngredientFormControl(ingredient, 'unit')\">\n      </app-select>\n      <app-input\n        class=\"ingredients__row--input\"\n        [name]=\"'name'\"\n        [placeholder]=\"'recipe-form.placeholder.name' | translate:translations:currentLang\"\n        [formControl]=\"getIngredientFormControl(ingredient, 'name')\">\n      </app-input>\n      <mat-slide-toggle\n        class=\"ingredients__row--input ingredients__row--input-toggle\"\n        [color]=\"'primary'\"\n        [formControl]=\"getIngredientFormControl(ingredient, 'isStapleFood')\">\n        {{'recipe-form.text.toggle' | translate:translations:currentLang}}\n      </mat-slide-toggle>\n      <button\n        class=\"icon-wrapper\"\n        (click)=\"deleteIngredient(index)\"\n        [disabled]=\"ingredients?.length === 1\"\n        [ngClass]=\"{'icon-wrapper--disabled': ingredients?.length === 1}\">\n        <fa-icon\n          class=\"delete-icon\"\n          [ngClass]=\"{'delete-icon--disabled': ingredients?.length === 1}\"\n          [icon]=\"['fas', 'times']\">\n        </fa-icon>\n        <span class=\"delete-text\">{{'recipe-form.button.delete' | translate:translations:currentLang}}</span>\n      </button>\n    </div>\n    <app-button\n      class=\"ingredients__button\"\n      [buttonText]=\"'recipe-form.button.new-ingredient' | translate:translations:currentLang\"\n      [isDisabled]=\"ingredients.invalid\"\n      [color]=\"'accent'\"\n      (clicked)=\"addEmptyIngredientRow()\">\n    </app-button>\n  </div>\n\n  <app-button\n    class=\"recipe-form__button\"\n    [buttonType]=\"'submit'\"\n    [buttonText]=\"(recipe ? 'recipe-form.button.modify' : 'recipe-form.button.submit') | translate:translations:currentLang\"\n    [isDisabled]=\"recipeForm.invalid\"></app-button>\n</form>\n\n\n\n"
+        },
+        {
             "name": "RegisterContainerComponent",
             "id": "component-RegisterContainerComponent-f7459dd6c8f743efcfeb8ad6c5029d48",
             "file": "src/app/auth/containers/register-container/register-container.component.ts",
@@ -1993,7 +2392,7 @@
         },
         {
             "name": "SelectComponent",
-            "id": "component-SelectComponent-f323f52e4fc89f09d2b52d86b1ca5f1b",
+            "id": "component-SelectComponent-c98c5d0c72c15c4ab5e548f9a19a7243",
             "file": "src/app/shared/components/select/select.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -2017,39 +2416,39 @@
             "inputsClass": [
                 {
                     "name": "control",
-                    "line": 19,
+                    "line": 20,
                     "type": "FormControl | undefined"
                 },
                 {
                     "name": "e2eTestName",
                     "defaultValue": "''",
-                    "line": 25
+                    "line": 26
                 },
                 {
                     "name": "errors",
                     "defaultValue": "[]",
-                    "line": 23,
+                    "line": 24,
                     "type": "string[]"
                 },
                 {
                     "name": "isDisabled",
                     "defaultValue": "false",
-                    "line": 24
+                    "line": 25
                 },
                 {
                     "name": "label",
-                    "line": 22,
+                    "line": 23,
                     "type": "string | undefined"
                 },
                 {
                     "name": "name",
                     "defaultValue": "''",
-                    "line": 20
+                    "line": 21
                 },
                 {
                     "name": "options",
                     "defaultValue": "[]",
-                    "line": 21,
+                    "line": 22,
                     "type": "SelectOption<T>[]"
                 }
             ],
@@ -2057,7 +2456,7 @@
                 {
                     "name": "valueChanged",
                     "defaultValue": "new EventEmitter()",
-                    "line": 26,
+                    "line": 27,
                     "type": "EventEmitter<T | string>"
                 }
             ],
@@ -2068,7 +2467,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 29
+                    "line": 30
                 },
                 {
                     "name": "propagateChange",
@@ -2076,7 +2475,7 @@
                     "type": "",
                     "optional": false,
                     "description": "",
-                    "line": 46
+                    "line": 47
                 },
                 {
                     "name": "selectedValue",
@@ -2084,7 +2483,7 @@
                     "type": "T | string | null",
                     "optional": false,
                     "description": "",
-                    "line": 28
+                    "line": 29
                 }
             ],
             "methodsClass": [
@@ -2099,7 +2498,7 @@
                     "optional": false,
                     "returnType": "string",
                     "typeParameters": [],
-                    "line": 42,
+                    "line": 43,
                     "jsdoctags": [
                         {
                             "name": "option",
@@ -2116,7 +2515,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 33
+                    "line": 34
                 },
                 {
                     "name": "onChange",
@@ -2129,7 +2528,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 38,
+                    "line": 39,
                     "jsdoctags": [
                         {
                             "name": "option",
@@ -2152,7 +2551,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 48,
+                    "line": 49,
                     "jsdoctags": [
                         {
                             "name": "fn",
@@ -2176,7 +2575,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 52,
+                    "line": 53,
                     "jsdoctags": [
                         {
                             "name": "fn",
@@ -2199,7 +2598,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 55,
+                    "line": 56,
                     "jsdoctags": [
                         {
                             "name": "value",
@@ -2216,11 +2615,11 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';\nimport { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';\nimport { SelectOption } from '../../model/model';\nimport { v4 as uuid } from 'uuid';\n\n\n@Component({\n  selector: 'app-select',\n  templateUrl: './select.component.html',\n  styleUrls: ['./select.component.scss'],\n  providers: [\n    {\n      provide: NG_VALUE_ACCESSOR,\n      useExisting: forwardRef(() => SelectComponent),\n      multi: true\n    }\n  ]})\nexport class SelectComponent<T> implements OnInit, ControlValueAccessor {\n  @Input() control: FormControl | undefined;\n  @Input() name = '';\n  @Input() options: SelectOption<T>[] = [];\n  @Input() label: string | undefined;\n  @Input() errors: string[] = [];\n  @Input() isDisabled = false;\n  @Input() e2eTestName = '';\n  @Output() valueChanged: EventEmitter<T | string> = new EventEmitter();\n\n  selectedValue: T | string | null = null;\n  inputId: string = uuid();\n\n  constructor() { }\n\n  ngOnInit(): void {\n    this.selectedValue = this.options[0].value;\n    this.propagateChange(this.options[0].value);\n  }\n\n  onChange(option: T | string): void {\n    this.propagateChange(option);\n  }\n\n  getOptionKey(option: SelectOption<T>): string {\n    return option?.key ?? ((typeof option.value === 'string') ? option.value : JSON.stringify(option.value));\n  }\n\n  propagateChange = (value: T | string) => {};\n\n  registerOnChange(fn: () => {}): void {\n    this.propagateChange = fn;\n  }\n\n  registerOnTouched(fn: () => {}): void {\n  }\n\n  writeValue(value: T | string): void {\n    if (value !== undefined) {\n      this.selectedValue = value;\n    }\n  }\n}\n\n",
+            "sourceCode": "import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';\nimport { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';\nimport { SelectOption } from '../../model/model';\nimport { v4 as uuid } from 'uuid';\n\n\n\n@Component({\n  selector: 'app-select',\n  templateUrl: './select.component.html',\n  styleUrls: ['./select.component.scss'],\n  providers: [\n    {\n      provide: NG_VALUE_ACCESSOR,\n      useExisting: forwardRef(() => SelectComponent),\n      multi: true\n    }\n  ]})\nexport class SelectComponent<T> implements OnInit, ControlValueAccessor {\n  @Input() control: FormControl | undefined;\n  @Input() name = '';\n  @Input() options: SelectOption<T>[] = [];\n  @Input() label: string | undefined;\n  @Input() errors: string[] = [];\n  @Input() isDisabled = false;\n  @Input() e2eTestName = '';\n  @Output() valueChanged: EventEmitter<T | string> = new EventEmitter();\n\n  selectedValue: T | string | null = null;\n  inputId: string = uuid();\n\n  constructor() { }\n\n  ngOnInit(): void {\n    this.selectedValue = this.options[0].value;\n    this.propagateChange(this.options[0].value);\n  }\n\n  onChange(option: T | string): void {\n    this.propagateChange(option);\n  }\n\n  getOptionKey(option: SelectOption<T>): string {\n    return option?.key ?? ((typeof option.value === 'string') ? option.value : JSON.stringify(option.value));\n  }\n\n  propagateChange = (value: T | string) => {};\n\n  registerOnChange(fn: () => {}): void {\n    this.propagateChange = fn;\n  }\n\n  registerOnTouched(fn: () => {}): void {\n  }\n\n  writeValue(value: T | string): void {\n    if (value !== undefined) {\n      this.selectedValue = value;\n    }\n  }\n}\n\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": "@import \"../../../../styles/settings/colors\";\n@import \"../../../../styles/mixins/forms\";\n\n.select {\n  font-family: 'Roboto', sans-serif;\n\n  &__field {\n    @include form-field;\n  }\n\n  &__label {\n    @include label;\n  }\n\n  &__error {\n    @include form-errors;\n  }\n}\n",
+                    "data": "@import \"../../../../styles/settings/colors\";\n@import \"../../../../styles/mixins/forms\";\n\n.select {\n\n  &__field {\n    @include form-field;\n  }\n\n  &__label {\n    @include label;\n  }\n\n  &__error {\n    @include form-errors;\n  }\n}\n",
                     "styleUrl": "./select.component.scss"
                 }
             ],
@@ -2229,7 +2628,7 @@
                 "name": "constructor",
                 "description": "",
                 "args": [],
-                "line": 29
+                "line": 30
             },
             "implements": [
                 "OnInit",
@@ -2436,7 +2835,7 @@
         },
         {
             "name": "ShoppingListFormComponent",
-            "id": "component-ShoppingListFormComponent-49c5138f1518c1bda76929a9c70594c5",
+            "id": "component-ShoppingListFormComponent-ba881d1c2da5ac938a6be72f77921b97",
             "file": "src/app/shopping-list/components/shopping-list-form/shopping-list-form.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -2558,11 +2957,11 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';\nimport { I18n, Language, SelectOption, ShoppingListItem, Unit } from '../../../shared/model/model';\nimport { DEFAULT_LANGUAGE } from '../../../shared/helpers/constants';\nimport { FormControl, FormGroup, Validators } from '@angular/forms';\nimport { translateValidationErrors } from '../../../shared/helpers/helpers';\nimport { TranslatePipe } from '../../../i18n/pipes/translate.pipe';\n\n@Component({\n  selector: 'app-shopping-list-form',\n  templateUrl: './shopping-list-form.component.html',\n  styleUrls: ['./shopping-list-form.component.scss']\n})\nexport class ShoppingListFormComponent implements OnInit {\n  @Input() translations: I18n = {};\n  @Input() currentLang: Language = DEFAULT_LANGUAGE;\n  @Output() itemAdded: EventEmitter<ShoppingListItem> = new EventEmitter();\n\n  addItemForm: FormGroup;\n\n  units: SelectOption<Unit>[] = [];\n\n  constructor(private translatePipe: TranslatePipe) {\n    this.addItemForm = new FormGroup({\n      amount:  new FormControl('', [\n        Validators.required,\n      ]),\n      unit:  new FormControl('pack', [\n        Validators.required,\n      ]),\n      name:  new FormControl('', [\n        Validators.required,\n      ]),\n    });\n  }\n\n  ngOnInit(): void {\n    this.units = [\n      {value: 'pack', key: this.translatePipe.transform('shoppingList.addForm.pack', this.translations, this.currentLang)},\n      {value: 'piece', key: this.translatePipe.transform('shoppingList.addForm.piece', this.translations, this.currentLang)},\n      {value: 'kg', key: 'kg'},\n      {value: 'g', key: 'g'},\n      {value: 'l', key: 'l'},\n      {value: 'dl', key: 'dl'},\n    ];\n  }\n\n  getFormControl(key: string): FormControl {\n    return this.addItemForm?.controls[key] as FormControl;\n  }\n\n  onSubmit(): void {\n    this.itemAdded.emit(this.addItemForm?.value);\n  }\n\n  getErrorsFor(key: string): string[] {\n    return translateValidationErrors(\n      this.getFormControl(key),\n      this.translatePipe,\n      this.translations,\n      this.currentLang);\n  }\n}\n",
+            "sourceCode": "import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';\nimport { FormControl, FormGroup, Validators } from '@angular/forms';\nimport { TranslatePipe } from '../../../i18n/pipes/translate.pipe';\nimport { DEFAULT_LANGUAGE } from '../../../shared/helpers/constants';\nimport { translateValidationErrors } from '../../../shared/helpers/helpers';\nimport { I18n, Language, SelectOption, ShoppingListItem, Unit } from '../../../shared/model/model';\n\n@Component({\n  selector: 'app-shopping-list-form',\n  templateUrl: './shopping-list-form.component.html',\n  styleUrls: ['./shopping-list-form.component.scss']\n})\nexport class ShoppingListFormComponent implements OnInit {\n  @Input() translations: I18n = {};\n  @Input() currentLang: Language = DEFAULT_LANGUAGE;\n  @Output() itemAdded: EventEmitter<ShoppingListItem> = new EventEmitter();\n\n  addItemForm: FormGroup;\n\n  units: SelectOption<Unit>[] = [];\n\n  constructor(private translatePipe: TranslatePipe) {\n    this.addItemForm = new FormGroup({\n      amount:  new FormControl('', [\n        Validators.required,\n      ]),\n      unit:  new FormControl('pack', [\n        Validators.required,\n      ]),\n      name:  new FormControl('', [\n        Validators.required,\n      ]),\n    });\n  }\n\n  ngOnInit(): void {\n    this.units = [\n      {value: 'pack', key: this.translatePipe.transform('shoppingList.addForm.pack', this.translations, this.currentLang)},\n      {value: 'piece', key: this.translatePipe.transform('shoppingList.addForm.piece', this.translations, this.currentLang)},\n      {value: 'kg', key: 'kg'},\n      {value: 'g', key: 'g'},\n      {value: 'l', key: 'l'},\n      {value: 'dl', key: 'dl'},\n    ];\n  }\n\n  getFormControl(key: string): FormControl {\n    return this.addItemForm?.controls[key] as FormControl;\n  }\n\n  onSubmit(): void {\n    this.itemAdded.emit(this.addItemForm?.value);\n  }\n\n  getErrorsFor(key: string): string[] {\n    return translateValidationErrors(\n      this.getFormControl(key),\n      this.translatePipe,\n      this.translations,\n      this.currentLang);\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": "@import \"../../../../styles/settings/colors\";\n@import \"../../../../styles/settings/breakpoints\";\n\n.add-items-form {\n  display: flex;\n  flex-direction: column;\n  border: 1px solid $blue_80;\n  border-radius: 4px;\n  padding: 1rem 2rem;\n\n  @include large {\n    flex-direction:  row;\n  }\n\n  &--input-amount {\n    @include large {\n      max-width: 8rem;\n    }\n  }\n\n  &--input {\n    padding-bottom: 1rem;\n    flex: 1 1 auto;\n\n    @include large {\n      padding-bottom: 0;\n      padding-right: 1rem;\n    }\n  }\n\n  &--input-unit {\n    @include large {\n      max-width: 8.5rem;\n    }\n  }\n\n  &--submit {\n    height: 2.5rem;\n\n    @include large {\n      height: auto;\n    }\n  }\n}\n",
+                    "data": "@import \"../../../../styles/settings/colors\";\n@import \"../../../../styles/settings/breakpoints\";\n@import \"../../../../styles/settings/variables\";\n\n.add-items-form {\n  display: flex;\n  flex-direction: column;\n  border: 1px solid $blue_80;\n  border-radius: $border-radius-default;\n  padding: 1rem 2rem;\n\n  @include large {\n    flex-direction:  row;\n  }\n\n  &--input-amount {\n    @include large {\n      max-width: 8rem;\n    }\n  }\n\n  &--input {\n    padding-bottom: 1rem;\n    flex: 1 1 auto;\n\n    @include large {\n      padding-bottom: 0;\n      padding-right: 1rem;\n    }\n  }\n\n  &--input-unit {\n    @include large {\n      max-width: 8.5rem;\n    }\n  }\n\n  &--submit {\n    height: 2.5rem;\n\n    @include large {\n      height: auto;\n    }\n  }\n}\n",
                     "styleUrl": "./shopping-list-form.component.scss"
                 }
             ],
@@ -2590,70 +2989,7 @@
             "implements": [
                 "OnInit"
             ],
-            "templateData": "<div class=\"form-wrapper\">\n  <form class=\"add-items-form\" [formGroup]=\"addItemForm\" (ngSubmit)=\"onSubmit()\">\n    <!--<app-input\n      class=\"add-items-form--input add-items-form--input-amount\"\n      type=\"number\"\n      [minValue]=\"0\"\n      [name]=\"'amount'\"\n      [placeholder]=\"'shoppingList.addForm.amount' | translate:translations:currentLang\"\n      [formControl]=\"getFormControl('amount')\"></app-input>\n\n\n\n    <app-select\n      class=\"add-items-form--input add-items-form--input-unit\"\n      [options]=\"units\"\n      [name]=\"'unit'\"\n      [formControl]=\"getFormControl('unit')\">\n    </app-select>\n\n    <app-input\n      class=\"add-items-form--input\"\n      [placeholder]=\"'shoppingList.addForm.product' | translate:translations:currentLang\"\n      [formControl]=\"getFormControl('name')\">\n    </app-input>\n\n    <app-button\n      class=\"add-items-form--submit\"\n      [buttonType]=\"'submit'\"\n      [buttonText]=\"'shoppingList.addForm.addLabel' | translate:translations:currentLang\"\n      [isDisabled]=\"addItemForm.invalid\"></app-button>-->\n  </form>\n</div>\n\n"
-        },
-        {
-            "name": "ShoppingListPageComponent",
-            "id": "component-ShoppingListPageComponent-138ea0e0befe5beed86e69dda8d82c8c",
-            "file": "src/app/shopping-list/components/shopping-list-page/shopping-list-page.component.ts",
-            "encapsulation": [],
-            "entryComponents": [],
-            "inputs": [],
-            "outputs": [],
-            "providers": [],
-            "selector": "app-shopping-list-page",
-            "styleUrls": [
-                "./shopping-list-page.component.scss"
-            ],
-            "styles": [],
-            "templateUrl": [
-                "./shopping-list-page.component.html"
-            ],
-            "viewProviders": [],
-            "inputsClass": [
-                {
-                    "name": "shoppingListItems",
-                    "defaultValue": "[]",
-                    "line": 10,
-                    "type": "ShoppingListItem[] | null"
-                }
-            ],
-            "outputsClass": [],
-            "propertiesClass": [],
-            "methodsClass": [
-                {
-                    "name": "ngOnInit",
-                    "args": [],
-                    "optional": false,
-                    "returnType": "void",
-                    "typeParameters": [],
-                    "line": 15
-                }
-            ],
-            "hostBindings": [],
-            "hostListeners": [],
-            "description": "",
-            "rawdescription": "",
-            "type": "component",
-            "sourceCode": "import { Component, Input, OnInit } from '@angular/core';\nimport { ShoppingListItem } from '../../../shared/model/model';\n\n@Component({\n  selector: 'app-shopping-list-page',\n  templateUrl: './shopping-list-page.component.html',\n  styleUrls: ['./shopping-list-page.component.scss']\n})\nexport class ShoppingListPageComponent implements OnInit {\n  @Input() shoppingListItems: ShoppingListItem[] | null = [];\n\n  constructor() {\n  }\n\n  ngOnInit(): void {\n  }\n}\n",
-            "assetsDirs": [],
-            "styleUrlsData": [
-                {
-                    "data": "",
-                    "styleUrl": "./shopping-list-page.component.scss"
-                }
-            ],
-            "stylesData": "",
-            "constructorObj": {
-                "name": "constructor",
-                "description": "",
-                "args": [],
-                "line": 10
-            },
-            "implements": [
-                "OnInit"
-            ],
-            "templateData": "\n<div class=\"container\">\n  <app-shopping-list\n    [items]=\"shoppingListItems\">\n\n  </app-shopping-list>\n</div>\n\n\n"
+            "templateData": "<div class=\"form-wrapper\">\n  <form class=\"add-items-form\" [formGroup]=\"addItemForm\" (ngSubmit)=\"onSubmit()\">\n    <!--<app-input\n      class=\"add-items-form--input add-items-form--input-amount\"\n      type=\"number\"\n      [minValue]=\"0\"\n      [name]=\"'amount'\"\n      [placeholder]=\"'shoppingList.addForm.amount' | translate:translations:currentLang\"\n      [formControl]=\"getFormControl('amount')\"></app-input>\n\n    <app-select\n      class=\"add-items-form--input add-items-form--input-unit\"\n      [options]=\"units\"\n      [name]=\"'unit'\"\n      [formControl]=\"getFormControl('unit')\">\n    </app-select>\n\n    <app-input\n      class=\"add-items-form--input\"\n      [placeholder]=\"'shoppingList.addForm.product' | translate:translations:currentLang\"\n      [formControl]=\"getFormControl('name')\">\n    </app-input>\n\n    <app-button\n      class=\"add-items-form--submit\"\n      [buttonType]=\"'submit'\"\n      [buttonText]=\"'shoppingList.addForm.addLabel' | translate:translations:currentLang\"\n      [isDisabled]=\"addItemForm.invalid\"></app-button>-->\n  </form>\n</div>\n\n"
         }
     ],
     "modules": [
@@ -2800,6 +3136,78 @@
         },
         {
             "name": "AuthRoutingModule",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": []
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": []
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
+            "name": "CookbookModule",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": [
+                        {
+                            "name": "RecipeFormComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "imports",
+                    "elements": [
+                        {
+                            "name": "CookbookRoutingModule"
+                        },
+                        {
+                            "name": "I18nModule"
+                        },
+                        {
+                            "name": "SharedModule"
+                        }
+                    ]
+                },
+                {
+                    "type": "exports",
+                    "elements": []
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
+            "name": "CookbookRoutingModule",
             "children": [
                 {
                     "type": "providers",
@@ -3076,38 +3484,6 @@
                 "name": "actionsData",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/components/navigation/navigation.stories.ts",
-                "type": "object",
-                "defaultValue": "{\n  logout: action('clicked')\n}"
-            },
-            {
-                "name": "actionsData",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/auth/components/login-form/login-form.stories.ts",
-                "type": "object",
-                "defaultValue": "{\n  credentialsReceived: action('credentialsReceived')\n}"
-            },
-            {
-                "name": "actionsData",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/button/button.stories.ts",
-                "type": "object",
-                "defaultValue": "{\n  clicked: action('clicked')\n}"
-            },
-            {
-                "name": "actionsData",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/input/input.stories.ts",
-                "type": "object",
-                "defaultValue": "{\n  clicked: action('clicked'),\n}"
-            },
-            {
-                "name": "actionsData",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/select/select.stories.ts",
                 "type": "object",
                 "defaultValue": "{\n  valueChanged: action('valueChanged'),\n}"
@@ -3124,9 +3500,49 @@
                 "name": "actionsData",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/button/button.stories.ts",
+                "type": "object",
+                "defaultValue": "{\n  clicked: action('clicked')\n}"
+            },
+            {
+                "name": "actionsData",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/components/navigation/navigation.stories.ts",
+                "type": "object",
+                "defaultValue": "{\n  logout: action('clicked')\n}"
+            },
+            {
+                "name": "actionsData",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/cookbook/components/recipe-form/recipe-form.stories.ts",
+                "type": "object",
+                "defaultValue": "{\n  recipeSaved: action('recipeSaved')\n}"
+            },
+            {
+                "name": "actionsData",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts",
                 "type": "object",
                 "defaultValue": "{\n  itemAdded: action('itemAdded'),\n}"
+            },
+            {
+                "name": "actionsData",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/input/input.stories.ts",
+                "type": "object",
+                "defaultValue": "{\n  clicked: action('clicked'),\n}"
+            },
+            {
+                "name": "actionsData",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/auth/components/login-form/login-form.stories.ts",
+                "type": "object",
+                "defaultValue": "{\n  credentialsReceived: action('credentialsReceived')\n}"
             },
             {
                 "name": "appStateReducer",
@@ -3140,17 +3556,17 @@
                 "name": "buttonData",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/components/navigation/navigation.stories.ts",
+                "file": "src/app/shared/components/button/button.stories.ts",
                 "type": "object",
-                "defaultValue": "{\n  isLoggedIn: false,\n  currentLang: 'de',\n  translations: {\n    de: {\n      'app.navigation.login': 'Login',\n      'app.navigation.logout': 'Abmelden',\n      'app.navigation.register': 'Registrieren',\n      'app.navigation.planer': 'Menuplaner',\n      'app.navigation.menus': 'Menüs',\n      'app.navigation.shopping-list': 'Einkaufsliste',\n    }\n  }\n}"
+                "defaultValue": "{\n  text: 'Primary',\n  isDisabled: false,\n  e2eTestName: 'buttonTest'\n}"
             },
             {
                 "name": "buttonData",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/button/button.stories.ts",
+                "file": "src/app/components/navigation/navigation.stories.ts",
                 "type": "object",
-                "defaultValue": "{\n  text: 'Primary',\n  isDisabled: false,\n  e2eTestName: 'buttonTest'\n}"
+                "defaultValue": "{\n  isLoggedIn: false,\n  currentLang: 'de',\n  translations: {\n    de: {\n      'app.navigation.login': 'Login',\n      'app.navigation.logout': 'Abmelden',\n      'app.navigation.register': 'Registrieren',\n      'app.navigation.planer': 'Menuplaner',\n      'app.navigation.menus': 'Menüs',\n      'app.navigation.shopping-list': 'Einkaufsliste',\n    }\n  }\n}"
             },
             {
                 "name": "context",
@@ -3172,6 +3588,14 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts",
+                "type": "",
+                "defaultValue": "() => ({\n  component: ShoppingListFormComponent,\n  props: {\n    ...taskData,\n    ...actionsData\n  },\n})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/input/input.stories.ts",
                 "type": "",
                 "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: '',\n    errors: []\n  }\n})"
@@ -3180,9 +3604,9 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/select/select.stories.ts",
+                "file": "src/app/cookbook/components/recipe-form/recipe-form.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: SelectComponent,\n  props: {\n    ...inputData,\n    ...actionsData,\n  }\n})"
+                "defaultValue": "() => ({\n  component: RecipeFormComponent,\n  props: {\n    ...formData,\n    ...actionsData\n  }\n})"
             },
             {
                 "name": "Default",
@@ -3196,9 +3620,9 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts",
+                "file": "src/app/shared/components/select/select.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: ShoppingListFormComponent,\n  props: {\n    ...taskData,\n    ...actionsData\n  },\n})"
+                "defaultValue": "() => ({\n  component: SelectComponent,\n  props: {\n    ...inputData,\n    ...actionsData,\n  }\n})"
             },
             {
                 "name": "DEFAULT_LANGUAGE",
@@ -3220,17 +3644,25 @@
                 "name": "Disabled",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/button/button.stories.ts",
+                "file": "src/app/shared/components/select/select.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Disabled',\n    isDisabled: true,\n    e2eTestName: buttonData.e2eTestName,\n    clicked: actionsData.clicked,\n  }\n})"
+                "defaultValue": "() => ({\n  component: SelectComponent,\n  props: {\n    ...inputData,\n    isDisabled: true,\n    ...actionsData,\n  }\n})"
             },
             {
                 "name": "Disabled",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/select/select.stories.ts",
+                "file": "src/app/shared/components/button/button.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: SelectComponent,\n  props: {\n    ...inputData,\n    isDisabled: true,\n    ...actionsData,\n  }\n})"
+                "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Disabled',\n    isDisabled: true,\n    e2eTestName: buttonData.e2eTestName,\n    clicked: actionsData.clicked,\n  }\n})"
+            },
+            {
+                "name": "Edit",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/cookbook/components/recipe-form/recipe-form.stories.ts",
+                "type": "",
+                "defaultValue": "() => ({\n  component: RecipeFormComponent,\n  props: {\n    ...formData,\n    ...actionsData,\n    recipe: {\n      title: 'Beef & beer pie',\n      url: 'https://www.bbcgoodfood.com/recipes/beef-beer-pie',\n      ingredients: [\n        {\n          name: 'Beer',\n          amount: 1,\n          unit: 'l',\n          isStapleFood: true,\n        },\n        {\n          name: 'Beef',\n          amount: 1,\n          unit: 'kg',\n          isStapleFood: false,\n        }\n      ]\n    }\n  }\n})"
             },
             {
                 "name": "EMAIL_PATTERN",
@@ -3239,6 +3671,14 @@
                 "file": "src/app/shared/helpers/constants.ts",
                 "type": "",
                 "defaultValue": "/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/"
+            },
+            {
+                "name": "environment",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/environments/environment.ts",
+                "type": "object",
+                "defaultValue": "{\n  production: false,\n  showBetaTeaser: true,\n  apiUrl: 'http://localhost:4200/api',\n  authUrl: 'http://localhost:4200',\n}"
             },
             {
                 "name": "environment",
@@ -3257,12 +3697,12 @@
                 "defaultValue": "{\n  production: false,\n  showBetaTeaser: false,\n  apiUrl: 'https://api.mealplaner.app',\n  authUrl: 'https://api.mealplaner.app',\n}"
             },
             {
-                "name": "environment",
+                "name": "formData",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/environments/environment.ts",
+                "file": "src/app/cookbook/components/recipe-form/recipe-form.stories.ts",
                 "type": "object",
-                "defaultValue": "{\n  production: false,\n  showBetaTeaser: true,\n  apiUrl: 'http://localhost:4200/api',\n  authUrl: 'http://localhost:4200',\n}"
+                "defaultValue": "{\n  translations: {\n    de: {\n      'recipe-form.placeholder.title': 'Title',\n      'recipe-form.label.title': 'Recipe Title',\n      'recipe-form.placeholder.url': 'Link',\n      'recipe-form.label.url': 'Link to Recipe',\n      'recipe-form.ingredients.label-text': 'Ingredients',\n      'recipe-form.placeholder.amount': 'Quantity',\n      'recipe-form.placeholder.name': 'Name',\n      'recipe-form.text.toggle': 'Basic Ingredient',\n      'recipe-form.button.delete': 'Delete',\n      'recipe-form.button.new-ingredient': 'Add new Ingredient',\n      'recipe-form.button.submit': 'Create',\n      'errors.validation.title.required': 'Titel is required',\n      'recipe-form.button.modify': 'Edit'\n    }\n  }\n}"
             },
             {
                 "name": "formData",
@@ -3340,17 +3780,17 @@
                 "name": "inputData",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/input/input.stories.ts",
+                "file": "src/app/shared/components/select/select.stories.ts",
                 "type": "object",
-                "defaultValue": "{\n  isDisabled: false,\n  e2eTestName: 'test',\n  label: 'Label',\n  errors: ['Ooops!', 'An error has occured!'],\n  placeholder: 'Placeholder',\n  formControl: createFormControl()\n}"
+                "defaultValue": "{\n  options: [\n    {key: 'Tesla', value: 'Tesla'},\n    {key: 'Audi', value: 'Audi'},\n    {key: 'Skoda', value: 'Skoda'},\n    {key: 'BMW', value: 'BMW'},\n  ],\n  isDisabled: false,\n}"
             },
             {
                 "name": "inputData",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/select/select.stories.ts",
+                "file": "src/app/shared/components/input/input.stories.ts",
                 "type": "object",
-                "defaultValue": "{\n  options: [\n    {key: 'Tesla', value: 'Tesla'},\n    {key: 'Audi', value: 'Audi'},\n    {key: 'Skoda', value: 'Skoda'},\n    {key: 'BMW', value: 'BMW'},\n  ],\n  isDisabled: false,\n}"
+                "defaultValue": "{\n  isDisabled: false,\n  e2eTestName: 'test',\n  label: 'Label',\n  errors: ['Ooops!', 'An error has occured!'],\n  placeholder: 'Placeholder',\n  formControl: createFormControl()\n}"
             },
             {
                 "name": "isLoggedIn",
@@ -3412,17 +3852,17 @@
                 "name": "logout",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/state/app-actions/error-interceptor.actions.ts",
+                "file": "src/app/shared/state/app-actions/navigation.actions.ts",
                 "type": "",
-                "defaultValue": "createAction('[Error Interceptor] Logout')"
+                "defaultValue": "createAction('[Nav] Logout')"
             },
             {
                 "name": "logout",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/state/app-actions/navigation.actions.ts",
+                "file": "src/app/shared/state/app-actions/error-interceptor.actions.ts",
                 "type": "",
-                "defaultValue": "createAction('[Nav] Logout')"
+                "defaultValue": "createAction('[Error Interceptor] Logout')"
             },
             {
                 "name": "logoutFailure",
@@ -3587,17 +4027,17 @@
                 "name": "taskData",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shopping-list/components/shopping-list/shopping-list.stories.ts",
-                "type": "literal type",
-                "defaultValue": "{\n  items: [\n    {id: '1', name: 'Mehl', amount: 1, unit: 'kg', isChecked: false},\n    {id: '2', name: 'Zucker', amount: 50, unit: 'g', isChecked: false},\n    {id: '3', name: 'Eier', amount: 1, unit: 'piece', isChecked: false},\n    {id: '4', name: 'Slaz', amount: 5, unit: 'coffeeSpoon', isChecked: false},\n  ],\n  translations: {\n    de: {\n      piece: '',\n      tableSpoon: 'Esslöffel',\n      coffeeSpoon: 'Kaffelöffel',\n      pinch: 'Prise',\n    }\n  }\n}"
+                "file": "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts",
+                "type": "object",
+                "defaultValue": "{\n  translations: {\n    de: {\n      'shoppingList.addForm.amount': 'Menge',\n      'shoppingList.addForm.product': 'Zucker',\n      'shoppingList.addForm.piece': 'Stück',\n      'shoppingList.addForm.pack': 'Packung',\n      'shoppingList.addForm.addLabel': 'Hinzufügen',\n    }\n  },\n  currentLang: 'de'\n}"
             },
             {
                 "name": "taskData",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts",
-                "type": "object",
-                "defaultValue": "{\n  translations: {\n    de: {\n      'shoppingList.addForm.amount': 'Menge',\n      'shoppingList.addForm.product': 'Zucker',\n      'shoppingList.addForm.piece': 'Stück',\n      'shoppingList.addForm.pack': 'Packung',\n      'shoppingList.addForm.addLabel': 'Hinzufügen',\n    }\n  },\n  currentLang: 'de'\n}"
+                "file": "src/app/shopping-list/components/shopping-list/shopping-list.stories.ts",
+                "type": "literal type",
+                "defaultValue": "{\n  items: [\n    {id: '1', name: 'Mehl', amount: 1, unit: 'kg', isChecked: false},\n    {id: '2', name: 'Zucker', amount: 50, unit: 'g', isChecked: false},\n    {id: '3', name: 'Eier', amount: 1, unit: 'piece', isChecked: false},\n    {id: '4', name: 'Slaz', amount: 5, unit: 'coffeeSpoon', isChecked: false},\n  ],\n  translations: {\n    de: {\n      piece: '',\n      tableSpoon: 'Esslöffel',\n      coffeeSpoon: 'Kaffelöffel',\n      pinch: 'Prise',\n    }\n  }\n}"
             },
             {
                 "name": "Template",
@@ -3723,6 +4163,33 @@
                     },
                     {
                         "name": "actions$",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "changeElementPosition",
+                "file": "src/app/shared/helpers/helpers.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "description": "",
+                "args": [
+                    {
+                        "name": "input"
+                    },
+                    {}
+                ],
+                "returnType": "T[]",
+                "jsdoctags": [
+                    {
+                        "name": "input",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
                         "tagName": {
                             "text": "param"
                         }
@@ -3928,7 +4395,7 @@
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
                 "rawtype": "literal type",
-                "file": "src/app/shared/model/model-api.ts",
+                "file": "src/app/shared/model/model.ts",
                 "description": "",
                 "kind": 165
             },
@@ -3937,7 +4404,7 @@
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
                 "rawtype": "literal type",
-                "file": "src/app/shared/model/model.ts",
+                "file": "src/app/shared/model/model-api.ts",
                 "description": "",
                 "kind": 165
             },
@@ -4028,156 +4495,6 @@
                     "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Warning',\n    isDisabled: buttonData.isDisabled,\n    e2eTestName: buttonData.e2eTestName,\n    clicked: actionsData.clicked,\n    color: 'warn'\n  }\n})"
                 }
             ],
-            "src/app/components/navigation/navigation.stories.ts": [
-                {
-                    "name": "actionsData",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/components/navigation/navigation.stories.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  logout: action('clicked')\n}"
-                },
-                {
-                    "name": "buttonData",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/components/navigation/navigation.stories.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  isLoggedIn: false,\n  currentLang: 'de',\n  translations: {\n    de: {\n      'app.navigation.login': 'Login',\n      'app.navigation.logout': 'Abmelden',\n      'app.navigation.register': 'Registrieren',\n      'app.navigation.planer': 'Menuplaner',\n      'app.navigation.menus': 'Menüs',\n      'app.navigation.shopping-list': 'Einkaufsliste',\n    }\n  }\n}"
-                },
-                {
-                    "name": "LoggedIn",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/components/navigation/navigation.stories.ts",
-                    "type": "",
-                    "defaultValue": "() => ({\n  component: NavigationComponent,\n  props: {\n    ...buttonData,\n    isLoggedIn: true,\n    ...actionsData,\n  }\n})"
-                },
-                {
-                    "name": "LoggedOut",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/components/navigation/navigation.stories.ts",
-                    "type": "",
-                    "defaultValue": "() => ({\n  component: NavigationComponent,\n  props: {\n    ...buttonData,\n    ...actionsData,\n  }\n})"
-                },
-                {
-                    "name": "Primary",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/components/navigation/navigation.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/components/navigation/navigation.stories.ts",
-                    "type": "any",
-                    "defaultValue": "(args: NavigationComponent) => ({\n  component: NavigationComponent,\n  props: args,\n})"
-                }
-            ],
-            "src/app/auth/components/login-form/login-form.stories.ts": [
-                {
-                    "name": "actionsData",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/auth/components/login-form/login-form.stories.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  credentialsReceived: action('credentialsReceived')\n}"
-                },
-                {
-                    "name": "formData",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/auth/components/login-form/login-form.stories.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  translations: {\n    de: {\n      email: 'Email Adresse',\n      password: 'Passwort',\n      login: 'Anmelden',\n      register: 'Registrieren',\n      'errors.validation.email.required': 'Bitte geben Sie Ihre Email Adresse ein',\n      'errors.validation.email.pattern': 'Valid Email Format braucht @ ein . dann mindestens 2 Zeichen',\n      'errors.validation.password.required': 'Bitte geben Sie Ihre Passwort ein',\n      'errors.validation.password.minlength': 'Passwort muss mindestens 4 character lang sein',\n      'errors.validation.password.pattern': 'Passwort braucht klein und gross Buchstaben und ein Zahl'\n      }\n    }\n}"
-                },
-                {
-                    "name": "Login",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/auth/components/login-form/login-form.stories.ts",
-                    "type": "",
-                    "defaultValue": "() => ({\n  component: LoginFormComponent,\n  props: {\n    credentialsReceived: actionsData.credentialsReceived,\n    translations: formData.translations\n  }\n})"
-                },
-                {
-                    "name": "Register",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/auth/components/login-form/login-form.stories.ts",
-                    "type": "",
-                    "defaultValue": "() => ({\n  component: LoginFormComponent,\n  props: {\n    credentialsReceived: actionsData.credentialsReceived,\n    translations: formData.translations,\n    buttonText: 'register'\n  }\n})"
-                }
-            ],
-            "src/app/shared/components/input/input.stories.ts": [
-                {
-                    "name": "actionsData",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/input/input.stories.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  clicked: action('clicked'),\n}"
-                },
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/input/input.stories.ts",
-                    "type": "",
-                    "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: '',\n    errors: []\n  }\n})"
-                },
-                {
-                    "name": "inputData",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/input/input.stories.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  isDisabled: false,\n  e2eTestName: 'test',\n  label: 'Label',\n  errors: ['Ooops!', 'An error has occured!'],\n  placeholder: 'Placeholder',\n  formControl: createFormControl()\n}"
-                },
-                {
-                    "name": "WithAccentButton",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/input/input.stories.ts",
-                    "type": "",
-                    "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: '',\n    buttonText: 'Click',\n    errors: [],\n    color: 'accent',\n    clicked: actionsData.clicked\n  }\n})"
-                },
-                {
-                    "name": "WithButtonAndError",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/input/input.stories.ts",
-                    "type": "",
-                    "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: '',\n    buttonText: 'Click',\n    errors: ['Ooops!', 'An error has occured!'],\n    color: 'accent',\n    clicked: actionsData.clicked\n  }\n})"
-                },
-                {
-                    "name": "WithError",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/input/input.stories.ts",
-                    "type": "",
-                    "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: ''\n  }\n})"
-                },
-                {
-                    "name": "WithoutLabel",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/input/input.stories.ts",
-                    "type": "",
-                    "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    label: '',\n    errors: []\n  }\n})"
-                },
-                {
-                    "name": "WithPrimaryButton",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/input/input.stories.ts",
-                    "type": "",
-                    "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: '',\n    buttonText: 'Click',\n    errors: [],\n    clicked: actionsData.clicked\n  }\n})"
-                }
-            ],
             "src/app/shared/components/select/select.stories.ts": [
                 {
                     "name": "actionsData",
@@ -4262,6 +4579,90 @@
                     "defaultValue": "{\n  items: [\n    {id: '1', name: 'Mehl', amount: 1, unit: 'kg', isChecked: false},\n    {id: '2', name: 'Zucker', amount: 50, unit: 'g', isChecked: false},\n    {id: '3', name: 'Eier', amount: 1, unit: 'piece', isChecked: false},\n    {id: '4', name: 'Slaz', amount: 5, unit: 'coffeeSpoon', isChecked: false},\n  ],\n  translations: {\n    de: {\n      piece: '',\n      tableSpoon: 'Esslöffel',\n      coffeeSpoon: 'Kaffelöffel',\n      pinch: 'Prise',\n    }\n  }\n}"
                 }
             ],
+            "src/app/components/navigation/navigation.stories.ts": [
+                {
+                    "name": "actionsData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/components/navigation/navigation.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  logout: action('clicked')\n}"
+                },
+                {
+                    "name": "buttonData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/components/navigation/navigation.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  isLoggedIn: false,\n  currentLang: 'de',\n  translations: {\n    de: {\n      'app.navigation.login': 'Login',\n      'app.navigation.logout': 'Abmelden',\n      'app.navigation.register': 'Registrieren',\n      'app.navigation.planer': 'Menuplaner',\n      'app.navigation.menus': 'Menüs',\n      'app.navigation.shopping-list': 'Einkaufsliste',\n    }\n  }\n}"
+                },
+                {
+                    "name": "LoggedIn",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/components/navigation/navigation.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: NavigationComponent,\n  props: {\n    ...buttonData,\n    isLoggedIn: true,\n    ...actionsData,\n  }\n})"
+                },
+                {
+                    "name": "LoggedOut",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/components/navigation/navigation.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: NavigationComponent,\n  props: {\n    ...buttonData,\n    ...actionsData,\n  }\n})"
+                },
+                {
+                    "name": "Primary",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/components/navigation/navigation.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/components/navigation/navigation.stories.ts",
+                    "type": "any",
+                    "defaultValue": "(args: NavigationComponent) => ({\n  component: NavigationComponent,\n  props: args,\n})"
+                }
+            ],
+            "src/app/cookbook/components/recipe-form/recipe-form.stories.ts": [
+                {
+                    "name": "actionsData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/cookbook/components/recipe-form/recipe-form.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  recipeSaved: action('recipeSaved')\n}"
+                },
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/cookbook/components/recipe-form/recipe-form.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: RecipeFormComponent,\n  props: {\n    ...formData,\n    ...actionsData\n  }\n})"
+                },
+                {
+                    "name": "Edit",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/cookbook/components/recipe-form/recipe-form.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: RecipeFormComponent,\n  props: {\n    ...formData,\n    ...actionsData,\n    recipe: {\n      title: 'Beef & beer pie',\n      url: 'https://www.bbcgoodfood.com/recipes/beef-beer-pie',\n      ingredients: [\n        {\n          name: 'Beer',\n          amount: 1,\n          unit: 'l',\n          isStapleFood: true,\n        },\n        {\n          name: 'Beef',\n          amount: 1,\n          unit: 'kg',\n          isStapleFood: false,\n        }\n      ]\n    }\n  }\n})"
+                },
+                {
+                    "name": "formData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/cookbook/components/recipe-form/recipe-form.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  translations: {\n    de: {\n      'recipe-form.placeholder.title': 'Title',\n      'recipe-form.label.title': 'Recipe Title',\n      'recipe-form.placeholder.url': 'Link',\n      'recipe-form.label.url': 'Link to Recipe',\n      'recipe-form.ingredients.label-text': 'Ingredients',\n      'recipe-form.placeholder.amount': 'Quantity',\n      'recipe-form.placeholder.name': 'Name',\n      'recipe-form.text.toggle': 'Basic Ingredient',\n      'recipe-form.button.delete': 'Delete',\n      'recipe-form.button.new-ingredient': 'Add new Ingredient',\n      'recipe-form.button.submit': 'Create',\n      'errors.validation.title.required': 'Titel is required',\n      'recipe-form.button.modify': 'Edit'\n    }\n  }\n}"
+                }
+            ],
             "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts": [
                 {
                     "name": "actionsData",
@@ -4286,6 +4687,106 @@
                     "file": "src/app/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts",
                     "type": "object",
                     "defaultValue": "{\n  translations: {\n    de: {\n      'shoppingList.addForm.amount': 'Menge',\n      'shoppingList.addForm.product': 'Zucker',\n      'shoppingList.addForm.piece': 'Stück',\n      'shoppingList.addForm.pack': 'Packung',\n      'shoppingList.addForm.addLabel': 'Hinzufügen',\n    }\n  },\n  currentLang: 'de'\n}"
+                }
+            ],
+            "src/app/shared/components/input/input.stories.ts": [
+                {
+                    "name": "actionsData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/input/input.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  clicked: action('clicked'),\n}"
+                },
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/input/input.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: '',\n    errors: []\n  }\n})"
+                },
+                {
+                    "name": "inputData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/input/input.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  isDisabled: false,\n  e2eTestName: 'test',\n  label: 'Label',\n  errors: ['Ooops!', 'An error has occured!'],\n  placeholder: 'Placeholder',\n  formControl: createFormControl()\n}"
+                },
+                {
+                    "name": "WithAccentButton",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/input/input.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: '',\n    buttonText: 'Click',\n    errors: [],\n    color: 'accent',\n    clicked: actionsData.clicked\n  }\n})"
+                },
+                {
+                    "name": "WithButtonAndError",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/input/input.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: '',\n    buttonText: 'Click',\n    errors: ['Ooops!', 'An error has occured!'],\n    color: 'accent',\n    clicked: actionsData.clicked\n  }\n})"
+                },
+                {
+                    "name": "WithError",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/input/input.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: ''\n  }\n})"
+                },
+                {
+                    "name": "WithoutLabel",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/input/input.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    label: '',\n    errors: []\n  }\n})"
+                },
+                {
+                    "name": "WithPrimaryButton",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/input/input.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: InputComponent,\n  props: {\n    ...inputData,\n    placeholder: '',\n    buttonText: 'Click',\n    errors: [],\n    clicked: actionsData.clicked\n  }\n})"
+                }
+            ],
+            "src/app/auth/components/login-form/login-form.stories.ts": [
+                {
+                    "name": "actionsData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/auth/components/login-form/login-form.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  credentialsReceived: action('credentialsReceived')\n}"
+                },
+                {
+                    "name": "formData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/auth/components/login-form/login-form.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  translations: {\n    de: {\n      email: 'Email Adresse',\n      password: 'Passwort',\n      login: 'Anmelden',\n      register: 'Registrieren',\n      'errors.validation.email.required': 'Bitte geben Sie Ihre Email Adresse ein',\n      'errors.validation.email.pattern': 'Valid Email Format braucht @ ein . dann mindestens 2 Zeichen',\n      'errors.validation.password.required': 'Bitte geben Sie Ihre Passwort ein',\n      'errors.validation.password.minlength': 'Passwort muss mindestens 4 character lang sein',\n      'errors.validation.password.pattern': 'Passwort braucht klein und gross Buchstaben und ein Zahl'\n      }\n    }\n}"
+                },
+                {
+                    "name": "Login",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/auth/components/login-form/login-form.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: LoginFormComponent,\n  props: {\n    credentialsReceived: actionsData.credentialsReceived,\n    translations: formData.translations\n  }\n})"
+                },
+                {
+                    "name": "Register",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/auth/components/login-form/login-form.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: LoginFormComponent,\n  props: {\n    credentialsReceived: actionsData.credentialsReceived,\n    translations: formData.translations,\n    buttonText: 'register'\n  }\n})"
                 }
             ],
             "src/app/shared/state/reducers/app-state.reducers.ts": [
@@ -4349,6 +4850,16 @@
                     "defaultValue": "StringUnion('de', 'en')"
                 }
             ],
+            "src/environments/environment.ts": [
+                {
+                    "name": "environment",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/environments/environment.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  production: false,\n  showBetaTeaser: true,\n  apiUrl: 'http://localhost:4200/api',\n  authUrl: 'http://localhost:4200',\n}"
+                }
+            ],
             "src/environments/environment.prod.ts": [
                 {
                     "name": "environment",
@@ -4367,16 +4878,6 @@
                     "file": "src/environments/environment.qa.ts",
                     "type": "object",
                     "defaultValue": "{\n  production: false,\n  showBetaTeaser: false,\n  apiUrl: 'https://api.mealplaner.app',\n  authUrl: 'https://api.mealplaner.app',\n}"
-                }
-            ],
-            "src/environments/environment.ts": [
-                {
-                    "name": "environment",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/environments/environment.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  production: false,\n  showBetaTeaser: true,\n  apiUrl: 'http://localhost:4200/api',\n  authUrl: 'http://localhost:4200',\n}"
                 }
             ],
             "src/app/i18n/actions/i18n-api.actions.ts": [
@@ -4575,16 +5076,6 @@
                     "defaultValue": "createAction('[Auth API] Refresh Token Success', props<{ user: User }>())"
                 }
             ],
-            "src/app/shared/state/app-actions/error-interceptor.actions.ts": [
-                {
-                    "name": "logout",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/state/app-actions/error-interceptor.actions.ts",
-                    "type": "",
-                    "defaultValue": "createAction('[Error Interceptor] Logout')"
-                }
-            ],
             "src/app/shared/state/app-actions/navigation.actions.ts": [
                 {
                     "name": "logout",
@@ -4593,6 +5084,16 @@
                     "file": "src/app/shared/state/app-actions/navigation.actions.ts",
                     "type": "",
                     "defaultValue": "createAction('[Nav] Logout')"
+                }
+            ],
+            "src/app/shared/state/app-actions/error-interceptor.actions.ts": [
+                {
+                    "name": "logout",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/state/app-actions/error-interceptor.actions.ts",
+                    "type": "",
+                    "defaultValue": "createAction('[Error Interceptor] Logout')"
                 }
             ],
             "src/app/auth/actions/login-service.actions.ts": [
@@ -4677,41 +5178,34 @@
                     ]
                 }
             ],
-            "src/app/shared/components/input/input.stories.ts": [
+            "src/app/shared/helpers/helpers.ts": [
                 {
-                    "name": "createFormControl",
-                    "file": "src/app/shared/components/input/input.stories.ts",
-                    "ctype": "miscellaneous",
-                    "subtype": "function",
-                    "description": "",
-                    "args": [],
-                    "returnType": "FormControl"
-                }
-            ],
-            "src/app/shared/components/select/select.stories.ts": [
-                {
-                    "name": "createFormControl",
-                    "file": "src/app/shared/components/select/select.stories.ts",
+                    "name": "changeElementPosition",
+                    "file": "src/app/shared/helpers/helpers.ts",
                     "ctype": "miscellaneous",
                     "subtype": "function",
                     "description": "",
                     "args": [
                         {
-                            "name": "name"
-                        }
+                            "name": "input"
+                        },
+                        {}
                     ],
-                    "returnType": "FormControl",
+                    "returnType": "T[]",
                     "jsdoctags": [
                         {
-                            "name": "name",
+                            "name": "input",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
                             "tagName": {
                                 "text": "param"
                             }
                         }
                     ]
-                }
-            ],
-            "src/app/shared/helpers/helpers.ts": [
+                },
                 {
                     "name": "decodeJwtToken",
                     "file": "src/app/shared/helpers/helpers.ts",
@@ -4854,6 +5348,40 @@
                     ]
                 }
             ],
+            "src/app/shared/components/input/input.stories.ts": [
+                {
+                    "name": "createFormControl",
+                    "file": "src/app/shared/components/input/input.stories.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "description": "",
+                    "args": [],
+                    "returnType": "FormControl"
+                }
+            ],
+            "src/app/shared/components/select/select.stories.ts": [
+                {
+                    "name": "createFormControl",
+                    "file": "src/app/shared/components/select/select.stories.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "name"
+                        }
+                    ],
+                    "returnType": "FormControl",
+                    "jsdoctags": [
+                        {
+                            "name": "name",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
             "src/app/shared/validators/custom-validators.validator.ts": [
                 {
                     "name": "email",
@@ -4880,17 +5408,6 @@
         },
         "groupedEnumerations": {},
         "groupedTypeAliases": {
-            "src/app/shared/model/model-api.ts": [
-                {
-                    "name": "I18n",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "literal type",
-                    "file": "src/app/shared/model/model-api.ts",
-                    "description": "",
-                    "kind": 165
-                }
-            ],
             "src/app/shared/model/model.ts": [
                 {
                     "name": "I18n",
@@ -4918,6 +5435,17 @@
                     "file": "src/app/shared/model/model.ts",
                     "description": "",
                     "kind": 168
+                }
+            ],
+            "src/app/shared/model/model-api.ts": [
+                {
+                    "name": "I18n",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "literal type",
+                    "file": "src/app/shared/model/model-api.ts",
+                    "description": "",
+                    "kind": 165
                 }
             ]
         }
@@ -5227,6 +5755,55 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/cookbook/components/recipe-form/recipe-form.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "RecipeFormComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/20",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/cookbook/components/recipe-form/recipe-form.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "actionsData",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/cookbook/components/recipe-form/recipe-form.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/cookbook/components/recipe-form/recipe-form.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Edit",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/cookbook/components/recipe-form/recipe-form.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "formData",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -5634,6 +6211,15 @@
                 "filePath": "src/app/shared/helpers/helpers.ts",
                 "type": "function",
                 "linksubtype": "function",
+                "name": "changeElementPosition",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/helpers/helpers.ts",
+                "type": "function",
+                "linksubtype": "function",
                 "name": "decodeJwtToken",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
@@ -5772,6 +6358,24 @@
                 "name": "LoginCredentials",
                 "coveragePercent": 0,
                 "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/model/model.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "Recipe",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/model/model.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "RecipeIngredient",
+                "coveragePercent": 0,
+                "coverageCount": "0/2",
                 "status": "low"
             },
             {
@@ -6054,15 +6658,6 @@
                 "name": "taskData",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/shopping-list/components/shopping-list-page/shopping-list-page.component.ts",
-                "type": "component",
-                "linktype": "component",
-                "name": "ShoppingListPageComponent",
-                "coveragePercent": 0,
-                "coverageCount": "0/4",
                 "status": "low"
             },
             {
