@@ -47,7 +47,7 @@ export class RecipeFormComponent implements OnInit {
             } else {
               (this.recipeForm.controls.ingredients as FormArray)
                 .push(this.createNewIngredientFormGroup(
-                  ingredient.name,
+                  ingredient.title,
                   ingredient.amount,
                   ingredient.unit,
                   ingredient.isStapleFood)
@@ -80,7 +80,7 @@ export class RecipeFormComponent implements OnInit {
 
   createNewIngredientFormGroup(name?: string, amount?: number, unit?: Unit, isStapleFood?: boolean): FormGroup {
     return new FormGroup({
-      name: new FormControl(name || '', [Validators.required]),
+      title: new FormControl(name || '', [Validators.required]),
       amount: new FormControl(amount || null, [Validators.required, Validators.min(1)]),
       unit: new FormControl(unit || 'kg', [Validators.required]),
       isStapleFood: new FormControl(isStapleFood || false, [Validators.required])
