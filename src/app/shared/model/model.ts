@@ -13,20 +13,42 @@ export type Language = typeof SUPPORTED_LANGUAGES.type;
 export type Unit = 'kg' | 'g' | 'tableSpoon' | 'coffeeSpoon' | 'l' | 'dl' | 'ml' | 'pinch' | 'piece' | 'pack';
 
 export interface Ingredient {
-  id?: string;
   title: string;
   amount: number;
   unit: Unit;
 }
 
-export interface ShoppingListItem extends Ingredient {
+export interface ShoppingList {
   id: string;
-  isChecked: boolean;
+  title: string;
+}
+
+export interface ShoppingListItem extends Ingredient{
+  id: string;
+  shoppingList: string;
+  order?: number;
+  isChecked?: boolean;
+}
+
+export type BasicShoppingListItem = Omit<ShoppingListItem, 'id' | 'order'>;
+
+export interface AddShoppingListItemEvent {
+  shoppingListId: string;
+  shoppingListItem: ShoppingListItem;
+}
+
+export interface DeleteShoppingListItemEvent {
+  shoppingListId: string;
+  shoppingListItem: ShoppingListItem;
 }
 
 export interface ArrayItemMovedEvent {
   currentIndex: number;
   previousIndex: number;
+}
+
+export interface ShoppingListItemMovedEvent extends ArrayItemMovedEvent {
+  shoppingListId: string;
 }
 
 export interface SelectOption<T> {
@@ -42,6 +64,7 @@ export interface LoginCredentials {
 
 export interface User {
   jwt: string;
+  id: string;
   name: string;
   email: string;
 }
@@ -82,6 +105,7 @@ export const StringUnion = <UnionType extends string>(...values: UnionType[]) =>
 };
 
 export interface RecipeIngredient extends Ingredient {
+  readonly id?: string;
   readonly isStapleFood: boolean;
 }
 
