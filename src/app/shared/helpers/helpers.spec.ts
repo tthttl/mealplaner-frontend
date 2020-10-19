@@ -1,11 +1,11 @@
 import { FormControl } from '@angular/forms';
 import { TranslatePipe } from '../../i18n/pipes/translate.pipe';
-import { I18n } from '../model/model';
-import { I18n as I18nApi, UserApi } from '../model/model-api';
+import { I18n, Unit } from '../model/model';
+import { I18n as I18nApi, ShoppingListItemApi, UserApi } from '../model/model-api';
 import {
   decodeJwtToken,
   isJwtTokenExpired,
-  mapI18nApiToI18nClient,
+  mapI18nApiToI18nClient, mapShoppingListItemApiToShoppingListItem,
   mapUserApiToUserClient,
   moveItemInArray,
   translateValidationErrors
@@ -162,6 +162,20 @@ describe('Helpers', () => {
     });
     it('should move item to backwords within the the array', () => {
       expect(moveItemInArray([0, 1, 2, 3, 4], 3, 1)).toEqual([0, 3, 1, 2, 4]);
+    });
+  });
+
+  describe('mapShoppingListItemApiToShoppingListItem', () => {
+    it('should convert ShoppingListItem', () => {
+      const shoppingListApi: ShoppingListItemApi = {
+        id: 'id',
+        title: 'title',
+        order: 0,
+        shoppingList: 'shoppingList',
+        amount: 1,
+        unit: 'kg',
+      };
+      expect(mapShoppingListItemApiToShoppingListItem(shoppingListApi)).toEqual({...shoppingListApi, isChecked: false});
     });
   });
 });
