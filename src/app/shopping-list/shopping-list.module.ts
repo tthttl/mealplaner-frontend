@@ -12,12 +12,18 @@ import { ShoppingListContainerComponent } from './containers/shopping-list-conta
 import { ShoppingListRoutingModule } from './shopping-list-routing.module';
 import { ShoppingListPageComponent } from './components/shopping-list-page/shopping-list-page.component';
 import { EffectsModule } from '@ngrx/effects';
-import { AuthApiEffects } from '../auth/effects/auth-api.effects';
 import { ShoppingListApiEffects } from './effects/shopping-list-api.effects';
+import { UnToggledPipe } from './pipes/untoggeldItems.pipe';
 
 
 @NgModule({
-  declarations: [ShoppingListComponent, ShoppingListFormComponent, ShoppingListContainerComponent, ShoppingListPageComponent],
+  declarations: [
+    ShoppingListComponent,
+    ShoppingListFormComponent,
+    ShoppingListContainerComponent,
+    ShoppingListPageComponent,
+    UnToggledPipe
+  ],
   imports: [
     CommonModule,
     DragDropModule,

@@ -3,6 +3,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { BasicShoppingListItem, ShoppingList, ShoppingListItem } from '../../shared/model/model';
+import { ShoppingListItemApi as ShoppingListItemApi } from '../../shared/model/model-api';
+import { map } from 'rxjs/operators';
+import { mapShoppingListItemApiToShoppingListItem } from '../../shared/helpers/helpers';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +19,10 @@ export class ShoppingListService {
   }
 
   getShoppingListItems(shoppingListId: string): Observable<ShoppingListItem[]> {
-    return this.httpClient.get<ShoppingListItem[]>(`${environment.apiUrl}/shopping-list-items?shoppingList=${shoppingListId}`);
+    return this.httpClient.get<ShoppingListItemApi[]>(`${environment.apiUrl}/shopping-list-items?shoppingList=${shoppingListId}`)
+      .pipe(map((shoppingListItemsApi) => {
+        return shoppingListItemsApi.map((shoppingListItemApi) => mapShoppingListItemApiToShoppingListItem(shoppingListItemApi));
+      }));
   }
 
   addShoppingListItem(shoppingListItem: BasicShoppingListItem): Observable<ShoppingListItem> {

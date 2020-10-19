@@ -1,8 +1,8 @@
 import { FormControl } from '@angular/forms';
 import { isAfter, isDate } from 'date-fns';
 import { TranslatePipe } from '../../i18n/pipes/translate.pipe';
-import { ArrayItemMovedEvent, I18n as I18nClient, I18n, JwtPayload, Language, User } from '../../shared/model/model';
-import { I18n as I18nApi, UserApi } from '../../shared/model/model-api';
+import { I18n as I18nClient, I18n, JwtPayload, Language, ShoppingListItem as ShoppingListItemClient, User } from '../../shared/model/model';
+import { I18n as I18nApi, ShoppingListItemApi as ShoppingListItemApi, UserApi } from '../../shared/model/model-api';
 import { DEFAULT_LANGUAGE } from './constants';
 
 export function mapI18nApiToI18nClient(i18nApi: I18nApi): I18nClient {
@@ -59,4 +59,11 @@ export function moveItemInArray<T>(array: T[], previousIndex: number, currentInd
   copy.splice(previousIndex, 1);
   copy.splice(currentIndex, 0, element);
   return copy;
+}
+
+export function mapShoppingListItemApiToShoppingListItem(shoppingListApi: ShoppingListItemApi): ShoppingListItemClient {
+  return {
+    ...shoppingListApi,
+    isChecked: false,
+  };
 }

@@ -1,7 +1,7 @@
 <app-shopping-list-page
   [shoppingLists]="shoppingLists$ | async"
   [activeShoppingListId]="activeShoppingListId$ | async"
-  [shoppingListItems]="shoppingListsItems$ | async"
+  [shoppingListItems]="shoppingListsItems$ | async | unToggled"
   [translations]="translations$ | async"
   [currentLanguage]="currentLanguage$ | async"
   (changeShoppingList)="onShoppingListChange($event)"
