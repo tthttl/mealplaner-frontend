@@ -104,11 +104,7 @@ export class ShoppingListApiEffects {
       return shoppingListItems.map(shoppingListItem => this.shoppingListService.updateShoppingListItem(shoppingListItem));
     }),
     concatMap((updateObservables: Observable<ShoppingListItem>[]) => {
-      console.log('here', updateObservables);
-
       const a = forkJoin(updateObservables);
-      console.log('a', a);
-
       return a.pipe(
         map(() => ShoppingListApiActions.updateShoppingListItemSuccess()),
         catchError(() => of(ShoppingListApiActions.updateShoppingListItemFailure({updateObservables}))));

@@ -44,23 +44,41 @@ describe('ShoppingListComponent', () => {
     expect(listItems.length).toBe(4);
   });
 
-  it('should emit deletion event', () => {
-    const shoppingListItem: ShoppingListItem = {id: '1', shoppingList: '42', title: 'Mehl', amount: 1, unit: 'kg', isChecked: false};
-
-    component.items = [
-      shoppingListItem
-    ];
+  it('should emit deletion event', fakeAsync(() => {
+    const shoppingListItem: ShoppingListItem = {id: '1', title: 'Mehl', amount: 1, unit: 'kg', shoppingList: '42'};
+    component.items = [shoppingListItem];
 
     fixture.detectChanges();
 
+    const hostElement = fixture.nativeElement;
+    const label = hostElement.querySelector('.shopping-list__item-text');
+    label.click();
+
     component.itemDeleted.subscribe((item: ShoppingListItem) => {
-      expect(item).toEqual( {...shoppingListItem});
+      expect(item).toEqual( shoppingListItem);
     });
 
+    tick(300);
+  }));
+
+
+  it('should not emit deletion event when unchecked within debounce time', fakeAsync(() => {
+    const shoppingListItem: ShoppingListItem = {id: '1', title: 'Mehl', amount: 1, unit: 'kg', shoppingList: '42'};
+    component.items = [shoppingListItem];
+
+    fixture.detectChanges();
+
+    spyOn(component.itemDeleted, 'emit');
+
     const hostElement = fixture.nativeElement;
-    const checkbox = hostElement.querySelector('.mat-checkbox-label');
-    checkbox.click();
-  });
+    const label = hostElement.querySelector('.shopping-list__item-text');
+    label.click();
+    tick(200);
+    label.click();
+    tick(100);
+    expect(component.itemDeleted.emit).toHaveBeenCalledTimes(0);
+  }));
+
 
 
   it('should emit listItemMoved event', fakeAsync(() => {

@@ -87,7 +87,6 @@ describe('RecipeFormComponent', () => {
     fixture.detectChanges();
 
     const button = hostElement.querySelector('button[type="submit"]');
-    console.log(button.disabled);
     expect(button.disabled).toBeFalsy();
     button.click();
 

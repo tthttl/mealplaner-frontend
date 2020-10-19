@@ -11,8 +11,8 @@ import { translateValidationErrors } from '../../../shared/helpers/helpers';
   styleUrls: ['./shopping-list-form.component.scss']
 })
 export class ShoppingListFormComponent implements OnInit {
-  @Input() translations: I18n = {};
-  @Input() currentLang: Language = DEFAULT_LANGUAGE;
+  @Input() translations: I18n | null = {};
+  @Input() currentLang: Language | null = DEFAULT_LANGUAGE;
   @Output() itemAdded: EventEmitter<BasicShoppingListItem> = new EventEmitter();
 
   addItemForm: FormGroup;
