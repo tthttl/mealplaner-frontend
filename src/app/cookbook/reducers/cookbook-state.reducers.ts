@@ -1,16 +1,15 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { sortAlphabetically } from '../../shared/helpers/helpers';
+import { addRecipeAtIndex } from '../../shared/helpers/helpers';
+import { Cookbook, Recipe, } from '../../shared/model/model';
 import {
-  Cookbook,
   CreateRecipeAction,
   CreateRecipeSuccessAction,
   CreateRecipeSuccessFailureAction,
   DeleteRecipeFromStateAction,
   EditRecipeSuccessAction,
   LoadRecipeSuccessAction,
-  Recipe,
   UndoDeleteRecipeFromStateAction
-} from '../../shared/model/model';
+} from '../../shared/model/model-action';
 import { CookbookActions, CookbookApiActions } from '../actions';
 import { CookbookState, initialCookbookState } from '../state/cookbook-state';
 
@@ -28,7 +27,7 @@ export const cookbookStateReducer = createReducer<CookbookState, Action>(
       ...state,
       recipes: {
         ...state.recipes,
-        [cookbookId]: recipes.slice().sort((a: Recipe, b: Recipe) => sortAlphabetically(a.title, b.title))
+        [cookbookId]: recipes
       }
     };
   }),
@@ -38,7 +37,6 @@ export const cookbookStateReducer = createReducer<CookbookState, Action>(
       recipes: {
         ...state.recipes,
         [recipeToSave.cookbookId]: [...state.recipes[recipeToSave.cookbookId], {...recipeToSave, id: optimisticId}]
-          .sort((a: Recipe, b: Recipe) => sortAlphabetically(a.title, b.title))
       }
     };
   }),
@@ -48,11 +46,7 @@ export const cookbookStateReducer = createReducer<CookbookState, Action>(
       recipes: {
         ...state.recipes,
         [savedRecipe.cookbookId]: state.recipes[savedRecipe.cookbookId].map((recipe: Recipe) => {
-          if (recipe.id === optimisticId) {
-            return savedRecipe;
-          } else {
-            return recipe;
-          }
+          return recipe.id === optimisticId ? savedRecipe : recipe;
         })
       }
     };
@@ -72,12 +66,8 @@ export const cookbookStateReducer = createReducer<CookbookState, Action>(
       recipes: {
         ...state.recipes,
         [editedRecipe.cookbookId]: state.recipes[editedRecipe.cookbookId].map((item: Recipe) => {
-          if (item.id === editedRecipe.id) {
-            return editedRecipe;
-          } else {
-            return item;
-          }
-        }).sort((a: Recipe, b: Recipe) => sortAlphabetically(a.title, b.title))
+          return item.id === editedRecipe.id ? editedRecipe : item;
+        })
       }
     };
   }),
@@ -95,8 +85,7 @@ export const cookbookStateReducer = createReducer<CookbookState, Action>(
       ...state,
       recipes: {
         ...state.recipes,
-        [recipe.cookbookId]: [...state.recipes[recipe.cookbookId], recipe]
-          .sort((a: Recipe, b: Recipe) => sortAlphabetically(a.title, b.title))
+        [recipe.cookbookId]: addRecipeAtIndex(recipe, state.recipes[recipe.cookbookId])
       }
     };
   })

@@ -95,6 +95,7 @@ export class RecipeFormComponent implements OnInit {
     const recipeToSave: Recipe = this.recipeForm?.value;
     if (!recipeToSave.id) {
       delete recipeToSave.id;
+      recipeToSave.title = recipeToSave.title.substring(0, 1).toUpperCase() + recipeToSave.title.substring(1);
     }
     recipeToSave.ingredients.map((ingredient: RecipeIngredient) => {
       if (!ingredient.id) {

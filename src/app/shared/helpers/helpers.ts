@@ -1,17 +1,7 @@
 import { FormControl } from '@angular/forms';
 import { isAfter, isDate } from 'date-fns';
 import { TranslatePipe } from '../../i18n/pipes/translate.pipe';
-import {
-  ArrayItemMovedEvent,
-  Cookbook,
-  I18n as I18nClient,
-  I18n,
-  JwtPayload,
-  Language,
-  Recipe,
-  RecipeIngredient,
-  User
-} from '../../shared/model/model';
+import { Cookbook, I18n as I18nClient, I18n, JwtPayload, Language, Recipe, RecipeIngredient, User } from '../../shared/model/model';
 import { CookbookApi, I18n as I18nApi, IngredientApi, RecipeApi, UserApi } from '../../shared/model/model-api';
 import { DEFAULT_LANGUAGE } from './constants';
 
@@ -98,12 +88,14 @@ export function convertIngredientApiArrayToRecipeIngredientArray(ingredients: In
 }
 
 export function convertCookbookApisToCookbooks(cookbooks: CookbookApi[]): Cookbook[] {
-  return cookbooks.map((cookbook: CookbookApi) => {
-    return {
-      id: cookbook.id,
-      title: cookbook.title
-    };
-  });
+  return cookbooks.map((cookbook: CookbookApi) => convertCookbookApiToCookbook(cookbook));
+}
+
+export function convertCookbookApiToCookbook(cookbook: CookbookApi): Cookbook {
+  return {
+    id: cookbook.id,
+    title: cookbook.title
+  };
 }
 
 export function sortAlphabetically(a: string, b: string): number {
@@ -114,4 +106,9 @@ export function sortAlphabetically(a: string, b: string): number {
     return -1;
   }
   return 0;
+}
+
+export function addRecipeAtIndex(recipe: Recipe, recipes: Recipe[]): Recipe[] {
+  const indexToInsert = recipes.findIndex((item: Recipe) => item.title.toLowerCase() > recipe.title.toLowerCase());
+  return indexToInsert > -1 ? [...recipes.slice(0, indexToInsert), recipe, ...recipes.slice(indexToInsert)] : [...recipes, recipe];
 }

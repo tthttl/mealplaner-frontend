@@ -1,8 +1,23 @@
 import { createAction, props } from '@ngrx/store';
 import { Cookbook, Recipe } from '../../shared/model/model';
 
-export const loadCookbookSuccess = createAction('[Cookbook Container] Load cookbooks success', props<{ cookbooks: Cookbook[] }>());
-export const loadCookbookFailure = createAction('[Cookbook Container] Load cookbooks failure');
+export const loadCookbookSuccess = createAction('[loadCookbook Effect] Load Cookbooks Success',
+  props<{ cookbooks: Cookbook[] }>()
+);
+export const loadCookbookFailure = createAction('[loadCookbook Effect] Load Cookbooks Failure');
+export const createCookbookSuccess = createAction('[createCookbook Effect] Create Cookbooks Success',
+  props<{ cookbook: Cookbook }>()
+);
+export const createCookbookFailure = createAction('[createCookbook Effect] Create Cookbooks Failure');
+export const editCookbookSuccess = createAction('[editCookbook Effect] Edit Cookbooks Success',
+  props<{ cookbook: Cookbook }>()
+);
+export const editCookbookFailure = createAction('[editCookbook Effect] Edit Cookbooks Failure');
+export const deleteCookbookSuccess = createAction('[deleteCookbook Effect] Delete Cookbooks Success',
+  props<{ cookbook: Cookbook }>()
+  );
+export const deleteCookbookFailure = createAction('[deleteCookbook Effect] Delete Cookbooks Failure');
+
 export const loadRecipesSuccess = createAction(
   '[LoadRecipe Effect] Get Recipes Success',
   props<{ cookbookId: string, recipes: Recipe[] }>()

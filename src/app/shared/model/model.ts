@@ -23,7 +23,7 @@ export interface ShoppingList {
   title: string;
 }
 
-export interface ShoppingListItem extends Ingredient{
+export interface ShoppingListItem extends Ingredient {
   id: string;
   shoppingList: string;
   order?: number;
@@ -111,10 +111,10 @@ export interface RecipeIngredient extends Ingredient {
 
 export interface Recipe {
   id?: string;
-  readonly title: string;
-  readonly cookbookId: string;
-  readonly ingredients: RecipeIngredient [];
-  readonly url?: string;
+  title: string;
+  cookbookId: string;
+  ingredients: RecipeIngredient [];
+  url?: string;
 }
 
 export interface DialogData<T extends object> {
@@ -125,48 +125,4 @@ export interface DialogData<T extends object> {
 export interface Cookbook {
   readonly id: string;
   readonly title: string;
-}
-
-export interface LoadRecipeSuccessAction {
-  readonly type: string;
-  readonly cookbookId: string;
-  readonly recipes: Recipe[];
-}
-
-export interface CreateRecipeAction {
-  readonly type: string;
-  readonly optimisticId: string;
-  readonly recipeToSave: Recipe;
-}
-
-export interface CreateRecipeSuccessAction {
-  readonly type: string;
-  readonly optimisticId: string;
-  readonly savedRecipe: Recipe;
-}
-
-export interface CreateRecipeSuccessFailureAction {
-  readonly type: string;
-  readonly cookbookId: string;
-  readonly optimisticId: string;
-}
-
-export interface EditRecipeSuccessAction {
-  readonly type: string;
-  readonly editedRecipe: Recipe;
-}
-
-export interface DeleteRecipeFromStateAction {
-  readonly type: string;
-  readonly recipeToDelete: Recipe;
-}
-
-export interface DeleteRecipeSuccessAction {
-  readonly type: string;
-  readonly deletedRecipe: Recipe;
-}
-
-export interface UndoDeleteRecipeFromStateAction {
-  readonly type: string;
-  readonly recipe: Recipe;
 }

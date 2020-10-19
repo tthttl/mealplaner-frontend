@@ -1,4 +1,4 @@
-import { BasicShoppingListItem, Language, LoginCredentials, ShoppingList, ShoppingListItem, ShoppingListItemMovedEvent } from './model';
+import { BasicShoppingListItem, Language, LoginCredentials, Recipe, ShoppingList, ShoppingListItem } from './model';
 
 export interface LoginAction {
   type: string;
@@ -59,4 +59,49 @@ export interface ShoppingListItemMovedAction {
   shoppingListId: string;
   currentIndex: number;
   previousIndex: number;
+}
+
+
+export interface LoadRecipeSuccessAction {
+  readonly type: string;
+  readonly cookbookId: string;
+  readonly recipes: Recipe[];
+}
+
+export interface CreateRecipeAction {
+  readonly type: string;
+  readonly optimisticId: string;
+  readonly recipeToSave: Recipe;
+}
+
+export interface CreateRecipeSuccessAction {
+  readonly type: string;
+  readonly optimisticId: string;
+  readonly savedRecipe: Recipe;
+}
+
+export interface CreateRecipeSuccessFailureAction {
+  readonly type: string;
+  readonly cookbookId: string;
+  readonly optimisticId: string;
+}
+
+export interface EditRecipeSuccessAction {
+  readonly type: string;
+  readonly editedRecipe: Recipe;
+}
+
+export interface DeleteRecipeFromStateAction {
+  readonly type: string;
+  readonly recipeToDelete: Recipe;
+}
+
+export interface DeleteRecipeSuccessAction {
+  readonly type: string;
+  readonly deletedRecipe: Recipe;
+}
+
+export interface UndoDeleteRecipeFromStateAction {
+  readonly type: string;
+  readonly recipe: Recipe;
 }

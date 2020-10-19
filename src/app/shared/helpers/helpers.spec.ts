@@ -3,6 +3,7 @@ import { TranslatePipe } from '../../i18n/pipes/translate.pipe';
 import { Cookbook, I18n, Recipe, RecipeIngredient } from '../model/model';
 import { CookbookApi, I18n as I18nApi, IngredientApi, RecipeApi, UserApi } from '../model/model-api';
 import {
+  addRecipeAtIndex,
   convertCookbookApisToCookbooks,
   convertIngredientApiArrayToRecipeIngredientArray,
   convertRecipeApiToRecipe,
@@ -234,13 +235,46 @@ describe('Helpers', () => {
 });
 
 describe(`${sortAlphabetically}`, () => {
-  it('should be 1', () => {
+  it('should be -1', () => {
     expect(sortAlphabetically('a', 'b')).toEqual(-1);
   });
-  it('should be -1', () => {
+  it('should be 1', () => {
     expect(sortAlphabetically('b', 'a')).toEqual(1);
   });
   it('should be 0', () => {
     expect(sortAlphabetically('a', 'a')).toEqual(0);
   });
+});
+
+describe(`${addRecipeAtIndex}`, () => {
+  const recipeA: Partial<Recipe> = {
+    id: '1',
+    title: 'Recipe A'
+  };
+
+  const recipeB: Partial<Recipe> = {
+    id: '2',
+    title: 'Recipe B'
+  };
+
+  const recipeC: Partial<Recipe> = {
+    id: '2',
+    title: 'Recipe B'
+  };
+
+  it('should add first', () => {
+    const recipes: Recipe[] = [recipeB as Recipe, recipeC as Recipe];
+    expect(addRecipeAtIndex(recipeA as Recipe, recipes));
+  });
+
+  it('should add last', () => {
+    const recipes: Recipe[] = [recipeA as Recipe, recipeB as Recipe];
+    expect(addRecipeAtIndex(recipeC as Recipe, recipes));
+  });
+
+  it('should add in the middle', () => {
+    const recipes: Recipe[] = [recipeA as Recipe, recipeC as Recipe];
+    expect(addRecipeAtIndex(recipeB as Recipe, recipes));
+  });
+
 });

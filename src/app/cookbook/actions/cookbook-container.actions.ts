@@ -1,7 +1,20 @@
 import { createAction, props } from '@ngrx/store';
-import { Recipe } from '../../shared/model/model';
+import { Cookbook, Recipe } from '../../shared/model/model';
 
-export const loadCookbook = createAction('[Cookbook Container] Load cookbooks');
+export const loadCookbook = createAction('[Cookbook Container] Load Cookbooks');
+export const createCookbook = createAction(
+  '[Cookbook Container] Create Cookbooks',
+  props<{ cookbook: Cookbook }>()
+);
+export const editCookbook = createAction(
+  '[Cookbook Container] Edit Cookbooks',
+  props<{ cookbook: Cookbook }>()
+);
+export const deleteCookbook = createAction(
+  '[Cookbook Container] Delete Cookbooks',
+  props<{ cookbook: Cookbook }>()
+);
+
 export const loadRecipes = createAction('[Cookbook Container] Get Recipes');
 export const createRecipe = createAction(
   '[Cookbook Container] Create Recipe',
