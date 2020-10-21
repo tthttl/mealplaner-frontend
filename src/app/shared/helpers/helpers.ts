@@ -2,15 +2,23 @@ import { FormControl } from '@angular/forms';
 import { isAfter, isDate } from 'date-fns';
 import { TranslatePipe } from '../../i18n/pipes/translate.pipe';
 import {
+  Cookbook,
   I18n as I18nClient,
   I18n,
   JwtPayload,
   Language,
-  Recipe,
+  Recipe, RecipeIngredient,
   ShoppingListItem as ShoppingListItemClient,
   User
 } from '../../shared/model/model';
-import { I18n as I18nApi, ShoppingListItemApi as ShoppingListItemApi, UserApi } from '../../shared/model/model-api';
+import {
+  CookbookApi,
+  I18n as I18nApi,
+  IngredientApi,
+  RecipeApi,
+  ShoppingListItemApi as ShoppingListItemApi,
+  UserApi
+} from '../../shared/model/model-api';
 import { DEFAULT_LANGUAGE } from './constants';
 
 export function mapI18nApiToI18nClient(i18nApi: I18nApi): I18nClient {

@@ -1,7 +1,7 @@
 import { FormControl } from '@angular/forms';
 import { TranslatePipe } from '../../i18n/pipes/translate.pipe';
 import { Cookbook, I18n, Recipe, RecipeIngredient } from '../model/model';
-import { CookbookApi, I18n as I18nApi, IngredientApi, RecipeApi, UserApi } from '../model/model-api';
+import { CookbookApi, I18n as I18nApi, IngredientApi, RecipeApi, ShoppingListItemApi, UserApi } from '../model/model-api';
 import {
   addRecipeAtIndex,
   convertCookbookApisToCookbooks,
