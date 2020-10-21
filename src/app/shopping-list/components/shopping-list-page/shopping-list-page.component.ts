@@ -18,7 +18,7 @@ import {
 })
 export class ShoppingListPageComponent implements OnInit {
   @Input() shoppingLists: ShoppingList[] | null = [];
-  @Input() shoppingListItems: ShoppingListItem[] | null = [];
+  @Input() shoppingListItems: ShoppingListItem[] = [];
   @Input() activeShoppingListId: string | undefined | null = undefined;
   @Input() translations: I18n | null = {};
   @Input() currentLanguage: Language | null = DEFAULT_LANGUAGE;
