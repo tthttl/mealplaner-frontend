@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
-import { catchError, concatMap, exhaustMap, filter, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import { catchError, concatMap, exhaustMap, filter, map, mergeMap, tap, withLatestFrom } from 'rxjs/operators';
 import { Cookbook, Recipe } from '../../shared/model/model';
 import { GlobalState } from '../../shared/state';
 import { CookbookActions, CookbookApiActions } from '../actions';
@@ -36,7 +36,7 @@ export class CookbookEffects {
     withLatestFrom(this.store.select(((state: GlobalState) => state.cookbookState.activeCookbookId))),
     concatMap(([_, activeCookbookId]) => this.recipeService.loadRecipes(activeCookbookId)
       .pipe(
-        map((recipes: Recipe[]) => CookbookApiActions.loadRecipesSuccess({ cookbookId: activeCookbookId, recipes})),
+        map((recipes: Recipe[]) => CookbookApiActions.loadRecipesSuccess({cookbookId: activeCookbookId, recipes})),
         catchError(() => of(CookbookApiActions.loadRecipesFailure()))
       )
     )
@@ -48,7 +48,7 @@ export class CookbookEffects {
     withLatestFrom(this.store.select(((state: GlobalState) => state.cookbookState.activeCookbookId))),
     concatMap(([action, activeCookbookId]) => this.recipeService.saveRecipe(activeCookbookId, action.recipeToSave)
       .pipe(
-        map((recipe: Recipe) => CookbookApiActions.createRecipeSuccess({ optimisticId: action.optimisticId, savedRecipe: recipe})),
+        map((recipe: Recipe) => CookbookApiActions.createRecipeSuccess({optimisticId: action.optimisticId, savedRecipe: recipe})),
         catchError(() => of(CookbookApiActions.createRecipeFailure({optimisticId: action.optimisticId, cookbookId: activeCookbookId})))
       )
     )
@@ -76,7 +76,7 @@ export class CookbookEffects {
   deleteRecipe$ = this.actions$.pipe(
     ofType(CookbookActions.deleteRecipe),
     filter(({recipe}: { recipe: Recipe }) => !!recipe.id),
-    switchMap(({recipe}: { recipe: Recipe }) => this.recipeService.deleteRecipe(recipe.id!)
+    mergeMap(({recipe}: { recipe: Recipe }) => this.recipeService.deleteRecipe(recipe.id!)
       .pipe(
         map(() => CookbookApiActions.deleteRecipeSuccess({deletedRecipe: recipe})),
         catchError(() => of(CookbookApiActions.undoDeleteRecipeFromState({recipe})))
