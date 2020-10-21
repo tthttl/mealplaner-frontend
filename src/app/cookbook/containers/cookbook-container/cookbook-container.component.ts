@@ -65,7 +65,7 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
     this.router.navigate([`cookbook/recipe/${recipeId}`]);
   }
 
-  onCreate(): void {
+  onCreateRecipe(): void {
     this.router.navigate(['cookbook/recipe']);
   }
 

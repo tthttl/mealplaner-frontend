@@ -1,0 +1,14 @@
+<app-recipe-list
+  [translations]="translations"
+  [currentLang]="currentLang"
+  [recipes]="recipes"
+  (deleteRecipe)="onDeleteRecipe($event)"
+  (editRecipe)="onEditRecipe($event)"
+  (clickRecipe)="onClickRecipe($event)"
+  (inputChanged)="onInputChanged($event)"
+></app-recipe-list>
+<app-button
+  [buttonText]="'button.submit' | translate: translations : currentLang"
+  (click)="click()"
+>
+</app-button>
