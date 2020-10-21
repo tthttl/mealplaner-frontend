@@ -1,0 +1,14 @@
+<app-recipe-list
+  [translations]="translations$ | async"
+  [currentLang]="currentLang$ | async"
+  [recipes]="recipes$ | async"
+  (deleteRecipe)="onDeleteRecipe($event)"
+  (editRecipe)="onEditRecipe($event)"
+  (clickRecipe)="onClickRecipe($event)"
+  (inputChanged)="onInputChanged($event)"
+></app-recipe-list>
+<app-button
+[buttonText]="'button.submit' | translate: (translations$ | async) : (currentLang$ | async)"
+(click)="onCreate()"
+>
+</app-button>

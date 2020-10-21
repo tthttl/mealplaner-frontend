@@ -1,13 +1,18 @@
 import { FormControl } from '@angular/forms';
 import { TranslatePipe } from '../../i18n/pipes/translate.pipe';
-import { I18n } from '../model/model';
-import { I18n as I18nApi, UserApi } from '../model/model-api';
+import { Cookbook, I18n, Recipe, RecipeIngredient } from '../model/model';
+import { CookbookApi, I18n as I18nApi, IngredientApi, RecipeApi, UserApi } from '../model/model-api';
 import {
+  addRecipeAtIndex,
+  convertCookbookApisToCookbooks,
+  convertIngredientApiArrayToRecipeIngredientArray,
+  convertRecipeApiToRecipe,
   decodeJwtToken,
   isJwtTokenExpired,
   mapI18nApiToI18nClient,
   mapUserApiToUserClient,
   moveItemInArray,
+  sortAlphabetically,
   translateValidationErrors
 } from './helpers';
 import createSpyObj = jasmine.createSpyObj;
@@ -164,4 +169,112 @@ describe('Helpers', () => {
       expect(moveItemInArray([0, 1, 2, 3, 4], 3, 1)).toEqual([0, 3, 1, 2, 4]);
     });
   });
+
+  describe('Cookbook converters', () => {
+    const ingredientApi: IngredientApi = {
+      id: '1',
+      title: 'Mehl',
+      unit: 'kg',
+      amount: 1,
+      isStapleFood: true
+    };
+
+    const ingredient: RecipeIngredient = {
+      id: '1',
+      title: 'Mehl',
+      unit: 'kg',
+      amount: 1,
+      isStapleFood: true
+    };
+
+    const recipeApi: RecipeApi = {
+      id: '1',
+      title: 'Recipe',
+      url: 'URL',
+      cookbookId: 'cookbookId',
+      ingredients: [ingredientApi]
+    };
+
+    const recipe: Recipe = {
+      id: '1',
+      title: 'Recipe',
+      url: 'URL',
+      cookbookId: 'cookbookId',
+      ingredients: [ingredient]
+    };
+
+    const cookbookApi: CookbookApi = {
+      id: '1',
+      title: 'Cookbook',
+    };
+
+    const cookbook: Cookbook = {
+      id: '1',
+      title: 'Cookbook',
+    };
+
+    describe('convertRecipeApiToRecipe', () => {
+      it('should convert', () => {
+        expect(convertRecipeApiToRecipe(recipeApi)).toEqual(recipe);
+      });
+    });
+
+    describe('convertIngredientApiArrayToRecipeIngredientArray', () => {
+      it('should convert', () => {
+        expect(convertIngredientApiArrayToRecipeIngredientArray([ingredientApi]))
+          .toEqual([ingredient]);
+      });
+    });
+
+    describe('convertCookbookApisToCookbooks', () => {
+      it('should convert', () => {
+        expect(convertCookbookApisToCookbooks([cookbookApi])).toEqual([cookbook]);
+      });
+    });
+  });
+});
+
+describe(`${sortAlphabetically}`, () => {
+  it('should be -1', () => {
+    expect(sortAlphabetically('a', 'b')).toEqual(-1);
+  });
+  it('should be 1', () => {
+    expect(sortAlphabetically('b', 'a')).toEqual(1);
+  });
+  it('should be 0', () => {
+    expect(sortAlphabetically('a', 'a')).toEqual(0);
+  });
+});
+
+describe(`${addRecipeAtIndex}`, () => {
+  const recipeA: Partial<Recipe> = {
+    id: '1',
+    title: 'Recipe A'
+  };
+
+  const recipeB: Partial<Recipe> = {
+    id: '2',
+    title: 'Recipe B'
+  };
+
+  const recipeC: Partial<Recipe> = {
+    id: '2',
+    title: 'Recipe B'
+  };
+
+  it('should add first', () => {
+    const recipes: Recipe[] = [recipeB as Recipe, recipeC as Recipe];
+    expect(addRecipeAtIndex(recipeA as Recipe, recipes));
+  });
+
+  it('should add last', () => {
+    const recipes: Recipe[] = [recipeA as Recipe, recipeB as Recipe];
+    expect(addRecipeAtIndex(recipeC as Recipe, recipes));
+  });
+
+  it('should add in the middle', () => {
+    const recipes: Recipe[] = [recipeA as Recipe, recipeC as Recipe];
+    expect(addRecipeAtIndex(recipeB as Recipe, recipes));
+  });
+
 });

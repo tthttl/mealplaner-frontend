@@ -12,9 +12,9 @@ import { I18n, Language, Recipe, RecipeIngredient, SelectOption, Unit } from '..
 })
 export class RecipeFormComponent implements OnInit {
 
-  @Input() translations: I18n = {};
-  @Input() currentLang: Language = DEFAULT_LANGUAGE;
-  @Input() recipe: Recipe | undefined;
+  @Input() translations: I18n | null = {};
+  @Input() currentLang: Language | null = DEFAULT_LANGUAGE;
+  @Input() recipe: Recipe | null | undefined;
   @Output() recipeSaved: EventEmitter<Recipe> = new EventEmitter<Recipe>();
 
   recipeForm: FormGroup;
@@ -23,6 +23,8 @@ export class RecipeFormComponent implements OnInit {
 
   constructor(private translatePipe: TranslatePipe) {
     this.recipeForm = new FormGroup({
+      id: new FormControl(''),
+      cookbookId: new FormControl(''),
       title: new FormControl('', [Validators.required]),
       url: new FormControl(''),
       ingredients: new FormArray([
@@ -47,6 +49,7 @@ export class RecipeFormComponent implements OnInit {
             } else {
               (this.recipeForm.controls.ingredients as FormArray)
                 .push(this.createNewIngredientFormGroup(
+                  ingredient.id,
                   ingredient.title,
                   ingredient.amount,
                   ingredient.unit,
@@ -78,9 +81,10 @@ export class RecipeFormComponent implements OnInit {
     return (ingredient as FormGroup).controls[key] as FormControl;
   }
 
-  createNewIngredientFormGroup(name?: string, amount?: number, unit?: Unit, isStapleFood?: boolean): FormGroup {
+  createNewIngredientFormGroup(id?: string, title?: string, amount?: number, unit?: Unit, isStapleFood?: boolean): FormGroup {
     return new FormGroup({
-      title: new FormControl(name || '', [Validators.required]),
+      id: new FormControl(id || ''),
+      title: new FormControl(title || '', [Validators.required]),
       amount: new FormControl(amount || null, [Validators.required, Validators.min(1)]),
       unit: new FormControl(unit || 'kg', [Validators.required]),
       isStapleFood: new FormControl(isStapleFood || false, [Validators.required])
@@ -88,9 +92,18 @@ export class RecipeFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    const recipe = this.recipeForm?.value;
-    recipe.ingredients.map((ingredient: RecipeIngredient) => ingredient.amount = +ingredient.amount);
-    this.recipeSaved.emit(recipe);
+    const recipeToSave: Recipe = this.recipeForm?.value;
+    if (!recipeToSave.id) {
+      delete recipeToSave.id;
+      recipeToSave.title = recipeToSave.title.substring(0, 1).toUpperCase() + recipeToSave.title.substring(1);
+    }
+    recipeToSave.ingredients.map((ingredient: RecipeIngredient) => {
+      if (!ingredient.id) {
+        delete ingredient.id;
+      }
+      ingredient.amount = +ingredient.amount;
+    });
+    this.recipeSaved.emit(recipeToSave);
   }
 
   addEmptyIngredientRow(): void {

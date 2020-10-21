@@ -1,8 +1,8 @@
 import { FormControl } from '@angular/forms';
 import { isAfter, isDate } from 'date-fns';
 import { TranslatePipe } from '../../i18n/pipes/translate.pipe';
-import { ArrayItemMovedEvent, I18n as I18nClient, I18n, JwtPayload, Language, User } from '../../shared/model/model';
-import { I18n as I18nApi, UserApi } from '../../shared/model/model-api';
+import { Cookbook, I18n as I18nClient, I18n, JwtPayload, Language, Recipe, RecipeIngredient, User } from '../../shared/model/model';
+import { CookbookApi, I18n as I18nApi, IngredientApi, RecipeApi, UserApi } from '../../shared/model/model-api';
 import { DEFAULT_LANGUAGE } from './constants';
 
 export function mapI18nApiToI18nClient(i18nApi: I18nApi): I18nClient {
@@ -59,4 +59,56 @@ export function moveItemInArray<T>(array: T[], previousIndex: number, currentInd
   copy.splice(previousIndex, 1);
   copy.splice(currentIndex, 0, element);
   return copy;
+}
+
+export function convertRecipesApiToRecipes(recipes: RecipeApi[]): Recipe[] {
+  return recipes.map((recipe: RecipeApi) => convertRecipeApiToRecipe(recipe));
+}
+
+export function convertRecipeApiToRecipe(recipe: RecipeApi): Recipe {
+  return {
+    id: recipe.id,
+    title: recipe.title,
+    url: recipe.url,
+    cookbookId: recipe.cookbookId,
+    ingredients: convertIngredientApiArrayToRecipeIngredientArray(recipe.ingredients)
+  };
+}
+
+export function convertIngredientApiArrayToRecipeIngredientArray(ingredients: IngredientApi[]): RecipeIngredient[] {
+  return ingredients.map((ingredient: IngredientApi) => {
+    return {
+      id: ingredient.id,
+      title: ingredient.title,
+      unit: ingredient.unit,
+      amount: ingredient.amount,
+      isStapleFood: ingredient.isStapleFood || false
+    };
+  });
+}
+
+export function convertCookbookApisToCookbooks(cookbooks: CookbookApi[]): Cookbook[] {
+  return cookbooks.map((cookbook: CookbookApi) => convertCookbookApiToCookbook(cookbook));
+}
+
+export function convertCookbookApiToCookbook(cookbook: CookbookApi): Cookbook {
+  return {
+    id: cookbook.id,
+    title: cookbook.title
+  };
+}
+
+export function sortAlphabetically(a: string, b: string): number {
+  if (a > b) {
+    return 1;
+  }
+  if (a < b) {
+    return -1;
+  }
+  return 0;
+}
+
+export function addRecipeAtIndex(recipe: Recipe, recipes: Recipe[]): Recipe[] {
+  const indexToInsert = recipes.findIndex((item: Recipe) => item.title.toLowerCase() > recipe.title.toLowerCase());
+  return indexToInsert > -1 ? [...recipes.slice(0, indexToInsert), recipe, ...recipes.slice(indexToInsert)] : [...recipes, recipe];
 }

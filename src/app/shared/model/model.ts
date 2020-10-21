@@ -23,7 +23,7 @@ export interface ShoppingList {
   title: string;
 }
 
-export interface ShoppingListItem extends Ingredient{
+export interface ShoppingListItem extends Ingredient {
   id: string;
   shoppingList: string;
   order?: number;
@@ -101,15 +101,28 @@ export const StringUnion = <UnionType extends string>(...values: UnionType[]) =>
   };
 
   const unionNamespace = {guard, check, values};
-  return Object.freeze(unionNamespace as typeof unionNamespace & {type: UnionType});
+  return Object.freeze(unionNamespace as typeof unionNamespace & { type: UnionType });
 };
 
 export interface RecipeIngredient extends Ingredient {
+  id?: string;
   readonly isStapleFood: boolean;
 }
 
 export interface Recipe {
+  id?: string;
+  title: string;
+  cookbookId: string;
+  ingredients: RecipeIngredient [];
+  url?: string;
+}
+
+export interface DialogData<T extends object> {
+  readonly data: T;
+  readonly translations: string[];
+}
+
+export interface Cookbook {
+  readonly id: string;
   readonly title: string;
-  readonly ingredients: RecipeIngredient [];
-  readonly url?: string;
 }

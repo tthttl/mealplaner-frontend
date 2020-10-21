@@ -1,0 +1,82 @@
+@import "../../../../styles/settings/variables";
+@import "../../../../styles/settings/breakpoints";
+
+.recipe-list {
+  width: 100%;
+  display: block;
+  overflow: hidden;
+
+  @include large {
+    padding: 1rem;
+    border: $border-primary;
+    border-radius: $border-radius-default;
+  }
+
+  .recipe {
+    border: $border-primary;
+    color: $text-70;
+    font-size: 1rem;
+    box-sizing: border-box;
+    margin-top: 0.5rem;
+
+    @include large {
+      border: none;
+      border-bottom: solid 1px $blue_70;
+      margin: 0;
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+
+    .recipe__row {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+
+      @include large{
+        flex-direction: row;
+        align-items: stretch;
+      }
+    }
+
+    &__title-box {
+      display: flex;
+      flex: 1 1 70%;
+      align-items: center;
+      padding: 0.5rem 0.5rem;
+
+      &:hover {
+        background-color: $blue_20;
+        cursor: pointer;
+      }
+
+      &:active {
+        background-color: $blue_30;
+      }
+
+      @include large{
+        padding: 0 0.5rem;
+      }
+    }
+
+    &__buttons-box {
+      display: flex;
+
+      @include large{
+        border-left: 1px solid;
+        border-image: linear-gradient(
+            to bottom,
+            white,
+            $blue_70,
+            white
+        ) 1 100%;
+      }
+    }
+
+    &__button {
+      width: 100%;
+      padding: 0.5rem 0.5rem;
+    }
+  }
+}
