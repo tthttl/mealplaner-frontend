@@ -3,13 +3,15 @@ import { initialShoppingListState, ShoppingListState } from '../states/shopping-
 import { ShoppingListApiActions, ShoppingListContainerActions, ShoppingListEffectActions } from '../../../shopping-list/actions';
 import { moveItemInArray } from '../../helpers/helpers';
 import {
-  AddShoppingListItemAction, AddShoppingListItemSuccessAction,
+  AddShoppingListItemAction,
+  AddShoppingListItemSuccessAction,
   ChangeShoppingListAction,
   DeleteShoppingListItemAction,
   LoadShoppingListItemsSuccessAction,
   LoadShoppingListsSuccessAction,
   SetActiveShoppingListAction,
-  ShoppingListItemMovedAction
+  ShoppingListItemMovedAction,
+  ShoppingListToggleAction
 } from '../../model/model-action';
 
 
@@ -95,6 +97,34 @@ export const shoppingListReducers = createReducer<ShoppingListState, Action>(
         shoppingListItems: {
           ...state.shoppingListItems,
           [shoppingListId]: moveItemInArray(state.shoppingListItems[shoppingListId], previousIndex, currentIndex),
+        }
+      };
+    }
+  ),
+  on(
+    ShoppingListContainerActions.toggleShoppingListItem,
+    (state: ShoppingListState, {shoppingListItemId, shoppingList}: ShoppingListToggleAction) => {
+      return {
+        ...state,
+        shoppingListItems: {
+          ...state.shoppingListItems,
+          [shoppingList]: state.shoppingListItems[shoppingList].map(shoppingListItem => {
+            return shoppingListItem.id === shoppingListItemId ? {...shoppingListItem, isChecked: true} : shoppingListItem;
+          }),
+        }
+      };
+    }
+  ),
+  on(
+    ShoppingListContainerActions.unToggleShoppingListItem,
+    (state: ShoppingListState, {shoppingListItemId, shoppingList}: ShoppingListToggleAction) => {
+      return {
+        ...state,
+        shoppingListItems: {
+          ...state.shoppingListItems,
+          [shoppingList]: state.shoppingListItems[shoppingList].map(shoppingListItem => {
+            return shoppingListItem.id === shoppingListItemId ? {...shoppingListItem, isChecked: false} : shoppingListItem;
+          }),
         }
       };
     }

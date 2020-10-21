@@ -9,14 +9,22 @@ import { DEFAULT_LANGUAGE } from '../../../shared/helpers/constants';
 })
 export class ShoppingListComponent{
   @Input() items: ShoppingListItem[] | null = [];
-  @Input() translations: I18n = {};
-  @Input() currentLang: Language = DEFAULT_LANGUAGE;
+  @Input() translations: I18n | null = {};
+  @Input() currentLang: Language | null = DEFAULT_LANGUAGE;
   @Output() itemDeleted: EventEmitter<ShoppingListItem> = new EventEmitter();
   @Output() listItemMoved: EventEmitter<ArrayItemMovedEvent> = new EventEmitter();
 
+  deleteBuffer: {[key: string]: number} = {};
+  deletionDelayInMilliseconds = 300;
+
 
   itemChecked(item: ShoppingListItem, isChecked: boolean): void {
-    this.itemDeleted.emit(item);
+    if (isChecked) {
+      this.deleteBuffer[item.id] = window.setTimeout(() => this.itemDeleted.emit(item), this.deletionDelayInMilliseconds);
+    } else {
+      clearTimeout(this.deleteBuffer[item.id]);
+    }
+
   }
 
   drop({previousIndex, currentIndex}: ArrayItemMovedEvent): void {

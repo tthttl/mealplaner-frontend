@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MatSnackBar, MatSnackBarConfig, MatSnackBarRef } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 import { TextOnlySnackBar } from '@angular/material/snack-bar/simple-snack-bar';
 import { Store } from '@ngrx/store';
 import { TranslatePipe } from '../../i18n/pipes/translate.pipe';
@@ -23,11 +23,12 @@ export class SnackbarService {
     this.store.select((state: GlobalState) => state.appState.language).subscribe((lang: Language) => this.currentLang = lang);
   }
 
-  openSnackBar(messageKey: string, actionKey: string, config?: MatSnackBarConfig): MatSnackBarRef<TextOnlySnackBar> {
+  openSnackBar(messageKey: string, actionKey: string, displayInMilliSeconds: number = 10000): MatSnackBarRef<TextOnlySnackBar> {
     const message = this.translatePipe.transform(messageKey, this.translations || null, this.currentLang);
     const action = this.translatePipe.transform(actionKey, this.translations || null, this.currentLang);
-    return this.snackBar.open(message, action, config || {
-      duration: 10000
+    return this.snackBar.open(message, action, {
+      duration: displayInMilliSeconds,
+      panelClass: 'snackbar'
     });
   }
 }

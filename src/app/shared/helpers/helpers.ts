@@ -1,8 +1,24 @@
 import { FormControl } from '@angular/forms';
 import { isAfter, isDate } from 'date-fns';
 import { TranslatePipe } from '../../i18n/pipes/translate.pipe';
-import { Cookbook, I18n as I18nClient, I18n, JwtPayload, Language, Recipe, RecipeIngredient, User } from '../../shared/model/model';
-import { CookbookApi, I18n as I18nApi, IngredientApi, RecipeApi, UserApi } from '../../shared/model/model-api';
+import {
+  Cookbook,
+  I18n as I18nClient,
+  I18n,
+  JwtPayload,
+  Language,
+  Recipe, RecipeIngredient,
+  ShoppingListItem as ShoppingListItemClient,
+  User
+} from '../../shared/model/model';
+import {
+  CookbookApi,
+  I18n as I18nApi,
+  IngredientApi,
+  RecipeApi,
+  ShoppingListItemApi as ShoppingListItemApi,
+  UserApi
+} from '../../shared/model/model-api';
 import { DEFAULT_LANGUAGE } from './constants';
 
 export function mapI18nApiToI18nClient(i18nApi: I18nApi): I18nClient {
@@ -111,4 +127,11 @@ export function sortAlphabetically(a: string, b: string): number {
 export function addRecipeAtIndex(recipe: Recipe, recipes: Recipe[]): Recipe[] {
   const indexToInsert = recipes.findIndex((item: Recipe) => item.title.toLowerCase() > recipe.title.toLowerCase());
   return indexToInsert > -1 ? [...recipes.slice(0, indexToInsert), recipe, ...recipes.slice(indexToInsert)] : [...recipes, recipe];
+}
+
+export function mapShoppingListItemApiToShoppingListItem(shoppingListApi: ShoppingListItemApi): ShoppingListItemClient {
+  return {
+    ...shoppingListApi,
+    isChecked: false,
+  };
 }

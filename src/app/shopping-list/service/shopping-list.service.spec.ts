@@ -3,6 +3,8 @@ import { ShoppingListService } from './shopping-list.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { BasicShoppingListItem, ShoppingList, ShoppingListItem } from '../../shared/model/model';
 import { environment } from '../../../environments/environment';
+import { ShoppingListItemApi } from '../../shared/model/model-api';
+import { mapShoppingListItemApiToShoppingListItem } from '../../shared/helpers/helpers';
 
 describe('ShoppingListService', () => {
   let injector: TestBed;
@@ -36,13 +38,13 @@ describe('ShoppingListService', () => {
   });
 
   it('getShoppingListItems() should return array of shopping list items', () => {
-    const mockShoppingLists: ShoppingListItem[] = [
+    const mockShoppingLists: ShoppingListItemApi[] = [
       {id: '42', title: 'Apple', amount: 1, unit: 'kg', shoppingList: '32', order: 2},
       {id: '42', title: 'Banana', amount: 1, unit: 'kg', shoppingList: '32', order: 1},
     ];
 
     service.getShoppingListItems('shoppingListId').subscribe((res) => {
-      expect(res).toEqual(mockShoppingLists);
+      expect(res).toEqual(mockShoppingLists.map(item => mapShoppingListItemApiToShoppingListItem(item)));
     });
 
     const req = httpMock.expectOne(`${environment.apiUrl}/shopping-list-items?shoppingList=shoppingListId`);

@@ -20,6 +20,8 @@ import {
 import { ShoppingListContainerActions } from '../../actions';
 import { Store } from '@ngrx/store';
 import { v4 as uuid } from 'uuid';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-shopping-list-container',
@@ -34,7 +36,7 @@ export class ShoppingListContainerComponent implements OnInit {
   shoppingLists$: Observable<ShoppingList[] | null> = this.store.select(selectShoppingLists);
   activeShoppingListId$: Observable<string | undefined> = this.store.select(activeShoppingListId);
 
-  constructor(private store: Store<GlobalState>) {
+  constructor(private store: Store<GlobalState>, private snackBarService: SnackbarService) {
   }
 
   ngOnInit(): void {
@@ -50,7 +52,20 @@ export class ShoppingListContainerComponent implements OnInit {
   }
 
   onShoppingListItemDeleted({shoppingListId, shoppingListItem}: DeleteShoppingListItemEvent): void {
-    this.store.dispatch(ShoppingListContainerActions.deleteShoppingListItem({shoppingListItem}));
+    this.store.dispatch(ShoppingListContainerActions.toggleShoppingListItem(
+      {shoppingListItemId: shoppingListItem.id, shoppingList: shoppingListItem.shoppingList}));
+
+    this.snackBarService.openSnackBar('message.undo', 'message.action', 3000)
+      .afterDismissed()
+      .pipe(take(1))
+      .subscribe(({dismissedByAction}) => {
+        if (dismissedByAction) {
+          this.store.dispatch(ShoppingListContainerActions.unToggleShoppingListItem(
+            {shoppingListItemId: shoppingListItem.id, shoppingList: shoppingListItem.shoppingList}));
+        } else {
+          this.store.dispatch(ShoppingListContainerActions.deleteShoppingListItem({shoppingListItem}));
+        }
+      });
   }
 
   onShoppingListItemMoved({shoppingListId, previousIndex, currentIndex}: ShoppingListItemMovedEvent): void {

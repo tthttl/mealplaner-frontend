@@ -48,6 +48,7 @@ export interface AddShoppingListItemSuccessAction {
   optimisticId: string;
   shoppingListItem: ShoppingListItem;
 }
+
 export interface DeleteShoppingListItemAction {
   type: string;
   shoppingListItem: ShoppingListItem;
@@ -104,4 +105,10 @@ export interface DeleteRecipeSuccessAction {
 export interface UndoDeleteRecipeFromStateAction {
   readonly type: string;
   readonly recipe: Recipe;
+}
+
+export interface ShoppingListToggleAction {
+  type: string;
+  shoppingListItemId: string;
+  shoppingList: string;
 }

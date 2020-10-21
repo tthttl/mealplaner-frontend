@@ -87,7 +87,7 @@ describe('shoppingListReducers', () => {
     });
   });
 
-  describe('ShoppingListContainerActions.deleteShoppingListItem$', () => {
+  describe('ShoppingListContainerActions.deleteShoppingListItem', () => {
     it('should optimistically remove item from shopping list', () => {
       const shoppingListItems: ShoppingListItem[] = [
         {title: 'Apple', shoppingList: '1234', amount: 1, unit: 'kg', id: '42', order: 2, isChecked: false},
@@ -141,8 +141,7 @@ describe('shoppingListReducers', () => {
     });
   });
 
-
-  describe('ShoppingListContainerActions.moveShoppingListItem$', () => {
+  describe('ShoppingListContainerActions.moveShoppingListItem', () => {
     it('should optimistically update order of shopping list', () => {
       const shoppingListItems: ShoppingListItem[] = [
         {title: 'Cherries', shoppingList: '42', amount: 1, unit: 'kg', id: '1', order: 3, isChecked: false},
@@ -165,6 +164,64 @@ describe('shoppingListReducers', () => {
             {title: 'Apple', shoppingList: '42', amount: 1, unit: 'kg', id: '42', order: 2, isChecked: false},
             {title: 'Cherries', shoppingList: '42', amount: 1, unit: 'kg', id: '1', order: 3, isChecked: false},
             {title: 'Banana', shoppingList: '42', amount: 1, unit: 'kg', id: '1', order: 1, isChecked: false},
+          ]
+        }
+      });
+    });
+  });
+
+  describe('ShoppingListContainerActions.toggleShoppingListItem', () => {
+    it('should optimistically update order of shopping list', () => {
+      const shoppingListItems: ShoppingListItem[] = [
+        {title: 'Cherries', shoppingList: '1234', amount: 1, unit: 'kg', id: '1', order: 3, isChecked: false},
+        {title: 'Apple', shoppingList: '1234', amount: 1, unit: 'kg', id: '42', order: 2, isChecked: false},
+        {title: 'Banana', shoppingList: '1234', amount: 1, unit: 'kg', id: '12', order: 1, isChecked: false},
+      ];
+
+      expect(
+        shoppingListReducers({
+            ...initialShoppingListState,
+            shoppingListItems: {
+              1234: [...shoppingListItems]
+            }
+          },
+          ShoppingListContainerActions.toggleShoppingListItem({shoppingList: '1234', shoppingListItemId: '42'})
+        )).toEqual({
+        ...initialShoppingListState,
+        shoppingListItems: {
+          1234: [
+            {title: 'Cherries', shoppingList: '1234', amount: 1, unit: 'kg', id: '1', order: 3, isChecked: false},
+            {title: 'Apple', shoppingList: '1234', amount: 1, unit: 'kg', id: '42', order: 2, isChecked: true},
+            {title: 'Banana', shoppingList: '1234', amount: 1, unit: 'kg', id: '12', order: 1, isChecked: false},
+          ]
+        }
+      });
+    });
+  });
+
+  describe('ShoppingListContainerActions.unToggleShoppingListItem', () => {
+    it('should optimistically update order of shopping list', () => {
+      const shoppingListItems: ShoppingListItem[] = [
+        {title: 'Cherries', shoppingList: '1234', amount: 1, unit: 'kg', id: '1', order: 3, isChecked: false},
+        {title: 'Apple', shoppingList: '1234', amount: 1, unit: 'kg', id: '42', order: 2, isChecked: true},
+        {title: 'Banana', shoppingList: '1234', amount: 1, unit: 'kg', id: '12', order: 1, isChecked: false},
+      ];
+
+      expect(
+        shoppingListReducers({
+            ...initialShoppingListState,
+            shoppingListItems: {
+              1234: [...shoppingListItems]
+            }
+          },
+          ShoppingListContainerActions.unToggleShoppingListItem({shoppingList: '1234', shoppingListItemId: '42'})
+        )).toEqual({
+        ...initialShoppingListState,
+        shoppingListItems: {
+          1234: [
+            {title: 'Cherries', shoppingList: '1234', amount: 1, unit: 'kg', id: '1', order: 3, isChecked: false},
+            {title: 'Apple', shoppingList: '1234', amount: 1, unit: 'kg', id: '42', order: 2, isChecked: false},
+            {title: 'Banana', shoppingList: '1234', amount: 1, unit: 'kg', id: '12', order: 1, isChecked: false},
           ]
         }
       });
