@@ -9,17 +9,17 @@ import { TranslatePipe } from '../../../i18n/pipes/translate.pipe';
 import { ButtonComponent } from '../../../shared/components/button/button.component';
 import { InputComponent } from '../../../shared/components/input/input.component';
 import { SelectComponent } from '../../../shared/components/select/select.component';
-import { RecipeFormComponent } from './recipe-form.component';
+import { RecipeListComponent } from './recipe-list.component';
 
 
 export default {
-  title: 'RecipeForm',
+  title: 'RecipeList',
   excludeStories: /.*Data$/,
   decorators: [
     moduleMetadata({
       imports: [FontAwesomeModule, ReactiveFormsModule, MatSlideToggleModule],
       declarations: [
-        RecipeFormComponent,
+        RecipeListComponent,
         TranslatePipe,
         InputComponent,
         SelectComponent,
@@ -46,61 +46,40 @@ export default {
 };
 
 export const actionsData = {
-  recipeSaved: action('recipeSaved')
+  inputChanged: action('inputChanged'),
+  editRecipe: action('editRecipe'),
+  deleteRecipe: action('deleteRecipe')
 };
 
 export const formData = {
   translations: {
     de: {
-      'recipe-form.placeholder.title': 'Title',
-      'recipe-form.label.title': 'Recipe Title',
-      'recipe-form.placeholder.url': 'Link',
-      'recipe-form.label.url': 'Link to Recipe',
-      'ingredients.label-text': 'Ingredients',
-      'recipe-form.placeholder.amount': 'Quantity',
-      'recipe-form.placeholder.name': 'Name',
-      'recipe-form.text.toggle': 'Basic Ingredient',
-      'recipe-form.button.delete': 'Delete',
-      'recipe-form.button.new-ingredient': 'Add new Ingredient',
-      'recipe-form.button.submit': 'Create',
-      'errors.validation.title.required': 'Titel is required',
-      'recipe-form.button.modify': 'Edit'
+      'input.search': 'Suchen',
+      'button.edit': 'Bearbeiten',
+      'button.delete': 'Löschen'
     }
-  }
+  },
+  recipes: [
+    {
+      id: '1',
+      title: 'Chocolate chip cookie'
+    },
+    {
+      id: '2',
+      title: 'Cheesecake'
+    },
+    {
+      id: '3',
+      title: 'Muffin'
+    }
+  ]
 };
 
 export const Default = () => ({
-  component: RecipeFormComponent,
+  component: RecipeListComponent,
   props: {
     ...formData,
     ...actionsData
   }
 });
-
-export const Edit = () => ({
-  component: RecipeFormComponent,
-  props: {
-    ...formData,
-    ...actionsData,
-    recipe: {
-      title: 'Beef & beer pie',
-      url: 'https://www.bbcgoodfood.com/recipes/beef-beer-pie',
-      ingredients: [
-        {
-          name: 'Beer',
-          amount: 1,
-          unit: 'l',
-          isStapleFood: true,
-        },
-        {
-          name: 'Beef',
-          amount: 1,
-          unit: 'kg',
-          isStapleFood: false,
-        }
-      ]
-    }
-  }
-});
-
 

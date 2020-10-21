@@ -1,13 +1,15 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { DEFAULT_LANGUAGE } from '../../../shared/helpers/constants';
 import {
-  AddShoppingListItemEvent,
-  ArrayItemMovedEvent, BasicShoppingListItem,
-  DeleteShoppingListItemEvent, I18n, Language,
+  ArrayItemMovedEvent,
+  BasicShoppingListItem,
+  DeleteShoppingListItemEvent,
+  I18n,
+  Language,
   ShoppingList,
   ShoppingListItem,
   ShoppingListItemMovedEvent
 } from '../../../shared/model/model';
-import { DEFAULT_LANGUAGE } from '../../../shared/helpers/constants';
 
 @Component({
   selector: 'app-shopping-list-page',

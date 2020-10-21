@@ -26,3 +26,24 @@ export interface UserApi {
     email: string;
   };
 }
+
+export interface RecipeApi {
+  readonly id: string;
+  readonly title: string;
+  readonly url?: string;
+  readonly cookbookId: string;
+  readonly ingredients: IngredientApi[];
+}
+
+export interface IngredientApi {
+  readonly id: string;
+  readonly title: string;
+  readonly unit: Unit;
+  readonly amount: number;
+  readonly isStapleFood: boolean;
+}
+
+export interface CookbookApi {
+  readonly id: string;
+  readonly title: string;
+}
