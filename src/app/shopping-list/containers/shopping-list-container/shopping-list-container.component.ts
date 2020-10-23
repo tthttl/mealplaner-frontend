@@ -10,6 +10,7 @@ import {
   ShoppingListItemMovedEvent
 } from '../../../shared/model/model';
 import {
+  activeShoppingList,
   activeShoppingListId,
   GlobalState,
   selectCurrentLanguage,
@@ -34,6 +35,7 @@ export class ShoppingListContainerComponent implements OnInit {
   currentLanguage$: Observable<Language> = this.store.select(selectCurrentLanguage);
   shoppingListsItems$: Observable<ShoppingListItem[]> = this.store.select(selectCurrentShoppingListItems);
   shoppingLists$: Observable<ShoppingList[] | null> = this.store.select(selectShoppingLists);
+  activeShoppingList$: Observable<ShoppingList | undefined> = this.store.select(activeShoppingList);
   activeShoppingListId$: Observable<string | undefined> = this.store.select(activeShoppingListId);
 
   constructor(private store: Store<GlobalState>, private snackBarService: SnackbarService) {

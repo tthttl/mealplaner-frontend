@@ -1,0 +1,48 @@
+@import "../../../../styles/settings/colors";
+@import "../../../../styles/settings/variables";
+@import "../../../../styles/mixins/style";
+
+
+
+.shopping-list-header {
+  padding-bottom: 24px;
+  padding-left: 10px;
+  color: $blue-grey_80;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+
+
+  &__title {
+    font-weight: 400;
+    font-size: 1.5em;
+  }
+
+  @include skeleton('.shopping-list-header__title-wrapper', $blue-grey_30, 3.5s) {
+    background: $blue-grey_40;
+    width: 60%;
+    height: 24px;
+    align-self: center;
+    border-radius: $border-radius-default;
+  };
+
+  @include skeleton('.shopping-list-header__button', $cyan_70, 3.5s) {
+    background: $cyan_80;
+    width: 80px;
+    height: 30px;
+    cursor: wait;
+    border-radius: $border-radius-default;
+  };
+
+
+  &__button {
+    border: none;
+    color: #ffffff;
+    padding: 4px 16px;
+    border-radius: $border-radius-default;
+    background-color: $cyan_80;
+    cursor: pointer;
+  }
+}
+
+

@@ -1,20 +1,20 @@
 
 <div class="container">
-  <div>
-    <ul>
-      <li *ngFor="let shoppingList of shoppingLists" [ngClass]="{active: shoppingList.id === activeShoppingListId}" (click)="onShoppingListChange(shoppingList.id)">
-        {{shoppingList | json}}
-      </li>
-    </ul>
-  </div>
-  <app-shopping-list-form [translations]="translations" [currentLang]="currentLanguage" (itemAdded)="onItemAdded($event)">
-  </app-shopping-list-form>
+  <app-list-header
+    [selectedList]="activeShoppingList"
+    [lists]="shoppingLists"
+    [translations]="translations"
+    [defaultTitle]="'shopping-list.default-title' | translate:translations:currentLanguage"
+    [addListLabel]="'shopping-list.new-list' | translate:translations:currentLanguage"
+    [buttonLabel]="'shopping-list.my-lists' | translate:translations:currentLanguage"
+    [currentLang]="currentLanguage"></app-list-header>
+  <app-shopping-list-form
+    [translations]="translations"
+    [currentLang]="currentLanguage"
+    (itemAdded)="onItemAdded($event)"></app-shopping-list-form>
   <app-shopping-list
-  [items]="shoppingListItems"
-  (listItemMoved)="onShoppingListItemMoved($event)"
-  (itemDeleted)="onShoppingListItemDeleted($event)">
-
-  </app-shopping-list>
+    [items]="shoppingListItems"
+    (listItemMoved)="onShoppingListItemMoved($event)"
+    (itemDeleted)="onShoppingListItemDeleted($event)"></app-shopping-list>
 </div>
-
 

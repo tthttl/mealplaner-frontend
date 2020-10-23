@@ -1,0 +1,31 @@
+@mixin skeleton($element, $animation-color, $animation-speed) {
+  #{$element}:empty {
+    @content;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #{$element}:empty::before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: -150px;
+    top: 0;
+    height: 100%;
+    width: 30px;
+    background: linear-gradient(to right, transparent 0%, #{$animation-color} 50%, transparent 100%);
+    animation: load #{$animation-speed} linear infinite;
+  }
+}
+
+@keyframes load {
+  0% {
+    left: -150px;
+  }
+  30%   {
+    left: 100%;
+  }
+  100%   {
+    left: 100%;
+  }
+}
