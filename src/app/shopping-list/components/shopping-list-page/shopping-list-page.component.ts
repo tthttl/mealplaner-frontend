@@ -56,4 +56,8 @@ export class ShoppingListPageComponent implements OnInit {
       this.moveShoppingListItem.emit({shoppingListId: this.activeShoppingListId, ...arrayItemMovedEvent});
     }
   }
+
+  onSelectList(shoppingListId: string): void {
+    this.changeShoppingList.emit(shoppingListId);
+  }
 }
