@@ -3,11 +3,9 @@
   <app-list-header
     [selectedList]="activeShoppingList"
     [lists]="shoppingLists"
-    [translations]="translations"
     [defaultTitle]="'shopping-list.default-title' | translate:translations:currentLanguage"
     [addListLabel]="'shopping-list.new-list' | translate:translations:currentLanguage"
-    [buttonLabel]="'shopping-list.my-lists' | translate:translations:currentLanguage"
-    [currentLang]="currentLanguage"></app-list-header>
+    [buttonLabel]="'shopping-list.my-lists' | translate:translations:currentLanguage"></app-list-header>
   <app-shopping-list-form
     [translations]="translations"
     [currentLang]="currentLanguage"

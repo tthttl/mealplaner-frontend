@@ -22,11 +22,11 @@ const dialogData: DialogData<Recipe> = {
       }
     ]
   },
-  translations: [
-    'Ingredients',
-    'Button 1',
-    'Button 2'
-  ]
+  translations: {
+    'ingredients.label-text': 'Ingredients',
+    'button.modify': 'Button 1',
+    'button.add-to-mealplaner': 'Button 2'
+  }
 };
 
 export default {
