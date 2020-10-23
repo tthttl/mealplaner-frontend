@@ -23,9 +23,9 @@ describe('RecipeViewComponent', () => {
         }
       ]
     },
-    translations: [
-      'test'
-    ]
+    translations: {
+      'ingredients.label-text': 'test'
+    }
   };
 
   beforeEach(async(() => {
