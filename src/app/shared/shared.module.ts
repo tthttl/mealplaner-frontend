@@ -7,6 +7,8 @@ import { ButtonComponent } from './components/button/button.component';
 import { InputComponent } from './components/input/input.component';
 import { SelectComponent } from './components/select/select.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ListPickerDialogComponent } from './components/list-picker-dialog/list-picker-dialog.component';
+import { ListHeaderComponent } from './components/list-header/list-header.component';
 
 
 @NgModule({
@@ -14,6 +16,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     ButtonComponent,
     InputComponent,
     SelectComponent,
+    ListHeaderComponent,
+    ListPickerDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -21,13 +25,15 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     ReactiveFormsModule,
     FontAwesomeModule,
     MatSnackBarModule,
-    MatDialogModule
+    MatDialogModule,
   ],
   exports: [
     ButtonComponent,
     InputComponent,
     SelectComponent,
-  ]
+    ListHeaderComponent,
+    ListPickerDialogComponent
+  ],
 })
 export class SharedModule {
 }

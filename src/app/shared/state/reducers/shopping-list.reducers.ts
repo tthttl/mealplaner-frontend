@@ -1,5 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { initialShoppingListState, ShoppingListState } from '../states/shopping-list-state';
+import { initialShoppingListState, shoppingListAdapter, ShoppingListState } from '../states/shopping-list-state';
 import { ShoppingListApiActions, ShoppingListContainerActions, ShoppingListEffectActions } from '../../../shopping-list/actions';
 import { moveItemInArray } from '../../helpers/helpers';
 import {
@@ -23,7 +23,7 @@ export const shoppingListReducers = createReducer<ShoppingListState, Action>(
       return {
         ...state,
         shoppingLists: {
-          items: shoppingLists,
+          items: shoppingListAdapter.addMany(shoppingLists, state.shoppingLists.items),
         }
       };
     }),
