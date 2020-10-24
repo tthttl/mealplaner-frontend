@@ -3,6 +3,7 @@
   [activeShoppingListId]="activeShoppingListId$ | async"
   [shoppingListItems]="shoppingListsItems$ | async | unToggled"
   [translations]="translations$ | async"
+  [activeShoppingList]="activeShoppingList$ | async"
   [currentLanguage]="currentLanguage$ | async"
   (changeShoppingList)="onShoppingListChange($event)"
   (addShoppingListItem)="onShoppingListItemAdded($event)"

@@ -23,7 +23,7 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
   recipes$: Observable<Recipe[]>;
   private destroy$: Subject<void> = new Subject<void>();
 
-  private dialogTranslations: string[] = [];
+  private dialogTranslations: {} = {};
 
   constructor(
     private store: Store<GlobalState>,
@@ -42,9 +42,11 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
     this.store.select(selectTranslations).pipe(
       withLatestFrom(this.store.select((state: GlobalState) => state.appState.language))
     ).subscribe(([translations, currentLanguage]: [I18n | null, Language]) => {
-      this.dialogTranslations.push(this.translatePipe.transform('ingredients.label-text', translations, currentLanguage));
-      this.dialogTranslations.push(this.translatePipe.transform('button.modify', translations, currentLanguage));
-      this.dialogTranslations.push(this.translatePipe.transform('button.add-to-mealplaner', translations, currentLanguage));
+      this.dialogTranslations = {
+        'ingredients.label-text': this.translatePipe.transform('ingredients.label-text', translations, currentLanguage),
+        'button.modify': this.translatePipe.transform('button.modify', translations, currentLanguage),
+        'button.add-to-mealplaner': this.translatePipe.transform('button.add-to-mealplaner', translations, currentLanguage),
+      };
     });
   }
 
@@ -72,7 +74,7 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
   onClickRecipe(recipe: Recipe): void {
     const dialogRef = this.dialogService.openDialog(RecipeViewComponent, {
       data: recipe,
-      translations: this.dialogTranslations
+      translations: this.dialogTranslations,
     });
     dialogRef.afterClosed()
       .pipe(take(1))

@@ -2,7 +2,7 @@ import { ActionReducerMap, createFeatureSelector, createSelector, MetaReducer } 
 import { cookbookStateReducer } from '../../cookbook/reducers/cookbook-state.reducers';
 import { CookbookState, initialCookbookState } from '../../cookbook/state/cookbook-state';
 import { isJwtTokenExpired } from '../helpers/helpers';
-import { initialShoppingListState, ShoppingListState } from './states/shopping-list-state';
+import { initialShoppingListState, shoppingListAdapter, ShoppingListState } from './states/shopping-list-state';
 import { shoppingListReducers } from './reducers/shopping-list.reducers';
 import { appStateReducer } from './reducers/app-state.reducers';
 import { AppState, initialAppState } from './states/app-state';
@@ -67,9 +67,16 @@ export const isLoggedIn = createSelector(
   (appState: AppState) => !!appState.user && !isJwtTokenExpired(appState.user.jwt)
 );
 
-export const selectShoppingLists = createSelector(
+export const selectShoppingListsEntity = createSelector(
   selectShoppingListState,
   (shoppingListState: ShoppingListState) => shoppingListState.shoppingLists.items
+);
+
+export const selectShoppingLists = shoppingListAdapter.getSelectors(selectShoppingListsEntity).selectAll ;
+
+export const activeShoppingList = createSelector(
+  selectShoppingListState,
+  (shoppingListState: ShoppingListState) => shoppingListState.shoppingLists.items.entities[shoppingListState.activeShoppingList || '']
 );
 
 export const activeShoppingListId = createSelector(

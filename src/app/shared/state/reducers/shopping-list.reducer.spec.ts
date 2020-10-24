@@ -13,7 +13,10 @@ describe('shoppingListReducers', () => {
       }))).toEqual({
         ...initialShoppingListState,
         shoppingLists: {
-          items: [...shoppingLists]
+          items: {ids: ['1', '2'], entities: {
+            1: shoppingLists[0],
+            2: shoppingLists[1],
+          }}
         },
       });
     });

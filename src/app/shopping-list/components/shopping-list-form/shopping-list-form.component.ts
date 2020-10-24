@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TranslatePipe } from '../../../i18n/pipes/translate.pipe';
 import { DEFAULT_LANGUAGE } from '../../../shared/helpers/constants';
@@ -8,7 +8,8 @@ import { BasicShoppingListItem, I18n, Language, SelectOption, Unit } from '../..
 @Component({
   selector: 'app-shopping-list-form',
   templateUrl: './shopping-list-form.component.html',
-  styleUrls: ['./shopping-list-form.component.scss']
+  styleUrls: ['./shopping-list-form.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ShoppingListFormComponent implements OnInit {
   @Input() translations: I18n | null = {};
