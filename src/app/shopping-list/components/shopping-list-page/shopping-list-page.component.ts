@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DEFAULT_LANGUAGE } from '../../../shared/helpers/constants';
 import {
   ArrayItemMovedEvent,
@@ -14,11 +14,12 @@ import {
 @Component({
   selector: 'app-shopping-list-page',
   templateUrl: './shopping-list-page.component.html',
-  styleUrls: ['./shopping-list-page.component.scss']
+  styleUrls: ['./shopping-list-page.component.scss'],
 })
 export class ShoppingListPageComponent implements OnInit {
   @Input() shoppingLists: ShoppingList[] | null = [];
   @Input() shoppingListItems: ShoppingListItem[] = [];
+  @Input() activeShoppingList: ShoppingList | undefined | null = undefined;
   @Input() activeShoppingListId: string | undefined | null = undefined;
   @Input() translations: I18n | null = {};
   @Input() currentLanguage: Language | null = DEFAULT_LANGUAGE;

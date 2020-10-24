@@ -1,6 +1,6 @@
 <div>
   <div mat-dialog-title>{{dialogData.data.title}}</div>
-  <h4>{{dialogData.translations[0]}}</h4>
+  <h4>{{dialogData.translations['ingredients.label-text']}}</h4>
   <div *ngFor="let ingredient of ingredients.controls" mat-dialog-content>
     <form [formGroup]="ingredientsForm" (ngSubmit)="onSubmit()">
       <div class="ingredient">
@@ -20,14 +20,14 @@
   </div>
   <div class="button-group" mat-dialog-actions>
     <app-button (click)="onEdit()"
-                [buttonText]="dialogData.translations[1]"
+                [buttonText]="dialogData.translations['button.modify']"
                 [color]="'accent'"
                 class="button--margin"
                 [routerLink]="['/recipe/', dialogData.data.id]"
     >
     </app-button>
     <app-button [mat-dialog-close]="dialogData.data"
-                [buttonText]="dialogData.translations[2]"
+                [buttonText]="dialogData.translations['button.add-to-mealplaner']"
     >
     </app-button>
   </div>

@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ShoppingListPageComponent } from './shopping-list-page.component';
+import { TranslatePipe } from '../../../i18n/pipes/translate.pipe';
 
 describe('ShoppingListPageComponent', () => {
   let component: ShoppingListPageComponent;
@@ -8,7 +9,7 @@ describe('ShoppingListPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ShoppingListPageComponent ]
+      declarations: [ ShoppingListPageComponent, TranslatePipe]
     })
     .compileComponents();
   }));

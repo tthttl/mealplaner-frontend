@@ -23,6 +23,11 @@ export interface ShoppingList {
   title: string;
 }
 
+export interface List {
+  id: string;
+  title: string;
+}
+
 export interface ShoppingListItem extends Ingredient {
   id: string;
   shoppingList: string;
@@ -119,12 +124,17 @@ export interface Recipe {
 
 export interface DialogData<T extends object> {
   readonly data: T;
-  readonly translations: string[];
+  readonly translations: {[key: string]: string};
 }
 
 export interface Cookbook {
   readonly id: string;
   readonly title: string;
+}
+
+export interface ListPickerDialogEvent {
+  event: 'select' | 'create' | 'edit' | 'delete';
+  listId?: string;
 }
 
 export interface SelectedIngredient extends Ingredient {
