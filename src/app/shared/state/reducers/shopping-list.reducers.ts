@@ -155,5 +155,44 @@ export const shoppingListReducers = createReducer<ShoppingListState, Action>(
         },
       };
     }
+  ),
+  on(
+    ShoppingListContainerActions.deleteShoppingList,
+    (state: ShoppingListState, {shoppingList}) => {
+      return {
+        ...state,
+        shoppingLists: {
+          ...state.shoppingLists,
+          items: shoppingListAdapter.removeOne(shoppingList.id, state.shoppingLists.items),
+        },
+      };
+    }
+  ),
+  on(
+    ShoppingListContainerActions.undoDeleteShoppingList,
+    (state: ShoppingListState, {shoppingList}) => {
+      return {
+        ...state,
+        shoppingLists: {
+          ...state.shoppingLists,
+          items: shoppingListAdapter.addOne(shoppingList, state.shoppingLists.items),
+        },
+      };
+    }
+  ),
+  on(
+    ShoppingListApiActions.deleteShoppingListSuccess,
+    (state: ShoppingListState, {shoppingList}) => {
+      const copyShoppingListsItems = {...state.shoppingListItems};
+
+      if (copyShoppingListsItems.hasOwnProperty(shoppingList.id)) {
+        delete copyShoppingListsItems[shoppingList.id];
+      }
+
+      return {
+        ...state,
+        shoppingListItems: copyShoppingListsItems,
+      };
+    }
   )
 );

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { List, ListPickerDialogEvent, ShoppingList } from '../../model/model';
 import { DialogService } from '../../services/dialog.service';
 import { take } from 'rxjs/operators';
@@ -8,7 +8,8 @@ import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-list-header',
   templateUrl: './list-header.component.html',
-  styleUrls: ['./list-header.component.scss']
+  styleUrls: ['./list-header.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListHeaderComponent implements OnInit {
   @Input() selectedList: List | null | undefined = undefined;

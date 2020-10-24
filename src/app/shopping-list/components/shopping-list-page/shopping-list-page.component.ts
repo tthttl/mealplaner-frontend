@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DEFAULT_LANGUAGE } from '../../../shared/helpers/constants';
 import {
   ArrayItemMovedEvent,
@@ -15,6 +15,7 @@ import {
   selector: 'app-shopping-list-page',
   templateUrl: './shopping-list-page.component.html',
   styleUrls: ['./shopping-list-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ShoppingListPageComponent implements OnInit {
   @Input() shoppingLists: ShoppingList[] | null = [];

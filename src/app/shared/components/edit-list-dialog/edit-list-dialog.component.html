@@ -4,7 +4,7 @@
   <app-input  [name]="'title'"  [formControl]="getFormControl('title')"></app-input>
 </mat-dialog-content>
 <mat-dialog-actions align="end" class="creat-list-dialog__actions">
-  <app-button [buttonText]="dialogData.translations['save-button-text']" [isDisabled]="listForm.invalid" ></app-button>
+  <app-button [buttonText]="dialogData.translations['save-button-text']" [isDisabled]="listForm.invalid" [buttonType]="'submit'"></app-button>
   <app-button [buttonText]="dialogData.translations['cancel-button-text']" color="accent" (click)="close()"></app-button>
 </mat-dialog-actions>
 </form>

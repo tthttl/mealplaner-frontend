@@ -2,13 +2,14 @@ import { ShoppingListService } from '../service/shopping-list.service';
 import { ShoppingListApiEffects } from './shopping-list-api.effects';
 import { ShoppingListApiActions, ShoppingListContainerActions, ShoppingListEffectActions } from '../actions';
 import { Observable, of, throwError } from 'rxjs';
-import { TestBed } from '@angular/core/testing';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { Action, Store } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GlobalState, selectCurrentShoppingListItems, selectUserID } from '../../shared/state';
+import { activeShoppingListId, GlobalState, initialState, selectCurrentShoppingListItems, selectUserID } from '../../shared/state';
 import { ShoppingList, ShoppingListItem } from '../../shared/model/model';
 import SpyObj = jasmine.SpyObj;
+import { initialShoppingListState } from '../../shared/state/states/shopping-list-state';
 
 
 describe('Shopping List Api Effects', () => {
@@ -51,6 +52,22 @@ describe('Shopping List Api Effects', () => {
               ]
             }
           ],
+          initialState: {
+            ...initialState,
+            shoppingListState: {
+              ...initialShoppingListState,
+              activeShoppingList: '42',
+              shoppingLists: {
+                items: {
+                  ids: ['42', '99'],
+                  entities: {
+                    42: {id: '42', title: 'Title 42'},
+                    99: {id: '99', title: 'Title 99'}
+                  }
+                }
+              }
+            }
+          }
         }),
       ]
     });
@@ -341,6 +358,59 @@ describe('Shopping List Api Effects', () => {
       shoppingListService.updateShoppingList.and.returnValue(throwError('error'));
       shoppingListApiEffects.editShoppingList$.subscribe((action: Action) => {
         expect(action.type).toEqual(ShoppingListApiActions.editShoppingListFailure.type);
+      });
+    });
+  });
+
+  describe('deleteShoppingListIfCurrentGetsDeleted$', () => {
+    beforeEach(() => {
+      actions$ = of({type: ShoppingListContainerActions.deleteShoppingList.type, shoppingList: {id: '42', title: 'DELETE'}});
+      shoppingListService = jasmine.createSpyObj('shoppingListService', ['deleteShoppingList']);
+      shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
+    });
+
+    it('it should return success message', fakeAsync(() => {
+      shoppingListService.deleteShoppingList.and.returnValue(of({} as { 'DELETED': true }));
+      shoppingListApiEffects.deleteShoppingListIfCurrentGetsDeleted$.subscribe((action: Action) => {
+        expect(action.type).toEqual(ShoppingListApiActions.deleteShoppingListSuccess.type);
+      });
+      tick(3000);
+    }));
+
+    it('should return failure action', fakeAsync(() => {
+      shoppingListService.deleteShoppingList.and.returnValue(throwError('error'));
+      shoppingListApiEffects.deleteShoppingListIfCurrentGetsDeleted$.subscribe((action: Action) => {
+        expect(action.type).toEqual(ShoppingListApiActions.deleteShoppingListFailure.type);
+      });
+      tick(3000);
+    }));
+  });
+
+  describe('changeShoppingListIfCurrentGetsDeleted$', () => {
+    beforeEach(() => {
+      actions$ = of({type: ShoppingListContainerActions.deleteShoppingList.type, shoppingList: {id: '42', title: 'Title'}});
+      shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
+    });
+
+    it('it should return select shoppingList Action when currently selected list gets deleted', () => {
+      shoppingListApiEffects.changeShoppingListIfCurrentGetsDeleted$.subscribe((action) => {
+        expect(action.type).toEqual(ShoppingListEffectActions.setActiveShoppingList.type);
+        expect(action.shoppingListId).toEqual('42');
+      });
+    });
+  });
+
+
+  describe('changeShoppingListIfCurrentGetsDeleted$', () => {
+    beforeEach(() => {
+      actions$ = of({type: ShoppingListContainerActions.deleteShoppingList.type, shoppingList: {id: '42', title: 'Title'}});
+      shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
+    });
+
+    it('it should return select shoppingList Action when currently selected list gets deleted', () => {
+      shoppingListApiEffects.changeShoppingListIfCurrentGetsDeleted$.subscribe((action) => {
+        expect(action.type).toEqual(ShoppingListEffectActions.setActiveShoppingList.type);
+        expect(action.shoppingListId).toEqual('42');
       });
     });
   });

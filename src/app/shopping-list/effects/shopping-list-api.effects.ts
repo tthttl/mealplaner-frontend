@@ -1,9 +1,22 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { GlobalState, selectCurrentShoppingListItems, selectUserID } from '../../shared/state';
+import { activeShoppingListId, GlobalState, selectCurrentShoppingListItems, selectUserID } from '../../shared/state';
 import { ShoppingListApiActions, ShoppingListContainerActions, ShoppingListEffectActions } from '../actions';
-import { catchError, concatMap, exhaustMap, filter, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import {
+  catchError,
+  concatMap,
+  debounce,
+  delay,
+  exhaustMap,
+  filter,
+  map,
+  mergeMap,
+  switchMap,
+  takeUntil,
+  tap,
+  withLatestFrom
+} from 'rxjs/operators';
 import { ChangeShoppingListAction, SetActiveShoppingListAction } from '../../shared/model/model-action';
 import { ShoppingList, ShoppingListItem } from '../../shared/model/model';
 import { forkJoin, Observable, of } from 'rxjs';
@@ -145,7 +158,6 @@ export class ShoppingListApiEffects {
   @Effect()
   selectNewlyCreatedShoppingList$ = this.actions$.pipe(
     ofType(ShoppingListApiActions.createShoppingListSuccess),
-    tap((action) => console.log('herep', action)),
     map(({shoppingList}) => ShoppingListEffectActions.setActiveShoppingList({shoppingListId: shoppingList.id})),
   );
 
@@ -158,5 +170,33 @@ export class ShoppingListApiEffects {
       }),
       catchError(() => of(ShoppingListApiActions.editShoppingListFailure()))
     )),
+  );
+
+  @Effect()
+  deleteShoppingListIfCurrentGetsDeleted$ = this.actions$.pipe(
+    ofType(ShoppingListContainerActions.deleteShoppingList),
+    concatMap(({shoppingList}) => {
+      return of({}).pipe(
+        delay(3000),
+        takeUntil(this.actions$.pipe(ofType(ShoppingListContainerActions.undoDeleteShoppingList))),
+        mergeMap(() => this.shoppingListService.deleteShoppingList(shoppingList.id).pipe(
+          map((editedShoppingList) => {
+            return ShoppingListApiActions.deleteShoppingListSuccess({shoppingList});
+          }),
+          catchError(() => of(ShoppingListApiActions.deleteShoppingListFailure()))
+        ))
+      );
+    })
+  );
+
+  @Effect()
+  changeShoppingListIfCurrentGetsDeleted$ = this.actions$.pipe(
+    ofType(ShoppingListContainerActions.deleteShoppingList),
+    withLatestFrom(this.store),
+    filter(([{shoppingList}, store]) => shoppingList.id === store.shoppingListState.activeShoppingList),
+    map(([_, store]) => {
+      const idOfFirstShoppingList = Object.keys(store.shoppingListState.shoppingLists.items.entities)[0];
+      return ShoppingListEffectActions.setActiveShoppingList({shoppingListId: idOfFirstShoppingList});
+    })
   );
 }

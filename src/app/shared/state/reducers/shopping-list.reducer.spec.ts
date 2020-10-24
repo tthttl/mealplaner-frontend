@@ -298,4 +298,107 @@ describe('shoppingListReducers', () => {
       });
     });
   });
+
+  describe(' ShoppingListContainerActions.deleteShoppingList', () => {
+    it('should optimistically delete ShoppingList', () => {
+
+      expect(
+        shoppingListReducers({
+            ...initialShoppingListState,
+            activeShoppingList: '1234',
+            shoppingLists: {
+              items: {ids: ['1234', '8888'], entities: {
+                  1234: {id: '1234', title: 'Test 1'},
+                  8888: {id: '8888', title: 'Delete'},
+                }}
+            },
+            shoppingListItems: {
+              1234: [],
+              8888: [],
+            }
+          },
+          ShoppingListContainerActions.deleteShoppingList({shoppingList: {id: '8888', title: 'Delete'}})
+        )).toEqual({
+        ...initialShoppingListState,
+        activeShoppingList: '1234',
+        shoppingLists: {
+          items: {ids: ['1234'], entities: {
+              1234: {id: '1234', title: 'Test 1'},
+            }}
+        },
+        shoppingListItems: {
+          1234: [],
+          8888: [],
+        }
+      });
+    });
+  });
+
+  describe('  ShoppingListContainerActions.undoDeleteShoppingList', () => {
+    it('should revert ptimistically delete ShoppingList', () => {
+
+      expect(
+        shoppingListReducers({
+            ...initialShoppingListState,
+            activeShoppingList: '1234',
+            shoppingLists: {
+              items: {ids: ['1234'], entities: {
+                  1234: {id: '1234', title: 'Test 1'},
+                }}
+            },
+            shoppingListItems: {
+              1234: [],
+              8888: [],
+            }
+          },
+          ShoppingListContainerActions.undoDeleteShoppingList({shoppingList: {id: '8888', title: 'Delete'}})
+        )).toEqual({
+        ...initialShoppingListState,
+        activeShoppingList: '1234',
+        shoppingLists: {
+          items: {ids: ['8888', '1234'], entities: {
+              1234: {id: '1234', title: 'Test 1'},
+              8888: {id: '8888', title: 'Delete'},
+            }}
+        },
+        shoppingListItems: {
+          1234: [],
+          8888: [],
+        }
+      });
+    });
+  });
+
+  describe('ShoppingListApiActions.deleteShoppingListSuccess', () => {
+    it('should clear shoppingListItems after delete ShoppingList successfully', () => {
+
+      expect(
+        shoppingListReducers({
+            ...initialShoppingListState,
+            activeShoppingList: '1234',
+            shoppingLists: {
+              items: {ids: ['1234'], entities: {
+                  1234: {id: '1234', title: 'Test 1'},
+                }}
+            },
+            shoppingListItems: {
+              1234: [],
+              8888: [],
+            }
+          },
+          ShoppingListApiActions.deleteShoppingListSuccess({shoppingList: {id: '8888', title: 'Delete'}})
+        )).toEqual({
+        ...initialShoppingListState,
+        activeShoppingList: '1234',
+        shoppingLists: {
+          items: {ids: ['1234'], entities: {
+              1234: {id: '1234', title: 'Test 1'},
+            }}
+        },
+        shoppingListItems: {
+          1234: [],
+        }
+      });
+    });
+  });
 });

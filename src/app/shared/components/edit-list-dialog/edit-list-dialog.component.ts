@@ -26,7 +26,6 @@ export class EditListDialogComponent {
   }
 
   createList(): void {
-    console.log(this.listForm.value);
     this.isEditing ?
       this.dialogRef.close({event: 'edit', shoppingList: {...this.dialogData.data, ...this.listForm.value}}) : this.dialogRef.close({event: 'create', title: this.listForm.value.title});
   }

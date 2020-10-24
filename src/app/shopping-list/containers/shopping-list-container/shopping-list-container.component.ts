@@ -23,14 +23,15 @@ import { ShoppingListContainerActions } from '../../actions';
 import { Store } from '@ngrx/store';
 import { v4 as uuid } from 'uuid';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
-import { take } from 'rxjs/operators';
+import { take, withLatestFrom } from 'rxjs/operators';
 import { DialogService } from '../../../shared/services/dialog.service';
 import { EditListDialogComponent } from '../../../shared/components/edit-list-dialog/edit-list-dialog.component';
+import { TranslatePipe } from '../../../i18n/pipes/translate.pipe';
 
 @Component({
   selector: 'app-shopping-list-container',
   templateUrl: './shopping-list-container.component.html',
-  styleUrls: ['./shopping-list-container.component.scss']
+  styleUrls: ['./shopping-list-container.component.scss'],
 })
 export class ShoppingListContainerComponent implements OnInit {
 
@@ -41,7 +42,30 @@ export class ShoppingListContainerComponent implements OnInit {
   activeShoppingList$: Observable<ShoppingList | undefined> = this.store.select(activeShoppingList);
   activeShoppingListId$: Observable<string | undefined> = this.store.select(activeShoppingListId);
 
-  constructor(private store: Store<GlobalState>, private snackBarService: SnackbarService, private dialogService: DialogService) {
+  private createDialogTranslations: {} = {};
+  private editDialogTranslations: {} = {};
+
+  constructor(
+    private store: Store<GlobalState>,
+    private snackBarService: SnackbarService,
+    private dialogService: DialogService,
+    private translatePipe: TranslatePipe
+  ) {
+    this.store.select(selectTranslations).pipe(
+      withLatestFrom(this.store.select((state: GlobalState) => state.appState.language))
+    ).subscribe(([translations, currentLanguage]: [I18n | null, Language]) => {
+      this.createDialogTranslations = {
+        title: this.translatePipe.transform('create-list.title', translations, currentLanguage),
+        'save-button-text': this.translatePipe.transform('create-list.save-button-text', translations, currentLanguage),
+        'cancel-button-text': this.translatePipe.transform('create-list.cancel-button-text', translations, currentLanguage),
+      };
+
+      this.editDialogTranslations = {
+        title: this.translatePipe.transform('edit-list.title', translations, currentLanguage),
+        'save-button-text': this.translatePipe.transform('edit-list.save-button-text', translations, currentLanguage),
+        'cancel-button-text': this.translatePipe.transform('edit-list.cancel-button-text', translations, currentLanguage),
+      };
+    });
   }
 
   ngOnInit(): void {
@@ -80,11 +104,7 @@ export class ShoppingListContainerComponent implements OnInit {
   onCreateShoppingList(): void {
     const dialogRef = this.dialogService.openDialog(EditListDialogComponent, {
       data: {},
-      translations: {
-        title: 'Neue Liste erstellen',
-        'save-button-text': 'Hinzufügen',
-        'cancel-button-text': 'Abbrechen'
-      }
+      translations: this.createDialogTranslations,
     });
     dialogRef.afterClosed()
       .pipe(take(1))
@@ -95,21 +115,28 @@ export class ShoppingListContainerComponent implements OnInit {
       });
   }
 
-  OnEditShoppingList(shoppingList: ShoppingList): void {
+  onEditShoppingList(shoppingList: ShoppingList): void {
     const dialogRef = this.dialogService.openDialog(EditListDialogComponent, {
       data: shoppingList,
-      translations: {
-        title: 'Liste Bearbeiten',
-        'save-button-text': 'Speichern',
-        'cancel-button-text': 'Abbrechen'
-      }
+      translations: this.editDialogTranslations,
     });
     dialogRef.afterClosed()
       .pipe(take(1))
       .subscribe((result: EditListDialogEvent | undefined) => {
         if (result?.event === 'edit') {
-          console.log(result.shoppingList);
           this.store.dispatch(ShoppingListContainerActions.editShoppingList({shoppingList: result.shoppingList}));
+        }
+      });
+  }
+
+  onShoppingListDelete(shoppingList: ShoppingList): void {
+    this.store.dispatch(ShoppingListContainerActions.deleteShoppingList({shoppingList}));
+    this.snackBarService.openSnackBar('message.undo', 'message.action', 3000)
+      .afterDismissed()
+      .pipe(take(1))
+      .subscribe(({dismissedByAction}) => {
+        if (dismissedByAction) {
+          this.store.dispatch(ShoppingListContainerActions.undoDeleteShoppingList({shoppingList}));
         }
       });
   }

@@ -39,3 +39,13 @@ export const editShoppingList = createAction(
   '[Shopping List Container] Edit ShoppingList',
   props<{ shoppingList: ShoppingList }>()
 );
+
+export const deleteShoppingList = createAction(
+  '[Shopping List Container] Delete shopping list',
+  props<{ shoppingList: ShoppingList }>()
+);
+
+export const undoDeleteShoppingList = createAction(
+  '[Shopping List Container] Undo Delete shopping',
+  props<{ shoppingList: ShoppingList }>()
+);
