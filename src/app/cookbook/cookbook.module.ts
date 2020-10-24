@@ -2,6 +2,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -41,6 +42,7 @@ import { RecipeService } from './services/recipe.service';
     FontAwesomeModule,
     MatSlideToggleModule,
     MatDialogModule,
+    MatCheckboxModule,
   ],
   providers: [
     {

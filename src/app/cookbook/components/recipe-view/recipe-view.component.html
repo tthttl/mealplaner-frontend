@@ -1,12 +1,22 @@
 <div>
   <div mat-dialog-title>{{dialogData.data.title}}</div>
   <h4>{{dialogData.translations[0]}}</h4>
-  <div *ngFor="let ingredient of dialogData.data.ingredients" mat-dialog-content>
-    <div class="ingredient">
-      <span class="ingredient-column">{{ingredient.amount}}</span>
-      <span class="ingredient-column">{{ingredient.unit}}</span>
-      <span class="ingredient-column">{{ingredient.title}}</span>
-    </div>
+  <div *ngFor="let ingredient of ingredients.controls" mat-dialog-content>
+    <form [formGroup]="ingredientsForm" (ngSubmit)="onSubmit()">
+      <div class="ingredient">
+        <mat-checkbox
+          class="shopping-list__item-text"
+          [checked]="getFormControl(ingredient, 'isSelected').value"
+          [color]="'primary'"
+          [disableRipple]="true"
+          (change)="toggleSelected(ingredient, $event.checked)">
+          <span class="ingredient-column">{{getFormControl(ingredient, 'amount').value}}</span>
+          <span class="ingredient-column">{{getFormControl(ingredient, 'unit').value}}</span>
+          <span class="ingredient-column">{{getFormControl(ingredient, 'title').value}}</span>
+        </mat-checkbox>
+
+      </div>
+    </form>
   </div>
   <div class="button-group" mat-dialog-actions>
     <app-button (click)="onEdit()"

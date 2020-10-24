@@ -126,3 +126,7 @@ export interface Cookbook {
   readonly id: string;
   readonly title: string;
 }
+
+export interface SelectedIngredient extends Ingredient {
+  isSelected: boolean;
+}
