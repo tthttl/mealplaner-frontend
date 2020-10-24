@@ -9,7 +9,7 @@ import { SelectComponent } from './components/select/select.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ListPickerDialogComponent } from './components/list-picker-dialog/list-picker-dialog.component';
 import { ListHeaderComponent } from './components/list-header/list-header.component';
-import { CreateListDialogComponent } from './components/create-list-dialog/create-list-dialog.component';
+import { EditListDialogComponent } from './components/edit-list-dialog/edit-list-dialog.component';
 
 
 @NgModule({
@@ -19,7 +19,7 @@ import { CreateListDialogComponent } from './components/create-list-dialog/creat
     SelectComponent,
     ListHeaderComponent,
     ListPickerDialogComponent,
-    CreateListDialogComponent,
+    EditListDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -35,7 +35,7 @@ import { CreateListDialogComponent } from './components/create-list-dialog/creat
     SelectComponent,
     ListHeaderComponent,
     ListPickerDialogComponent,
-    CreateListDialogComponent,
+    EditListDialogComponent,
   ],
 })
 export class SharedModule {

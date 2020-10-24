@@ -134,10 +134,16 @@ export interface Cookbook {
 
 export interface ListPickerDialogEvent {
   event: 'select' | 'create' | 'edit' | 'delete';
-  listId?: string;
+  shoppingList?: ShoppingList;
 }
 
 export interface CreateListDialogEvent {
-  event: 'select' | 'create' | 'edit' | 'delete';
+  event: 'create';
   title: string;
+  id?: string;
+}
+
+export interface EditListDialogEvent {
+  event: 'edit';
+  shoppingList: ShoppingList;
 }

@@ -148,4 +148,15 @@ export class ShoppingListApiEffects {
     tap((action) => console.log('herep', action)),
     map(({shoppingList}) => ShoppingListEffectActions.setActiveShoppingList({shoppingListId: shoppingList.id})),
   );
+
+  @Effect()
+  editShoppingList$ = this.actions$.pipe(
+    ofType(ShoppingListContainerActions.editShoppingList),
+    concatMap(({shoppingList}) => this.shoppingListService.updateShoppingList(shoppingList).pipe(
+      map((editedShoppingList) => {
+        return ShoppingListApiActions.editShoppingListSuccess({shoppingList: editedShoppingList});
+      }),
+      catchError(() => of(ShoppingListApiActions.editShoppingListFailure()))
+    )),
+  );
 }

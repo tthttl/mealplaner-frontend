@@ -322,4 +322,26 @@ describe('Shopping List Api Effects', () => {
       });
     });
   });
+
+  describe('editShoppingList$', () => {
+    beforeEach(() => {
+      actions$ = of({type: ShoppingListContainerActions.editShoppingList.type});
+      shoppingListService = jasmine.createSpyObj('shoppingListService', ['updateShoppingList']);
+      shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
+    });
+
+    it('it should return success action', () => {
+      shoppingListService.updateShoppingList.and.returnValue(of({} as ShoppingList));
+      shoppingListApiEffects.editShoppingList$.subscribe((action: Action) => {
+        expect(action.type).toEqual(ShoppingListApiActions.editShoppingListSuccess.type);
+      });
+    });
+
+    it('should return failure action', () => {
+      shoppingListService.updateShoppingList.and.returnValue(throwError('error'));
+      shoppingListApiEffects.editShoppingList$.subscribe((action: Action) => {
+        expect(action.type).toEqual(ShoppingListApiActions.editShoppingListFailure.type);
+      });
+    });
+  });
 });

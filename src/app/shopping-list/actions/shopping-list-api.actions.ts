@@ -48,3 +48,12 @@ export const createShoppingListSuccess = createAction(
 export const createShoppingListFailure = createAction(
   '[Shopping List API] Create Shopping List  Failure',
 );
+
+export const editShoppingListSuccess = createAction(
+  '[Shopping List API] Edit Shopping List Success',
+  props<{ shoppingList: ShoppingList }>()
+);
+
+export const editShoppingListFailure = createAction(
+  '[Shopping List API] Edit Shopping List  Failure',
+);

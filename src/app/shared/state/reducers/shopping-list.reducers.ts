@@ -144,5 +144,16 @@ export const shoppingListReducers = createReducer<ShoppingListState, Action>(
         activeShoppingList: shoppingList.id,
       };
     }
+  ),
+  on(
+    ShoppingListContainerActions.editShoppingList,
+    (state: ShoppingListState, {shoppingList}) => {
+      return {
+        ...state,
+        shoppingLists: {
+          items: shoppingListAdapter.updateOne({id: shoppingList.id, changes: shoppingList}, state.shoppingLists.items),
+        },
+      };
+    }
   )
 );

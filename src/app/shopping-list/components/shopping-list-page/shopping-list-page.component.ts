@@ -24,13 +24,13 @@ export class ShoppingListPageComponent implements OnInit {
   @Input() translations: I18n | null = {};
   @Input() currentLanguage: Language | null = DEFAULT_LANGUAGE;
 
-  @Output() changeShoppingList: EventEmitter<string> = new EventEmitter();
+  @Output() changeShoppingList: EventEmitter<ShoppingList> = new EventEmitter();
   @Output() addShoppingListItem: EventEmitter<BasicShoppingListItem> = new EventEmitter();
   @Output() deleteShoppingListItem: EventEmitter<DeleteShoppingListItemEvent> = new EventEmitter();
   @Output() moveShoppingListItem: EventEmitter<ShoppingListItemMovedEvent> = new EventEmitter();
-  @Output() deleteShoppingList: EventEmitter<string> = new EventEmitter();
-  @Output() editShoppingListItem: EventEmitter<string> = new EventEmitter();
-  @Output() createShoppingListItem: EventEmitter<string> = new EventEmitter();
+  @Output() deleteShoppingList: EventEmitter<ShoppingList> = new EventEmitter();
+  @Output() editShoppingList: EventEmitter<ShoppingList> = new EventEmitter();
+  @Output() createShoppingList: EventEmitter<ShoppingList> = new EventEmitter();
 
   constructor() {
   }
@@ -38,8 +38,8 @@ export class ShoppingListPageComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onShoppingListChange(id: string): void {
-    this.changeShoppingList.emit(id);
+  onShoppingListChange(shoppingList: ShoppingList): void {
+    this.changeShoppingList.emit(shoppingList);
   }
 
   onItemAdded(shoppingListItem: BasicShoppingListItem): void {
@@ -60,19 +60,19 @@ export class ShoppingListPageComponent implements OnInit {
     }
   }
 
-  onSelectList(shoppingListId: string): void {
-    this.changeShoppingList.emit(shoppingListId);
+  onSelectList(shoppingList: ShoppingList): void {
+    this.changeShoppingList.emit(shoppingList);
   }
 
-  onEditList(shoppingListId: string): void {
-    this.editShoppingListItem.emit(shoppingListId);
+  onEditList(shoppingList: ShoppingList): void {
+    this.editShoppingList.emit(shoppingList);
   }
 
-  onDeleteList(shoppingListId: string): void {
-    this.deleteShoppingList.emit(shoppingListId);
+  onDeleteList(shoppingList: ShoppingList): void {
+    this.deleteShoppingList.emit(shoppingList);
   }
 
   onCreateList(): void {
-    this.createShoppingListItem.emit();
+    this.createShoppingList.emit();
   }
 }

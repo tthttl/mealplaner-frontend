@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import {
   BasicShoppingListItem,
   CreateListDialogEvent,
-  DeleteShoppingListItemEvent,
+  DeleteShoppingListItemEvent, EditListDialogEvent,
   I18n,
   Language,
   ShoppingList,
@@ -25,7 +25,7 @@ import { v4 as uuid } from 'uuid';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { take } from 'rxjs/operators';
 import { DialogService } from '../../../shared/services/dialog.service';
-import { CreateListDialogComponent } from '../../../shared/components/create-list-dialog/create-list-dialog.component';
+import { EditListDialogComponent } from '../../../shared/components/edit-list-dialog/edit-list-dialog.component';
 
 @Component({
   selector: 'app-shopping-list-container',
@@ -48,8 +48,8 @@ export class ShoppingListContainerComponent implements OnInit {
     this.store.dispatch(ShoppingListContainerActions.loadShoppingLists());
   }
 
-  onShoppingListChange(shoppingListId: string): void {
-    this.store.dispatch(ShoppingListContainerActions.changeShoppingList({shoppingListId}));
+  onShoppingListChange(shoppingList: ShoppingList): void {
+    this.store.dispatch(ShoppingListContainerActions.changeShoppingList({shoppingListId: shoppingList.id}));
   }
 
   onShoppingListItemAdded(shoppingListItem: BasicShoppingListItem): void {
@@ -78,15 +78,38 @@ export class ShoppingListContainerComponent implements OnInit {
   }
 
   onCreateShoppingList(): void {
-    const dialogRef = this.dialogService.openDialog(CreateListDialogComponent, {
+    const dialogRef = this.dialogService.openDialog(EditListDialogComponent, {
       data: {},
-      translations: {}
+      translations: {
+        title: 'Neue Liste erstellen',
+        'save-button-text': 'Hinzufügen',
+        'cancel-button-text': 'Abbrechen'
+      }
     });
     dialogRef.afterClosed()
       .pipe(take(1))
       .subscribe((result: CreateListDialogEvent | undefined) => {
         if (result?.event === 'create') {
           this.store.dispatch(ShoppingListContainerActions.createShoppingList({title: result.title}));
+        }
+      });
+  }
+
+  OnEditShoppingList(shoppingList: ShoppingList): void {
+    const dialogRef = this.dialogService.openDialog(EditListDialogComponent, {
+      data: shoppingList,
+      translations: {
+        title: 'Liste Bearbeiten',
+        'save-button-text': 'Speichern',
+        'cancel-button-text': 'Abbrechen'
+      }
+    });
+    dialogRef.afterClosed()
+      .pipe(take(1))
+      .subscribe((result: EditListDialogEvent | undefined) => {
+        if (result?.event === 'edit') {
+          console.log(result.shoppingList);
+          this.store.dispatch(ShoppingListContainerActions.editShoppingList({shoppingList: result.shoppingList}));
         }
       });
   }

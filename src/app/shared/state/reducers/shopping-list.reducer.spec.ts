@@ -264,4 +264,38 @@ describe('shoppingListReducers', () => {
       });
     });
   });
+
+  describe('ShoppingListContainerActions.editShoppingList', () => {
+    it('should optimistically update ShoppingList', () => {
+
+      expect(
+        shoppingListReducers({
+            ...initialShoppingListState,
+            activeShoppingList: '1234',
+            shoppingLists: {
+              items: {ids: ['1234', '8888'], entities: {
+                  1234: {id: '1234', title: 'Test 1'},
+                  8888: {id: '8888', title: 'Test 1'},
+                }}
+            },
+            shoppingListItems: {
+              1234: []
+            }
+          },
+          ShoppingListContainerActions.editShoppingList({shoppingList: {id: '8888', title: 'Updated'}})
+        )).toEqual({
+        ...initialShoppingListState,
+        activeShoppingList: '1234',
+        shoppingLists: {
+          items: {ids: ['1234', '8888'], entities: {
+              1234: {id: '1234', title: 'Test 1'},
+              8888: {id: '8888', title: 'Updated'},
+            }}
+        },
+        shoppingListItems: {
+          1234: []
+        }
+      });
+    });
+  });
 });

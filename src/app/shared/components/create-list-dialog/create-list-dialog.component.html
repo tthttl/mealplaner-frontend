@@ -1,8 +1,0 @@
-<h2 mat-dialog-title>Neue Liste erstellen</h2>
-<mat-dialog-content class="mat-typography creat-list-dialog">
-  <app-input [(ngModel)]="listTitle"></app-input>
-</mat-dialog-content>
-<mat-dialog-actions align="end" class="creat-list-dialog__actions">
-  <app-button buttonText="Hinzufügen" [isDisabled]="!listTitle" (click)="createList()"></app-button>
-  <app-button buttonText="Abbrechen" color="accent" (click)="close()"></app-button>
-</mat-dialog-actions>
