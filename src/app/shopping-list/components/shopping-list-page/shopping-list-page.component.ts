@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DEFAULT_LANGUAGE } from '../../../shared/helpers/constants';
 import {
   ArrayItemMovedEvent,
@@ -28,6 +28,9 @@ export class ShoppingListPageComponent implements OnInit {
   @Output() addShoppingListItem: EventEmitter<BasicShoppingListItem> = new EventEmitter();
   @Output() deleteShoppingListItem: EventEmitter<DeleteShoppingListItemEvent> = new EventEmitter();
   @Output() moveShoppingListItem: EventEmitter<ShoppingListItemMovedEvent> = new EventEmitter();
+  @Output() deleteShoppingList: EventEmitter<string> = new EventEmitter();
+  @Output() editShoppingListItem: EventEmitter<string> = new EventEmitter();
+  @Output() createShoppingListItem: EventEmitter<string> = new EventEmitter();
 
   constructor() {
   }
@@ -59,5 +62,17 @@ export class ShoppingListPageComponent implements OnInit {
 
   onSelectList(shoppingListId: string): void {
     this.changeShoppingList.emit(shoppingListId);
+  }
+
+  onEditList(shoppingListId: string): void {
+    this.editShoppingListItem.emit(shoppingListId);
+  }
+
+  onDeleteList(shoppingListId: string): void {
+    this.deleteShoppingList.emit(shoppingListId);
+  }
+
+  onCreateList(): void {
+    this.createShoppingListItem.emit();
   }
 }

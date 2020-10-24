@@ -30,4 +30,7 @@ export const moveShoppingListItem = createAction(
   props<{ shoppingListId: string, currentIndex: number, previousIndex: number }>()
 );
 
-
+export const createShoppingList = createAction(
+  '[Shopping List Container] Create new ShoppingList',
+  props<{ title: string }>()
+);

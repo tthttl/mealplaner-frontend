@@ -230,4 +230,38 @@ describe('shoppingListReducers', () => {
       });
     });
   });
+
+  describe('ShoppingListApiActions.createShoppingListSuccess', () => {
+    it('should add and select new ShoppingList', () => {
+
+      expect(
+        shoppingListReducers({
+            ...initialShoppingListState,
+            activeShoppingList: '1234',
+            shoppingLists: {
+              items: {ids: ['1234'], entities: {
+                  1234: {id: '1234', title: 'Test 1'},
+                }}
+            },
+            shoppingListItems: {
+              1234: []
+            }
+          },
+          ShoppingListApiActions.createShoppingListSuccess({shoppingList: {id: '8888', title: 'Test Added'}})
+        )).toEqual({
+        ...initialShoppingListState,
+        activeShoppingList: '8888',
+        shoppingLists: {
+          items: {ids: ['1234', '8888'], entities: {
+              1234: {id: '1234', title: 'Test 1'},
+              8888: {id: '8888', title: 'Test Added'},
+            }}
+        },
+        shoppingListItems: {
+          1234: [],
+          8888: [],
+        }
+      });
+    });
+  });
 });

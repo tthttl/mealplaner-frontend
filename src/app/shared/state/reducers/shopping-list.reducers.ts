@@ -128,5 +128,21 @@ export const shoppingListReducers = createReducer<ShoppingListState, Action>(
         }
       };
     }
+  ),
+  on(
+    ShoppingListApiActions.createShoppingListSuccess,
+    (state: ShoppingListState, {shoppingList}) => {
+      return {
+        ...state,
+        shoppingLists: {
+          items: shoppingListAdapter.addOne(shoppingList, state.shoppingLists.items),
+        },
+        shoppingListItems: {
+          ...state.shoppingListItems,
+          [shoppingList.id]: []
+        },
+        activeShoppingList: shoppingList.id,
+      };
+    }
   )
 );

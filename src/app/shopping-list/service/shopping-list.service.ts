@@ -18,6 +18,18 @@ export class ShoppingListService {
     return this.httpClient.get<ShoppingList[]>(`${environment.apiUrl}/shopping-lists?user=${userId}`);
   }
 
+  createShoppingList(title: string): Observable<ShoppingList> {
+    return this.httpClient.post<ShoppingList>(`${environment.apiUrl}/shopping-lists`, {title});
+  }
+
+  updateShoppingList(shoppingList: ShoppingList): Observable<ShoppingList> {
+    return this.httpClient.put<ShoppingList>(`${environment.apiUrl}/shopping-lists/${shoppingList.id}`, {title: shoppingList.title});
+  }
+
+  deleteShoppingList(shoppingListId: string): Observable<{ DELETED: true }> {
+    return this.httpClient.delete<{ DELETED: true }>(`${environment.apiUrl}/shopping-lists/${shoppingListId}`);
+  }
+
   getShoppingListItems(shoppingListId: string): Observable<ShoppingListItem[]> {
     return this.httpClient.get<ShoppingListItemApi[]>(`${environment.apiUrl}/shopping-list-items?shoppingList=${shoppingListId}`)
       .pipe(map((shoppingListItemsApi) => {

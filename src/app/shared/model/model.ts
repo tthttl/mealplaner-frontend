@@ -136,3 +136,8 @@ export interface ListPickerDialogEvent {
   event: 'select' | 'create' | 'edit' | 'delete';
   listId?: string;
 }
+
+export interface CreateListDialogEvent {
+  event: 'select' | 'create' | 'edit' | 'delete';
+  title: string;
+}

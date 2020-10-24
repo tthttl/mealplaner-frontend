@@ -109,8 +109,18 @@ describe('Shopping List Api Effects', () => {
       });
     });
 
-    it('it should  chose first shopping list if requested id in query params does not exists', () => {
-      activatedRoute.snapshot.queryParams.shoppingListId = '99';
+    it('it should  chose requested shopping list in local storage if it exists', () => {
+      spyOn(localStorage, 'getItem').and.callFake(() => '43');
+      shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
+      shoppingListApiEffects.chooseCurrentShoppingList$.subscribe((action) => {
+        expect(action.type).toEqual(ShoppingListEffectActions.setActiveShoppingList.type);
+        expect(action.shoppingListId).toEqual('43');
+      });
+    });
+
+    it('it should chose first shopping list if requested id in query params and local storage does not exists', () => {
+      activatedRoute.snapshot.queryParams.shoppingListId = '98';
+      spyOn(localStorage, 'getItem').and.callFake(() => '99');
       shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
       shoppingListApiEffects.chooseCurrentShoppingList$.subscribe((action) => {
         expect(action.type).toEqual(ShoppingListEffectActions.setActiveShoppingList.type);
@@ -145,6 +155,34 @@ describe('Shopping List Api Effects', () => {
       shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
       shoppingListApiEffects.setQueryParameterForActiveShoppingList$.subscribe((action) => {
         expect(router.navigate).toHaveBeenCalledWith([], {relativeTo: activatedRoute, queryParams: {shoppingListId: '42'}});
+      });
+    });
+  });
+
+  describe('setLocalStorageForActiveShoppingList$', () => {
+    beforeEach(() => {
+      spyOn(localStorage, 'setItem');
+    });
+
+    it('it should  set local storage parameters after delegated ShoppingListEffectActions', () => {
+      actions$ = of({
+        type: ShoppingListEffectActions.setActiveShoppingList.type,
+        shoppingListId: '42',
+      });
+      shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
+      shoppingListApiEffects.setLocalStorageForActiveShoppingList$.subscribe((action) => {
+        expect(localStorage.setItem).toHaveBeenCalledWith('selectedShoppingListId', '42');
+      });
+    });
+
+    it('it should  set local storage parameters after delegated ShoppingListContainerActions', () => {
+      actions$ = of({
+        type: ShoppingListContainerActions.changeShoppingList.type,
+        shoppingListId: '42',
+      });
+      shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
+      shoppingListApiEffects.setLocalStorageForActiveShoppingList$.subscribe((action) => {
+        expect(localStorage.setItem).toHaveBeenCalledWith('selectedShoppingListId', '42');
       });
     });
   });
@@ -247,6 +285,40 @@ describe('Shopping List Api Effects', () => {
       shoppingListApiEffects.moveShoppingListItem$.subscribe((action: Action) => {
         expect(shoppingListService.updateShoppingListItem).toHaveBeenCalledTimes(2);
         expect(action.type).toEqual(ShoppingListApiActions.updateShoppingListItemSuccess.type);
+      });
+    });
+  });
+
+
+  describe('createShoppingList$', () => {
+    beforeEach(() => {
+      actions$ = of({type: ShoppingListContainerActions.createShoppingList.type});
+      shoppingListService = jasmine.createSpyObj('shoppingListService', ['createShoppingList']);
+      shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
+    });
+
+    it('it should return success action', () => {
+      shoppingListService.createShoppingList.and.returnValue(of({} as ShoppingList));
+      shoppingListApiEffects.createShoppingList$.subscribe((action: Action) => {
+        expect(action.type).toEqual(ShoppingListApiActions.createShoppingListSuccess.type);
+      });
+    });
+
+    it('should return failure action', () => {
+      shoppingListService.createShoppingList.and.returnValue(throwError('error'));
+      shoppingListApiEffects.createShoppingList$.subscribe((action: Action) => {
+        expect(action.type).toEqual(ShoppingListApiActions.createShoppingListFailure.type);
+      });
+    });
+  });
+
+  describe('selectNewlyCreatedShoppingList$', () => {
+    it('it should return success action', () => {
+      actions$ = of({type: ShoppingListApiActions.createShoppingListSuccess.type, shoppingList: {id: '1234', title: 'Testing'}});
+      shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
+      shoppingListApiEffects.selectNewlyCreatedShoppingList$.subscribe((action) => {
+        expect(action.type).toEqual(ShoppingListEffectActions.setActiveShoppingList.type);
+        expect(action.shoppingListId).toEqual('1234');
       });
     });
   });

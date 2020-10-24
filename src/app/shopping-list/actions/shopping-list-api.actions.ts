@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { BasicShoppingListItem, ShoppingList, ShoppingListItem, ShoppingListItemMovedEvent, User } from '../../shared/model/model';
+import { BasicShoppingListItem, ShoppingList, ShoppingListItem } from '../../shared/model/model';
 import { Observable } from 'rxjs';
 
 export const loadShoppingListItemsSuccess = createAction(
@@ -37,5 +37,14 @@ export const updateShoppingListItemSuccess = createAction(
 );
 export const updateShoppingListItemFailure = createAction(
   '[Shopping List API] Delete Shopping List Items Failure',
-  props<{updateObservables: Observable<ShoppingListItem>[]}>()
+  props<{ updateObservables: Observable<ShoppingListItem>[] }>()
+);
+
+export const createShoppingListSuccess = createAction(
+  '[Shopping List API] Create Shopping List Success',
+  props<{ shoppingList: ShoppingList }>()
+);
+
+export const createShoppingListFailure = createAction(
+  '[Shopping List API] Create Shopping List  Failure',
 );

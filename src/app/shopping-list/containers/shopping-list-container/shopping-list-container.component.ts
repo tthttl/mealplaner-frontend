@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
   BasicShoppingListItem,
+  CreateListDialogEvent,
   DeleteShoppingListItemEvent,
   I18n,
   Language,
@@ -23,6 +24,8 @@ import { Store } from '@ngrx/store';
 import { v4 as uuid } from 'uuid';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { take } from 'rxjs/operators';
+import { DialogService } from '../../../shared/services/dialog.service';
+import { CreateListDialogComponent } from '../../../shared/components/create-list-dialog/create-list-dialog.component';
 
 @Component({
   selector: 'app-shopping-list-container',
@@ -38,7 +41,7 @@ export class ShoppingListContainerComponent implements OnInit {
   activeShoppingList$: Observable<ShoppingList | undefined> = this.store.select(activeShoppingList);
   activeShoppingListId$: Observable<string | undefined> = this.store.select(activeShoppingListId);
 
-  constructor(private store: Store<GlobalState>, private snackBarService: SnackbarService) {
+  constructor(private store: Store<GlobalState>, private snackBarService: SnackbarService, private dialogService: DialogService) {
   }
 
   ngOnInit(): void {
@@ -53,7 +56,7 @@ export class ShoppingListContainerComponent implements OnInit {
     this.store.dispatch(ShoppingListContainerActions.addShoppingListItem({optimisticId: uuid(), shoppingListItem}));
   }
 
-  onShoppingListItemDeleted({shoppingListId, shoppingListItem}: DeleteShoppingListItemEvent): void {
+  onShoppingListItemDeleted({shoppingListItem}: DeleteShoppingListItemEvent): void {
     this.store.dispatch(ShoppingListContainerActions.toggleShoppingListItem(
       {shoppingListItemId: shoppingListItem.id, shoppingList: shoppingListItem.shoppingList}));
 
@@ -72,5 +75,19 @@ export class ShoppingListContainerComponent implements OnInit {
 
   onShoppingListItemMoved({shoppingListId, previousIndex, currentIndex}: ShoppingListItemMovedEvent): void {
     this.store.dispatch(ShoppingListContainerActions.moveShoppingListItem({shoppingListId, previousIndex, currentIndex}));
+  }
+
+  onCreateShoppingList(): void {
+    const dialogRef = this.dialogService.openDialog(CreateListDialogComponent, {
+      data: {},
+      translations: {}
+    });
+    dialogRef.afterClosed()
+      .pipe(take(1))
+      .subscribe((result: CreateListDialogEvent | undefined) => {
+        if (result?.event === 'create') {
+          this.store.dispatch(ShoppingListContainerActions.createShoppingList({title: result.title}));
+        }
+      });
   }
 }

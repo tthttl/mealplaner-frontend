@@ -1,6 +1,6 @@
 <mat-dialog-content class="mat-typography list-picker">
   <div class="list-picker__item list-picker__item--add"  (click)="createList()">
-    <section>
+    <section class="list-picker__item-title">
       <fa-icon
         class="list-picker__icon"
         [icon]="['fas','plus']"
@@ -10,7 +10,7 @@
   </div>
   <div *ngFor="let shoppingList of dialogData.data"
        class="list-picker__item">
-    <section (click)="selectList(shoppingList.id)">
+    <section class="list-picker__item-title" (click)="selectList(shoppingList.id)">
       {{shoppingList.title || dialogData.translations['default-title']}}
     </section>
     <section class="list-picker__actions">

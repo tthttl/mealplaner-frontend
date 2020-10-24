@@ -37,7 +37,7 @@ export class ListHeaderComponent implements OnInit {
     });
     dialogRef.afterClosed()
       .pipe(take(1))
-      .subscribe((result: ListPickerDialogEvent) => {
+      .subscribe((result: ListPickerDialogEvent | undefined) => {
         switch (result?.event) {
           case 'create':
             this.createList.emit();
