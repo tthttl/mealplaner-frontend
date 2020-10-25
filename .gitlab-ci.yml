@@ -40,7 +40,7 @@ build-storybook:
   script: npm run build-storybook
   artifacts:
     paths:
-      - out-storybook
+      - storybook-static
 
 build-prod:
   stage: build
