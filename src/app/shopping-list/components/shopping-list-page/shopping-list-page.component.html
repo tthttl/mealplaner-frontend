@@ -17,6 +17,8 @@
       (itemAdded)="onItemAdded($event)"></app-shopping-list-form>
     <app-shopping-list
       [items]="shoppingListItems"
+      [translations]="translations"
+      [currentLang]="currentLanguage"
       (listItemMoved)="onShoppingListItemMoved($event)"
       (itemDeleted)="onShoppingListItemDeleted($event)"></app-shopping-list>
   </div>
