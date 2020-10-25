@@ -39,7 +39,7 @@ export class ShoppingListContainerComponent implements OnInit {
 
   translations$: Observable<I18n | null> = this.store.select(selectTranslations);
   currentLanguage$: Observable<Language> = this.store.select(selectCurrentLanguage);
-  shoppingListsItems$: Observable<ShoppingListItem[] | undefined> = this.store.select(selectCurrentShoppingListItems);
+  shoppingListsItems$: Observable<ShoppingListItem[] | undefined | null> = this.store.select(selectCurrentShoppingListItems);
   shoppingLists$: Observable<ShoppingList[] | null> = this.store.select(selectShoppingLists);
   activeShoppingList$: Observable<ShoppingList | undefined> = this.store.select(activeShoppingList);
   activeShoppingListId$: Observable<string | undefined> = this.store.select(activeShoppingListId);

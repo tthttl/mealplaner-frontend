@@ -3,7 +3,7 @@ import { ShoppingListItem } from '../../shared/model/model';
 
 @Pipe({name: 'unToggled'})
 export class UnToggledPipe implements PipeTransform {
-  transform(value: ShoppingListItem[] | null): ShoppingListItem[] | null {
+  transform(value: ShoppingListItem[] | undefined | null): ShoppingListItem[] | undefined | null {
     if (!value) {
       return value;
     }

@@ -32,7 +32,7 @@ export class ShoppingListComponent{
     }
   }
 
-  getPageState(items: ShoppingListItem[]): string {
+  getPageState(items: ShoppingListItem[] | null | undefined): string {
     if (items === null || items === undefined) {
       return 'loading';
     }
