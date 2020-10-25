@@ -86,7 +86,7 @@ export const activeShoppingListId = createSelector(
 
 export const selectCurrentShoppingListItems = createSelector(
   selectShoppingListState,
-  (shoppingListState: ShoppingListState) => shoppingListState.shoppingListItems[shoppingListState.activeShoppingList || ''] || []
+  (shoppingListState: ShoppingListState) => shoppingListState.shoppingListItems[shoppingListState.activeShoppingList || '']
 );
 
 

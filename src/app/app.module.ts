@@ -22,6 +22,7 @@ import { JwtInterceptor } from './shared/interceptors/jwt.interceptor';
 import { metaReducers, reducers } from './shared/state';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { SharedModule } from './shared/shared.module';
+import { ProductPageComponent } from './components/product-page/product-page.component';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { SharedModule } from './shared/shared.module';
     AppComponent,
     BetaTeaserComponent,
     NavigationComponent,
+    ProductPageComponent,
   ],
   imports: [
     BrowserModule,

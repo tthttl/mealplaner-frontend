@@ -5,6 +5,10 @@
 
   &__field {
     @include form-field;
+
+    &--no-border {
+      padding-left: 0.2rem;
+    }
   }
 
   &__label {

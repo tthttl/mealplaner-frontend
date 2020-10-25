@@ -1,27 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { activeShoppingListId, GlobalState, selectCurrentShoppingListItems, selectUserID } from '../../shared/state';
+import { GlobalState, selectCurrentShoppingListItems, selectUserID } from '../../shared/state';
 import { ShoppingListApiActions, ShoppingListContainerActions, ShoppingListEffectActions } from '../actions';
-import {
-  catchError,
-  concatMap,
-  debounce,
-  delay,
-  exhaustMap,
-  filter,
-  map,
-  mergeMap,
-  switchMap,
-  takeUntil,
-  tap,
-  withLatestFrom
-} from 'rxjs/operators';
+import { catchError, concatMap, delay, exhaustMap, filter, map, mergeMap, switchMap, takeUntil, tap, withLatestFrom } from 'rxjs/operators';
 import { ChangeShoppingListAction, SetActiveShoppingListAction } from '../../shared/model/model-action';
 import { ShoppingList, ShoppingListItem } from '../../shared/model/model';
 import { forkJoin, Observable, of } from 'rxjs';
 import { ShoppingListService } from '../service/shopping-list.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DELETION_DELAY } from '../../shared/helpers/constants';
 
 @Injectable()
 export class ShoppingListApiEffects {
@@ -177,10 +165,10 @@ export class ShoppingListApiEffects {
     ofType(ShoppingListContainerActions.deleteShoppingList),
     concatMap(({shoppingList}) => {
       return of({}).pipe(
-        delay(3000),
+        delay(DELETION_DELAY),
         takeUntil(this.actions$.pipe(ofType(ShoppingListContainerActions.undoDeleteShoppingList))),
         mergeMap(() => this.shoppingListService.deleteShoppingList(shoppingList.id).pipe(
-          map((editedShoppingList) => {
+          map(() => {
             return ShoppingListApiActions.deleteShoppingListSuccess({shoppingList});
           }),
           catchError(() => of(ShoppingListApiActions.deleteShoppingListFailure()))

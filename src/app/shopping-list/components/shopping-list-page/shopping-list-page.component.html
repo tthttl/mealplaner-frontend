@@ -10,13 +10,15 @@
     (editList)="onEditList($event)"
     (deleteList)="onDeleteList($event)"
     (createList)="onCreateList()"></app-list-header>
-  <app-shopping-list-form
-    [translations]="translations"
-    [currentLang]="currentLanguage"
-    (itemAdded)="onItemAdded($event)"></app-shopping-list-form>
-  <app-shopping-list
-    [items]="shoppingListItems"
-    (listItemMoved)="onShoppingListItemMoved($event)"
-    (itemDeleted)="onShoppingListItemDeleted($event)"></app-shopping-list>
+  <div class="shopping-list-wrapper">
+    <app-shopping-list-form
+      [translations]="translations"
+      [currentLang]="currentLanguage"
+      (itemAdded)="onItemAdded($event)"></app-shopping-list-form>
+    <app-shopping-list
+      [items]="shoppingListItems"
+      (listItemMoved)="onShoppingListItemMoved($event)"
+      (itemDeleted)="onShoppingListItemDeleted($event)"></app-shopping-list>
+  </div>
 </div>
 

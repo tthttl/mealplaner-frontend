@@ -3,7 +3,8 @@ import { Observable } from 'rxjs';
 import {
   BasicShoppingListItem,
   CreateListDialogEvent,
-  DeleteShoppingListItemEvent, EditListDialogEvent,
+  DeleteShoppingListItemEvent,
+  EditListDialogEvent,
   I18n,
   Language,
   ShoppingList,
@@ -27,6 +28,7 @@ import { take, withLatestFrom } from 'rxjs/operators';
 import { DialogService } from '../../../shared/services/dialog.service';
 import { EditListDialogComponent } from '../../../shared/components/edit-list-dialog/edit-list-dialog.component';
 import { TranslatePipe } from '../../../i18n/pipes/translate.pipe';
+import { DELETION_DELAY } from '../../../shared/helpers/constants';
 
 @Component({
   selector: 'app-shopping-list-container',
@@ -37,7 +39,7 @@ export class ShoppingListContainerComponent implements OnInit {
 
   translations$: Observable<I18n | null> = this.store.select(selectTranslations);
   currentLanguage$: Observable<Language> = this.store.select(selectCurrentLanguage);
-  shoppingListsItems$: Observable<ShoppingListItem[]> = this.store.select(selectCurrentShoppingListItems);
+  shoppingListsItems$: Observable<ShoppingListItem[] | undefined> = this.store.select(selectCurrentShoppingListItems);
   shoppingLists$: Observable<ShoppingList[] | null> = this.store.select(selectShoppingLists);
   activeShoppingList$: Observable<ShoppingList | undefined> = this.store.select(activeShoppingList);
   activeShoppingListId$: Observable<string | undefined> = this.store.select(activeShoppingListId);
@@ -58,14 +60,14 @@ export class ShoppingListContainerComponent implements OnInit {
         title: this.translatePipe.transform('create-list.title', translations, currentLanguage),
         'save-button-text': this.translatePipe.transform('create-list.save-button-text', translations, currentLanguage),
         'cancel-button-text': this.translatePipe.transform('create-list.cancel-button-text', translations, currentLanguage),
-        placeholder:  this.translatePipe.transform('create-list.placeholder', translations, currentLanguage),
+        placeholder: this.translatePipe.transform('create-list.placeholder', translations, currentLanguage),
       };
 
       this.editDialogTranslations = {
         title: this.translatePipe.transform('edit-list.title', translations, currentLanguage),
         'save-button-text': this.translatePipe.transform('edit-list.save-button-text', translations, currentLanguage),
         'cancel-button-text': this.translatePipe.transform('edit-list.cancel-button-text', translations, currentLanguage),
-        placeholder:  this.translatePipe.transform('edit-list.placeholder', translations, currentLanguage),
+        placeholder: this.translatePipe.transform('edit-list.placeholder', translations, currentLanguage),
 
       };
     });
@@ -134,7 +136,7 @@ export class ShoppingListContainerComponent implements OnInit {
 
   onShoppingListDelete(shoppingList: ShoppingList): void {
     this.store.dispatch(ShoppingListContainerActions.deleteShoppingList({shoppingList}));
-    this.snackBarService.openSnackBar('message.undo', 'message.action', 3000)
+    this.snackBarService.openSnackBar('message.undo', 'message.action', DELETION_DELAY)
       .afterDismissed()
       .pipe(take(1))
       .subscribe(({dismissedByAction}) => {
