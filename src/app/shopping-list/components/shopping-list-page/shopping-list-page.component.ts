@@ -18,8 +18,8 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ShoppingListPageComponent implements OnInit {
-  @Input() shoppingLists: ShoppingList[] | null = [];
-  @Input() shoppingListItems: ShoppingListItem[] = [];
+  @Input() shoppingLists: ShoppingList[] | null = null;
+  @Input() shoppingListItems: ShoppingListItem[] | undefined | null = null;
   @Input() activeShoppingList: ShoppingList | undefined | null = undefined;
   @Input() activeShoppingListId: string | undefined | null = undefined;
   @Input() translations: I18n | null = {};

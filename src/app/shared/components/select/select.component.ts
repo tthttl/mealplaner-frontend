@@ -4,7 +4,6 @@ import { SelectOption } from '../../model/model';
 import { v4 as uuid } from 'uuid';
 
 
-
 @Component({
   selector: 'app-select',
   templateUrl: './select.component.html',
@@ -15,12 +14,14 @@ import { v4 as uuid } from 'uuid';
       useExisting: forwardRef(() => SelectComponent),
       multi: true
     }
-  ]})
+  ]
+})
 export class SelectComponent<T> implements OnInit, ControlValueAccessor {
   @Input() control: FormControl | undefined;
   @Input() name = '';
   @Input() options: SelectOption<T>[] = [];
   @Input() label: string | undefined;
+  @Input() noBorder = false;
   @Input() errors: string[] = [];
   @Input() isDisabled = false;
   @Input() e2eTestName = '';
@@ -29,7 +30,8 @@ export class SelectComponent<T> implements OnInit, ControlValueAccessor {
   selectedValue: T | string | null = null;
   inputId: string = uuid();
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
     this.selectedValue = this.options[0].value;

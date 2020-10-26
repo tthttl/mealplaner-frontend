@@ -1,3 +1,7 @@
-.active {
-  font-weight: 500;
+@import "../../../../styles/settings/colors";
+@import "../../../../styles/settings/variables";
+
+.shopping-list-wrapper {
+  border-radius: $border-radius-default;
+  box-shadow: 0 0 18px $blue-grey_10;
 }

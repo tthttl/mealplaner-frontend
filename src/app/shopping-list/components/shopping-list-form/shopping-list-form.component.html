@@ -4,6 +4,7 @@
       class="add-items-form--input add-items-form--input-amount"
       type="number"
       [minValue]="0"
+      [noBorder]="true"
       [name]="'amount'"
       [placeholder]="'shoppingList.addForm.amount' | translate:translations:currentLang"
       [formControl]="getFormControl('amount')"></app-input>
@@ -12,12 +13,14 @@
       class="add-items-form--input add-items-form--input-unit"
       [options]="units"
       [name]="'unit'"
+      [noBorder]="true"
       [formControl]="getFormControl('unit')">
     </app-select>
 
     <app-input
       class="add-items-form--input"
       [placeholder]="'shoppingList.addForm.product' | translate:translations:currentLang"
+      [noBorder]="true"
       [formControl]="getFormControl('title')">
     </app-input>
 
