@@ -28,7 +28,7 @@ build-dev:
   stage: build
   only:
     - master
-  script: npm run build --configuration=qa
+  script: npm run build:qa
   artifacts:
     paths:
      - dist
@@ -46,7 +46,7 @@ build-prod:
   stage: build
   only:
     - tags
-  script: npm run build --configuration=production
+  script: npm run build:prod
   artifacts:
     paths:
       - dist
