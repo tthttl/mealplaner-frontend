@@ -15,6 +15,7 @@ import {
   selector: 'app-shopping-list-page',
   templateUrl: './shopping-list-page.component.html',
   styleUrls: ['./shopping-list-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ShoppingListPageComponent implements OnInit {
   @Input() shoppingLists: ShoppingList[] | null = [];
@@ -24,10 +25,13 @@ export class ShoppingListPageComponent implements OnInit {
   @Input() translations: I18n | null = {};
   @Input() currentLanguage: Language | null = DEFAULT_LANGUAGE;
 
-  @Output() changeShoppingList: EventEmitter<string> = new EventEmitter();
+  @Output() changeShoppingList: EventEmitter<ShoppingList> = new EventEmitter();
   @Output() addShoppingListItem: EventEmitter<BasicShoppingListItem> = new EventEmitter();
   @Output() deleteShoppingListItem: EventEmitter<DeleteShoppingListItemEvent> = new EventEmitter();
   @Output() moveShoppingListItem: EventEmitter<ShoppingListItemMovedEvent> = new EventEmitter();
+  @Output() deleteShoppingList: EventEmitter<ShoppingList> = new EventEmitter();
+  @Output() editShoppingList: EventEmitter<ShoppingList> = new EventEmitter();
+  @Output() createShoppingList: EventEmitter<ShoppingList> = new EventEmitter();
 
   constructor() {
   }
@@ -35,8 +39,8 @@ export class ShoppingListPageComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onShoppingListChange(id: string): void {
-    this.changeShoppingList.emit(id);
+  onShoppingListChange(shoppingList: ShoppingList): void {
+    this.changeShoppingList.emit(shoppingList);
   }
 
   onItemAdded(shoppingListItem: BasicShoppingListItem): void {
@@ -55,5 +59,21 @@ export class ShoppingListPageComponent implements OnInit {
     if (this.activeShoppingListId) {
       this.moveShoppingListItem.emit({shoppingListId: this.activeShoppingListId, ...arrayItemMovedEvent});
     }
+  }
+
+  onSelectList(shoppingList: ShoppingList): void {
+    this.changeShoppingList.emit(shoppingList);
+  }
+
+  onEditList(shoppingList: ShoppingList): void {
+    this.editShoppingList.emit(shoppingList);
+  }
+
+  onDeleteList(shoppingList: ShoppingList): void {
+    this.deleteShoppingList.emit(shoppingList);
+  }
+
+  onCreateList(): void {
+    this.createShoppingList.emit();
   }
 }

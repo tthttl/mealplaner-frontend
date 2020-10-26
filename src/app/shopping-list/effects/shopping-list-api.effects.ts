@@ -1,14 +1,27 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { GlobalState, selectCurrentShoppingListItems, selectUser, selectUserID } from '../../shared/state';
+import { activeShoppingListId, GlobalState, selectCurrentShoppingListItems, selectUserID } from '../../shared/state';
 import { ShoppingListApiActions, ShoppingListContainerActions, ShoppingListEffectActions } from '../actions';
-import { catchError, concatMap, exhaustMap, filter, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
-import { ChangeShoppingListAction, SetActiveShoppingListAction, ShoppingListItemMovedAction } from '../../shared/model/model-action';
-import { ShoppingList, ShoppingListItem, ShoppingListItemMovedEvent } from '../../shared/model/model';
+import {
+  catchError,
+  concatMap,
+  debounce,
+  delay,
+  exhaustMap,
+  filter,
+  map,
+  mergeMap,
+  switchMap,
+  takeUntil,
+  tap,
+  withLatestFrom
+} from 'rxjs/operators';
+import { ChangeShoppingListAction, SetActiveShoppingListAction } from '../../shared/model/model-action';
+import { ShoppingList, ShoppingListItem } from '../../shared/model/model';
 import { forkJoin, Observable, of } from 'rxjs';
 import { ShoppingListService } from '../service/shopping-list.service';
-import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Injectable()
 export class ShoppingListApiEffects {
@@ -35,21 +48,41 @@ export class ShoppingListApiEffects {
   chooseCurrentShoppingList$ = this.actions$.pipe(
     ofType(ShoppingListApiActions.loadShoppingListsSuccess),
     switchMap(({shoppingLists}) => {
-      const requestedShoppingListId = this.activatedRoute.snapshot.queryParams.shoppingListId;
       const shoppingListsIds = shoppingLists.map((shoppingList) => shoppingList.id);
-      const selectedShoppingListId  = requestedShoppingListId && shoppingListsIds.includes(requestedShoppingListId) ?
-        requestedShoppingListId : shoppingListsIds[0];
 
-      return of(ShoppingListEffectActions.setActiveShoppingList({shoppingListId: selectedShoppingListId})
-      );
+      const requestedShoppingListId = this.activatedRoute.snapshot.queryParams.shoppingListId;
+      if (requestedShoppingListId && shoppingListsIds.includes(requestedShoppingListId)) {
+        return of(ShoppingListEffectActions.setActiveShoppingList({shoppingListId: requestedShoppingListId}));
+      }
+
+      const savedShoppingListId = localStorage.getItem('selectedShoppingListId');
+      if (savedShoppingListId && shoppingListsIds.includes(savedShoppingListId)) {
+        return of(ShoppingListEffectActions.setActiveShoppingList({shoppingListId: savedShoppingListId}));
+      }
+
+      return of(ShoppingListEffectActions.setActiveShoppingList({shoppingListId: shoppingListsIds[0]}));
     }),
   );
 
   @Effect({dispatch: false})
   setQueryParameterForActiveShoppingList$ = this.actions$.pipe(
-    ofType(ShoppingListEffectActions.setActiveShoppingList, ShoppingListContainerActions.changeShoppingList),
+    ofType(
+      ShoppingListEffectActions.setActiveShoppingList,
+      ShoppingListContainerActions.changeShoppingList,
+    ),
     tap(({shoppingListId}) => {
       this.router.navigate([], {relativeTo: this.activatedRoute, queryParams: {shoppingListId}});
+    })
+  );
+
+  @Effect({dispatch: false})
+  setLocalStorageForActiveShoppingList$ = this.actions$.pipe(
+    ofType(
+      ShoppingListEffectActions.setActiveShoppingList,
+      ShoppingListContainerActions.changeShoppingList
+    ),
+    tap(({shoppingListId}) => {
+      localStorage.setItem('selectedShoppingListId', shoppingListId);
     })
   );
 
@@ -108,6 +141,62 @@ export class ShoppingListApiEffects {
       return a.pipe(
         map(() => ShoppingListApiActions.updateShoppingListItemSuccess()),
         catchError(() => of(ShoppingListApiActions.updateShoppingListItemFailure({updateObservables}))));
+    })
+  );
+
+  @Effect()
+  createShoppingList$ = this.actions$.pipe(
+    ofType(ShoppingListContainerActions.createShoppingList),
+    concatMap(({title}) => this.shoppingListService.createShoppingList(title).pipe(
+      map((shoppingList) => {
+        return ShoppingListApiActions.createShoppingListSuccess({shoppingList});
+      }),
+      catchError(() => of(ShoppingListApiActions.createShoppingListFailure()))
+    )),
+  );
+
+  @Effect()
+  selectNewlyCreatedShoppingList$ = this.actions$.pipe(
+    ofType(ShoppingListApiActions.createShoppingListSuccess),
+    map(({shoppingList}) => ShoppingListEffectActions.setActiveShoppingList({shoppingListId: shoppingList.id})),
+  );
+
+  @Effect()
+  editShoppingList$ = this.actions$.pipe(
+    ofType(ShoppingListContainerActions.editShoppingList),
+    concatMap(({shoppingList}) => this.shoppingListService.updateShoppingList(shoppingList).pipe(
+      map((editedShoppingList) => {
+        return ShoppingListApiActions.editShoppingListSuccess({shoppingList: editedShoppingList});
+      }),
+      catchError(() => of(ShoppingListApiActions.editShoppingListFailure()))
+    )),
+  );
+
+  @Effect()
+  deleteShoppingListIfCurrentGetsDeleted$ = this.actions$.pipe(
+    ofType(ShoppingListContainerActions.deleteShoppingList),
+    concatMap(({shoppingList}) => {
+      return of({}).pipe(
+        delay(3000),
+        takeUntil(this.actions$.pipe(ofType(ShoppingListContainerActions.undoDeleteShoppingList))),
+        mergeMap(() => this.shoppingListService.deleteShoppingList(shoppingList.id).pipe(
+          map((editedShoppingList) => {
+            return ShoppingListApiActions.deleteShoppingListSuccess({shoppingList});
+          }),
+          catchError(() => of(ShoppingListApiActions.deleteShoppingListFailure()))
+        ))
+      );
+    })
+  );
+
+  @Effect()
+  changeShoppingListIfCurrentGetsDeleted$ = this.actions$.pipe(
+    ofType(ShoppingListContainerActions.deleteShoppingList),
+    withLatestFrom(this.store),
+    filter(([{shoppingList}, store]) => shoppingList.id === store.shoppingListState.activeShoppingList),
+    map(([_, store]) => {
+      const idOfFirstShoppingList = Object.keys(store.shoppingListState.shoppingLists.items.entities)[0];
+      return ShoppingListEffectActions.setActiveShoppingList({shoppingListId: idOfFirstShoppingList});
     })
   );
 }

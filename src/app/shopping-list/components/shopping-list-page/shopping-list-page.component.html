@@ -5,7 +5,11 @@
     [lists]="shoppingLists"
     [defaultTitle]="'shopping-list.default-title' | translate:translations:currentLanguage"
     [addListLabel]="'shopping-list.new-list' | translate:translations:currentLanguage"
-    [buttonLabel]="'shopping-list.my-lists' | translate:translations:currentLanguage"></app-list-header>
+    [buttonLabel]="'shopping-list.my-lists' | translate:translations:currentLanguage"
+    (selectList)="onSelectList($event)"
+    (editList)="onEditList($event)"
+    (deleteList)="onDeleteList($event)"
+    (createList)="onCreateList()"></app-list-header>
   <app-shopping-list-form
     [translations]="translations"
     [currentLang]="currentLanguage"
