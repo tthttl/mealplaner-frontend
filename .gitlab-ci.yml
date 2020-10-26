@@ -28,7 +28,7 @@ build-dev:
   stage: build
   only:
     - master
-  script: npm run build
+  script: npm run build --configuration=qa
   artifacts:
     paths:
      - dist
