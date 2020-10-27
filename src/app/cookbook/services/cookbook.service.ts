@@ -18,8 +18,8 @@ export class CookbookService {
     );
   }
 
-  saveCookbook(cookbook: Cookbook): Observable<Cookbook> {
-    return this.httpClient.post<CookbookApi>(`${environment.apiUrl}/cookbooks`, cookbook).pipe(
+  saveCookbook(title: string): Observable<Cookbook> {
+    return this.httpClient.post<CookbookApi>(`${environment.apiUrl}/cookbooks`, {title}).pipe(
       map((savedCookbook: CookbookApi) => convertCookbookApiToCookbook(savedCookbook))
     );
   }

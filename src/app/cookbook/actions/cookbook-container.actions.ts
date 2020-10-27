@@ -4,7 +4,7 @@ import { Cookbook, Recipe } from '../../shared/model/model';
 export const loadCookbook = createAction('[Cookbook Container] Load Cookbooks');
 export const createCookbook = createAction(
   '[Cookbook Container] Create Cookbooks',
-  props<{ cookbook: Cookbook }>()
+  props<{ optimisticId: string, title: string }>()
 );
 export const editCookbook = createAction(
   '[Cookbook Container] Edit Cookbooks',

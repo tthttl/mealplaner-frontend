@@ -2,6 +2,9 @@ import { Action, createReducer, on } from '@ngrx/store';
 import { addRecipeAtIndex, copyOrCreateArray } from '../../shared/helpers/helpers';
 import { Cookbook, Recipe, } from '../../shared/model/model';
 import {
+  CookbookCreatedAction,
+  CookbookCreatedFailureAction,
+  CookbookCreatedSuccessAction,
   CookbookSelectedAction,
   CreateRecipeAction,
   CreateRecipeSuccessAction,
@@ -94,6 +97,30 @@ export const cookbookStateReducer = createReducer<CookbookState, Action>(
     return {
       ...state,
       activeCookbookId: selectedCookbookId
+    };
+  }),
+  on(CookbookContainerActions.createCookbook, (state: CookbookState, {optimisticId, title}: CookbookCreatedAction) => {
+    return {
+      ...state,
+      cookbooks: [
+        ...state.cookbooks, {id: optimisticId, title}
+      ]
+    };
+  }),
+  on(CookbookApiActions.createCookbookSuccess, (state: CookbookState, {optimisticId, cookbook}: CookbookCreatedSuccessAction) => {
+    return {
+      ...state,
+      cookbooks: [
+        ...state.cookbooks.map((item: Cookbook) => item.id === optimisticId ? cookbook : item)
+      ]
+    };
+  }),
+  on(CookbookApiActions.createCookbookFailure, (state: CookbookState, {optimisticId}: CookbookCreatedFailureAction) => {
+    return {
+      ...state,
+      cookbooks: [
+        ...state.cookbooks.filter((item: Cookbook) => item.id === optimisticId)
+      ]
     };
   })
 );

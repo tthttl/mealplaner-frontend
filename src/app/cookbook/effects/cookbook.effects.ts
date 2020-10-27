@@ -91,7 +91,7 @@ export class CookbookEffects {
     switchMap(({cookbooks}) => {
       const requestedCookbookId = this.route.snapshot.queryParams.cookbookId;
       const cookbookIds = cookbooks.map((cookbook) => cookbook.id);
-      const selectedCookbookId  = requestedCookbookId && cookbookIds.includes(requestedCookbookId) ?
+      const selectedCookbookId = requestedCookbookId && cookbookIds.includes(requestedCookbookId) ?
         requestedCookbookId : cookbookIds[0];
       return of(CookbookApiActions.setActiveCookbookIdAsQueryParam({selectedCookbookId})
       );
@@ -104,6 +104,15 @@ export class CookbookEffects {
     tap(({selectedCookbookId}) => {
       this.router.navigate([], {relativeTo: this.route, queryParams: {selectedCookbookId}});
     })
+  );
+
+  @Effect()
+  createCookbook$ = this.actions$.pipe(
+    ofType(CookbookContainerActions.createCookbook),
+    exhaustMap(({title, optimisticId}) => this.cookbookService.saveCookbook(title).pipe(
+      map((cookbook: Cookbook) => CookbookApiActions.createCookbookSuccess({optimisticId, cookbook})),
+      catchError((error: Error) => of(CookbookApiActions.createCookbookFailure({optimisticId})))
+    ))
   );
 
 }

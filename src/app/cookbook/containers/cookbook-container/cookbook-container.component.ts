@@ -6,10 +6,12 @@ import { map, switchMap, take, withLatestFrom } from 'rxjs/operators';
 import { v4 as uuid } from 'uuid';
 import { TranslatePipe } from '../../../i18n/pipes/translate.pipe';
 import { copyIngredientsToShoppingList, copyRecipeToMealplaner } from '../../../shared/actions/shared-actiion';
+import { EditListDialogComponent } from '../../../shared/components/edit-list-dialog/edit-list-dialog.component';
 import { mapSelectedIngredientToBasicShoppingListItem } from '../../../shared/helpers/helpers';
 import {
   BasicShoppingListItem,
   Cookbook,
+  CreateListDialogEvent,
   I18n,
   Language,
   List,
@@ -37,7 +39,8 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
   selectedCookbook$: Observable<Cookbook | undefined>;
   private destroy$: Subject<void> = new Subject<void>();
 
-  private dialogTranslations: {} = {};
+  private recipeViewTranslations: {} = {};
+  private listDialogTranslations: {} = {};
 
   constructor(
     private store: Store<GlobalState>,
@@ -64,10 +67,16 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
     this.store.select(selectTranslations).pipe(
       withLatestFrom(this.store.select((state: GlobalState) => state.appState.language))
     ).subscribe(([translations, currentLanguage]: [I18n | null, Language]) => {
-      this.dialogTranslations = {
+      this.recipeViewTranslations = {
         'ingredients.label-text': this.translatePipe.transform('ingredients.label-text', translations, currentLanguage),
         'button.add-to-shopping-list': this.translatePipe.transform('button.add-to-shopping-list', translations, currentLanguage),
         'button.add-to-mealplaner': this.translatePipe.transform('button.add-to-mealplaner', translations, currentLanguage),
+      };
+      this.listDialogTranslations = {
+        title: this.translatePipe.transform('create-list.title', translations, currentLanguage),
+        'save-button-text': this.translatePipe.transform('create-list.save-button-text', translations, currentLanguage),
+        'cancel-button-text': this.translatePipe.transform('create-list.cancel-button-text', translations, currentLanguage),
+        placeholder: this.translatePipe.transform('create-cookbook.placeholder', translations, currentLanguage),
       };
     });
   }
@@ -96,7 +105,7 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
   onClickRecipe(recipe: Recipe): void {
     const dialogRef = this.dialogService.openDialog(RecipeViewComponent, {
       data: recipe,
-      translations: this.dialogTranslations,
+      translations: this.recipeViewTranslations,
     });
     dialogRef.afterClosed()
       .pipe(
@@ -140,7 +149,17 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
   }
 
   onCreateList(): void {
-
+    const dialogRef = this.dialogService.openDialog(EditListDialogComponent, {
+      data: {},
+      translations: this.listDialogTranslations,
+    });
+    dialogRef.afterClosed()
+      .pipe(take(1))
+      .subscribe((result: CreateListDialogEvent | undefined) => {
+        if (result?.event === 'create') {
+          this.store.dispatch(CookbookContainerActions.createCookbook({ optimisticId: uuid(), title: result.title}));
+        }
+      });
   }
 
   onSelectList(list: List): void {

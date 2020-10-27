@@ -6,9 +6,11 @@ export const loadCookbookSuccess = createAction('[loadCookbook Effect] Load Cook
 );
 export const loadCookbookFailure = createAction('[loadCookbook Effect] Load Cookbooks Failure');
 export const createCookbookSuccess = createAction('[createCookbook Effect] Create Cookbooks Success',
-  props<{ cookbook: Cookbook }>()
+  props<{ optimisticId: string, cookbook: Cookbook }>()
 );
-export const createCookbookFailure = createAction('[createCookbook Effect] Create Cookbooks Failure');
+export const createCookbookFailure = createAction('[createCookbook Effect] Create Cookbooks Failure',
+  props<{ optimisticId: string }>()
+);
 export const editCookbookSuccess = createAction('[editCookbook Effect] Edit Cookbooks Success',
   props<{ cookbook: Cookbook }>()
 );

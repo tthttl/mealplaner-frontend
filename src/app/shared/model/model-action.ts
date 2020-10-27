@@ -1,4 +1,4 @@
-import { BasicShoppingListItem, Language, LoginCredentials, Recipe, ShoppingList, ShoppingListItem } from './model';
+import { BasicShoppingListItem, Cookbook, Language, LoginCredentials, Recipe, ShoppingList, ShoppingListItem } from './model';
 
 export interface LoginAction {
   type: string;
@@ -116,4 +116,21 @@ export interface ShoppingListToggleAction {
 export interface CookbookSelectedAction {
   type: string;
   selectedCookbookId: string;
+}
+
+export interface CookbookCreatedAction {
+  type: string;
+  optimisticId: string;
+  title: string;
+}
+
+export interface CookbookCreatedSuccessAction {
+  type: string;
+  optimisticId: string;
+  cookbook: Cookbook;
+}
+
+export interface CookbookCreatedFailureAction {
+  type: string;
+  optimisticId: string;
 }
