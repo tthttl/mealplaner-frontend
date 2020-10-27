@@ -12,6 +12,7 @@ import {
   Cookbook,
   I18n,
   Language,
+  List,
   Recipe,
   RecipeViewDialogEvent,
   SelectedIngredient
@@ -142,15 +143,15 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
 
   }
 
-  onSelectList(listId: string): void {
-    this.store.dispatch(CookbookContainerActions.selectCookbook({selectedCookbookId: listId}));
+  onSelectList(list: List): void {
+    this.store.dispatch(CookbookContainerActions.selectCookbook({selectedCookbookId: list.id}));
   }
 
-  onEditList(listId: string): void {
+  onEditList(list: List): void {
 
   }
 
-  onDeleteList(listId: string): void {
+  onDeleteList(list: List): void {
 
   }
 

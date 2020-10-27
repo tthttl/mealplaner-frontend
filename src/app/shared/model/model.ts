@@ -134,7 +134,7 @@ export interface Cookbook {
 
 export interface ListPickerDialogEvent {
   event: 'select' | 'create' | 'edit' | 'delete';
-  shoppingList?: ShoppingList;
+  list?: List;
 }
 
 export interface CreateListDialogEvent {

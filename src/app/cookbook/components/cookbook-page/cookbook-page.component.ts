@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DEFAULT_LANGUAGE } from '../../../shared/helpers/constants';
-import { Cookbook, I18n, Language, Recipe } from '../../../shared/model/model';
+import { Cookbook, I18n, Language, List, Recipe } from '../../../shared/model/model';
 
 @Component({
   selector: 'app-cookbook-page',
@@ -20,9 +20,9 @@ export class CookbookPageComponent {
   @Output() clickRecipe: EventEmitter<Recipe> = new EventEmitter<Recipe>();
   @Output() createRecipe: EventEmitter<void> = new EventEmitter<void>();
   @Output() createList: EventEmitter<undefined> = new EventEmitter();
-  @Output() selectList: EventEmitter<string> = new EventEmitter();
-  @Output() editList: EventEmitter<string> = new EventEmitter();
-  @Output() deleteList: EventEmitter<string> = new EventEmitter();
+  @Output() selectList: EventEmitter<List> = new EventEmitter();
+  @Output() editList: EventEmitter<List> = new EventEmitter();
+  @Output() deleteList: EventEmitter<List> = new EventEmitter();
 
   onEditRecipe(id: string | undefined): void {
     if (id) {
@@ -50,16 +50,16 @@ export class CookbookPageComponent {
     this.createList.emit();
   }
 
-  onSelectList(listId: string): void {
-    this.selectList.emit(listId);
+  onSelectList(list: List): void {
+    this.selectList.emit(list);
   }
 
-  onEditList(listId: string): void {
-    this.editList.emit(listId);
+  onEditList(list: List): void {
+    this.editList.emit(list);
   }
 
-  onDeleteList(listId: string): void {
-    this.deleteList.emit(listId);
+  onDeleteList(list: List): void {
+    this.deleteList.emit(list);
   }
 
 }
