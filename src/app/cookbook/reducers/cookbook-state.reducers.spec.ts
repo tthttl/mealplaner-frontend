@@ -1,5 +1,5 @@
 import { Cookbook, Recipe } from '../../shared/model/model';
-import { CookbookActions, CookbookApiActions } from '../actions';
+import { CookbookApiActions, CookbookContainerActions } from '../actions';
 import { initialCookbookState } from '../state/cookbook-state';
 import { cookbookStateReducer } from './cookbook-state.reducers';
 
@@ -53,7 +53,7 @@ describe('CookbookState Reducer', () => {
     });
   });
 
-  describe(`${CookbookActions.createRecipe}`, () => {
+  describe(`${CookbookContainerActions.createRecipe}`, () => {
     it('should add new Recipe with optimisticId', () => {
       expect(cookbookStateReducer(
         {
@@ -61,7 +61,7 @@ describe('CookbookState Reducer', () => {
             cookbookId: []
           }
         },
-        CookbookActions.createRecipe({optimisticId: 'optimisticId', recipeToSave: recipeA as Recipe}))
+        CookbookContainerActions.createRecipe({optimisticId: 'optimisticId', recipeToSave: recipeA as Recipe}))
       ).toEqual({
         ...initialCookbookState,
         recipes: {
@@ -109,7 +109,7 @@ describe('CookbookState Reducer', () => {
 
   });
 
-  describe(`${CookbookActions.deleteRecipeFromState}`, () => {
+  describe(`${CookbookContainerActions.deleteRecipeFromState}`, () => {
     it('should delete existing Recipe', () => {
       expect(cookbookStateReducer(
         {
@@ -117,7 +117,7 @@ describe('CookbookState Reducer', () => {
             cookbookId: [recipeA as Recipe]
           }
         },
-        CookbookActions.deleteRecipeFromState({recipeToDelete: recipeA as Recipe}))
+        CookbookContainerActions.deleteRecipeFromState({recipeToDelete: recipeA as Recipe}))
       ).toEqual({
         ...initialCookbookState,
         recipes: {

@@ -1,9 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { take } from 'rxjs/operators';
 import { List, ListPickerDialogEvent } from '../../model/model';
 import { DialogService } from '../../services/dialog.service';
-import { take } from 'rxjs/operators';
 import { ListPickerDialogComponent } from '../list-picker-dialog/list-picker-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-list-header',
@@ -21,7 +20,7 @@ export class ListHeaderComponent implements OnInit {
   @Output() editList: EventEmitter<string> = new EventEmitter();
   @Output() deleteList: EventEmitter<string> = new EventEmitter();
 
-  constructor(private dialogService: DialogService, public dialog: MatDialog) {
+  constructor(private dialogService: DialogService) {
   }
 
   ngOnInit(): void {

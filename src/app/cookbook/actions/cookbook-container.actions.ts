@@ -15,6 +15,11 @@ export const deleteCookbook = createAction(
   props<{ cookbook: Cookbook }>()
 );
 
+export const selectCookbook = createAction(
+  '[Cookbook Container] Select Cookbook',
+  props<{ selectedCookbookId: string }>()
+);
+
 export const loadRecipes = createAction('[Cookbook Container] Get Recipes');
 export const createRecipe = createAction(
   '[Cookbook Container] Create Recipe',

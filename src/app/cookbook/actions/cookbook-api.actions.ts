@@ -15,7 +15,7 @@ export const editCookbookSuccess = createAction('[editCookbook Effect] Edit Cook
 export const editCookbookFailure = createAction('[editCookbook Effect] Edit Cookbooks Failure');
 export const deleteCookbookSuccess = createAction('[deleteCookbook Effect] Delete Cookbooks Success',
   props<{ cookbook: Cookbook }>()
-  );
+);
 export const deleteCookbookFailure = createAction('[deleteCookbook Effect] Delete Cookbooks Failure');
 
 export const loadRecipesSuccess = createAction(
@@ -41,3 +41,7 @@ export const deleteRecipeSuccess = createAction(
 export const deleteRecipeFailure = createAction('[DeleteRecipe Effect] Delete Recipe Failure');
 export const undoDeleteRecipeFromState = createAction('[DeleteRecipe Effect] Undo delete Recipe from State',
   props<{ recipe: Recipe }>());
+
+export const setActiveCookbookIdAsQueryParam = createAction('[ChooseActiveCookbookId Effect] Set Active CookbookId As QueryParam',
+  props<{ selectedCookbookId: string }>()
+);

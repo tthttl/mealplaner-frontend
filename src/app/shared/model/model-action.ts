@@ -112,3 +112,8 @@ export interface ShoppingListToggleAction {
   shoppingListItemId: string;
   shoppingList: string;
 }
+
+export interface CookbookSelectedAction {
+  type: string;
+  selectedCookbookId: string;
+}

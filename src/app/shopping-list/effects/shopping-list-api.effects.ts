@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { GlobalState, selectCurrentShoppingListItems, selectUser, selectUserID } from '../../shared/state';
-import { ShoppingListApiActions, ShoppingListContainerActions, ShoppingListEffectActions } from '../actions';
-import { catchError, concatMap, exhaustMap, filter, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
-import { ChangeShoppingListAction, SetActiveShoppingListAction, ShoppingListItemMovedAction } from '../../shared/model/model-action';
-import { ShoppingList, ShoppingListItem, ShoppingListItemMovedEvent } from '../../shared/model/model';
 import { forkJoin, Observable, of } from 'rxjs';
+import { catchError, concatMap, exhaustMap, filter, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import { SharedActions } from '../../shared/actions';
+import { ShoppingList, ShoppingListItem } from '../../shared/model/model';
+import { ChangeShoppingListAction, SetActiveShoppingListAction } from '../../shared/model/model-action';
+import { GlobalState, selectCurrentShoppingListItems, selectUserID } from '../../shared/state';
+import { ShoppingListApiActions, ShoppingListContainerActions, ShoppingListEffectActions } from '../actions';
 import { ShoppingListService } from '../service/shopping-list.service';
-import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
 
 @Injectable()
 export class ShoppingListApiEffects {
@@ -68,7 +69,7 @@ export class ShoppingListApiEffects {
 
   @Effect()
   addShoppingListItem$ = this.actions$.pipe(
-    ofType(ShoppingListContainerActions.addShoppingListItem),
+    ofType(ShoppingListContainerActions.addShoppingListItem, SharedActions.copyIngredientsToShoppingList),
     concatMap(({optimisticId, shoppingListItem}) => this.shoppingListService.addShoppingListItem(shoppingListItem).pipe(
       map((shoppingListItemApi: ShoppingListItem) => {
         return ShoppingListApiActions.addShoppingListItemSuccess({optimisticId, shoppingListItem: shoppingListItemApi});

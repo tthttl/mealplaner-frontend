@@ -2,12 +2,15 @@ import { FormControl } from '@angular/forms';
 import { isAfter, isDate } from 'date-fns';
 import { TranslatePipe } from '../../i18n/pipes/translate.pipe';
 import {
+  BasicShoppingListItem,
   Cookbook,
   I18n as I18nClient,
   I18n,
   JwtPayload,
   Language,
-  Recipe, RecipeIngredient,
+  Recipe,
+  RecipeIngredient,
+  SelectedIngredient,
   ShoppingListItem as ShoppingListItemClient,
   User
 } from '../../shared/model/model';
@@ -134,4 +137,18 @@ export function mapShoppingListItemApiToShoppingListItem(shoppingListApi: Shoppi
     ...shoppingListApi,
     isChecked: false,
   };
+}
+
+export function mapSelectedIngredientToBasicShoppingListItem(ingredient: SelectedIngredient, shoppingListId: string = ''):
+  BasicShoppingListItem {
+  return {
+    amount: ingredient.amount,
+    unit: ingredient.unit,
+    title: ingredient.title,
+    shoppingList: shoppingListId
+  };
+}
+
+export function copyOrCreateArray<T extends object>(arrayMap: {[key: string]: T[]}, arrayId: string): T[]{
+  return !!arrayMap[arrayId] ? [...arrayMap[arrayId]] : ([] as T[]);
 }

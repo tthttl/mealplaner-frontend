@@ -140,3 +140,9 @@ export interface ListPickerDialogEvent {
 export interface SelectedIngredient extends Ingredient {
   isSelected: boolean;
 }
+
+export interface RecipeViewDialogEvent {
+  readonly event: 'selectedIngredients' | 'recipe';
+  readonly recipe?: Recipe;
+  readonly selectedIngredients?: SelectedIngredient[];
+}

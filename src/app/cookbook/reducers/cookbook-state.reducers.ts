@@ -1,7 +1,8 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { addRecipeAtIndex } from '../../shared/helpers/helpers';
+import { addRecipeAtIndex, copyOrCreateArray } from '../../shared/helpers/helpers';
 import { Cookbook, Recipe, } from '../../shared/model/model';
 import {
+  CookbookSelectedAction,
   CreateRecipeAction,
   CreateRecipeSuccessAction,
   CreateRecipeSuccessFailureAction,
@@ -10,7 +11,7 @@ import {
   LoadRecipeSuccessAction,
   UndoDeleteRecipeFromStateAction
 } from '../../shared/model/model-action';
-import { CookbookActions, CookbookApiActions } from '../actions';
+import { CookbookApiActions, CookbookContainerActions } from '../actions';
 import { CookbookState, initialCookbookState } from '../state/cookbook-state';
 
 export const cookbookStateReducer = createReducer<CookbookState, Action>(
@@ -31,12 +32,12 @@ export const cookbookStateReducer = createReducer<CookbookState, Action>(
       }
     };
   }),
-  on(CookbookActions.createRecipe, (state: CookbookState, {optimisticId, recipeToSave}: CreateRecipeAction) => {
+  on(CookbookContainerActions.createRecipe, (state: CookbookState, {optimisticId, recipeToSave}: CreateRecipeAction) => {
     return {
       ...state,
       recipes: {
         ...state.recipes,
-        [recipeToSave.cookbookId]: [...state.recipes[recipeToSave.cookbookId], {...recipeToSave, id: optimisticId}]
+        [recipeToSave.cookbookId]: [...copyOrCreateArray(state.recipes, recipeToSave.cookbookId), {...recipeToSave, id: optimisticId}]
       }
     };
   }),
@@ -71,7 +72,7 @@ export const cookbookStateReducer = createReducer<CookbookState, Action>(
       }
     };
   }),
-  on(CookbookActions.deleteRecipeFromState, (state: CookbookState, {recipeToDelete}: DeleteRecipeFromStateAction) => {
+  on(CookbookContainerActions.deleteRecipeFromState, (state: CookbookState, {recipeToDelete}: DeleteRecipeFromStateAction) => {
     return {
       ...state,
       recipes: {
@@ -87,6 +88,12 @@ export const cookbookStateReducer = createReducer<CookbookState, Action>(
         ...state.recipes,
         [recipe.cookbookId]: addRecipeAtIndex(recipe, state.recipes[recipe.cookbookId])
       }
+    };
+  }),
+  on(CookbookContainerActions.selectCookbook, (state: CookbookState, {selectedCookbookId}: CookbookSelectedAction) => {
+    return {
+      ...state,
+      activeCookbookId: selectedCookbookId
     };
   })
 );

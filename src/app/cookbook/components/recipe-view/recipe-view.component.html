@@ -2,7 +2,7 @@
   <div mat-dialog-title>{{dialogData.data.title}}</div>
   <h4>{{dialogData.translations['ingredients.label-text']}}</h4>
   <div *ngFor="let ingredient of ingredients.controls" mat-dialog-content>
-    <form [formGroup]="ingredientsForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="ingredientsForm" (ngSubmit)="onAddIngredients()">
       <div class="ingredient">
         <mat-checkbox
           class="shopping-list__item-text"
@@ -19,14 +19,13 @@
     </form>
   </div>
   <div class="button-group" mat-dialog-actions>
-    <app-button (click)="onEdit()"
-                [buttonText]="dialogData.translations['button.modify']"
+    <app-button (click)="onAddIngredients()"
+                [buttonText]="dialogData.translations['button.add-to-shopping-list']"
                 [color]="'accent'"
                 class="button--margin"
-                [routerLink]="['/recipe/', dialogData.data.id]"
     >
     </app-button>
-    <app-button [mat-dialog-close]="dialogData.data"
+    <app-button (click)="onAddRecipe()"
                 [buttonText]="dialogData.translations['button.add-to-mealplaner']"
     >
     </app-button>

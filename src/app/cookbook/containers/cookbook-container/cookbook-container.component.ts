@@ -3,12 +3,23 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
 import { map, switchMap, take, withLatestFrom } from 'rxjs/operators';
+import { v4 as uuid } from 'uuid';
 import { TranslatePipe } from '../../../i18n/pipes/translate.pipe';
-import { I18n, Language, Recipe } from '../../../shared/model/model';
+import { copyIngredientsToShoppingList, copyRecipeToMealplaner } from '../../../shared/actions/shared-actiion';
+import { mapSelectedIngredientToBasicShoppingListItem } from '../../../shared/helpers/helpers';
+import {
+  BasicShoppingListItem,
+  Cookbook,
+  I18n,
+  Language,
+  Recipe,
+  RecipeViewDialogEvent,
+  SelectedIngredient
+} from '../../../shared/model/model';
 import { DialogService } from '../../../shared/services/dialog.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
-import { GlobalState, selectActiveCookbook, selectTranslations } from '../../../shared/state';
-import { CookbookActions, CookbookApiActions } from '../../actions';
+import { activeShoppingListId, GlobalState, selectActiveCookbook, selectCookbooks, selectTranslations } from '../../../shared/state';
+import { CookbookApiActions, CookbookContainerActions } from '../../actions';
 import { RecipeViewComponent } from '../../components/recipe-view/recipe-view.component';
 
 @Component({
@@ -21,6 +32,8 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
   translations$: Observable<I18n | null>;
   currentLang$: Observable<Language>;
   recipes$: Observable<Recipe[]>;
+  cookbooks$: Observable<Cookbook[]>;
+  selectedCookbook$: Observable<Cookbook | undefined>;
   private destroy$: Subject<void> = new Subject<void>();
 
   private dialogTranslations: {} = {};
@@ -35,16 +48,24 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
     this.translations$ = this.store.select(selectTranslations);
     this.currentLang$ = this.store.select((state: GlobalState) => state.appState.language);
     this.recipes$ = this.selectRecipes();
+    this.cookbooks$ = this.store.select(selectCookbooks);
+    this.selectedCookbook$ = this.store.select((state: GlobalState) => {
+      if (state.cookbookState.activeCookbookId) {
+        return state.cookbookState.cookbooks.find((cookbook: Cookbook) => cookbook.id === state.cookbookState.activeCookbookId);
+      } else {
+        return state.cookbookState.cookbooks[0];
+      }
+    });
   }
 
   ngOnInit(): void {
-    this.store.dispatch(CookbookActions.loadCookbook());
+    this.store.dispatch(CookbookContainerActions.loadCookbook());
     this.store.select(selectTranslations).pipe(
       withLatestFrom(this.store.select((state: GlobalState) => state.appState.language))
     ).subscribe(([translations, currentLanguage]: [I18n | null, Language]) => {
       this.dialogTranslations = {
         'ingredients.label-text': this.translatePipe.transform('ingredients.label-text', translations, currentLanguage),
-        'button.modify': this.translatePipe.transform('button.modify', translations, currentLanguage),
+        'button.add-to-shopping-list': this.translatePipe.transform('button.add-to-shopping-list', translations, currentLanguage),
         'button.add-to-mealplaner': this.translatePipe.transform('button.add-to-mealplaner', translations, currentLanguage),
       };
     });
@@ -52,13 +73,13 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
 
   onDeleteRecipe(recipe: Recipe): void {
     const snackBarRef = this.snackBarService.openSnackBar('message.undo', 'message.action');
-    this.store.dispatch(CookbookActions.deleteRecipeFromState({recipeToDelete: recipe}));
+    this.store.dispatch(CookbookContainerActions.deleteRecipeFromState({recipeToDelete: recipe}));
     snackBarRef.afterDismissed().pipe(take(1))
       .subscribe(({dismissedByAction}) => {
         if (dismissedByAction) {
           this.store.dispatch(CookbookApiActions.undoDeleteRecipeFromState({recipe}));
         } else {
-          this.store.dispatch(CookbookActions.deleteRecipe({recipe}));
+          this.store.dispatch(CookbookContainerActions.deleteRecipe({recipe}));
         }
       });
   }
@@ -77,10 +98,27 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
       translations: this.dialogTranslations,
     });
     dialogRef.afterClosed()
-      .pipe(take(1))
-      .subscribe((result: Recipe | undefined) => {
-        if (result) {
-          console.log(result); // dispatch AddToMealplaner action
+      .pipe(
+        take(1),
+        withLatestFrom(this.store.select(activeShoppingListId))
+      )
+      .subscribe(([event, shoppingListId]: [RecipeViewDialogEvent, string | undefined]) => {
+        switch (event?.event) {
+          case 'recipe':
+            this.store.dispatch(copyRecipeToMealplaner({recipe: event.recipe!}));
+            break;
+          case 'selectedIngredients':
+            event.selectedIngredients?.filter((item: SelectedIngredient) => item.isSelected)
+              .map((item: SelectedIngredient) => mapSelectedIngredientToBasicShoppingListItem(item, shoppingListId))
+              .map((item: BasicShoppingListItem) => {
+                console.log(item);
+                return item;
+              })
+              .forEach((item: BasicShoppingListItem) => this.store.dispatch(copyIngredientsToShoppingList({
+                optimisticId: uuid(),
+                shoppingListItem: item
+              })));
+            break;
         }
       });
   }
@@ -98,6 +136,22 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
       switchMap((activeCookbookId: string) => this.store
         .select((state: GlobalState) => state.cookbookState.recipes[activeCookbookId]))
     );
+  }
+
+  onCreateList(): void {
+
+  }
+
+  onSelectList(listId: string): void {
+    this.store.dispatch(CookbookContainerActions.selectCookbook({selectedCookbookId: listId}));
+  }
+
+  onEditList(listId: string): void {
+
+  }
+
+  onDeleteList(listId: string): void {
+
   }
 
   ngOnDestroy(): void {

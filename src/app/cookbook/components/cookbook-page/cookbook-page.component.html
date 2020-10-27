@@ -1,3 +1,15 @@
+<app-list-header
+  [selectedList]="selectedList"
+  [lists]="cookbooks"
+  [defaultTitle]="'shopping-list.default-title' | translate:translations:currentLang"
+  [addListLabel]="'shopping-list.new-list' | translate:translations:currentLang"
+  [buttonLabel]="'shopping-list.my-lists' | translate:translations:currentLang"
+  (createList)="onCreateList()"
+  (selectList)="onSelectList($event)"
+  (editList)="onEditList($event)"
+  (deleteList)="onDeleteList($event)"
+>
+</app-list-header>
 <app-recipe-list
   [translations]="translations"
   [currentLang]="currentLang"

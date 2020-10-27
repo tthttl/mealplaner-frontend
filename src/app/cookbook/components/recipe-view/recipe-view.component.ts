@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { DialogData, Recipe, RecipeIngredient, SelectedIngredient } from '../../../shared/model/model';
+import { DialogData, Recipe, RecipeIngredient } from '../../../shared/model/model';
 
 @Component({
   selector: 'app-recipe-view',
@@ -9,8 +9,6 @@ import { DialogData, Recipe, RecipeIngredient, SelectedIngredient } from '../../
   styleUrls: ['./recipe-view.component.scss']
 })
 export class RecipeViewComponent implements OnInit {
-
-  @Output() selectedIngredients: EventEmitter<SelectedIngredient[]> = new EventEmitter<SelectedIngredient[]>();
   ingredientsForm: FormGroup = new FormGroup({
     ingredients: new FormArray([])
   });
@@ -39,9 +37,18 @@ export class RecipeViewComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  onSubmit(): void {
-    console.log(this.ingredientsForm.value.ingredients);
-    this.selectedIngredients.emit(this.ingredientsForm.value.ingredients);
+  onAddIngredients(): void {
+    this.dialogRef.close({
+      event: 'selectedIngredients',
+      selectedIngredients: this.ingredientsForm.value.ingredients
+    });
+  }
+
+  onAddRecipe(): void{
+    this.dialogRef.close({
+      event: 'recipe',
+      recipe: this.dialogData.data
+    });
   }
 
   getFormControl(ingredient: AbstractControl, key: string): FormControl {
