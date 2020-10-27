@@ -80,7 +80,7 @@ describe('ShoppingListService', () => {
     req.flush(shoppingListItem);
   });
 
-  it('deleteShoppingListItem$() should return success message', () => {
+  it('deleteShoppingListItem() should return success message', () => {
     service.deleteShoppingListItem('shoppingListItemId').subscribe((res) => {
       expect(res).toEqual({DELETED: true});
     });
@@ -90,6 +90,40 @@ describe('ShoppingListService', () => {
     req.flush({DELETED: true});
   });
 
+  it('createShoppingList should return new shopping list', () => {
+
+    service.createShoppingList('Test').subscribe((res) => {
+      expect(res).toEqual({id: '42', title: 'Test'});
+    });
+
+    const req = httpMock.expectOne(`${environment.apiUrl}/shopping-lists`);
+    expect(req.request.method).toBe('POST');
+    req.flush({id: '42', title: 'Test'});
+  });
+
+  it('updateShoppingList() should return shoppingList', () => {
+    const shoppingList: ShoppingList = {
+      id: 'shoppingListId', title: 'List'
+    };
+
+    service.updateShoppingList(shoppingList).subscribe((res) => {
+      expect(res).toEqual(shoppingList);
+    });
+
+    const req = httpMock.expectOne(`${environment.apiUrl}/shopping-lists/shoppingListId`);
+    expect(req.request.method).toBe('PUT');
+    req.flush(shoppingList);
+  });
+
+  it('deleteShoppingList() should return success message', () => {
+    service.deleteShoppingList('shoppingListId').subscribe((res) => {
+      expect(res).toEqual({DELETED: true});
+    });
+
+    const req = httpMock.expectOne(`${environment.apiUrl}/shopping-lists/shoppingListId`);
+    expect(req.request.method).toBe('DELETE');
+    req.flush({DELETED: true});
+  });
 
   afterEach(() => {
     httpMock.verify();

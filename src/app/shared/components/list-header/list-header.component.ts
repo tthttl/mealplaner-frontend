@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { List, ListPickerDialogEvent } from '../../model/model';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { List, ListPickerDialogEvent, ShoppingList } from '../../model/model';
 import { DialogService } from '../../services/dialog.service';
 import { take } from 'rxjs/operators';
 import { ListPickerDialogComponent } from '../list-picker-dialog/list-picker-dialog.component';
@@ -8,7 +8,8 @@ import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-list-header',
   templateUrl: './list-header.component.html',
-  styleUrls: ['./list-header.component.scss']
+  styleUrls: ['./list-header.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListHeaderComponent implements OnInit {
   @Input() selectedList: List | null | undefined = undefined;
@@ -17,9 +18,9 @@ export class ListHeaderComponent implements OnInit {
   @Input() addListLabel = '';
   @Input() buttonLabel = '';
   @Output() createList: EventEmitter<undefined> = new EventEmitter();
-  @Output() selectList: EventEmitter<string> = new EventEmitter();
-  @Output() editList: EventEmitter<string> = new EventEmitter();
-  @Output() deleteList: EventEmitter<string> = new EventEmitter();
+  @Output() selectList: EventEmitter<ShoppingList> = new EventEmitter();
+  @Output() editList: EventEmitter<ShoppingList> = new EventEmitter();
+  @Output() deleteList: EventEmitter<ShoppingList> = new EventEmitter();
 
   constructor(private dialogService: DialogService, public dialog: MatDialog) {
   }
@@ -37,19 +38,19 @@ export class ListHeaderComponent implements OnInit {
     });
     dialogRef.afterClosed()
       .pipe(take(1))
-      .subscribe((result: ListPickerDialogEvent) => {
+      .subscribe((result: ListPickerDialogEvent | undefined) => {
         switch (result?.event) {
           case 'create':
             this.createList.emit();
             break;
           case 'select':
-            this.selectList.emit(result.listId);
+            this.selectList.emit(result.shoppingList);
             break;
           case 'edit':
-            this.editList.emit(result.listId);
+            this.editList.emit(result.shoppingList);
             break;
           case 'delete':
-            this.deleteList.emit(result.listId);
+            this.deleteList.emit(result.shoppingList);
             break;
         }
       });

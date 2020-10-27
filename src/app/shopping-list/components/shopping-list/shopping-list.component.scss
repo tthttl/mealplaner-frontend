@@ -1,4 +1,7 @@
 @import "../../../../styles/settings/colors";
+@import "../../../../styles/settings/breakpoints";
+@import "../../../../styles/mixins/style";
+@import "../../../../styles/settings/variables";
 
 .shopping-list {
   width: 100%;
@@ -6,15 +9,11 @@
   overflow: hidden;
 
   &__item {
-    border-bottom: solid 1px $blue-grey_30;
+    border-top: solid 1px $blue-grey_30;
     color: $text-70;
     font-size: 16px;
     box-sizing: border-box;
     background: white;
-
-    &:last-child {
-      border: none;
-    }
   }
 
   &__item-column-wrapper {
@@ -45,6 +44,28 @@
       transition: width 1.5s linear;
     }
   }
+
+  @include skeleton('.shopping-list__item-skeleton', $blue-grey_30, 3.5s) {
+    background: $blue-grey_40;
+    height: 24px;
+    margin: 12px auto 18px 18px;
+    border-radius: $border-radius-default;
+    width: 90%;
+
+    &:nth-child(2){
+      width: 75%;
+    }
+
+    &:nth-child(3){
+      width: 85%;
+    }
+
+    &:nth-child(4){
+      width: 80%;
+      margin-bottom: 24px;
+    }
+  };
+
 }
 
 .cdk-drag-preview {
@@ -65,4 +86,26 @@
 
 .shopping-list-item.cdk-drop-list-dragging .shopping-list-item:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.empty-shopping-list {
+  margin: 0 auto;
+  max-width: 80%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-bottom: 24px;
+  color: $text-40;
+  font-size: 0.8em;
+  text-align: center;
+  font-weight: 500;
+  line-height: 2;
+
+  @include large {
+    font-size: 1.2em;
+  }
+
+  &__image {
+    max-width: 100%;
+  }
 }
