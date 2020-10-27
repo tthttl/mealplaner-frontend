@@ -128,5 +128,71 @@ export const shoppingListReducers = createReducer<ShoppingListState, Action>(
         }
       };
     }
+  ),
+  on(
+    ShoppingListApiActions.createShoppingListSuccess,
+    (state: ShoppingListState, {shoppingList}) => {
+      return {
+        ...state,
+        shoppingLists: {
+          items: shoppingListAdapter.addOne(shoppingList, state.shoppingLists.items),
+        },
+        shoppingListItems: {
+          ...state.shoppingListItems,
+          [shoppingList.id]: []
+        },
+        activeShoppingList: shoppingList.id,
+      };
+    }
+  ),
+  on(
+    ShoppingListContainerActions.editShoppingList,
+    (state: ShoppingListState, {shoppingList}) => {
+      return {
+        ...state,
+        shoppingLists: {
+          items: shoppingListAdapter.updateOne({id: shoppingList.id, changes: shoppingList}, state.shoppingLists.items),
+        },
+      };
+    }
+  ),
+  on(
+    ShoppingListContainerActions.deleteShoppingList,
+    (state: ShoppingListState, {shoppingList}) => {
+      return {
+        ...state,
+        shoppingLists: {
+          ...state.shoppingLists,
+          items: shoppingListAdapter.removeOne(shoppingList.id, state.shoppingLists.items),
+        },
+      };
+    }
+  ),
+  on(
+    ShoppingListContainerActions.undoDeleteShoppingList,
+    (state: ShoppingListState, {shoppingList}) => {
+      return {
+        ...state,
+        shoppingLists: {
+          ...state.shoppingLists,
+          items: shoppingListAdapter.addOne(shoppingList, state.shoppingLists.items),
+        },
+      };
+    }
+  ),
+  on(
+    ShoppingListApiActions.deleteShoppingListSuccess,
+    (state: ShoppingListState, {shoppingList}) => {
+      const copyShoppingListsItems = {...state.shoppingListItems};
+
+      if (copyShoppingListsItems.hasOwnProperty(shoppingList.id)) {
+        delete copyShoppingListsItems[shoppingList.id];
+      }
+
+      return {
+        ...state,
+        shoppingListItems: copyShoppingListsItems,
+      };
+    }
   )
 );

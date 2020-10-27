@@ -51,6 +51,7 @@ export class ShoppingListFormComponent implements OnInit {
 
   onSubmit(): void {
     this.itemAdded.emit(this.addItemForm?.value);
+    this.addItemForm.reset({unit: 'pack'});
   }
 
   getErrorsFor(key: string): string[] {

@@ -19,6 +19,7 @@ export class InputComponent implements ControlValueAccessor {
   @Input() buttonType = 'button';
   @Input() buttonTestName = '';
   @Input() color = 'primary';
+  @Input() noBorder = false;
   @Input() iconLeft: string | undefined;
   @Input() minValue: number | null = null;
 

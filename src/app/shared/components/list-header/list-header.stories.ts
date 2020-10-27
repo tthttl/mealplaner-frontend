@@ -1,14 +1,11 @@
 import { ListHeaderComponent } from './list-header.component';
 import { moduleMetadata } from '@storybook/angular';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ListPickerDialogComponent } from '../list-picker-dialog/list-picker-dialog.component';
-import { APP_INITIALIZER, EventEmitter } from '@angular/core';
+import { APP_INITIALIZER } from '@angular/core';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
-import { Story } from '@storybook/angular/ts3.5/dist/client';
-import { ShoppingList } from '../../model/model';
-import { DialogService } from '../../services/dialog.service';
 
 
 export default {

@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { DialogData, List } from '../../model/model';
+import { DialogData, List, ShoppingList } from '../../model/model';
 
 @Component({
   selector: 'app-list-picker-dialog',
@@ -19,15 +19,15 @@ export class ListPickerDialogComponent {
     this.dialogRef.close({event: 'create'});
   }
 
-  selectList(listId: string): void {
-    this.dialogRef.close({event: 'select', listId});
+  selectList(shoppingList: ShoppingList): void {
+    this.dialogRef.close({event: 'select', shoppingList});
   }
 
-  editList(listId: string): void {
-    this.dialogRef.close({event: 'edit', listId});
+  editList(shoppingList: ShoppingList): void {
+    this.dialogRef.close({event: 'edit', shoppingList});
   }
 
-  deleteList(listId: string): void {
-    this.dialogRef.close({event: 'delete', listId});
+  deleteList(shoppingList: ShoppingList): void {
+    this.dialogRef.close({event: 'delete', shoppingList});
   }
 }

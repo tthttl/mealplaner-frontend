@@ -28,7 +28,7 @@ build-dev:
   stage: build
   only:
     - master
-  script: npm run build
+  script: npm run build:qa
   artifacts:
     paths:
      - dist
@@ -40,13 +40,13 @@ build-storybook:
   script: npm run build-storybook
   artifacts:
     paths:
-      - out-storybook
+      - storybook-static
 
 build-prod:
   stage: build
   only:
     - tags
-  script: npm run build --configuration=production
+  script: npm run build:prod
   artifacts:
     paths:
       - dist

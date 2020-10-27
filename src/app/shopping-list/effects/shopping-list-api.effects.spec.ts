@@ -2,13 +2,14 @@ import { ShoppingListService } from '../service/shopping-list.service';
 import { ShoppingListApiEffects } from './shopping-list-api.effects';
 import { ShoppingListApiActions, ShoppingListContainerActions, ShoppingListEffectActions } from '../actions';
 import { Observable, of, throwError } from 'rxjs';
-import { TestBed } from '@angular/core/testing';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { Action, Store } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GlobalState, selectCurrentShoppingListItems, selectUserID } from '../../shared/state';
+import { activeShoppingListId, GlobalState, initialState, selectCurrentShoppingListItems, selectUserID } from '../../shared/state';
 import { ShoppingList, ShoppingListItem } from '../../shared/model/model';
 import SpyObj = jasmine.SpyObj;
+import { initialShoppingListState } from '../../shared/state/states/shopping-list-state';
 
 
 describe('Shopping List Api Effects', () => {
@@ -51,6 +52,22 @@ describe('Shopping List Api Effects', () => {
               ]
             }
           ],
+          initialState: {
+            ...initialState,
+            shoppingListState: {
+              ...initialShoppingListState,
+              activeShoppingList: '42',
+              shoppingLists: {
+                items: {
+                  ids: ['42', '99'],
+                  entities: {
+                    42: {id: '42', title: 'Title 42'},
+                    99: {id: '99', title: 'Title 99'}
+                  }
+                }
+              }
+            }
+          }
         }),
       ]
     });
@@ -109,8 +126,18 @@ describe('Shopping List Api Effects', () => {
       });
     });
 
-    it('it should  chose first shopping list if requested id in query params does not exists', () => {
-      activatedRoute.snapshot.queryParams.shoppingListId = '99';
+    it('it should  chose requested shopping list in local storage if it exists', () => {
+      spyOn(localStorage, 'getItem').and.callFake(() => '43');
+      shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
+      shoppingListApiEffects.chooseCurrentShoppingList$.subscribe((action) => {
+        expect(action.type).toEqual(ShoppingListEffectActions.setActiveShoppingList.type);
+        expect(action.shoppingListId).toEqual('43');
+      });
+    });
+
+    it('it should chose first shopping list if requested id in query params and local storage does not exists', () => {
+      activatedRoute.snapshot.queryParams.shoppingListId = '98';
+      spyOn(localStorage, 'getItem').and.callFake(() => '99');
       shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
       shoppingListApiEffects.chooseCurrentShoppingList$.subscribe((action) => {
         expect(action.type).toEqual(ShoppingListEffectActions.setActiveShoppingList.type);
@@ -145,6 +172,34 @@ describe('Shopping List Api Effects', () => {
       shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
       shoppingListApiEffects.setQueryParameterForActiveShoppingList$.subscribe((action) => {
         expect(router.navigate).toHaveBeenCalledWith([], {relativeTo: activatedRoute, queryParams: {shoppingListId: '42'}});
+      });
+    });
+  });
+
+  describe('setLocalStorageForActiveShoppingList$', () => {
+    beforeEach(() => {
+      spyOn(localStorage, 'setItem');
+    });
+
+    it('it should  set local storage parameters after delegated ShoppingListEffectActions', () => {
+      actions$ = of({
+        type: ShoppingListEffectActions.setActiveShoppingList.type,
+        shoppingListId: '42',
+      });
+      shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
+      shoppingListApiEffects.setLocalStorageForActiveShoppingList$.subscribe((action) => {
+        expect(localStorage.setItem).toHaveBeenCalledWith('selectedShoppingListId', '42');
+      });
+    });
+
+    it('it should  set local storage parameters after delegated ShoppingListContainerActions', () => {
+      actions$ = of({
+        type: ShoppingListContainerActions.changeShoppingList.type,
+        shoppingListId: '42',
+      });
+      shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
+      shoppingListApiEffects.setLocalStorageForActiveShoppingList$.subscribe((action) => {
+        expect(localStorage.setItem).toHaveBeenCalledWith('selectedShoppingListId', '42');
       });
     });
   });
@@ -247,6 +302,115 @@ describe('Shopping List Api Effects', () => {
       shoppingListApiEffects.moveShoppingListItem$.subscribe((action: Action) => {
         expect(shoppingListService.updateShoppingListItem).toHaveBeenCalledTimes(2);
         expect(action.type).toEqual(ShoppingListApiActions.updateShoppingListItemSuccess.type);
+      });
+    });
+  });
+
+
+  describe('createShoppingList$', () => {
+    beforeEach(() => {
+      actions$ = of({type: ShoppingListContainerActions.createShoppingList.type});
+      shoppingListService = jasmine.createSpyObj('shoppingListService', ['createShoppingList']);
+      shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
+    });
+
+    it('it should return success action', () => {
+      shoppingListService.createShoppingList.and.returnValue(of({} as ShoppingList));
+      shoppingListApiEffects.createShoppingList$.subscribe((action: Action) => {
+        expect(action.type).toEqual(ShoppingListApiActions.createShoppingListSuccess.type);
+      });
+    });
+
+    it('should return failure action', () => {
+      shoppingListService.createShoppingList.and.returnValue(throwError('error'));
+      shoppingListApiEffects.createShoppingList$.subscribe((action: Action) => {
+        expect(action.type).toEqual(ShoppingListApiActions.createShoppingListFailure.type);
+      });
+    });
+  });
+
+  describe('selectNewlyCreatedShoppingList$', () => {
+    it('it should return success action', () => {
+      actions$ = of({type: ShoppingListApiActions.createShoppingListSuccess.type, shoppingList: {id: '1234', title: 'Testing'}});
+      shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
+      shoppingListApiEffects.selectNewlyCreatedShoppingList$.subscribe((action) => {
+        expect(action.type).toEqual(ShoppingListEffectActions.setActiveShoppingList.type);
+        expect(action.shoppingListId).toEqual('1234');
+      });
+    });
+  });
+
+  describe('editShoppingList$', () => {
+    beforeEach(() => {
+      actions$ = of({type: ShoppingListContainerActions.editShoppingList.type});
+      shoppingListService = jasmine.createSpyObj('shoppingListService', ['updateShoppingList']);
+      shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
+    });
+
+    it('it should return success action', () => {
+      shoppingListService.updateShoppingList.and.returnValue(of({} as ShoppingList));
+      shoppingListApiEffects.editShoppingList$.subscribe((action: Action) => {
+        expect(action.type).toEqual(ShoppingListApiActions.editShoppingListSuccess.type);
+      });
+    });
+
+    it('should return failure action', () => {
+      shoppingListService.updateShoppingList.and.returnValue(throwError('error'));
+      shoppingListApiEffects.editShoppingList$.subscribe((action: Action) => {
+        expect(action.type).toEqual(ShoppingListApiActions.editShoppingListFailure.type);
+      });
+    });
+  });
+
+  describe('deleteShoppingListIfCurrentGetsDeleted$', () => {
+    beforeEach(() => {
+      actions$ = of({type: ShoppingListContainerActions.deleteShoppingList.type, shoppingList: {id: '42', title: 'DELETE'}});
+      shoppingListService = jasmine.createSpyObj('shoppingListService', ['deleteShoppingList']);
+      shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
+    });
+
+    it('it should return success message', fakeAsync(() => {
+      shoppingListService.deleteShoppingList.and.returnValue(of({} as { 'DELETED': true }));
+      shoppingListApiEffects.deleteShoppingListIfCurrentGetsDeleted$.subscribe((action: Action) => {
+        expect(action.type).toEqual(ShoppingListApiActions.deleteShoppingListSuccess.type);
+      });
+      tick(3000);
+    }));
+
+    it('should return failure action', fakeAsync(() => {
+      shoppingListService.deleteShoppingList.and.returnValue(throwError('error'));
+      shoppingListApiEffects.deleteShoppingListIfCurrentGetsDeleted$.subscribe((action: Action) => {
+        expect(action.type).toEqual(ShoppingListApiActions.deleteShoppingListFailure.type);
+      });
+      tick(3000);
+    }));
+  });
+
+  describe('changeShoppingListIfCurrentGetsDeleted$', () => {
+    beforeEach(() => {
+      actions$ = of({type: ShoppingListContainerActions.deleteShoppingList.type, shoppingList: {id: '42', title: 'Title'}});
+      shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
+    });
+
+    it('it should return select shoppingList Action when currently selected list gets deleted', () => {
+      shoppingListApiEffects.changeShoppingListIfCurrentGetsDeleted$.subscribe((action) => {
+        expect(action.type).toEqual(ShoppingListEffectActions.setActiveShoppingList.type);
+        expect(action.shoppingListId).toEqual('42');
+      });
+    });
+  });
+
+
+  describe('changeShoppingListIfCurrentGetsDeleted$', () => {
+    beforeEach(() => {
+      actions$ = of({type: ShoppingListContainerActions.deleteShoppingList.type, shoppingList: {id: '42', title: 'Title'}});
+      shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
+    });
+
+    it('it should return select shoppingList Action when currently selected list gets deleted', () => {
+      shoppingListApiEffects.changeShoppingListIfCurrentGetsDeleted$.subscribe((action) => {
+        expect(action.type).toEqual(ShoppingListEffectActions.setActiveShoppingList.type);
+        expect(action.shoppingListId).toEqual('42');
       });
     });
   });
