@@ -36,7 +36,7 @@ describe(`${RecipeService}`, () => {
         expect(cookbooks).toEqual(convertCookbookApisToCookbooks([cookbook]));
       });
 
-    const request = httpClientMock.expectOne(`${environment.apiUrl}/cookbooks?user=${userId}`);
+    const request = httpClientMock.expectOne(`${environment.apiUrl}/cookbooks?user=${userId}&_sort=title:asc`);
     expect(request.request.method).toEqual('GET');
     request.flush([cookbook]);
   });
