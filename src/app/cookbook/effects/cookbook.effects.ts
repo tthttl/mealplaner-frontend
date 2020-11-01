@@ -91,7 +91,6 @@ export class CookbookEffects {
     ofType(CookbookApiActions.loadCookbookSuccess),
     switchMap(({cookbooks}) => {
       const requestedCookbookId = this.route.snapshot.queryParams.selectedCookbookId;
-      console.log(requestedCookbookId);
       const cookbookIds = cookbooks.map((cookbook) => cookbook.id);
       const selectedCookbookId = requestedCookbookId && cookbookIds.includes(requestedCookbookId) ?
         requestedCookbookId : cookbookIds[0];
