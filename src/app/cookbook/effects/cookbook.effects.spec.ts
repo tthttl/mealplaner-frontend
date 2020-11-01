@@ -76,7 +76,7 @@ describe('Cookbook Effects', () => {
 
   it('loadRecipes should return success action', () => {
     cookbookEffects = createEffects(CookbookContainerActions.loadRecipes.type);
-    recipeService.loadRecipes.and.returnValue(of([] as Recipe[]));
+    recipeService.loadRecipes.and.returnValue(of([{cookbookId: 'cookBookId'}] as Recipe[]));
     cookbookEffects.loadRecipes$.subscribe((action: Action) => {
       expect(action.type).toEqual(CookbookApiActions.loadRecipesSuccess.type);
     });
