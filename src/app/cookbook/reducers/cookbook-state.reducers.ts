@@ -122,7 +122,7 @@ export const cookbookStateReducer = createReducer<CookbookState, Action>(
     return {
       ...state,
       cookbooks: [
-        ...state.cookbooks.filter((item: Cookbook) => item.id === optimisticId)
+        ...state.cookbooks.filter((item: Cookbook) => item.id !== optimisticId)
       ]
     };
   }),

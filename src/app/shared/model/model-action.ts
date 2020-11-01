@@ -149,3 +149,8 @@ export interface UndoCookbookDeletedFromStateAction {
   type: string;
   cookbook: Cookbook;
 }
+
+export interface SetActiveCookbookIdAsQueryParamAction {
+  type: string;
+  selectedCookbookId: string;
+}

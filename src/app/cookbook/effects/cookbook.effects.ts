@@ -25,7 +25,8 @@ export class CookbookEffects {
   @Effect()
   loadCookbooks$ = this.actions$.pipe(
     ofType(CookbookContainerActions.loadCookbook),
-    exhaustMap(() => this.cookbookService.loadCookbooks('5f1d4b9ed6ace683b709db8d').pipe( // select userId from state
+    withLatestFrom(this.store),
+    exhaustMap(([_, store]) => this.cookbookService.loadCookbooks(store.appState.user?.id!).pipe( // select userId from state
       map((cookbooks: Cookbook[]) => CookbookApiActions.loadCookbookSuccess({cookbooks})),
       catchError(() => of(CookbookApiActions.loadCookbookFailure()))
     ))
@@ -58,7 +59,6 @@ export class CookbookEffects {
   @Effect({dispatch: false})
   navigateToCookbook$ = this.actions$.pipe(
     ofType(CookbookApiActions.createRecipeSuccess, CookbookApiActions.editRecipeSuccess),
-    tap(() => console.log('NAVIGATE')),
     tap(({recipe}) => this.router.navigate(['/cookbook'], {queryParams: {selectedCookbookId: recipe.cookbookId}}))
   );
 

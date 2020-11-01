@@ -7,6 +7,7 @@ import {
   convertCookbookApisToCookbooks,
   convertIngredientApiArrayToRecipeIngredientArray,
   convertRecipeApiToRecipe,
+  copyOrCreateArray,
   decodeJwtToken,
   isJwtTokenExpired,
   mapI18nApiToI18nClient,
@@ -292,4 +293,31 @@ describe(`${addItemAtIndex}`, () => {
       expect(mapShoppingListItemApiToShoppingListItem(shoppingListApi)).toEqual({...shoppingListApi, isChecked: false});
     });
   });
+
+  describe(`${addItemAtIndex}`, () => {
+    it('should add item at beginning', () => {
+      expect(addItemAtIndex(recipeA as Recipe, [recipeB as Recipe, recipeC as Recipe]))
+        .toEqual([recipeA as Recipe, recipeB as Recipe, recipeC as Recipe]);
+    });
+    it('should add item in the middle', () => {
+      expect(addItemAtIndex(recipeB as Recipe, [recipeA as Recipe, recipeC as Recipe]))
+        .toEqual([recipeA as Recipe, recipeB as Recipe, recipeC as Recipe]);
+    });
+    it('should add item at the end', () => {
+      expect(addItemAtIndex(recipeC as Recipe, [recipeA as Recipe, recipeB as Recipe]))
+        .toEqual([recipeA as Recipe, recipeB as Recipe, recipeC as Recipe]);
+    });
+  });
+
+  describe(`${copyOrCreateArray}`, () => {
+    it('should copy array', () => {
+      expect(copyOrCreateArray({1: [{id: 1}, {id: 2}]}, '1'))
+        .toEqual([{id: 1}, {id: 2}]);
+    });
+    it('should create empty array', () => {
+      expect(copyOrCreateArray({1: [{id: 1}, {id: 2}]}, '2'))
+        .toEqual([]);
+    });
+  });
+
 });
