@@ -8,6 +8,7 @@ import {
   I18n,
   JwtPayload,
   Language,
+  List,
   Recipe,
   RecipeIngredient,
   SelectedIngredient,
@@ -127,9 +128,9 @@ export function sortAlphabetically(a: string, b: string): number {
   return 0;
 }
 
-export function addRecipeAtIndex(recipe: Recipe, recipes: Recipe[]): Recipe[] {
-  const indexToInsert = recipes.findIndex((item: Recipe) => item.title.toLowerCase() > recipe.title.toLowerCase());
-  return indexToInsert > -1 ? [...recipes.slice(0, indexToInsert), recipe, ...recipes.slice(indexToInsert)] : [...recipes, recipe];
+export function addItemAtIndex<T extends Recipe | List>(newItem: T, items: T[]): T[] {
+  const indexToInsert = items.findIndex((item: T) => item.title.toLowerCase() > newItem.title.toLowerCase());
+  return indexToInsert > -1 ? [...items.slice(0, indexToInsert), newItem, ...items.slice(indexToInsert)] : [...items, newItem];
 }
 
 export function mapShoppingListItemApiToShoppingListItem(shoppingListApi: ShoppingListItemApi): ShoppingListItemClient {

@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DialogData, List } from '../../model/model';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-list-dialog',
@@ -27,7 +27,10 @@ export class EditListDialogComponent {
 
   createList(): void {
     this.isEditing ?
-      this.dialogRef.close({event: 'edit', shoppingList: {...this.dialogData.data, ...this.listForm.value}}) : this.dialogRef.close({event: 'create', title: this.listForm.value.title});
+      this.dialogRef.close({
+        event: 'edit',
+        list: {...this.dialogData.data, ...this.listForm.value}
+      }) : this.dialogRef.close({event: 'create', title: this.listForm.value.title});
   }
 
   getFormControl(key: string): FormControl {

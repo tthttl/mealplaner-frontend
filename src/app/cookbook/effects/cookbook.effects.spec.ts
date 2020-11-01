@@ -51,7 +51,7 @@ describe('Cookbook Effects', () => {
     activatedRoute = {
       snapshot: {
         queryParams: {
-          cookbookId: 'cookbookId'
+          selectedCookbookId: 'cookbookId'
         } as Params
       }
     } as ActivatedRoute;

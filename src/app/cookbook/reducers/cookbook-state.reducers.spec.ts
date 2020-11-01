@@ -79,7 +79,7 @@ describe('CookbookState Reducer', () => {
             cookbookId: [{...recipeA, id: 'optimisticId'} as Recipe]
           }
         },
-        CookbookApiActions.createRecipeSuccess({optimisticId: 'optimisticId', savedRecipe: recipeA as Recipe}))
+        CookbookApiActions.createRecipeSuccess({optimisticId: 'optimisticId', recipe: recipeA as Recipe}))
       ).toEqual({
         ...initialCookbookState,
         recipes: {
@@ -98,7 +98,7 @@ describe('CookbookState Reducer', () => {
           }
         },
         CookbookApiActions.editRecipeSuccess(
-          {editedRecipe: {id: '1', title: 'modified', cookbookId} as Recipe}))
+          {recipe: {id: '1', title: 'modified', cookbookId} as Recipe}))
       ).toEqual({
         ...initialCookbookState,
         recipes: {

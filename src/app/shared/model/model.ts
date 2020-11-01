@@ -140,12 +140,11 @@ export interface ListPickerDialogEvent {
 export interface CreateListDialogEvent {
   event: 'create';
   title: string;
-  id?: string;
 }
 
 export interface EditListDialogEvent {
   event: 'edit';
-  shoppingList: ShoppingList;
+  list: List;
 }
 
 export interface SelectedIngredient extends Ingredient {

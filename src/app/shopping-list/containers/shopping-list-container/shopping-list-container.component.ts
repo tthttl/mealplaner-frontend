@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { take, withLatestFrom } from 'rxjs/operators';
+import { v4 as uuid } from 'uuid';
+import { TranslatePipe } from '../../../i18n/pipes/translate.pipe';
+import { EditListDialogComponent } from '../../../shared/components/edit-list-dialog/edit-list-dialog.component';
+import { DELETION_DELAY } from '../../../shared/helpers/constants';
 import {
   BasicShoppingListItem,
   CreateListDialogEvent,
@@ -11,6 +17,8 @@ import {
   ShoppingListItem,
   ShoppingListItemMovedEvent
 } from '../../../shared/model/model';
+import { DialogService } from '../../../shared/services/dialog.service';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
 import {
   activeShoppingList,
   activeShoppingListId,
@@ -21,14 +29,6 @@ import {
   selectTranslations
 } from '../../../shared/state';
 import { ShoppingListContainerActions } from '../../actions';
-import { Store } from '@ngrx/store';
-import { v4 as uuid } from 'uuid';
-import { SnackbarService } from '../../../shared/services/snackbar.service';
-import { take, withLatestFrom } from 'rxjs/operators';
-import { DialogService } from '../../../shared/services/dialog.service';
-import { EditListDialogComponent } from '../../../shared/components/edit-list-dialog/edit-list-dialog.component';
-import { TranslatePipe } from '../../../i18n/pipes/translate.pipe';
-import { DELETION_DELAY } from '../../../shared/helpers/constants';
 
 @Component({
   selector: 'app-shopping-list-container',
@@ -129,7 +129,7 @@ export class ShoppingListContainerComponent implements OnInit {
       .pipe(take(1))
       .subscribe((result: EditListDialogEvent | undefined) => {
         if (result?.event === 'edit') {
-          this.store.dispatch(ShoppingListContainerActions.editShoppingList({shoppingList: result.shoppingList}));
+          this.store.dispatch(ShoppingListContainerActions.editShoppingList({shoppingList: result.list}));
         }
       });
   }

@@ -18,7 +18,10 @@ export const editCookbookFailure = createAction('[editCookbook Effect] Edit Cook
 export const deleteCookbookSuccess = createAction('[deleteCookbook Effect] Delete Cookbooks Success',
   props<{ cookbook: Cookbook }>()
 );
-export const deleteCookbookFailure = createAction('[deleteCookbook Effect] Delete Cookbooks Failure');
+export const undoDeleteCookbookFromState = createAction(
+  '[Cookbook Effect] Undo Delete Cookbooks From State',
+  props<{ cookbook: Cookbook }>()
+);
 
 export const loadRecipesSuccess = createAction(
   '[LoadRecipe Effect] Get Recipes Success',
@@ -27,13 +30,13 @@ export const loadRecipesSuccess = createAction(
 export const loadRecipesFailure = createAction('[LoadRecipe Effect] Get Recipes Failure');
 export const createRecipeSuccess = createAction(
   '[CreateRecipe Effect] Create Recipe Success',
-  props<{ optimisticId: string, savedRecipe: Recipe }>()
+  props<{ optimisticId: string, recipe: Recipe }>()
 );
 export const createRecipeFailure = createAction('[CreateRecipe Effect] Create Recipe Failure',
   props<{ optimisticId: string, cookbookId: string }>());
 export const editRecipeSuccess = createAction(
   '[EditRecipe Effect] Edit Recipe Success',
-  props<{ editedRecipe: Recipe }>()
+  props<{ recipe: Recipe }>()
 );
 export const editRecipeFailure = createAction('[EditRecipe Effect] Edit Recipe Failure');
 export const deleteRecipeSuccess = createAction(

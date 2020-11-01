@@ -49,7 +49,7 @@ export class CookbookEffects {
     withLatestFrom(this.store.select(((state: GlobalState) => state.cookbookState.activeCookbookId))),
     concatMap(([action, activeCookbookId]) => this.recipeService.saveRecipe(activeCookbookId, action.recipeToSave)
       .pipe(
-        map((recipe: Recipe) => CookbookApiActions.createRecipeSuccess({optimisticId: action.optimisticId, savedRecipe: recipe})),
+        map((recipe: Recipe) => CookbookApiActions.createRecipeSuccess({optimisticId: action.optimisticId, recipe})),
         catchError(() => of(CookbookApiActions.createRecipeFailure({optimisticId: action.optimisticId, cookbookId: activeCookbookId})))
       )
     )
@@ -58,7 +58,8 @@ export class CookbookEffects {
   @Effect({dispatch: false})
   navigateToCookbook$ = this.actions$.pipe(
     ofType(CookbookApiActions.createRecipeSuccess, CookbookApiActions.editRecipeSuccess),
-    tap(() => this.router.navigate(['/cookbook']))
+    tap(() => console.log('NAVIGATE')),
+    tap(({recipe}) => this.router.navigate(['/cookbook'], {queryParams: {selectedCookbookId: recipe.cookbookId}}))
   );
 
   @Effect()
@@ -67,7 +68,7 @@ export class CookbookEffects {
     withLatestFrom(this.store.select(((state: GlobalState) => state.cookbookState.activeCookbookId))),
     concatMap(([action, cookbookId]) => this.recipeService.editRecipe(cookbookId, action.recipeToEdit)
       .pipe(
-        map((recipe: Recipe) => CookbookApiActions.editRecipeSuccess({editedRecipe: recipe})),
+        map((recipe: Recipe) => CookbookApiActions.editRecipeSuccess({recipe})),
         catchError(() => of(CookbookApiActions.editRecipeFailure()))
       )
     )
@@ -89,7 +90,8 @@ export class CookbookEffects {
   chooseActiveCookbookId$ = this.actions$.pipe(
     ofType(CookbookApiActions.loadCookbookSuccess),
     switchMap(({cookbooks}) => {
-      const requestedCookbookId = this.route.snapshot.queryParams.cookbookId;
+      const requestedCookbookId = this.route.snapshot.queryParams.selectedCookbookId;
+      console.log(requestedCookbookId);
       const cookbookIds = cookbooks.map((cookbook) => cookbook.id);
       const selectedCookbookId = requestedCookbookId && cookbookIds.includes(requestedCookbookId) ?
         requestedCookbookId : cookbookIds[0];
@@ -113,6 +115,35 @@ export class CookbookEffects {
       map((cookbook: Cookbook) => CookbookApiActions.createCookbookSuccess({optimisticId, cookbook})),
       catchError((error: Error) => of(CookbookApiActions.createCookbookFailure({optimisticId})))
     ))
+  );
+
+  @Effect()
+  editCookbook$ = this.actions$.pipe(
+    ofType(CookbookContainerActions.editCookbook),
+    concatMap(({cookbook}) => this.cookbookService.editCookbook(cookbook).pipe(
+      map((editedCookbook: Cookbook) => CookbookApiActions.editCookbookSuccess({cookbook: editedCookbook})),
+      catchError((error: Error) => of(CookbookApiActions.editCookbookFailure()))
+    ))
+  );
+
+  @Effect()
+  deleteCookbook$ = this.actions$.pipe(
+    ofType(CookbookContainerActions.deleteCookbook),
+    filter(({cookbook}) => !!cookbook.id),
+    mergeMap(({cookbook}) => this.cookbookService.deleteCookbook(cookbook.id!).pipe(
+      map(() => CookbookApiActions.deleteCookbookSuccess({cookbook})),
+      catchError((error: Error) => of(CookbookApiActions.undoDeleteCookbookFromState({cookbook})))
+    ))
+  );
+
+  @Effect()
+  switchCookbookWhenDeleted$ = this.actions$.pipe(
+    ofType(CookbookContainerActions.deleteCookbookFromState),
+    withLatestFrom(this.store),
+    filter(([{cookbook}, store]) => cookbook.id === store.cookbookState.activeCookbookId),
+    map(([_, store]) => {
+      return CookbookContainerActions.selectCookbook({selectedCookbookId: store.cookbookState.cookbooks[0].id});
+    })
   );
 
 }

@@ -1,10 +1,12 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { addRecipeAtIndex, copyOrCreateArray } from '../../shared/helpers/helpers';
+import { addItemAtIndex, copyOrCreateArray } from '../../shared/helpers/helpers';
 import { Cookbook, Recipe, } from '../../shared/model/model';
 import {
   CookbookCreatedAction,
   CookbookCreatedFailureAction,
   CookbookCreatedSuccessAction,
+  CookbookDeletedFromStateAction,
+  CookbookEditedSuccessAction,
   CookbookSelectedAction,
   CreateRecipeAction,
   CreateRecipeSuccessAction,
@@ -12,6 +14,7 @@ import {
   DeleteRecipeFromStateAction,
   EditRecipeSuccessAction,
   LoadRecipeSuccessAction,
+  UndoCookbookDeletedFromStateAction,
   UndoDeleteRecipeFromStateAction
 } from '../../shared/model/model-action';
 import { CookbookApiActions, CookbookContainerActions } from '../actions';
@@ -22,7 +25,7 @@ export const cookbookStateReducer = createReducer<CookbookState, Action>(
   on(CookbookApiActions.loadCookbookSuccess,
     (state: CookbookState, {cookbooks}: { cookbooks: Cookbook[] }) => ({
       ...state,
-      activeCookbookId: cookbooks[0].id,
+      activeCookbookId: state.activeCookbookId ? state.activeCookbookId : cookbooks[0].id,
       cookbooks
     })
   ),
@@ -44,13 +47,13 @@ export const cookbookStateReducer = createReducer<CookbookState, Action>(
       }
     };
   }),
-  on(CookbookApiActions.createRecipeSuccess, (state: CookbookState, {optimisticId, savedRecipe}: CreateRecipeSuccessAction) => {
+  on(CookbookApiActions.createRecipeSuccess, (state: CookbookState, {optimisticId, recipe}: CreateRecipeSuccessAction) => {
     return {
       ...state,
       recipes: {
         ...state.recipes,
-        [savedRecipe.cookbookId]: state.recipes[savedRecipe.cookbookId].map((recipe: Recipe) => {
-          return recipe.id === optimisticId ? savedRecipe : recipe;
+        [recipe.cookbookId]: state.recipes[recipe.cookbookId].map((item: Recipe) => {
+          return item.id === optimisticId ? recipe : item;
         })
       }
     };
@@ -64,13 +67,13 @@ export const cookbookStateReducer = createReducer<CookbookState, Action>(
       }
     };
   }),
-  on(CookbookApiActions.editRecipeSuccess, (state: CookbookState, {editedRecipe}: EditRecipeSuccessAction) => {
+  on(CookbookApiActions.editRecipeSuccess, (state: CookbookState, {recipe}: EditRecipeSuccessAction) => {
     return {
       ...state,
       recipes: {
         ...state.recipes,
-        [editedRecipe.cookbookId]: state.recipes[editedRecipe.cookbookId].map((item: Recipe) => {
-          return item.id === editedRecipe.id ? editedRecipe : item;
+        [recipe.cookbookId]: state.recipes[recipe.cookbookId].map((item: Recipe) => {
+          return item.id === recipe.id ? recipe : item;
         })
       }
     };
@@ -89,7 +92,7 @@ export const cookbookStateReducer = createReducer<CookbookState, Action>(
       ...state,
       recipes: {
         ...state.recipes,
-        [recipe.cookbookId]: addRecipeAtIndex(recipe, state.recipes[recipe.cookbookId])
+        [recipe.cookbookId]: addItemAtIndex(recipe, state.recipes[recipe.cookbookId])
       }
     };
   }),
@@ -122,5 +125,29 @@ export const cookbookStateReducer = createReducer<CookbookState, Action>(
         ...state.cookbooks.filter((item: Cookbook) => item.id === optimisticId)
       ]
     };
-  })
+  }),
+  on(CookbookApiActions.editCookbookSuccess, (state: CookbookState, {cookbook}: CookbookEditedSuccessAction) => {
+    return {
+      ...state,
+      cookbooks: [
+        ...state.cookbooks.map((item: Cookbook) => item.id === cookbook.id ? cookbook : item)
+      ]
+    };
+  }),
+  on(CookbookContainerActions.deleteCookbookFromState, (state: CookbookState, {cookbook}: CookbookDeletedFromStateAction) => {
+    return {
+      ...state,
+      cookbooks: [
+        ...state.cookbooks.filter((item: Cookbook) => item.id !== cookbook.id)
+      ]
+    };
+  }),
+  on(CookbookApiActions.undoDeleteCookbookFromState, (state: CookbookState, {cookbook}: UndoCookbookDeletedFromStateAction) => {
+    return {
+      ...state,
+      cookbooks: [
+        ...addItemAtIndex(cookbook, state.cookbooks)
+      ]
+    };
+  }),
 );

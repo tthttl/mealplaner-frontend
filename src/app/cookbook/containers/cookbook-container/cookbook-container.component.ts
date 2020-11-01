@@ -12,6 +12,7 @@ import {
   BasicShoppingListItem,
   Cookbook,
   CreateListDialogEvent,
+  EditListDialogEvent,
   I18n,
   Language,
   List,
@@ -40,7 +41,8 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
 
   private recipeViewTranslations: {} = {};
-  private listDialogTranslations: {} = {};
+  private createListDialogTranslations: {} = {};
+  private editListDialogTranslations: {} = {};
 
   constructor(
     private store: Store<GlobalState>,
@@ -72,11 +74,17 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
         'button.add-to-shopping-list': this.translatePipe.transform('button.add-to-shopping-list', translations, currentLanguage),
         'button.add-to-mealplaner': this.translatePipe.transform('button.add-to-mealplaner', translations, currentLanguage),
       };
-      this.listDialogTranslations = {
+      this.createListDialogTranslations = {
         title: this.translatePipe.transform('create-list.title', translations, currentLanguage),
         'save-button-text': this.translatePipe.transform('create-list.save-button-text', translations, currentLanguage),
         'cancel-button-text': this.translatePipe.transform('create-list.cancel-button-text', translations, currentLanguage),
         placeholder: this.translatePipe.transform('create-cookbook.placeholder', translations, currentLanguage),
+      };
+      this.editListDialogTranslations = {
+        title: this.translatePipe.transform('edit-list.title', translations, currentLanguage),
+        'save-button-text': this.translatePipe.transform('edit-list.save-button-text', translations, currentLanguage),
+        'cancel-button-text': this.translatePipe.transform('edit-list.cancel-button-text', translations, currentLanguage),
+        placeholder: this.translatePipe.transform('edit-list.placeholder', translations, currentLanguage),
       };
     });
   }
@@ -151,7 +159,7 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
   onCreateList(): void {
     const dialogRef = this.dialogService.openDialog(EditListDialogComponent, {
       data: {},
-      translations: this.listDialogTranslations,
+      translations: this.createListDialogTranslations,
     });
     dialogRef.afterClosed()
       .pipe(take(1))
@@ -167,11 +175,30 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
   }
 
   onEditList(list: List): void {
-
+    const dialogRef = this.dialogService.openDialog(EditListDialogComponent, {
+      data: list,
+      translations: this.editListDialogTranslations,
+    });
+    dialogRef.afterClosed()
+      .pipe(take(1))
+      .subscribe((result: EditListDialogEvent | undefined) => {
+        if (result?.event === 'edit') {
+          this.store.dispatch(CookbookContainerActions.editCookbook({ cookbook: result.list}));
+        }
+      });
   }
 
   onDeleteList(list: List): void {
-
+    const snackBarRef = this.snackBarService.openSnackBar('message.undo', 'message.action');
+    this.store.dispatch(CookbookContainerActions.deleteCookbookFromState({cookbook: list}));
+    snackBarRef.afterDismissed().pipe(take(1))
+      .subscribe(({dismissedByAction}) => {
+        if (dismissedByAction) {
+          this.store.dispatch(CookbookApiActions.undoDeleteCookbookFromState({cookbook: list}));
+        } else {
+          this.store.dispatch(CookbookContainerActions.deleteCookbook({cookbook: list}));
+        }
+      });
   }
 
   ngOnDestroy(): void {

@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { convertCookbookApisToCookbooks, convertCookbookApiToCookbook } from '../../shared/helpers/helpers';
 import { Cookbook } from '../../shared/model/model';
-import { CookbookApi, RecipeApi } from '../../shared/model/model-api';
+import { CookbookApi } from '../../shared/model/model-api';
 
 @Injectable()
 export class CookbookService {
@@ -25,7 +25,7 @@ export class CookbookService {
   }
 
   editCookbook(cookbook: Cookbook): Observable<Cookbook> {
-    return this.httpClient.put<RecipeApi>(`${environment.apiUrl}/cookbooks/${cookbook.id}`, cookbook).pipe(
+    return this.httpClient.put<CookbookApi>(`${environment.apiUrl}/cookbooks/${cookbook.id}`, cookbook).pipe(
       map((editedCookbook: CookbookApi) => convertCookbookApiToCookbook(editedCookbook))
     );
   }
