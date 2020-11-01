@@ -155,16 +155,16 @@ describe('Cookbook Effects', () => {
   });
 
   it('should navigate to cookbook on createRecipeSuccess', () => {
-    cookbookEffects = createEffects(CookbookApiActions.createRecipeSuccess.type);
+    cookbookEffects = createEffects(CookbookApiActions.createRecipeSuccess.type, {cookbookId: 'cookbookId'} as Recipe);
     cookbookEffects.navigateToCookbook$.subscribe(() => {
-      expect(router.navigate).toHaveBeenCalledWith(['/cookbook']);
+      expect(router.navigate).toHaveBeenCalledWith(['/cookbook'], {queryParams: {selectedCookbookId: 'cookbookId'}});
     });
   });
 
   it('should navigate to cookbook on editRecipeSuccess', () => {
-    cookbookEffects = createEffects(CookbookApiActions.editRecipeSuccess.type);
+    cookbookEffects = createEffects(CookbookApiActions.editRecipeSuccess.type, {cookbookId: 'cookbookId'} as Recipe);
     cookbookEffects.navigateToCookbook$.subscribe(() => {
-      expect(router.navigate).toHaveBeenCalledWith(['/cookbook']);
+      expect(router.navigate).toHaveBeenCalledWith(['/cookbook'], {queryParams: {selectedCookbookId: 'cookbookId'}});
     });
   });
 });
