@@ -13,7 +13,7 @@ export class CookbookService {
   }
 
   loadCookbooks(userId: string): Observable<Cookbook[]> {
-    return this.httpClient.get<CookbookApi[]>(`${environment.apiUrl}/cookbooks?user=${userId}`).pipe(
+    return this.httpClient.get<CookbookApi[]>(`${environment.apiUrl}/cookbooks?user=${userId}&_sort=title:asc`).pipe(
       map((cookbooks: CookbookApi[]) => convertCookbookApisToCookbooks(cookbooks))
     );
   }
