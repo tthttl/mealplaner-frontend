@@ -40,7 +40,7 @@ export class RecipeViewComponent implements OnInit {
   onAddIngredients(): void {
     this.dialogRef.close({
       event: 'selectedIngredients',
-      selectedIngredients: this.ingredientsForm.value.ingredients
+      selectedIngredients: this.ingredients.controls.map((control: AbstractControl) => (control as FormGroup).value)
     });
   }
 
