@@ -6,7 +6,7 @@ import { map, switchMap, take } from 'rxjs/operators';
 import { v4 as uuid } from 'uuid';
 import { I18n, Language, Recipe } from '../../../shared/model/model';
 import { GlobalState, selectActiveCookbook, selectTranslations } from '../../../shared/state';
-import { CookbookActions } from '../../actions';
+import { CookbookContainerActions } from '../../actions';
 
 @Component({
   selector: 'app-recipe-container',
@@ -45,10 +45,10 @@ export class RecipeContainerComponent implements OnInit {
 
   onRecipeSaved(recipe: Recipe): void {
     !!this.id ?
-      this.store.dispatch(CookbookActions.editRecipe({recipeToEdit: recipe})) :
+      this.store.dispatch(CookbookContainerActions.editRecipe({recipeToEdit: recipe})) :
       this.store.select(selectActiveCookbook).pipe(
         take(1)
-      ).subscribe((activeCookbookId: string) => this.store.dispatch(CookbookActions.createRecipe({
+      ).subscribe((activeCookbookId: string) => this.store.dispatch(CookbookContainerActions.createRecipe({
           optimisticId: uuid(),
           recipeToSave: {
             ...recipe,

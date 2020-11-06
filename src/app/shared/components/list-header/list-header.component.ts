@@ -1,9 +1,8 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { List, ListPickerDialogEvent, ShoppingList } from '../../model/model';
-import { DialogService } from '../../services/dialog.service';
 import { take } from 'rxjs/operators';
+import { List, ListPickerDialogEvent } from '../../model/model';
+import { DialogService } from '../../services/dialog.service';
 import { ListPickerDialogComponent } from '../list-picker-dialog/list-picker-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-list-header',
@@ -18,11 +17,11 @@ export class ListHeaderComponent implements OnInit {
   @Input() addListLabel = '';
   @Input() buttonLabel = '';
   @Output() createList: EventEmitter<undefined> = new EventEmitter();
-  @Output() selectList: EventEmitter<ShoppingList> = new EventEmitter();
-  @Output() editList: EventEmitter<ShoppingList> = new EventEmitter();
-  @Output() deleteList: EventEmitter<ShoppingList> = new EventEmitter();
+  @Output() selectList: EventEmitter<List> = new EventEmitter();
+  @Output() editList: EventEmitter<List> = new EventEmitter();
+  @Output() deleteList: EventEmitter<List> = new EventEmitter();
 
-  constructor(private dialogService: DialogService, public dialog: MatDialog) {
+  constructor(private dialogService: DialogService) {
   }
 
   ngOnInit(): void {
@@ -44,13 +43,13 @@ export class ListHeaderComponent implements OnInit {
             this.createList.emit();
             break;
           case 'select':
-            this.selectList.emit(result.shoppingList);
+            this.selectList.emit(result?.list);
             break;
           case 'edit':
-            this.editList.emit(result.shoppingList);
+            this.editList.emit(result?.list);
             break;
           case 'delete':
-            this.deleteList.emit(result.shoppingList);
+            this.deleteList.emit(result?.list);
             break;
         }
       });

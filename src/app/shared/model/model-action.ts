@@ -1,4 +1,4 @@
-import { BasicShoppingListItem, Language, LoginCredentials, Recipe, ShoppingList, ShoppingListItem } from './model';
+import { BasicShoppingListItem, Cookbook, Language, LoginCredentials, Recipe, ShoppingList, ShoppingListItem } from './model';
 
 export interface LoginAction {
   type: string;
@@ -78,7 +78,7 @@ export interface CreateRecipeAction {
 export interface CreateRecipeSuccessAction {
   readonly type: string;
   readonly optimisticId: string;
-  readonly savedRecipe: Recipe;
+  readonly recipe: Recipe;
 }
 
 export interface CreateRecipeSuccessFailureAction {
@@ -89,7 +89,7 @@ export interface CreateRecipeSuccessFailureAction {
 
 export interface EditRecipeSuccessAction {
   readonly type: string;
-  readonly editedRecipe: Recipe;
+  readonly recipe: Recipe;
 }
 
 export interface DeleteRecipeFromStateAction {
@@ -111,4 +111,46 @@ export interface ShoppingListToggleAction {
   type: string;
   shoppingListItemId: string;
   shoppingList: string;
+}
+
+export interface CookbookSelectedAction {
+  type: string;
+  selectedCookbookId: string;
+}
+
+export interface CookbookCreatedAction {
+  type: string;
+  optimisticId: string;
+  title: string;
+}
+
+export interface CookbookCreatedSuccessAction {
+  type: string;
+  optimisticId: string;
+  cookbook: Cookbook;
+}
+
+export interface CookbookCreatedFailureAction {
+  type: string;
+  optimisticId: string;
+}
+
+export interface CookbookEditedSuccessAction {
+  type: string;
+  cookbook: Cookbook;
+}
+
+export interface CookbookDeletedFromStateAction {
+  type: string;
+  cookbook: Cookbook;
+}
+
+export interface UndoCookbookDeletedFromStateAction {
+  type: string;
+  cookbook: Cookbook;
+}
+
+export interface SetActiveCookbookIdAsQueryParamAction {
+  type: string;
+  selectedCookbookId: string;
 }

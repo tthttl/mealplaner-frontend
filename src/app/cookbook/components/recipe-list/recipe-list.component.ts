@@ -49,6 +49,18 @@ export class RecipeListComponent implements OnInit, OnDestroy {
     this.clickRecipe.emit(recipe);
   }
 
+  getPageState(items: Recipe[] | null | undefined): string {
+    if (items === null || items === undefined) {
+      return 'loading';
+    }
+
+    if (items.length === 0) {
+      return 'empty';
+    }
+
+    return 'default';
+  }
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();

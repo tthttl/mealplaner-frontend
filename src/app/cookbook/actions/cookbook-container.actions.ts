@@ -4,7 +4,7 @@ import { Cookbook, Recipe } from '../../shared/model/model';
 export const loadCookbook = createAction('[Cookbook Container] Load Cookbooks');
 export const createCookbook = createAction(
   '[Cookbook Container] Create Cookbooks',
-  props<{ cookbook: Cookbook }>()
+  props<{ optimisticId: string, title: string }>()
 );
 export const editCookbook = createAction(
   '[Cookbook Container] Edit Cookbooks',
@@ -13,6 +13,15 @@ export const editCookbook = createAction(
 export const deleteCookbook = createAction(
   '[Cookbook Container] Delete Cookbooks',
   props<{ cookbook: Cookbook }>()
+);
+export const deleteCookbookFromState = createAction(
+  '[Cookbook Container] Delete Cookbooks From State',
+  props<{ cookbook: Cookbook }>()
+);
+
+export const selectCookbook = createAction(
+  '[Cookbook Container] Select Cookbook',
+  props<{ selectedCookbookId: string }>()
 );
 
 export const loadRecipes = createAction('[Cookbook Container] Get Recipes');

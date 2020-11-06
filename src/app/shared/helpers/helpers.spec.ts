@@ -3,13 +3,15 @@ import { TranslatePipe } from '../../i18n/pipes/translate.pipe';
 import { Cookbook, I18n, Recipe, RecipeIngredient } from '../model/model';
 import { CookbookApi, I18n as I18nApi, IngredientApi, RecipeApi, ShoppingListItemApi, UserApi } from '../model/model-api';
 import {
-  addRecipeAtIndex,
+  addItemAtIndex,
   convertCookbookApisToCookbooks,
   convertIngredientApiArrayToRecipeIngredientArray,
   convertRecipeApiToRecipe,
+  copyOrCreateArray,
   decodeJwtToken,
   isJwtTokenExpired,
-  mapI18nApiToI18nClient, mapShoppingListItemApiToShoppingListItem,
+  mapI18nApiToI18nClient,
+  mapShoppingListItemApiToShoppingListItem,
   mapUserApiToUserClient,
   moveItemInArray,
   sortAlphabetically,
@@ -246,7 +248,7 @@ describe(`${sortAlphabetically}`, () => {
   });
 });
 
-describe(`${addRecipeAtIndex}`, () => {
+describe(`${addItemAtIndex}`, () => {
   const recipeA: Partial<Recipe> = {
     id: '1',
     title: 'Recipe A'
@@ -264,17 +266,17 @@ describe(`${addRecipeAtIndex}`, () => {
 
   it('should add first', () => {
     const recipes: Recipe[] = [recipeB as Recipe, recipeC as Recipe];
-    expect(addRecipeAtIndex(recipeA as Recipe, recipes));
+    expect(addItemAtIndex(recipeA as Recipe, recipes));
   });
 
   it('should add last', () => {
     const recipes: Recipe[] = [recipeA as Recipe, recipeB as Recipe];
-    expect(addRecipeAtIndex(recipeC as Recipe, recipes));
+    expect(addItemAtIndex(recipeC as Recipe, recipes));
   });
 
   it('should add in the middle', () => {
     const recipes: Recipe[] = [recipeA as Recipe, recipeC as Recipe];
-    expect(addRecipeAtIndex(recipeB as Recipe, recipes));
+    expect(addItemAtIndex(recipeB as Recipe, recipes));
   });
 
 
@@ -291,4 +293,31 @@ describe(`${addRecipeAtIndex}`, () => {
       expect(mapShoppingListItemApiToShoppingListItem(shoppingListApi)).toEqual({...shoppingListApi, isChecked: false});
     });
   });
+
+  describe(`${addItemAtIndex}`, () => {
+    it('should add item at beginning', () => {
+      expect(addItemAtIndex(recipeA as Recipe, [recipeB as Recipe, recipeC as Recipe]))
+        .toEqual([recipeA as Recipe, recipeB as Recipe, recipeC as Recipe]);
+    });
+    it('should add item in the middle', () => {
+      expect(addItemAtIndex(recipeB as Recipe, [recipeA as Recipe, recipeC as Recipe]))
+        .toEqual([recipeA as Recipe, recipeB as Recipe, recipeC as Recipe]);
+    });
+    it('should add item at the end', () => {
+      expect(addItemAtIndex(recipeC as Recipe, [recipeA as Recipe, recipeB as Recipe]))
+        .toEqual([recipeA as Recipe, recipeB as Recipe, recipeC as Recipe]);
+    });
+  });
+
+  describe(`${copyOrCreateArray}`, () => {
+    it('should copy array', () => {
+      expect(copyOrCreateArray({1: [{id: 1}, {id: 2}]}, '1'))
+        .toEqual([{id: 1}, {id: 2}]);
+    });
+    it('should create empty array', () => {
+      expect(copyOrCreateArray({1: [{id: 1}, {id: 2}]}, '2'))
+        .toEqual([]);
+    });
+  });
+
 });

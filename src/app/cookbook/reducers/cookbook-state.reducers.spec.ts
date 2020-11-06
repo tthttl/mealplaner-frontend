@@ -1,5 +1,5 @@
 import { Cookbook, Recipe } from '../../shared/model/model';
-import { CookbookActions, CookbookApiActions } from '../actions';
+import { CookbookApiActions, CookbookContainerActions } from '../actions';
 import { initialCookbookState } from '../state/cookbook-state';
 import { cookbookStateReducer } from './cookbook-state.reducers';
 
@@ -7,7 +7,7 @@ describe('CookbookState Reducer', () => {
 
   const cookbookId = 'cookbookId';
 
-  const cookbook: Partial<Cookbook> = {
+  const cookbook: Cookbook = {
     id: '1',
     title: 'cookbook'
   };
@@ -53,7 +53,7 @@ describe('CookbookState Reducer', () => {
     });
   });
 
-  describe(`${CookbookActions.createRecipe}`, () => {
+  describe(`${CookbookContainerActions.createRecipe}`, () => {
     it('should add new Recipe with optimisticId', () => {
       expect(cookbookStateReducer(
         {
@@ -61,7 +61,7 @@ describe('CookbookState Reducer', () => {
             cookbookId: []
           }
         },
-        CookbookActions.createRecipe({optimisticId: 'optimisticId', recipeToSave: recipeA as Recipe}))
+        CookbookContainerActions.createRecipe({optimisticId: 'optimisticId', recipeToSave: recipeA as Recipe}))
       ).toEqual({
         ...initialCookbookState,
         recipes: {
@@ -79,7 +79,7 @@ describe('CookbookState Reducer', () => {
             cookbookId: [{...recipeA, id: 'optimisticId'} as Recipe]
           }
         },
-        CookbookApiActions.createRecipeSuccess({optimisticId: 'optimisticId', savedRecipe: recipeA as Recipe}))
+        CookbookApiActions.createRecipeSuccess({optimisticId: 'optimisticId', recipe: recipeA as Recipe}))
       ).toEqual({
         ...initialCookbookState,
         recipes: {
@@ -98,7 +98,7 @@ describe('CookbookState Reducer', () => {
           }
         },
         CookbookApiActions.editRecipeSuccess(
-          {editedRecipe: {id: '1', title: 'modified', cookbookId} as Recipe}))
+          {recipe: {id: '1', title: 'modified', cookbookId} as Recipe}))
       ).toEqual({
         ...initialCookbookState,
         recipes: {
@@ -109,7 +109,7 @@ describe('CookbookState Reducer', () => {
 
   });
 
-  describe(`${CookbookActions.deleteRecipeFromState}`, () => {
+  describe(`${CookbookContainerActions.deleteRecipeFromState}`, () => {
     it('should delete existing Recipe', () => {
       expect(cookbookStateReducer(
         {
@@ -117,7 +117,7 @@ describe('CookbookState Reducer', () => {
             cookbookId: [recipeA as Recipe]
           }
         },
-        CookbookActions.deleteRecipeFromState({recipeToDelete: recipeA as Recipe}))
+        CookbookContainerActions.deleteRecipeFromState({recipeToDelete: recipeA as Recipe}))
       ).toEqual({
         ...initialCookbookState,
         recipes: {
@@ -141,6 +141,111 @@ describe('CookbookState Reducer', () => {
         recipes: {
           cookbookId: [recipeA as Recipe]
         }
+      });
+    });
+  });
+
+  describe(`${CookbookContainerActions.selectCookbook}`, () => {
+    it('should set activeCookbookId', () => {
+      expect(cookbookStateReducer(
+        {
+          ...initialCookbookState,
+          activeCookbookId: 'formerId'
+        },
+        CookbookContainerActions.selectCookbook({selectedCookbookId: 'newId'}))
+      ).toEqual({
+        ...initialCookbookState,
+        activeCookbookId: 'newId'
+      });
+    });
+  });
+
+  describe(`${CookbookContainerActions.createCookbook}`, () => {
+    it('should add new cookbook with optimistic id', () => {
+      expect(cookbookStateReducer(
+        {
+          ...initialCookbookState,
+          cookbooks: []
+        },
+        CookbookContainerActions.createCookbook({optimisticId: '1', title: 'dummyTitle'}))
+      ).toEqual({
+        ...initialCookbookState,
+        cookbooks: [{id: '1', title: 'dummyTitle'}]
+      });
+    });
+  });
+
+  describe(`${CookbookApiActions.createCookbookSuccess}`, () => {
+    it('should override cookbook with optimistic id', () => {
+      expect(cookbookStateReducer(
+        {
+          ...initialCookbookState,
+          cookbooks: [{id: '1', title: 'dummyTitle'}]
+        },
+        CookbookApiActions.createCookbookSuccess({optimisticId: '1', cookbook}))
+      ).toEqual({
+        ...initialCookbookState,
+        cookbooks: [{id: '1', title: 'cookbook'}]
+      });
+    });
+  });
+
+  describe(`${CookbookApiActions.createCookbookFailure}`, () => {
+    it('should remove cookbook with optimistic id', () => {
+      expect(cookbookStateReducer(
+        {
+          ...initialCookbookState,
+          cookbooks: [{id: '1', title: 'dummyTitle'}]
+        },
+        CookbookApiActions.createCookbookFailure({optimisticId: '1'}))
+      ).toEqual({
+        ...initialCookbookState,
+        cookbooks: []
+      });
+    });
+  });
+
+  describe(`${CookbookApiActions.editCookbookSuccess}`, () => {
+    it('should update cookbook with matching id', () => {
+      expect(cookbookStateReducer(
+        {
+          ...initialCookbookState,
+          cookbooks: [{id: '1', title: 'dummyTitle'}]
+        },
+        CookbookApiActions.editCookbookSuccess({cookbook}))
+      ).toEqual({
+        ...initialCookbookState,
+        cookbooks: [cookbook]
+      });
+    });
+  });
+
+  describe(`${CookbookContainerActions.deleteCookbookFromState}`, () => {
+    it('should delete cookbook from state', () => {
+      expect(cookbookStateReducer(
+        {
+          ...initialCookbookState,
+          cookbooks: [{id: '1', title: 'dummyTitle'}]
+        },
+        CookbookContainerActions.deleteCookbookFromState({cookbook}))
+      ).toEqual({
+        ...initialCookbookState,
+        cookbooks: []
+      });
+    });
+  });
+
+  describe(`${CookbookApiActions.undoDeleteCookbookFromState}`, () => {
+    it('should undo delete cookbook from state', () => {
+      expect(cookbookStateReducer(
+        {
+          ...initialCookbookState,
+          cookbooks: []
+        },
+        CookbookApiActions.undoDeleteCookbookFromState({cookbook}))
+      ).toEqual({
+        ...initialCookbookState,
+        cookbooks: [cookbook]
       });
     });
   });

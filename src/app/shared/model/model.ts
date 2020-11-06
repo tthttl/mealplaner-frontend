@@ -134,16 +134,25 @@ export interface Cookbook {
 
 export interface ListPickerDialogEvent {
   event: 'select' | 'create' | 'edit' | 'delete';
-  shoppingList?: ShoppingList;
+  list?: List;
 }
 
 export interface CreateListDialogEvent {
   event: 'create';
   title: string;
-  id?: string;
 }
 
 export interface EditListDialogEvent {
   event: 'edit';
-  shoppingList: ShoppingList;
+  list: List;
+}
+
+export interface SelectedIngredient extends Ingredient {
+  isSelected: boolean;
+}
+
+export interface RecipeViewDialogEvent {
+  readonly event: 'selectedIngredients' | 'recipe';
+  readonly recipe?: Recipe;
+  readonly selectedIngredients?: SelectedIngredient[];
 }

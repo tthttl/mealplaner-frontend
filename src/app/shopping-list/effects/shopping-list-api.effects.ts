@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
+import { forkJoin, Observable, of } from 'rxjs';
+import { catchError, concatMap, delay, exhaustMap, filter, map, mergeMap, switchMap, takeUntil, tap, withLatestFrom } from 'rxjs/operators';
+import { SharedActions } from '../../shared/actions';
+import { DELETION_DELAY } from '../../shared/helpers/constants';
+import { ShoppingList, ShoppingListItem } from '../../shared/model/model';
+import { ChangeShoppingListAction, SetActiveShoppingListAction } from '../../shared/model/model-action';
 import { GlobalState, selectCurrentShoppingListItems, selectUserID } from '../../shared/state';
 import { ShoppingListApiActions, ShoppingListContainerActions, ShoppingListEffectActions } from '../actions';
-import { catchError, concatMap, delay, exhaustMap, filter, map, mergeMap, switchMap, takeUntil, tap, withLatestFrom } from 'rxjs/operators';
-import { ChangeShoppingListAction, SetActiveShoppingListAction } from '../../shared/model/model-action';
-import { ShoppingList, ShoppingListItem } from '../../shared/model/model';
-import { forkJoin, Observable, of } from 'rxjs';
 import { ShoppingListService } from '../service/shopping-list.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { DELETION_DELAY } from '../../shared/helpers/constants';
 
 @Injectable()
 export class ShoppingListApiEffects {
@@ -89,7 +90,7 @@ export class ShoppingListApiEffects {
 
   @Effect()
   addShoppingListItem$ = this.actions$.pipe(
-    ofType(ShoppingListContainerActions.addShoppingListItem),
+    ofType(ShoppingListContainerActions.addShoppingListItem, SharedActions.copyIngredientsToShoppingList),
     concatMap(({optimisticId, shoppingListItem}) => this.shoppingListService.addShoppingListItem(shoppingListItem).pipe(
       map((shoppingListItemApi: ShoppingListItem) => {
         return ShoppingListApiActions.addShoppingListItemSuccess({optimisticId, shoppingListItem: shoppingListItemApi});

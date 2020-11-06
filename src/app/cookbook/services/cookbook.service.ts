@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { convertCookbookApisToCookbooks, convertCookbookApiToCookbook } from '../../shared/helpers/helpers';
 import { Cookbook } from '../../shared/model/model';
-import { CookbookApi, RecipeApi } from '../../shared/model/model-api';
+import { CookbookApi } from '../../shared/model/model-api';
 
 @Injectable()
 export class CookbookService {
@@ -13,19 +13,19 @@ export class CookbookService {
   }
 
   loadCookbooks(userId: string): Observable<Cookbook[]> {
-    return this.httpClient.get<CookbookApi[]>(`${environment.apiUrl}/cookbooks?user=${userId}`).pipe(
+    return this.httpClient.get<CookbookApi[]>(`${environment.apiUrl}/cookbooks?user=${userId}&_sort=title:asc`).pipe(
       map((cookbooks: CookbookApi[]) => convertCookbookApisToCookbooks(cookbooks))
     );
   }
 
-  saveCookbook(cookbook: Cookbook): Observable<Cookbook> {
-    return this.httpClient.post<CookbookApi>(`${environment.apiUrl}/cookbooks`, cookbook).pipe(
+  saveCookbook(title: string): Observable<Cookbook> {
+    return this.httpClient.post<CookbookApi>(`${environment.apiUrl}/cookbooks`, {title}).pipe(
       map((savedCookbook: CookbookApi) => convertCookbookApiToCookbook(savedCookbook))
     );
   }
 
   editCookbook(cookbook: Cookbook): Observable<Cookbook> {
-    return this.httpClient.put<RecipeApi>(`${environment.apiUrl}/cookbooks/${cookbook.id}`, cookbook).pipe(
+    return this.httpClient.put<CookbookApi>(`${environment.apiUrl}/cookbooks/${cookbook.id}`, cookbook).pipe(
       map((editedCookbook: CookbookApi) => convertCookbookApiToCookbook(editedCookbook))
     );
   }

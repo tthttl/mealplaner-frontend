@@ -2,6 +2,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -9,6 +10,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { I18nModule } from '../i18n/i18n.module';
 import { TranslatePipe } from '../i18n/pipes/translate.pipe';
 import { SharedModule } from '../shared/shared.module';
+import { CookbookPageComponent } from './components/cookbook-page/cookbook-page.component';
 import { RecipeFormComponent } from './components/recipe-form/recipe-form.component';
 import { RecipeListComponent } from './components/recipe-list/recipe-list.component';
 import { RecipeViewComponent } from './components/recipe-view/recipe-view.component';
@@ -26,7 +28,8 @@ import { RecipeService } from './services/recipe.service';
     RecipeListComponent,
     CookbookContainerComponent,
     RecipeContainerComponent,
-    RecipeViewComponent
+    RecipeViewComponent,
+    CookbookPageComponent
   ],
   imports: [
     CommonModule,
@@ -39,6 +42,7 @@ import { RecipeService } from './services/recipe.service';
     FontAwesomeModule,
     MatSlideToggleModule,
     MatDialogModule,
+    MatCheckboxModule,
   ],
   providers: [
     {
