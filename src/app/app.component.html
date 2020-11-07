@@ -2,7 +2,9 @@
   [isLoggedIn]="isLoggedIn | async"
   [translations]="translations$ | async"
   [currentLang]="currentLang$ | async"
-  (logout)="onLogout()"></app-navigation>
+  (logout)="onLogout()"
+  (languageChanged)="changeLanguage($event)"
+></app-navigation>
 
 <div id="main-page">
   <router-outlet></router-outlet>

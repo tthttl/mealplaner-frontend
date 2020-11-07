@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { I18nContainerActions } from './i18n/actions';
 import { I18n, Language } from './shared/model/model';
 import { GlobalState, isLoggedIn, selectCurrentLanguage, selectTranslations } from './shared/state';
 import { NavActions } from './shared/state/app-actions';
@@ -20,5 +21,9 @@ export class AppComponent {
 
   onLogout(): void {
     this.store.dispatch(NavActions.logout());
+  }
+
+  changeLanguage(language: Language): void {
+    this.store.dispatch(I18nContainerActions.changeLanguage({language}));
   }
 }

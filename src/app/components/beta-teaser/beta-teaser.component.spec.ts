@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MemoizedSelector } from '@ngrx/store';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { Language, I18n, Translations } from '../../shared/model/model';
 import { TranslatePipe } from '../../i18n/pipes/translate.pipe';
+import { I18n, Language, Translations } from '../../shared/model/model';
 import { GlobalState, selectCurrentLanguage, selectTranslations } from '../../shared/state';
 
 import { BetaTeaserComponent } from './beta-teaser.component';
@@ -11,7 +11,7 @@ describe('BetaTeaserComponent', () => {
   let component: BetaTeaserComponent;
   let fixture: ComponentFixture<BetaTeaserComponent>;
   let mockStore: MockStore;
-  let mockI18nSelector: MemoizedSelector<GlobalState, I18n | null>;
+  let mockI18nSelector: MemoizedSelector<GlobalState, I18n>;
   let mockLanguageSelector: MemoizedSelector<GlobalState, Language>;
 
   beforeEach(async(() => {

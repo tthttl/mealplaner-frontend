@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { mapI18nApiToI18nClient } from '../../shared/helpers/helpers';
-import { Language, I18n as I18nClient } from '../../shared/model/model';
+import { I18n as I18nClient, Language } from '../../shared/model/model';
 import { I18n as I18nApi } from '../../shared/model/model-api';
 
 @Injectable({

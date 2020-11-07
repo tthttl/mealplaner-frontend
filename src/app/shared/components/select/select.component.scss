@@ -9,6 +9,18 @@
     &--no-border {
       padding-left: 0.2rem;
     }
+
+    &--no-padding {
+      padding: 0;
+    }
+
+    &--no-background{
+      background-color: transparent;
+      color: $blue-grey_10;
+      outline: none;
+      border: none;
+    }
+
   }
 
   &__label {
