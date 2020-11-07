@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { AuthModule } from './auth/auth.module';
-import { ProductPageComponent } from './components/product-page/product-page.component';
 import { LoggedOutGuard } from './shared/guards/logged-out.guard';
+import { ProductPageContainerComponent } from './containers/product-page-container/product-page-container.component';
 
 
 const routes: Routes = [
   {
     path: '',
-    component: ProductPageComponent,
+    component: ProductPageContainerComponent,
     canActivate: [LoggedOutGuard]
   },
   {
@@ -33,4 +33,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

@@ -23,6 +23,7 @@ import { metaReducers, reducers } from './shared/state';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { SharedModule } from './shared/shared.module';
 import { ProductPageComponent } from './components/product-page/product-page.component';
+import { ProductPageContainerComponent } from './containers/product-page-container/product-page-container.component';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { ProductPageComponent } from './components/product-page/product-page.com
     BetaTeaserComponent,
     NavigationComponent,
     ProductPageComponent,
+    ProductPageContainerComponent,
   ],
   imports: [
     BrowserModule,
