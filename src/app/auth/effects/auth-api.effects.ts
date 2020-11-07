@@ -11,6 +11,7 @@ import { of } from 'rxjs';
 import { AppInitializationActions, ErrorInterceptorActions, NavActions } from '../../shared/state/app-actions';
 import { Router } from '@angular/router';
 import { DEFAULT_REDIRECT_URL_FOR_LOGGED_IN_USER } from '../../shared/helpers/constants';
+import { SnackbarService } from '../../shared/services/snackbar.service';
 
 @Injectable()
 export class AuthApiEffects {
@@ -18,6 +19,7 @@ export class AuthApiEffects {
     private actions$: Actions,
     private authService: AuthService,
     private router: Router,
+    private snackBarService: SnackbarService,
     private store: Store<GlobalState>) {
   }
 
@@ -66,6 +68,14 @@ export class AuthApiEffects {
     withLatestFrom(this.store.select(selectRequestedUrlBeforeLoginWasRequired)),
     tap(([_, url]) => {
       this.router.navigate(['/']);
+    }),
+  );
+
+  @Effect({dispatch: false})
+  showLoginFailure$ = this.actions$.pipe(
+    ofType(AuthApiActions.loginFailure),
+    tap(() => {
+      this.snackBarService.openSnackBar('login.failed', undefined, 3000);
     }),
   );
 }

@@ -1,6 +1,9 @@
-<div class="form-wrapper">
+<div class="container login-form">
+  <div class="login-form__header">
+    ANMELDEN
+  </div>
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <app-input
+    <!-- <app-input
       class="login-form__input"
       formControlName="identifier"
       [type]="'email'"
@@ -16,12 +19,40 @@
       [autocomplete]="buttonText==='login' ? 'current-password' : 'new-password'"
       [label]="'password' | translate:translations:currentLang"
       [errors]=" getErrorsFor('password')"
-    ></app-input>
-    <app-button class="form-button"
-      [buttonText]="buttonText | translate:translations:currentLang"
-      [buttonType]="'submit'"
-      [isDisabled]="!loginForm.valid"
-    >
-    </app-button>
+    ></app-input> -->
+    <div class="login-form__form">
+      <div class="login-form__field">
+        <fa-icon class="login-form__icon"
+                 [icon]="['fas','user']"></fa-icon>
+        <input formControlName="identifier"
+               type="email"
+               placeholder="E-Mail"
+               aria-label="E-Mail"
+               class="login-form__input"/>
+      </div>
+
+      <div class="login-form__field">
+        <fa-icon class="login-form__icon"
+                 [icon]="['fas','unlock-alt']"></fa-icon>
+        <input placeholder="Password"
+               [formControl]="getFormControl('password')"
+               type="password"
+               aria-label="Password"
+               class="login-form__input"/>
+      </div>
+
+    </div>
+
+    <button class="login-form__button">Anmelden</button>
+
+    <section class="login-form__helper-section">
+      <div>
+        Passwort vergessen?
+      </div>
+      <div>
+        Noch kein Konto? Dann kannst du dich <a class="login-form__link" routerLink="/auth/register">hier</a>
+        registrieren
+      </div>
+    </section>
   </form>
 </div>
