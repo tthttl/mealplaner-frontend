@@ -139,7 +139,7 @@ export class CookbookEffects {
   switchCookbookWhenDeleted$ = this.actions$.pipe(
     ofType(CookbookContainerActions.deleteCookbookFromState),
     withLatestFrom(this.store),
-    filter(([{cookbook}, store]) => cookbook.id === store.cookbookState.activeCookbookId && store.cookbookState.cookbooks.length > 0),
+    filter(([{cookbook}, store]) => cookbook.id === store.cookbookState.activeCookbookId && store.cookbookState.cookbooks?.length > 0),
     map(([_, store]) => {
       return CookbookContainerActions.selectCookbook({selectedCookbookId: store.cookbookState.cookbooks[0].id});
     })
