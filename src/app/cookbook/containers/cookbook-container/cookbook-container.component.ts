@@ -18,11 +18,19 @@ import {
   List,
   Recipe,
   RecipeViewDialogEvent,
-  SelectedIngredient
+  SelectedIngredient,
+  ShoppingList
 } from '../../../shared/model/model';
 import { DialogService } from '../../../shared/services/dialog.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
-import { activeShoppingListId, GlobalState, selectActiveCookbook, selectCookbooks, selectTranslations } from '../../../shared/state';
+import {
+  activeShoppingList,
+  activeShoppingListId,
+  GlobalState,
+  selectActiveCookbook,
+  selectCookbooks,
+  selectTranslations
+} from '../../../shared/state';
 import { CookbookApiActions, CookbookContainerActions } from '../../actions';
 import { RecipeViewComponent } from '../../components/recipe-view/recipe-view.component';
 
@@ -38,6 +46,7 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
   recipes$: Observable<Recipe[]>;
   cookbooks$: Observable<Cookbook[]>;
   selectedCookbook$: Observable<Cookbook | undefined>;
+  activeShoppingList$: Observable<ShoppingList | undefined>;
   private destroy$: Subject<void> = new Subject<void>();
 
   private recipeViewTranslations: {} = {};
@@ -62,6 +71,7 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
         return state.cookbookState.cookbooks[0];
       }
     });
+    this.activeShoppingList$ = this.store.select(activeShoppingList);
   }
 
   ngOnInit(): void {
@@ -136,6 +146,14 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
                 optimisticId: uuid(),
                 shoppingListItem: item
               })));
+            this.activeShoppingList$.pipe(take(1)).subscribe((shoppingList: ShoppingList | undefined) => {
+              const snackBarRef = this.snackBarService.openSnackBar('message.ingredients-added-to-shoppinglist', shoppingList?.title);
+              snackBarRef.afterDismissed().pipe(take(1)).subscribe(({dismissedByAction}) => {
+                if (dismissedByAction) {
+                  this.router.navigate(['/shopping-list'], {queryParams: {shoppingListId: shoppingList?.id}});
+                }
+              });
+            });
             break;
         }
       });
@@ -165,7 +183,7 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
       .pipe(take(1))
       .subscribe((result: CreateListDialogEvent | undefined) => {
         if (result?.event === 'create') {
-          this.store.dispatch(CookbookContainerActions.createCookbook({ optimisticId: uuid(), title: result.title}));
+          this.store.dispatch(CookbookContainerActions.createCookbook({optimisticId: uuid(), title: result.title}));
         }
       });
   }
@@ -183,7 +201,7 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
       .pipe(take(1))
       .subscribe((result: EditListDialogEvent | undefined) => {
         if (result?.event === 'edit') {
-          this.store.dispatch(CookbookContainerActions.editCookbook({ cookbook: result.list}));
+          this.store.dispatch(CookbookContainerActions.editCookbook({cookbook: result.list}));
         }
       });
   }

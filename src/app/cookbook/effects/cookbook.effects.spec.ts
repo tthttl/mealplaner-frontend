@@ -236,7 +236,7 @@ describe('Cookbook Effects', () => {
   });
 
   it(`setQueryParameterForActiveShoppingList should set
-   queryParam when ${CookbookApiActions.setActiveCookbookIdAsQueryParam} is dispatched`, () => {
+   queryParam when CookbookApiActions.setActiveCookbookIdAsQueryParam is dispatched`, () => {
     cookbookEffects = createEffects(of({type: CookbookApiActions.setActiveCookbookIdAsQueryParam.type, selectedCookbookId: cookbook.id}));
     cookbookEffects.setQueryParameterForActiveShoppingList$.subscribe((action: Action) => {
       expect(router.navigate).toHaveBeenCalledWith([], {
@@ -247,7 +247,7 @@ describe('Cookbook Effects', () => {
   });
 
   it(`setQueryParameterForActiveShoppingList should set
-   queryParam when ${CookbookContainerActions.selectCookbook} is dispatched`, () => {
+   queryParam when CookbookContainerActions.selectCookbook is dispatched`, () => {
     cookbookEffects = createEffects(of({type: CookbookContainerActions.selectCookbook.type, selectedCookbookId: cookbook.id}));
     cookbookEffects.setQueryParameterForActiveShoppingList$.subscribe((action: Action) => {
       expect(router.navigate).toHaveBeenCalledWith([], {

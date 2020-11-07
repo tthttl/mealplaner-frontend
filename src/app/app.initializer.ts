@@ -1,15 +1,15 @@
-import { I18nService } from './i18n/services/i18n.service';
-import { forkJoin } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { GlobalState } from './shared/state';
-import { AppInitializationActions } from './shared/state/app-actions';
-import { AuthService } from './auth/services/auth.service';
 import { Actions, ofType } from '@ngrx/effects';
-import { I18nApiActions } from './i18n/actions';
+import { Store } from '@ngrx/store';
+import { forkJoin } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 import { AuthApiActions } from './auth/actions';
-import { Language } from './shared/model/model';
+import { AuthService } from './auth/services/auth.service';
+import { I18nApiActions } from './i18n/actions';
+import { I18nService } from './i18n/services/i18n.service';
 import { DEFAULT_LANGUAGE, SUPPORTED_LANGUAGES } from './shared/helpers/constants';
+import { Language } from './shared/model/model';
+import { GlobalState } from './shared/state';
+import { AppInitializationActions } from './shared/state/app-actions';
 
 export function appInitializer(
   authService: AuthService,
