@@ -71,6 +71,7 @@ describe('RecipeFormComponent', () => {
 
   it('should emit Recipe when inputs are filled and submit is clicked', () => {
     spyOn(component.recipeSaved, 'emit');
+    component.recipeForm.markAsTouched();
     const titleInput = hostElement.querySelector('input[ng-reflect-name="title"]');
     const amountInput = hostElement.querySelector('input[ng-reflect-name="amount"]');
     const ingredientTitle = hostElement.querySelector('.ingredients input[ng-reflect-name="title"]');
@@ -122,6 +123,7 @@ describe('RecipeFormComponent', () => {
       ]
     };
     component.ngOnInit();
+    component.recipeForm.markAsTouched();
     fixture.detectChanges();
     const button = hostElement.querySelector('button[type="submit"]');
     button.click();
