@@ -50,6 +50,7 @@
     "@angular/cli": "~10.0.1",
     "@angular/compiler-cli": "~10.0.2",
     "@babel/core": "^7.10.5",
+    "@babel/parser": "^7.12.5",
     "@compodoc/compodoc": "^1.1.11",
     "@ngrx/store-devtools": "^9.2.0",
     "@storybook/addon-actions": "^6.0.21",
