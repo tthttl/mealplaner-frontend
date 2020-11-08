@@ -23,6 +23,7 @@
 
     &__field {
       @include form-field;
+      background-color: transparent;
 
       &--border-accent {
         border: 2px solid $cyan_70;

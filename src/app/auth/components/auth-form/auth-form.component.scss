@@ -1,7 +1,7 @@
 @import "../../../../styles/settings/colors";
 @import "../../../../styles/settings/variables";
 
-.login-form {
+.auth-form {
   max-width: 500px;
 
   &__header {
@@ -20,21 +20,6 @@
     padding: 24px 0;
     display: flex;
     flex-direction: column;
-  }
-
-  &__field{
-    width: 80%;
-    margin: 8px auto;
-    display: flex;
-    align-items: center;
-  }
-
-  &__input {
-    background: none;
-    border: none;
-    padding: 10px 0;
-    display: block;
-    flex-grow: 1;
   }
 
   &__button {
@@ -58,7 +43,7 @@
       left: -20px;
       border-style: solid;
       border-width: 20px;
-      border-color: transparent $blue_100 transparent transparent;
+      border-color: transparent $blue_70 transparent transparent;
       z-index: -1;
     }
 
@@ -72,7 +57,7 @@
       right: -20px;
       border-style: solid;
       border-width: 20px;
-      border-color: transparent  transparent transparent $blue_100;
+      border-color: transparent  transparent transparent $blue_70;
       z-index: -1;
     }
   }
@@ -82,30 +67,20 @@
     background: $blue-grey_10;
     text-align: center;
     margin: 0 20px;
-    padding: 8px 0;
-    line-height: 2.5;
+    padding: 24px 0;
+    line-height: 1.5;
+  }
+
+  &__backend-error {
+    width: 80%;
+    padding: 8px 4px;
+    color: $red_10;
+    background: $red_50;
+    margin: 0 auto;
+    border-radius: $border-radius-default;
   }
 
   &__link {
     color: $blue_80;
   }
-
-  &__icon {
-    color: $blue_grey_70;
-    padding-right: 16px;
-  }
-
-  /*padding: 1rem;
-  border: 1px solid $blue_80;
-  border-radius: $border-radius-default;
-
-  .login-form__input {
-    display: block;
-    margin-bottom: 0.5rem;
-  }
-
-  .form-button{
-    display: block;
-    margin-top: 1rem;
-  }*/
 }

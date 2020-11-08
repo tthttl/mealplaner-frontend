@@ -2,7 +2,7 @@ import { AuthService } from '../services/auth.service';
 import { AuthApiEffects } from './auth-api.effects';
 import { GlobalState, initialState } from '../../shared/state';
 import { of, throwError } from 'rxjs';
-import { AuthApiActions, LoginPageActions } from '../actions';
+import { AuthApiActions, LoginPageActions, RegisterContainerActions } from '../actions';
 import { Router } from '@angular/router';
 import { TestBed } from '@angular/core/testing';
 import { provideMockStore } from '@ngrx/store/testing';
@@ -12,6 +12,7 @@ import { AppInitializationActions } from '../../shared/state/app-actions';
 import { DEFAULT_REDIRECT_URL_FOR_LOGGED_IN_USER } from '../../shared/helpers/constants';
 import SpyObj = jasmine.SpyObj;
 import { SnackbarService } from '../../shared/services/snackbar.service';
+import { CookbookSelectedAction, LoginFailureAction } from '../../shared/model/model-action';
 
 describe('Auth Api Effects', () => {
 
@@ -64,6 +65,48 @@ describe('Auth Api Effects', () => {
       authService.login.and.returnValue(throwError('error'));
       authApiEffects.login.subscribe((action: Action) => {
         expect(action.type).toEqual(AuthApiActions.loginFailure.type);
+        expect((action as LoginFailureAction).error).toEqual('authBackend.error.connection');
+      });
+    });
+  });
+
+  describe('register', () => {
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        providers: [
+          {
+            provide: Store,
+            useClass: StoreMock
+          },
+          provideMockStore({initialState}),
+        ]
+      });
+      store = TestBed.inject(Store);
+      actions$ = of({type: RegisterContainerActions.register.type});
+      authService = jasmine.createSpyObj('AuthService', ['register']);
+      snackBarService = jasmine.createSpyObj('SnackBarService', ['openSnackBar']);
+      router = jasmine.createSpyObj('Router', ['navigate']);
+      authApiEffects = new AuthApiEffects(
+        actions$,
+        authService,
+        router,
+        snackBarService,
+        store);
+    });
+
+    it('should return success action', () => {
+      authService.register.and.returnValue(of({} as User));
+      authApiEffects.register$.subscribe((action: Action) => {
+        expect(action.type).toEqual(AuthApiActions.registerSuccess.type);
+      });
+    });
+
+
+    it('should return failure action', () => {
+      authService.register.and.returnValue(throwError('error'));
+      authApiEffects.register$.subscribe((action: Action) => {
+        expect(action.type).toEqual(AuthApiActions.registerFailure.type);
+        expect((action as LoginFailureAction).error).toEqual('authBackend.error.connection');
       });
     });
   });
@@ -126,53 +169,38 @@ describe('Auth Api Effects', () => {
         ]
       });
       store = TestBed.inject(Store);
-      actions$ = of({type: AuthApiActions.loginSuccess.type});
       authService = jasmine.createSpyObj('AuthService', ['']);
       router = jasmine.createSpyObj('Router', ['navigate']);
       snackBarService = jasmine.createSpyObj('SnackBarService', ['openSnackBar']);
+    });
+
+    it('should redirect when successfully login', () => {
+      actions$ = of({type: AuthApiActions.loginSuccess.type});
       authApiEffects = new AuthApiEffects(
         actions$,
         authService,
         router,
         snackBarService,
         store);
+
+      authApiEffects.redirectWhenLoggedIn.subscribe(() => {
+        expect(router.navigate).toHaveBeenCalledWith([DEFAULT_REDIRECT_URL_FOR_LOGGED_IN_USER]);
+      });
     });
 
-    it('should redirect when successfully login', () => {
+    it('should redirect when successfully registered', () => {
+      actions$ = of({type: AuthApiActions.registerSuccess.type});
+      authApiEffects = new AuthApiEffects(
+        actions$,
+        authService,
+        router,
+        snackBarService,
+        store);
+
       authApiEffects.redirectWhenLoggedIn.subscribe(() => {
         expect(router.navigate).toHaveBeenCalledWith([DEFAULT_REDIRECT_URL_FOR_LOGGED_IN_USER]);
       });
     });
   });
 
-  describe('showLoginFailure$', () => {
-    beforeEach(() => {
-      TestBed.configureTestingModule({
-        providers: [
-          {
-            provide: Store,
-            useClass: StoreMock
-          },
-          provideMockStore({initialState}),
-        ]
-      });
-      store = TestBed.inject(Store);
-      actions$ = of({type: AuthApiActions.loginFailure.type});
-      authService = jasmine.createSpyObj('AuthService', ['']);
-      router = jasmine.createSpyObj('Router', ['navigate']);
-      snackBarService = jasmine.createSpyObj('SnackBarService', ['openSnackBar']);
-      authApiEffects = new AuthApiEffects(
-        actions$,
-        authService,
-        router,
-        snackBarService,
-        store);
-    });
-
-    it('should show error when login failed', () => {
-      authApiEffects.showLoginFailure$.subscribe(() => {
-        expect(snackBarService.openSnackBar).toHaveBeenCalledTimes(1);
-      });
-    });
-  });
 });

@@ -22,7 +22,7 @@ export class AuthenticatedGuard implements CanActivate {
       map(user => {
 
         if (!user?.jwt || isJwtTokenExpired(user.jwt)) {
-          if (url !== 'auth/login') {
+          if (url !== 'auth/login' && url !== 'auth/register') {
             this.store.dispatch(AuthenticatedGuardActions.setRequestedUrlBeforeLoginWasRequired({url}));
           }
           this.router.navigate(['/auth/login']);

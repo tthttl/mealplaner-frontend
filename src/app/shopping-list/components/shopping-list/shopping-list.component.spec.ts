@@ -6,7 +6,6 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { TranslatePipe } from '../../../i18n/pipes/translate.pipe';
 import { ArrayItemMovedEvent, ShoppingListItem } from '../../../shared/model/model';
-import { LoginFormComponent } from '../../../auth/components/login-form/login-form.component';
 
 describe('ShoppingListComponent', () => {
   let component: ShoppingListComponent;
@@ -14,10 +13,10 @@ describe('ShoppingListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ShoppingListComponent, TranslatePipe ],
+      declarations: [ShoppingListComponent, TranslatePipe],
       imports: [DragDropModule, MatCheckboxModule],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -55,7 +54,7 @@ describe('ShoppingListComponent', () => {
     label.click();
 
     component.itemDeleted.subscribe((item: ShoppingListItem) => {
-      expect(item).toEqual( shoppingListItem);
+      expect(item).toEqual(shoppingListItem);
     });
 
     tick(300);
@@ -80,12 +79,11 @@ describe('ShoppingListComponent', () => {
   }));
 
 
-
   it('should emit listItemMoved event', fakeAsync(() => {
     component.listItemMoved.subscribe((item: ArrayItemMovedEvent) => {
-      expect(item).toEqual( {currentIndex: 3, previousIndex: 8});
+      expect(item).toEqual({currentIndex: 3, previousIndex: 8});
     });
 
-    component.drop( {currentIndex: 3, previousIndex: 8});
+    component.drop({currentIndex: 3, previousIndex: 8});
   }));
 });
