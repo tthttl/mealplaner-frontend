@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { AuthModule } from './auth/auth.module';
 import { ProductPageComponent } from './components/product-page/product-page.component';
 import { LoggedOutGuard } from './shared/guards/logged-out.guard';
@@ -14,10 +14,6 @@ const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () => AuthModule
-  },
-  {
-    path: 'shopping-list',
-    loadChildren: () => import('./shopping-list/shopping-list.module').then(m => m.ShoppingListModule)
   },
   {
     path: 'meal-planer',

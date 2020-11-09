@@ -1,12 +1,11 @@
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-
-import { ShoppingListComponent } from './shopping-list.component';
-import { By } from '@angular/platform-browser';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { By } from '@angular/platform-browser';
 import { TranslatePipe } from '../../../i18n/pipes/translate.pipe';
 import { ArrayItemMovedEvent, ShoppingListItem } from '../../../shared/model/model';
-import { LoginFormComponent } from '../../../auth/components/login-form/login-form.component';
+
+import { ShoppingListComponent } from './shopping-list.component';
 
 describe('ShoppingListComponent', () => {
   let component: ShoppingListComponent;
