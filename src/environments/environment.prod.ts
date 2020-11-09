@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
   showBetaTeaser: false,
-  apiUrl: 'https://api.mealplaner.app',
-  authUrl: 'https://api.mealplaner.app',
+  apiUrl: 'https://mealplaner.app/api',
+  authUrl: 'https://mealplaner.app/api',
 };
