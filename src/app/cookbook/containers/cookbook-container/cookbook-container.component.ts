@@ -147,7 +147,7 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
                 shoppingListItem: item
               })));
             this.activeShoppingList$.pipe(take(1)).subscribe((shoppingList: ShoppingList | undefined) => {
-              const snackBarRef = this.snackBarService.openSnackBar('message.ingredients-added-to-shoppinglist', shoppingList?.title);
+              const snackBarRef = this.snackBarService.openSnackBar('message.ingredients-added-to-shoppinglist', shoppingList?.title || '');
               snackBarRef.afterDismissed().pipe(take(1)).subscribe(({dismissedByAction}) => {
                 if (dismissedByAction) {
                   this.router.navigate(['/shopping-list'], {queryParams: {shoppingListId: shoppingList?.id}});
