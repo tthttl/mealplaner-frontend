@@ -14,15 +14,16 @@ import { appInitializer } from './app.initializer';
 import { AuthModule } from './auth/auth.module';
 import { AuthService } from './auth/services/auth.service';
 import { BetaTeaserComponent } from './components/beta-teaser/beta-teaser.component';
+import { NavigationComponent } from './components/navigation/navigation.component';
+import { ProductPageComponent } from './components/product-page/product-page.component';
 import { CookbookModule } from './cookbook/cookbook.module';
 import { I18nModule } from './i18n/i18n.module';
 import { I18nService } from './i18n/services/i18n.service';
 import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
 import { JwtInterceptor } from './shared/interceptors/jwt.interceptor';
-import { metaReducers, reducers } from './shared/state';
-import { NavigationComponent } from './components/navigation/navigation.component';
 import { SharedModule } from './shared/shared.module';
-import { ProductPageComponent } from './components/product-page/product-page.component';
+import { metaReducers, reducers } from './shared/state';
+import { ShoppingListModule } from './shopping-list/shopping-list.module';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { ProductPageComponent } from './components/product-page/product-page.com
     CookbookModule,
     EffectsModule.forRoot([]),
     FontAwesomeModule,
-    SharedModule
+    SharedModule,
+    ShoppingListModule
   ],
   providers: [
     { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AuthService, I18nService, Store, Actions] },

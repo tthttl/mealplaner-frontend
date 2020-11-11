@@ -5,7 +5,8 @@ import { Observable, Subject } from 'rxjs';
 import { map, switchMap, take, withLatestFrom } from 'rxjs/operators';
 import { v4 as uuid } from 'uuid';
 import { TranslatePipe } from '../../../i18n/pipes/translate.pipe';
-import { copyIngredientsToShoppingList, copyRecipeToMealplaner } from '../../../shared/actions/shared-actiion';
+
+
 import { EditListDialogComponent } from '../../../shared/components/edit-list-dialog/edit-list-dialog.component';
 import { mapSelectedIngredientToBasicShoppingListItem } from '../../../shared/helpers/helpers';
 import {
@@ -32,6 +33,7 @@ import {
   selectTranslations
 } from '../../../shared/state';
 import { CookbookApiActions, CookbookContainerActions } from '../../actions';
+import { copyIngredientsToShoppingList, copyRecipeToMealplaner } from '../../actions/cookbook-container.actions';
 import { RecipeViewComponent } from '../../components/recipe-view/recipe-view.component';
 
 @Component({
@@ -76,6 +78,11 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.store.dispatch(CookbookContainerActions.loadCookbook());
+    this.activeShoppingList$.pipe(take(1)).subscribe((shoppingList: ShoppingList | undefined) => {
+      if (!shoppingList) {
+        this.store.dispatch(CookbookContainerActions.loadShoppingLists());
+      }
+    });
     this.store.select(selectTranslations).pipe(
       withLatestFrom(this.store.select((state: GlobalState) => state.appState.language))
     ).subscribe(([translations, currentLanguage]: [I18n | null, Language]) => {

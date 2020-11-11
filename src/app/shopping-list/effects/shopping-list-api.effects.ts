@@ -4,7 +4,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { forkJoin, Observable, of } from 'rxjs';
 import { catchError, concatMap, delay, exhaustMap, filter, map, mergeMap, switchMap, takeUntil, tap, withLatestFrom } from 'rxjs/operators';
-import { SharedActions } from '../../shared/actions';
+import { CookbookContainerActions } from '../../cookbook/actions';
 import { DELETION_DELAY } from '../../shared/helpers/constants';
 import { ShoppingList, ShoppingListItem } from '../../shared/model/model';
 import { ChangeShoppingListAction, SetActiveShoppingListAction } from '../../shared/model/model-action';
@@ -24,7 +24,7 @@ export class ShoppingListApiEffects {
 
   @Effect()
   getShoppingLists$ = this.actions$.pipe(
-    ofType(ShoppingListContainerActions.loadShoppingLists),
+    ofType(ShoppingListContainerActions.loadShoppingLists, CookbookContainerActions.loadShoppingLists),
     withLatestFrom(this.store.select(selectUserID)),
     filter(([_, userId]) => !!userId),
     exhaustMap(([_, userId]) => this.shoppingListService.getShoppingLists(userId!).pipe(
@@ -90,7 +90,7 @@ export class ShoppingListApiEffects {
 
   @Effect()
   addShoppingListItem$ = this.actions$.pipe(
-    ofType(ShoppingListContainerActions.addShoppingListItem, SharedActions.copyIngredientsToShoppingList),
+    ofType(ShoppingListContainerActions.addShoppingListItem, CookbookContainerActions.copyIngredientsToShoppingList),
     concatMap(({optimisticId, shoppingListItem}) => this.shoppingListService.addShoppingListItem(shoppingListItem).pipe(
       map((shoppingListItemApi: ShoppingListItem) => {
         return ShoppingListApiActions.addShoppingListItemSuccess({optimisticId, shoppingListItem: shoppingListItemApi});
