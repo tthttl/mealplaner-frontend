@@ -24,6 +24,7 @@ import { JwtInterceptor } from './shared/interceptors/jwt.interceptor';
 import { SharedModule } from './shared/shared.module';
 import { metaReducers, reducers } from './shared/state';
 import { ShoppingListModule } from './shopping-list/shopping-list.module';
+import { ProductPageContainerComponent } from './containers/product-page-container/product-page-container.component';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { ShoppingListModule } from './shopping-list/shopping-list.module';
     BetaTeaserComponent,
     NavigationComponent,
     ProductPageComponent,
+    ProductPageContainerComponent,
   ],
   imports: [
     BrowserModule,

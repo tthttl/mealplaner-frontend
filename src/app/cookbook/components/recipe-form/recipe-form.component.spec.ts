@@ -45,12 +45,12 @@ describe('RecipeFormComponent', () => {
 
   it('new ingredient button should be disabled when amount is invalid', () => {
     const button = hostElement.querySelector('button.icon-wrapper');
-    const amountInput = hostElement.querySelector('input[ng-reflect-name="amount"]');
-    const titelInput = hostElement.querySelector('.ingredients input[ng-reflect-name="title"]');
+    const amountInput = hostElement.querySelector('input[name="amount"]');
+    const titleInput = hostElement.querySelector('.ingredients input[name="title"]');
     amountInput.value = 0;
     amountInput.dispatchEvent(new Event('input'));
-    titelInput.value = 'Beer';
-    titelInput.dispatchEvent(new Event('input'));
+    titleInput.value = 'Beer';
+    titleInput.dispatchEvent(new Event('input'));
     fixture.detectChanges();
 
     expect(button.disabled).toBeTruthy();
@@ -59,7 +59,7 @@ describe('RecipeFormComponent', () => {
 
   it('new ingredient button should be disabled when name is empty', () => {
     const button = hostElement.querySelector('button.icon-wrapper');
-    const amountInput = hostElement.querySelector('input[ng-reflect-name="amount"]');
+    const amountInput = hostElement.querySelector('input[name="amount"]');
     amountInput.value = 1;
     amountInput.dispatchEvent(new Event('input'));
 
@@ -72,9 +72,9 @@ describe('RecipeFormComponent', () => {
   it('should emit Recipe when inputs are filled and submit is clicked', () => {
     spyOn(component.recipeSaved, 'emit');
     component.recipeForm.markAsTouched();
-    const titleInput = hostElement.querySelector('input[ng-reflect-name="title"]');
-    const amountInput = hostElement.querySelector('input[ng-reflect-name="amount"]');
-    const ingredientTitle = hostElement.querySelector('.ingredients input[ng-reflect-name="title"]');
+    const titleInput = hostElement.querySelector('input[name="title"]');
+    const amountInput = hostElement.querySelector('input[name="amount"]');
+    const ingredientTitle = hostElement.querySelector('.ingredients input[name="title"]');
     const select = hostElement.querySelector('select');
 
     titleInput.value = 'Recipe';

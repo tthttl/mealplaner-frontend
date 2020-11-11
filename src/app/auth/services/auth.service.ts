@@ -5,7 +5,7 @@ import { map, tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { decodeJwtToken, mapUserApiToUserClient } from '../../shared/helpers/helpers';
 import { UserApi } from '../../shared/model/model-api';
-import { JwtRefreshResponse, LoginCredentials, User } from '../../shared/model/model';
+import { JwtRefreshResponse, LoginCredentials, RegisterCredentials, User } from '../../shared/model/model';
 import { GlobalState } from '../../shared/state';
 import { Store } from '@ngrx/store';
 import { LoginServiceActions } from '../actions';
@@ -21,6 +21,13 @@ export class AuthService {
 
   login(credentials: LoginCredentials): Observable<User> {
     return this.httpClient.post<UserApi>(`${environment.authUrl}/auth/local`, credentials).pipe(
+      map((userApi: UserApi) => mapUserApiToUserClient(userApi)),
+      tap(user => this.startRefreshTokenTimer(user.jwt))
+    );
+  }
+
+  register(credentials: RegisterCredentials): Observable<User> {
+    return this.httpClient.post<UserApi>(`${environment.authUrl}/auth/local/register`, {username: credentials.email, ...credentials}).pipe(
       map((userApi: UserApi) => mapUserApiToUserClient(userApi)),
       tap(user => this.startRefreshTokenTimer(user.jwt))
     );

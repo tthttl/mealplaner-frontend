@@ -23,9 +23,9 @@ export class SnackbarService {
     this.store.select((state: GlobalState) => state.appState.language).subscribe((lang: Language) => this.currentLang = lang);
   }
 
-  openSnackBar(messageKey: string, actionKey: string, displayInMilliSeconds: number = 10000): MatSnackBarRef<TextOnlySnackBar> {
+  openSnackBar(messageKey: string, actionKey?: string , displayInMilliSeconds: number = 10000): MatSnackBarRef<TextOnlySnackBar> {
     const message = this.translatePipe.transform(messageKey, this.translations || null, this.currentLang);
-    const action = this.translatePipe.transform(actionKey, this.translations || null, this.currentLang);
+    const action = actionKey ? this.translatePipe.transform(actionKey, this.translations || null, this.currentLang) : undefined;
     return this.snackBar.open(message, action, {
       duration: displayInMilliSeconds,
       panelClass: 'snackbar'

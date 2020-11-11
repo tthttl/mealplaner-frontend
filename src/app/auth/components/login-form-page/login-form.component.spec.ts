@@ -2,41 +2,49 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslatePipe } from '../../../i18n/pipes/translate.pipe';
 
-import { LoginFormComponent } from './login-form.component';
+import { LoginFormPageComponent } from './login-form-page.component';
 import { SharedModule } from '../../../shared/shared.module';
+import { AuthFormComponent } from '../auth-form/auth-form.component';
+import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { APP_INITIALIZER } from '@angular/core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
 
 describe('LoginFormComponent', () => {
-  let component: LoginFormComponent;
-  let fixture: ComponentFixture<LoginFormComponent>;
+  let component: LoginFormPageComponent;
+  let fixture: ComponentFixture<LoginFormPageComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, SharedModule],
-      declarations: [LoginFormComponent, TranslatePipe],
+      imports: [ReactiveFormsModule, SharedModule, FontAwesomeModule],
+      declarations: [LoginFormPageComponent, TranslatePipe, AuthFormComponent],
       providers: [
         {
           provide: TranslatePipe,
           useClass: TranslatePipe
-        }
+        },
+        {
+          provide: APP_INITIALIZER,
+          useFactory: (iconLibrary: FaIconLibrary) => {
+            return async () => {
+              iconLibrary.addIconPacks(fas);
+            };
+          },
+          deps: [FaIconLibrary],
+          multi: true,
+        },
       ]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LoginFormComponent);
+    fixture = TestBed.createComponent(LoginFormPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('button should be disabled when inputs are empty', () => {
-    const hostElement = fixture.nativeElement;
-    const button = hostElement.querySelector('button');
-    expect(button.disabled).toBeTruthy();
   });
 
   it('should emit credentials when inputs are filled and button is clicked', () => {

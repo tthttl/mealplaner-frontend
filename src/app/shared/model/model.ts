@@ -67,6 +67,13 @@ export interface LoginCredentials {
   password: string;
 }
 
+export interface RegisterCredentials {
+  name: string;
+  email: string;
+  password: string;
+  invitationCode: string;
+}
+
 export interface User {
   jwt: string;
   id: string;

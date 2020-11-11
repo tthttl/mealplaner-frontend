@@ -154,3 +154,8 @@ export interface SetActiveCookbookIdAsQueryParamAction {
   type: string;
   selectedCookbookId: string;
 }
+
+export interface LoginFailureAction {
+  type: string;
+  error: string;
+}
