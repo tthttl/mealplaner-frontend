@@ -3,13 +3,14 @@
 
 
 @mixin form-errors {
-  color: $red_20;
-  background-color: $red_70;
-  border-radius: $border-radius-default;
-  padding: 0.5rem;
+  color: $red_70;
   font-size: small;
   font-weight: 400;
-  margin: 0.5rem 0;
+  margin-bottom: 0.5rem;
+  padding-left: 8px;
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
 @mixin form-field {
@@ -59,4 +60,46 @@
   vertical-align:baseline;
   white-space:nowrap;
   transition-duration: 0.2s;
+}
+
+@mixin authform {
+  &__field {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    align-items: baseline;
+  }
+
+  &__input {
+    background: none;
+    border: none;
+    padding: 10px 0;
+    display: block;
+    flex-grow: 1;
+  }
+
+  &__icon {
+    color: $blue_grey_70;
+    padding-right: 16px;
+    width: 32px;
+  }
+
+  &__helper {
+    width: 80%;
+    margin: 0 auto;
+    font-size: 0.8em;
+    color: $blue_grey_60;
+  }
+
+  &__hint {
+    padding-bottom: 16px;
+  }
+
+  &__hint:last-child {
+    padding-bottom: 0;
+  }
+
+  &__link {
+    color: $blue_80;
+  }
 }

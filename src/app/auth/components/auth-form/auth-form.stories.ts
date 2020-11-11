@@ -7,7 +7,7 @@ import { moduleMetadata } from '@storybook/angular';
 import { TranslatePipe } from '../../../i18n/pipes/translate.pipe';
 import { ButtonComponent } from '../../../shared/components/button/button.component';
 import { InputComponent } from '../../../shared/components/input/input.component';
-import { LoginFormComponent } from './login-form.component';
+import { AuthFormComponent } from './auth-form.component';
 
 export default {
   title: 'LoginForm',
@@ -57,7 +57,7 @@ export const formData = {
 };
 
 export const Login = () => ({
-  component: LoginFormComponent,
+  component: AuthFormComponent,
   props: {
     credentialsReceived: actionsData.credentialsReceived,
     translations: formData.translations
@@ -65,7 +65,7 @@ export const Login = () => ({
 });
 
 export const Register = () => ({
-  component: LoginFormComponent,
+  component: AuthFormComponent,
   props: {
     credentialsReceived: actionsData.credentialsReceived,
     translations: formData.translations,

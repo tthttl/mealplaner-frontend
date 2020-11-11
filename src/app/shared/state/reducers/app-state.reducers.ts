@@ -39,6 +39,7 @@ export const appStateReducer = createReducer<AppState, Action>(
     }),
   on(
     AuthApiActions.loginSuccess,
+    AuthApiActions.registerSuccess,
     (state, {user}: { user: User }) => {
       return {
         ...state,

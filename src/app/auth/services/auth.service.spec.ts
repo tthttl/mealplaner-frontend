@@ -59,6 +59,25 @@ describe('AuthService', () => {
     req.flush(mockUserApi);
   });
 
+  it('register() should return User', () => {
+    const mockUserApi: UserApi = {
+      user: {
+        _id: '0',
+        username: 'Joe',
+        email: 'joe@doe.com',
+      },
+      jwt: validJwt
+    };
+
+    service.register({name: 'Joe', email: 'joe@doe.com', invitationCode: 'CODE', password: 'jane'}).subscribe((res) => {
+      expect(res).toEqual(mapUserApiToUserClient(mockUserApi));
+    });
+
+    const req = httpMock.expectOne(`${environment.authUrl}/auth/local/register`);
+    expect(req.request.method).toBe('POST');
+    req.flush(mockUserApi);
+  });
+
   it('refreshToken() should return RefreshToken', () => {
     const mockJwtRenewal: JwtRefreshResponse = {
       ok: true,
