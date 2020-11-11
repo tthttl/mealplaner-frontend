@@ -150,6 +150,6 @@ export function mapSelectedIngredientToBasicShoppingListItem(ingredient: Selecte
   };
 }
 
-export function copyOrCreateArray<T extends object>(arrayMap: {[key: string]: T[]}, arrayId: string): T[]{
+export function copyOrCreateArray<T extends object>(arrayMap: { [key: string]: T[] }, arrayId: string): T[] {
   return !!arrayMap[arrayId] ? [...arrayMap[arrayId]] : ([] as T[]);
 }

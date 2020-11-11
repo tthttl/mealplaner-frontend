@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Cookbook, Recipe } from '../../shared/model/model';
+import { BasicShoppingListItem, Cookbook, Recipe } from '../../shared/model/model';
 
 export const loadCookbook = createAction('[Cookbook Container] Load Cookbooks');
 export const createCookbook = createAction(
@@ -38,4 +38,12 @@ export const deleteRecipe = createAction(
   props<{ recipe: Recipe }>()
 );
 export const deleteRecipeFromState = createAction('[Cookbook Container] Delete Recipe from State', props<{ recipeToDelete: Recipe }>());
+
+export const copyIngredientsToShoppingList = createAction('[CookbookContainer]',
+  props<{ optimisticId: string, shoppingListItem: BasicShoppingListItem }>());
+
+export const copyRecipeToMealplaner = createAction('[CookbookContainer]',
+  props<{ recipe: Recipe }>());
+
+export const loadShoppingLists = createAction('[Cookbook Container] Load ShoppingLists from Cookbook Container');
 

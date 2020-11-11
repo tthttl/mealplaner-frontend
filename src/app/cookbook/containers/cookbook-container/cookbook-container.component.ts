@@ -5,7 +5,8 @@ import { Observable, Subject } from 'rxjs';
 import { map, switchMap, take, withLatestFrom } from 'rxjs/operators';
 import { v4 as uuid } from 'uuid';
 import { TranslatePipe } from '../../../i18n/pipes/translate.pipe';
-import { copyIngredientsToShoppingList, copyRecipeToMealplaner } from '../../../shared/actions/shared-actiion';
+
+
 import { EditListDialogComponent } from '../../../shared/components/edit-list-dialog/edit-list-dialog.component';
 import { mapSelectedIngredientToBasicShoppingListItem } from '../../../shared/helpers/helpers';
 import {
@@ -18,12 +19,21 @@ import {
   List,
   Recipe,
   RecipeViewDialogEvent,
-  SelectedIngredient
+  SelectedIngredient,
+  ShoppingList
 } from '../../../shared/model/model';
 import { DialogService } from '../../../shared/services/dialog.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
-import { activeShoppingListId, GlobalState, selectActiveCookbook, selectCookbooks, selectTranslations } from '../../../shared/state';
+import {
+  activeShoppingList,
+  activeShoppingListId,
+  GlobalState,
+  selectActiveCookbook,
+  selectCookbooks,
+  selectTranslations
+} from '../../../shared/state';
 import { CookbookApiActions, CookbookContainerActions } from '../../actions';
+import { copyIngredientsToShoppingList, copyRecipeToMealplaner } from '../../actions/cookbook-container.actions';
 import { RecipeViewComponent } from '../../components/recipe-view/recipe-view.component';
 
 @Component({
@@ -38,6 +48,7 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
   recipes$: Observable<Recipe[]>;
   cookbooks$: Observable<Cookbook[]>;
   selectedCookbook$: Observable<Cookbook | undefined>;
+  activeShoppingList$: Observable<ShoppingList | undefined>;
   private destroy$: Subject<void> = new Subject<void>();
 
   private recipeViewTranslations: {} = {};
@@ -62,10 +73,16 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
         return state.cookbookState.cookbooks[0];
       }
     });
+    this.activeShoppingList$ = this.store.select(activeShoppingList);
   }
 
   ngOnInit(): void {
     this.store.dispatch(CookbookContainerActions.loadCookbook());
+    this.activeShoppingList$.pipe(take(1)).subscribe((shoppingList: ShoppingList | undefined) => {
+      if (!shoppingList) {
+        this.store.dispatch(CookbookContainerActions.loadShoppingLists());
+      }
+    });
     this.store.select(selectTranslations).pipe(
       withLatestFrom(this.store.select((state: GlobalState) => state.appState.language))
     ).subscribe(([translations, currentLanguage]: [I18n | null, Language]) => {
@@ -136,6 +153,14 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
                 optimisticId: uuid(),
                 shoppingListItem: item
               })));
+            this.activeShoppingList$.pipe(take(1)).subscribe((shoppingList: ShoppingList | undefined) => {
+              const snackBarRef = this.snackBarService.openSnackBar('message.ingredients-added-to-shoppinglist', shoppingList?.title || '');
+              snackBarRef.afterDismissed().pipe(take(1)).subscribe(({dismissedByAction}) => {
+                if (dismissedByAction) {
+                  this.router.navigate(['/shopping-list'], {queryParams: {shoppingListId: shoppingList?.id}});
+                }
+              });
+            });
             break;
         }
       });
@@ -165,7 +190,7 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
       .pipe(take(1))
       .subscribe((result: CreateListDialogEvent | undefined) => {
         if (result?.event === 'create') {
-          this.store.dispatch(CookbookContainerActions.createCookbook({ optimisticId: uuid(), title: result.title}));
+          this.store.dispatch(CookbookContainerActions.createCookbook({optimisticId: uuid(), title: result.title}));
         }
       });
   }
@@ -183,7 +208,7 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
       .pipe(take(1))
       .subscribe((result: EditListDialogEvent | undefined) => {
         if (result?.event === 'edit') {
-          this.store.dispatch(CookbookContainerActions.editCookbook({ cookbook: result.list}));
+          this.store.dispatch(CookbookContainerActions.editCookbook({cookbook: result.list}));
         }
       });
   }

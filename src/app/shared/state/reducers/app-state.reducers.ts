@@ -1,9 +1,9 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { I18n, Language, User } from '../../model/model';
-import { AppState, initialAppState } from '../states/app-state';
 import { AuthApiActions } from '../../../auth/actions';
-import { I18nApiActions } from '../../../i18n/actions';
+import { I18nApiActions, I18nContainerActions } from '../../../i18n/actions';
+import { I18n, Language, User } from '../../model/model';
 import { AppInitializationActions, AuthenticatedGuardActions, ErrorInterceptorActions, NavActions } from '../app-actions';
+import { AppState, initialAppState } from '../states/app-state';
 
 
 export const appStateReducer = createReducer<AppState, Action>(
@@ -71,5 +71,11 @@ export const appStateReducer = createReducer<AppState, Action>(
         ...state,
         user: null,
       };
-    })
+    }),
+  on(I18nContainerActions.changeLanguage, (state: AppState, {language}: { language: Language }) => {
+    return {
+      ...state,
+      language
+    };
+  })
 );

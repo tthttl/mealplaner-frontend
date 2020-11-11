@@ -31,6 +31,17 @@
 
     <div class="main-navigation__actions">
 
+      <app-select
+        class="main-navigation__secondary-action"
+        [control]="getSelectedLanguage()"
+        [noBorder]="true"
+        [name]="'language'"
+        [options]="supportedLanguages"
+        (valueChanged)="changeLanguage($event)"
+        [noBackground]="true"
+        [noPadding]="true"
+      >
+      </app-select>
 
       <app-button *ngIf="isLoggedIn; else registerTemplate"
                   [buttonText]="'app.navigation.logout' | translate:translations:currentLang"

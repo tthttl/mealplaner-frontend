@@ -1,3 +1,4 @@
+import { LocationStrategy } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { TranslatePipe } from '../../../i18n/pipes/translate.pipe';
@@ -21,7 +22,10 @@ export class RecipeFormComponent implements OnInit {
   ingredients: FormArray;
   units: SelectOption<string>[] = [];
 
-  constructor(private translatePipe: TranslatePipe) {
+  constructor(
+    private translatePipe: TranslatePipe,
+    private location: LocationStrategy,
+  ) {
     this.recipeForm = new FormGroup({
       id: new FormControl(''),
       cookbookId: new FormControl(''),
@@ -92,6 +96,10 @@ export class RecipeFormComponent implements OnInit {
   }
 
   onSubmit(): void {
+    if (!this.recipeForm.touched) {
+      this.location.back();
+      return;
+    }
     const recipeToSave: Recipe = this.recipeForm?.value;
     if (!recipeToSave.id) {
       delete recipeToSave.id;
@@ -104,6 +112,13 @@ export class RecipeFormComponent implements OnInit {
       ingredient.amount = +ingredient.amount;
     });
     this.recipeSaved.emit(recipeToSave);
+  }
+
+  getButtonText(): string {
+    if (!this.recipeForm.touched) {
+      return 'button.back';
+    }
+    return this.recipe ? 'button.modify' : 'button.submit';
   }
 
   addEmptyIngredientRow(): void {

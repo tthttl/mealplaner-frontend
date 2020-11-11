@@ -10,7 +10,7 @@ export interface SetActiveShoppingListAction {
   id: string;
 }
 
-export interface LoadI18nAction {
+export interface SetLanguageAction {
   type: string;
   language: Language;
 }

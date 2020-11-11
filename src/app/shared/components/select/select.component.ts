@@ -1,7 +1,7 @@
 import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { SelectOption } from '../../model/model';
 import { v4 as uuid } from 'uuid';
+import { SelectOption } from '../../model/model';
 
 
 @Component({
@@ -25,7 +25,9 @@ export class SelectComponent<T> implements OnInit, ControlValueAccessor {
   @Input() errors: string[] = [];
   @Input() isDisabled = false;
   @Input() e2eTestName = '';
-  @Output() valueChanged: EventEmitter<T | string> = new EventEmitter();
+  @Input() noPadding = false;
+  @Input() noBackground = false;
+  @Output() valueChanged: EventEmitter<T> = new EventEmitter();
 
   selectedValue: T | string | null = null;
   inputId: string = uuid();
@@ -40,6 +42,7 @@ export class SelectComponent<T> implements OnInit, ControlValueAccessor {
 
   onChange(option: T | string): void {
     this.propagateChange(option);
+    this.valueChanged.emit(option as T);
   }
 
   getOptionKey(option: SelectOption<T>): string {

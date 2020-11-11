@@ -2,10 +2,10 @@ import { ActionReducerMap, createFeatureSelector, createSelector, MetaReducer } 
 import { cookbookStateReducer } from '../../cookbook/reducers/cookbook-state.reducers';
 import { CookbookState, initialCookbookState } from '../../cookbook/state/cookbook-state';
 import { isJwtTokenExpired } from '../helpers/helpers';
-import { initialShoppingListState, shoppingListAdapter, ShoppingListState } from './states/shopping-list-state';
-import { shoppingListReducers } from './reducers/shopping-list.reducers';
 import { appStateReducer } from './reducers/app-state.reducers';
+import { shoppingListReducers } from './reducers/shopping-list.reducers';
 import { AppState, initialAppState } from './states/app-state';
+import { initialShoppingListState, shoppingListAdapter, ShoppingListState } from './states/shopping-list-state';
 
 export interface GlobalState {
   appState: AppState;
@@ -34,7 +34,7 @@ export const selectShoppingListState = createFeatureSelector<GlobalState, Shoppi
 
 export const selectTranslations = createSelector(
   selectAppState,
-  (appState: AppState) => appState.i18n
+  (appState: AppState) => appState.i18n || {}
 );
 
 export const selectRecipes = createSelector(
