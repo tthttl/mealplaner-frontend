@@ -12,10 +12,10 @@
       <ng-container *ngTemplateOutlet="formTemplate; context: {form: authForm}"></ng-container>
     </div>
 
-    <button class="auth-form__button">{{ buttonText }}</button>
+    <button *ngIf="showButton" class="auth-form__button">{{ buttonText }}</button>
   </form>
 
-  <section class="auth-form__helper-section">
+  <section *ngIf="showButton" class="auth-form__helper-section">
     <ng-container [ngTemplateOutlet]="formFooter"></ng-container>
   </section>
 </div>

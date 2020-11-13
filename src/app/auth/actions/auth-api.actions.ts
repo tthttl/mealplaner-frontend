@@ -12,3 +12,9 @@ export const logoutFailure = createAction('[Auth API] Logout Failure');
 
 export const registerSuccess = createAction('[Auth API] Register Success', props<{ user: User }>());
 export const registerFailure = createAction('[Auth API] Register Failure', props<{ error: string }>());
+
+export const forgotPasswordSuccess = createAction('[Auth API] Forgot Password Success');
+export const forgotPasswordFailure = createAction('[Auth API] Forgot Password Failure');
+
+export const restPasswordSuccess = createAction('[Auth API] Rest Password Success', props<{ user: User }>());
+export const restPasswordFailure = createAction('[Auth API] Rest Password Failure', props<{ error: string }>());

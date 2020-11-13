@@ -2,7 +2,13 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { GlobalState, selectRequestedUrlBeforeLoginWasRequired } from '../../shared/state';
-import { AuthApiActions, LoginPageActions, LoginServiceActions, RegisterContainerActions } from '../actions';
+import {
+  AuthApiActions,
+  ForgotPasswordContainerActions,
+  LoginPageActions,
+  LoginServiceActions,
+  RegisterContainerActions, ResetPasswordContainerActions
+} from '../actions';
 import { catchError, exhaustMap, map, tap, withLatestFrom } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 import { LoginAction } from '../../shared/model/model-action';
@@ -68,9 +74,28 @@ export class AuthApiEffects {
     )),
   );
 
+  @Effect()
+  sendPasswordResetMail$ = this.actions$.pipe(
+    ofType(ForgotPasswordContainerActions.requestEmail),
+    exhaustMap(({email}) => this.authService.forgotPassword(email).pipe(
+      map(() => AuthApiActions.forgotPasswordSuccess()),
+      catchError(() => of(AuthApiActions.forgotPasswordFailure()))
+    )),
+  );
+
+  @Effect()
+  resetPassword$ = this.actions$.pipe(
+    ofType(ResetPasswordContainerActions.resetPassword),
+    exhaustMap(({password, resetPasswordToken}) => this.authService.resetPassword(password, resetPasswordToken).pipe(
+      map((user: User) => AuthApiActions.restPasswordSuccess({user})),
+      tap(() => this.snackBarService.openSnackBar('auth.reset-password.success')),
+      catchError(() => of(AuthApiActions.restPasswordFailure({error: 'authBackend.resetPassword.failed'})))
+    )),
+  );
+
   @Effect({dispatch: false})
   redirectWhenLoggedIn = this.actions$.pipe(
-    ofType(AuthApiActions.loginSuccess, AuthApiActions.registerSuccess),
+    ofType(AuthApiActions.loginSuccess, AuthApiActions.registerSuccess, AuthApiActions.restPasswordSuccess),
     withLatestFrom(this.store.select(selectRequestedUrlBeforeLoginWasRequired)),
     tap(([_, url]) => {
       this.router.navigate([url || DEFAULT_REDIRECT_URL_FOR_LOGGED_IN_USER]);

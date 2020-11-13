@@ -39,7 +39,7 @@
 
   <ng-template #formFooter>
     <div class="login-form__hint">
-      {{ 'auth.login.forgot-password' | translate:translations:currentLang}}
+      <a [routerLink]="['/auth/forgot']" [queryParams]="email ? {email: email} : {}"> {{ 'auth.login.forgot-password' | translate:translations:currentLang}}</a>
     </div>
     <div class="login-form__hint" [innerHTML]="'auth.login.not-registered' | translate:translations:currentLang " >
     </div>

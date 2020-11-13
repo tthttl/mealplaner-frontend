@@ -13,7 +13,6 @@ import { translateValidationErrors } from '../../../shared/helpers/helpers';
 })
 export class LoginFormPageComponent {
 
-  @Input() buttonText = 'login';
   @Input() translations: I18n | null = {};
   @Input() currentLang: Language | null = DEFAULT_LANGUAGE;
   @Input() backendErrorMessage: string | undefined;
@@ -31,6 +30,10 @@ export class LoginFormPageComponent {
         Validators.required,
       ])
     });
+  }
+
+  get email(): string {
+    return this.loginForm.value.identifier;
   }
 
   getFormControl(key: string): FormControl {

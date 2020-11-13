@@ -14,5 +14,13 @@
   "/auth/logout": {
     "target": "http://localhost:1337",
     "secure": false
+  },
+  "/auth/forgot-password": {
+    "target": "http://localhost:1337",
+    "secure": false
+  },
+  "/auth/reset-password": {
+    "target": "http://localhost:1337",
+    "secure": false
   }
 }

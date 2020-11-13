@@ -13,10 +13,24 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { LoginFormPageComponent } from './components/login-form-page/login-form-page.component';
 import { AuthFormComponent } from './components/auth-form/auth-form.component';
 import { RegisterFormPageComponent } from './components/regsiter-form-page/register-form-page.component';
+import { ForgotPasswordContainerComponent } from './containers/forgot-password-container/forgot-password-container.component';
+import { ForgotPasswordPageComponent } from './components/forgot-password-page/forgot-password-page.component';
+import { ResetPasswordContainerComponent } from './containers/reset-password-container/reset-password-container.component';
+import { ResetPasswordPageComponent } from './components/reset-password-page/reset-password-page.component';
 
 
 @NgModule({
-  declarations: [AuthFormComponent, RegisterFormPageComponent, LoginContainerComponent, RegisterContainerComponent, LoginFormPageComponent],
+  declarations: [
+    AuthFormComponent,
+    RegisterFormPageComponent,
+    LoginContainerComponent,
+    RegisterContainerComponent,
+    LoginFormPageComponent,
+    ForgotPasswordContainerComponent,
+    ForgotPasswordPageComponent,
+    ResetPasswordContainerComponent,
+    ResetPasswordPageComponent
+  ],
   imports: [
     I18nModule,
     CommonModule,
@@ -33,4 +47,5 @@ import { RegisterFormPageComponent } from './components/regsiter-form-page/regis
     }
   ]
 })
-export class AuthModule { }
+export class AuthModule {
+}

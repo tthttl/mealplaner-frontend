@@ -78,6 +78,35 @@ describe('AuthService', () => {
     req.flush(mockUserApi);
   });
 
+  it('forgotPassword() should return return success message', () => {
+    service.forgotPassword('joe@doe.com').subscribe((res) => {
+      expect(res).toEqual({ok: true});
+    });
+
+    const req = httpMock.expectOne(`${environment.authUrl}/auth/forgot-password`);
+    expect(req.request.method).toBe('POST');
+    req.flush({ok: true});
+  });
+
+  it('resetPassword() should return User', () => {
+    const mockUserApi: UserApi = {
+      user: {
+        _id: '0',
+        username: 'Joe',
+        email: 'joe@doe.com',
+      },
+      jwt: validJwt
+    };
+
+    service.resetPassword('secret', 'resetToken').subscribe((res) => {
+      expect(res).toEqual(mapUserApiToUserClient(mockUserApi));
+    });
+
+    const req = httpMock.expectOne(`${environment.authUrl}/auth/reset-password`);
+    expect(req.request.method).toBe('POST');
+    req.flush(mockUserApi);
+  });
+
   it('refreshToken() should return RefreshToken', () => {
     const mockJwtRenewal: JwtRefreshResponse = {
       ok: true,

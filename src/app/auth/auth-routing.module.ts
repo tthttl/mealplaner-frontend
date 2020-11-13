@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginContainerComponent } from './containers/login-container/login-container.component';
 import { LoggedOutGuard } from '../shared/guards/logged-out.guard';
 import { RegisterContainerComponent } from './containers/register-container/register-container.component';
+import { ForgotPasswordContainerComponent } from './containers/forgot-password-container/forgot-password-container.component';
+import { ResetPasswordContainerComponent } from './containers/reset-password-container/reset-password-container.component';
 
 
 const routes: Routes = [
@@ -16,6 +18,16 @@ const routes: Routes = [
     component: RegisterContainerComponent,
     canActivate: [LoggedOutGuard]
   },
+  {
+    path: 'forgot',
+    component: ForgotPasswordContainerComponent,
+    canActivate: [LoggedOutGuard]
+  },
+  {
+    path: 'reset',
+    component: ResetPasswordContainerComponent,
+    canActivate: [LoggedOutGuard]
+  }
 ];
 
 @NgModule({
