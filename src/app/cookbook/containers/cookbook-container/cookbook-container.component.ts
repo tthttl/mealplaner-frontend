@@ -146,7 +146,6 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
             event.selectedIngredients?.filter((item: SelectedIngredient) => item.isSelected)
               .map((item: SelectedIngredient) => mapSelectedIngredientToBasicShoppingListItem(item, shoppingListId))
               .map((item: BasicShoppingListItem) => {
-                console.log(item);
                 return item;
               })
               .forEach((item: BasicShoppingListItem) => this.store.dispatch(copyIngredientsToShoppingList({

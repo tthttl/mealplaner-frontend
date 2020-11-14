@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { ShoppingListContainerComponent } from './containers/shopping-list-container/shopping-list-container.component';
+import { RouterModule, Routes } from '@angular/router';
 import { AuthenticatedGuard } from '../shared/guards/authenticated.guard';
+import { ShoppingListContainerComponent } from './containers/shopping-list-container/shopping-list-container.component';
 
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'shopping-list',
     component: ShoppingListContainerComponent,
     canActivate: [AuthenticatedGuard]
   }
