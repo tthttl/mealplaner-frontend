@@ -132,6 +132,28 @@ describe('i18nReducer', () => {
     });
   });
 
+  describe(' AuthApiActions.restPasswordSuccess', () => {
+    it('should set user in store', () => {
+      expect(appStateReducer({
+          ...initialAppState,
+        },
+        AuthApiActions.restPasswordSuccess({user: {
+            id: '0',
+            name: 'Joe',
+            email: 'joe@doe.com',
+            jwt: 'jwt'
+          }}))).toEqual({
+        ...initialAppState,
+        user: {
+          id: '0',
+          name: 'Joe',
+          email: 'joe@doe.com',
+          jwt: 'jwt'
+        }
+      });
+    });
+  });
+
   describe('AuthenticatedGuardActions.setRequestedUrlBeforeLoginWasRequired.loginSuccess', () => {
     it('should set requestedUrlBeforeLoginWasRequired in store', () => {
       expect(appStateReducer({

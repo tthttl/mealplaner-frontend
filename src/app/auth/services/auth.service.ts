@@ -39,6 +39,20 @@ export class AuthService {
     );
   }
 
+  forgotPassword(email: string): Observable<{ ok: boolean }> {
+    return this.httpClient.post<{ ok: boolean }>(`${environment.authUrl}/auth/forgot-password`, {email, user: email});
+  }
+
+  resetPassword(password: string, resetPasswordToken: string): Observable<User> {
+    return this.httpClient.post<UserApi>(
+      `${environment.authUrl}/auth/reset-password`,
+      {code: resetPasswordToken, password, passwordConfirmation: password})
+      .pipe(
+        map((userApi: UserApi) => mapUserApiToUserClient(userApi)),
+        tap(user => this.startRefreshTokenTimer(user.jwt))
+      );
+  }
+
   logout(): Observable<true> {
     this.stopRefreshTokenTimer();
     return this.httpClient.post<true>(`${environment.authUrl}/auth/logout`, {});

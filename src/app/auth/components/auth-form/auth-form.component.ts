@@ -17,6 +17,7 @@ export class AuthFormComponent {
   @Input() buttonText = '';
   @Input() backedErrorMessage: string | undefined;
   @Input() authForm: FormGroup  = new FormGroup({});
+  @Input() showButton = true;
   @Output() formSubmit: EventEmitter<LoginCredentials> = new EventEmitter();
 
   /* tslint:disable no-any*/
