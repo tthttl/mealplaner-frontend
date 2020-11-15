@@ -5,7 +5,7 @@ import { isJwtTokenExpired } from '../helpers/helpers';
 import { appStateReducer } from './reducers/app-state.reducers';
 import { shoppingListReducers } from './reducers/shopping-list.reducers';
 import { AppState, initialAppState } from './states/app-state';
-import { initialShoppingListState, shoppingListAdapter, ShoppingListState } from './states/shopping-list-state';
+import { initialShoppingListState, shoppingListAdapter, shoppingListItemAdapter, ShoppingListState } from './states/shopping-list-state';
 
 export interface GlobalState {
   appState: AppState;
@@ -84,11 +84,30 @@ export const activeShoppingListId = createSelector(
   (shoppingListState: ShoppingListState) => shoppingListState.activeShoppingList
 );
 
-export const selectCurrentShoppingListItems = createSelector(
+export const isActiveShoppingListLoading = createSelector(
   selectShoppingListState,
-  (shoppingListState: ShoppingListState) => shoppingListState.shoppingListItems[shoppingListState.activeShoppingList || '']
+  (shoppingListState: ShoppingListState) => shoppingListState.activeShoppingList
 );
 
+
+export const selectCurrentShoppingListEntity = createSelector(
+  selectShoppingListState,
+  (shoppingListState: ShoppingListState) => {
+    if (!shoppingListState.activeShoppingList) {
+      return shoppingListItemAdapter.getInitialState();
+    }
+
+    const items = shoppingListState.shoppingListItems[shoppingListState.activeShoppingList];
+
+    if (!items) {
+      return shoppingListItemAdapter.getInitialState();
+    }
+
+    return items;
+  },
+);
+
+export const selectCurrentShoppingListItems = shoppingListItemAdapter.getSelectors(selectCurrentShoppingListEntity).selectAll;
 
 export const selectCookbooks = createSelector(
   selectCookbookState,

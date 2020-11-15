@@ -11,6 +11,7 @@ import { ChangeShoppingListAction, SetActiveShoppingListAction } from '../../sha
 import { GlobalState, selectCurrentShoppingListItems, selectUserID } from '../../shared/state';
 import { ShoppingListApiActions, ShoppingListContainerActions, ShoppingListEffectActions } from '../actions';
 import { ShoppingListService } from '../service/shopping-list.service';
+import { moveItemInArray } from '../../shared/helpers/helpers';
 
 @Injectable()
 export class ShoppingListApiEffects {
@@ -102,32 +103,48 @@ export class ShoppingListApiEffects {
   @Effect()
   deleteShoppingListItem$ = this.actions$.pipe(
     ofType(ShoppingListContainerActions.deleteShoppingListItem),
-    concatMap(({shoppingListItem}) => this.shoppingListService.deleteShoppingListItem(shoppingListItem.id).pipe(
-      map(() => {
-        return ShoppingListApiActions.deleteShoppingListItemSuccess({shoppingListItem});
-      }),
-      catchError(() => of(ShoppingListApiActions.deleteShoppingListItemFailure({shoppingListItem})))
-    )),
+    concatMap(({shoppingListItem}) => {
+      return of({}).pipe(
+        delay(DELETION_DELAY),
+        takeUntil(this.actions$.pipe(ofType(ShoppingListContainerActions.undoDeleteShoppingListItem))),
+        mergeMap(() =>  this.shoppingListService.deleteShoppingListItem(shoppingListItem.id).pipe(
+          map(() => {
+            return ShoppingListApiActions.deleteShoppingListItemSuccess({shoppingListItem});
+          }),
+          catchError(() => of(ShoppingListApiActions.deleteShoppingListItemFailure({shoppingListItem})))
+        ))
+      );
+    })
   );
 
-  @Effect({dispatch: false})
+  @Effect()
   moveShoppingListItem$ = this.actions$.pipe(
     ofType(ShoppingListContainerActions.moveShoppingListItem),
     withLatestFrom(this.store.select(selectCurrentShoppingListItems)),
-    map(([{shoppingListId, previousIndex, currentIndex}, shoppingListItems]): ShoppingListItem[] => {
+    map(([{shoppingListId, previousIndex, currentIndex}, shoppingListItems]) => {
       const [fromIndex, toIndex] = [previousIndex, currentIndex].sort();
-      const itemsToUpdate = shoppingListItems.slice(fromIndex, toIndex + 1);
+      const itemsToUpdate = moveItemInArray(shoppingListItems, previousIndex, currentIndex).slice(fromIndex, toIndex + 1);
       const maxOrder = Math.max(...itemsToUpdate.map((shoppingListItem: ShoppingListItem) => shoppingListItem.order || 0));
 
-      return itemsToUpdate
-        .map((item, index) => ({...item, order: maxOrder - index}));
+      moveItemInArray(itemsToUpdate, previousIndex, currentIndex);
+
+      return ShoppingListEffectActions.bulkUpdateShoppingListItems({
+        shoppingListId,
+        shoppingListItems: itemsToUpdate.map((item, index) => ({...item, order: maxOrder - index})),
+      });
     }),
-    map((shoppingListItems: ShoppingListItem[]) => {
+  );
+
+  @Effect()
+  bulkUpdateShoppingListItem$ = this.actions$.pipe(
+    ofType(ShoppingListEffectActions.bulkUpdateShoppingListItems),
+    map(({shoppingListItems}) => {
       return shoppingListItems.map(shoppingListItem => this.shoppingListService.updateShoppingListItem(shoppingListItem));
     }),
     concatMap((updateObservables: Observable<ShoppingListItem>[]) => {
       const a = forkJoin(updateObservables);
       return a.pipe(
+        tap(() => console.log('success')),
         map(() => ShoppingListApiActions.updateShoppingListItemSuccess()),
         catchError(() => of(ShoppingListApiActions.updateShoppingListItemFailure({updateObservables}))));
     })

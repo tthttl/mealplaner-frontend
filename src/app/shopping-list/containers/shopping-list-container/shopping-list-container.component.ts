@@ -86,18 +86,14 @@ export class ShoppingListContainerComponent implements OnInit {
   }
 
   onShoppingListItemDeleted({shoppingListItem}: DeleteShoppingListItemEvent): void {
-    this.store.dispatch(ShoppingListContainerActions.toggleShoppingListItem(
-      {shoppingListItemId: shoppingListItem.id, shoppingList: shoppingListItem.shoppingList}));
+    this.store.dispatch(ShoppingListContainerActions.deleteShoppingListItem({shoppingListItem}));
 
     this.snackBarService.openSnackBar('message.undo', 'message.action', 3000)
       .afterDismissed()
       .pipe(take(1))
       .subscribe(({dismissedByAction}) => {
         if (dismissedByAction) {
-          this.store.dispatch(ShoppingListContainerActions.unToggleShoppingListItem(
-            {shoppingListItemId: shoppingListItem.id, shoppingList: shoppingListItem.shoppingList}));
-        } else {
-          this.store.dispatch(ShoppingListContainerActions.deleteShoppingListItem({shoppingListItem}));
+          this.store.dispatch(ShoppingListContainerActions.undoDeleteShoppingListItem({shoppingListItem}));
         }
       });
   }

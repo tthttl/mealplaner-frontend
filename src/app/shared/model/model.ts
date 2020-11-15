@@ -21,6 +21,7 @@ export interface Ingredient {
 export interface ShoppingList {
   id: string;
   title: string;
+  isInitialized?: boolean;
 }
 
 export interface List {
@@ -32,7 +33,6 @@ export interface ShoppingListItem extends Ingredient {
   id: string;
   shoppingList: string;
   order?: number;
-  isChecked?: boolean;
 }
 
 export type BasicShoppingListItem = Omit<ShoppingListItem, 'id' | 'order'>;

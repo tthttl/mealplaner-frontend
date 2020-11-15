@@ -6,10 +6,10 @@ import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { Action, Store } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
 import { ActivatedRoute, Router } from '@angular/router';
-import { activeShoppingListId, GlobalState, initialState, selectCurrentShoppingListItems, selectUserID } from '../../shared/state';
+import { GlobalState, initialState, selectUserID } from '../../shared/state';
 import { ShoppingList, ShoppingListItem } from '../../shared/model/model';
-import SpyObj = jasmine.SpyObj;
 import { initialShoppingListState } from '../../shared/state/states/shopping-list-state';
+import SpyObj = jasmine.SpyObj;
 
 
 describe('Shopping List Api Effects', () => {
@@ -42,15 +42,6 @@ describe('Shopping List Api Effects', () => {
         provideMockStore({
           selectors: [
             {selector: selectUserID, value: '32'},
-            {
-              selector: selectCurrentShoppingListItems,
-              value: [
-                {id: '42', title: 'Item 1', order: 4},
-                {id: '42', title: 'Item 2', order: 3},
-                {id: '42', title: 'Item 3', order: 2},
-                {id: '42', title: 'Item 4', order: 1},
-              ]
-            }
           ],
           initialState: {
             ...initialState,
@@ -63,6 +54,17 @@ describe('Shopping List Api Effects', () => {
                   entities: {
                     42: {id: '42', title: 'Title 42'},
                     99: {id: '99', title: 'Title 99'}
+                  }
+                }
+              },
+              shoppingListItems: {
+                42: {
+                  ids: ['42', '43', '44', '45'],
+                  entities: {
+                    42: {id: '42', title: 'Item 1', order: 4, shoppingList: '42', unit: 'kg', amount: 1},
+                    43: {id: '43', title: 'Item 2', order: 3, shoppingList: '42', unit: 'kg', amount: 1},
+                    44: {id: '44', title: 'Item 3', order: 2, shoppingList: '42', unit: 'kg', amount: 1},
+                    45: {id: '45', title: 'Item 4', order: 1, shoppingList: '42', unit: 'kg', amount: 1},
                   }
                 }
               }
@@ -159,7 +161,7 @@ describe('Shopping List Api Effects', () => {
         shoppingListId: '42',
       });
       shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
-      shoppingListApiEffects.setQueryParameterForActiveShoppingList$.subscribe((action) => {
+      shoppingListApiEffects.setQueryParameterForActiveShoppingList$.subscribe(() => {
         expect(router.navigate).toHaveBeenCalledWith([], {relativeTo: activatedRoute, queryParams: {shoppingListId: '42'}});
       });
     });
@@ -170,7 +172,7 @@ describe('Shopping List Api Effects', () => {
         shoppingListId: '42',
       });
       shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
-      shoppingListApiEffects.setQueryParameterForActiveShoppingList$.subscribe((action) => {
+      shoppingListApiEffects.setQueryParameterForActiveShoppingList$.subscribe(() => {
         expect(router.navigate).toHaveBeenCalledWith([], {relativeTo: activatedRoute, queryParams: {shoppingListId: '42'}});
       });
     });
@@ -187,7 +189,7 @@ describe('Shopping List Api Effects', () => {
         shoppingListId: '42',
       });
       shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
-      shoppingListApiEffects.setLocalStorageForActiveShoppingList$.subscribe((action) => {
+      shoppingListApiEffects.setLocalStorageForActiveShoppingList$.subscribe(() => {
         expect(localStorage.setItem).toHaveBeenCalledWith('selectedShoppingListId', '42');
       });
     });
@@ -198,7 +200,7 @@ describe('Shopping List Api Effects', () => {
         shoppingListId: '42',
       });
       shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
-      shoppingListApiEffects.setLocalStorageForActiveShoppingList$.subscribe((action) => {
+      shoppingListApiEffects.setLocalStorageForActiveShoppingList$.subscribe(() => {
         expect(localStorage.setItem).toHaveBeenCalledWith('selectedShoppingListId', '42');
       });
     });
@@ -275,7 +277,7 @@ describe('Shopping List Api Effects', () => {
       shoppingListService = jasmine.createSpyObj('shoppingListService', ['updateShoppingListItem']);
     });
 
-    it('should call service 3 times when moved from Index 0 to 2', () => {
+    it('should create update array with  3 items when moved from Index 0 to 2', () => {
       actions$ = of({
         type: ShoppingListContainerActions.moveShoppingListItem.type,
         shoppingListId: '42',
@@ -283,14 +285,18 @@ describe('Shopping List Api Effects', () => {
         currentIndex: 2
       });
       shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
-      shoppingListService.updateShoppingListItem.and.returnValue(of({} as ShoppingListItem));
-      shoppingListApiEffects.moveShoppingListItem$.subscribe((action: Action) => {
-        expect(shoppingListService.updateShoppingListItem).toHaveBeenCalledTimes(3);
-        expect(action.type).toEqual(ShoppingListApiActions.updateShoppingListItemSuccess.type);
+      // shoppingListService.updateShoppingListItem.and.returnValue(of({} as ShoppingListItem));
+      shoppingListApiEffects.moveShoppingListItem$.subscribe((action) => {
+        expect(action.shoppingListItems).toEqual([
+          {id: '43', title: 'Item 2', order: 4, shoppingList: '42', unit: 'kg', amount: 1},
+          {id: '44', title: 'Item 3', order: 3, shoppingList: '42', unit: 'kg', amount: 1},
+          {id: '42', title: 'Item 1', order: 2, shoppingList: '42', unit: 'kg', amount: 1},
+        ]);
+        expect(action.type).toEqual(ShoppingListEffectActions.bulkUpdateShoppingListItems.type);
       });
     });
 
-    it('should call service 2 times when moved from Index 2 to 1', () => {
+    it('should create update array with  2 items when moved from Index 2 to 1', () => {
       actions$ = of({
         type: ShoppingListContainerActions.moveShoppingListItem.type,
         shoppingListId: '42',
@@ -298,9 +304,35 @@ describe('Shopping List Api Effects', () => {
         currentIndex: 1
       });
       shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
+      // shoppingListService.updateShoppingListItem.and.returnValue(of({} as ShoppingListItem));
+      shoppingListApiEffects.moveShoppingListItem$.subscribe((action) => {
+        expect(action.shoppingListItems).toEqual([
+          {id: '44', title: 'Item 3', order: 3, shoppingList: '42', unit: 'kg', amount: 1},
+          {id: '43', title: 'Item 2', order: 2, shoppingList: '42', unit: 'kg', amount: 1},
+        ]);
+        expect(action.type).toEqual(ShoppingListEffectActions.bulkUpdateShoppingListItems.type);
+      });
+    });
+  });
+
+  describe('bulkUpdateShoppingListItem$', () => {
+    beforeEach(() => {
+      shoppingListService = jasmine.createSpyObj('shoppingListService', ['updateShoppingListItem']);
+    });
+
+    it('should call api 3 tiems for 3 items', () => {
+      actions$ = of({
+        type: ShoppingListEffectActions.bulkUpdateShoppingListItems.type,
+        shoppingListItems: [
+          {id: '43', title: 'Item 2', order: 4, shoppingList: '42', unit: 'kg', amount: 1},
+          {id: '44', title: 'Item 3', order: 3, shoppingList: '42', unit: 'kg', amount: 1},
+          {id: '42', title: 'Item 1', order: 2, shoppingList: '42', unit: 'kg', amount: 1},
+        ]
+      });
+      shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
       shoppingListService.updateShoppingListItem.and.returnValue(of({} as ShoppingListItem));
-      shoppingListApiEffects.moveShoppingListItem$.subscribe((action: Action) => {
-        expect(shoppingListService.updateShoppingListItem).toHaveBeenCalledTimes(2);
+      shoppingListApiEffects.bulkUpdateShoppingListItem$.subscribe((action: Action) => {
+        expect(shoppingListService.updateShoppingListItem).toHaveBeenCalledTimes(3);
         expect(action.type).toEqual(ShoppingListApiActions.updateShoppingListItemSuccess.type);
       });
     });

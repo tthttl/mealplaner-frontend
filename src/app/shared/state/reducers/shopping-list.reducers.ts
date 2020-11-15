@@ -1,7 +1,6 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { initialShoppingListState, shoppingListAdapter, ShoppingListState } from '../states/shopping-list-state';
+import { initialShoppingListState, shoppingListAdapter, shoppingListItemAdapter, ShoppingListState } from '../states/shopping-list-state';
 import { ShoppingListApiActions, ShoppingListContainerActions, ShoppingListEffectActions } from '../../../shopping-list/actions';
-import { moveItemInArray } from '../../helpers/helpers';
 import {
   AddShoppingListItemAction,
   AddShoppingListItemSuccessAction,
@@ -9,9 +8,7 @@ import {
   DeleteShoppingListItemAction,
   LoadShoppingListItemsSuccessAction,
   LoadShoppingListsSuccessAction,
-  SetActiveShoppingListAction,
-  ShoppingListItemMovedAction,
-  ShoppingListToggleAction
+  SetActiveShoppingListAction
 } from '../../model/model-action';
 
 
@@ -41,9 +38,12 @@ export const shoppingListReducers = createReducer<ShoppingListState, Action>(
     (state: ShoppingListState, {shoppingListId, shoppingListItems}: LoadShoppingListItemsSuccessAction) => {
       return {
         ...state,
+        shoppingLists: {
+          items: shoppingListAdapter.updateOne({id: shoppingListId, changes: {isInitialized: true}}, state.shoppingLists.items),
+        },
         shoppingListItems: {
           ...state.shoppingListItems,
-          [shoppingListId]: shoppingListItems,
+          [shoppingListId]: shoppingListItemAdapter.addMany(shoppingListItems, shoppingListItemAdapter.getInitialState()),
         }
       };
     }),
@@ -54,10 +54,9 @@ export const shoppingListReducers = createReducer<ShoppingListState, Action>(
         ...state,
         shoppingListItems: {
           ...state.shoppingListItems,
-          [shoppingListItem.shoppingList]: [
+          [shoppingListItem.shoppingList]: shoppingListItemAdapter.addOne(
             {id: optimisticId, ...shoppingListItem},
-            ...state.shoppingListItems[shoppingListItem.shoppingList]
-          ],
+            state.shoppingListItems[shoppingListItem.shoppingList])
         }
       };
     }
@@ -69,9 +68,10 @@ export const shoppingListReducers = createReducer<ShoppingListState, Action>(
         ...state,
         shoppingListItems: {
           ...state.shoppingListItems,
-          [action.shoppingListItem.shoppingList]: state.shoppingListItems[action.shoppingListItem.shoppingList].map(shoppingListItem => {
-            return shoppingListItem.id === action.optimisticId ? action.shoppingListItem : shoppingListItem;
-          })
+          [action.shoppingListItem.shoppingList]: shoppingListItemAdapter.updateOne(
+            {id: action.optimisticId, changes: action.shoppingListItem},
+            state.shoppingListItems[action.shoppingListItem.shoppingList]
+          )
         }
       };
     }
@@ -83,48 +83,40 @@ export const shoppingListReducers = createReducer<ShoppingListState, Action>(
         ...state,
         shoppingListItems: {
           ...state.shoppingListItems,
-          [shoppingListItem.shoppingList]: state.shoppingListItems[shoppingListItem.shoppingList]
-            .filter((current) => current.id !== shoppingListItem.id),
+          [shoppingListItem.shoppingList]: shoppingListItemAdapter.removeOne(
+            shoppingListItem.id,
+            state.shoppingListItems[shoppingListItem.shoppingList]
+          )
         }
       };
     }
   ),
   on(
-    ShoppingListContainerActions.moveShoppingListItem,
-    (state: ShoppingListState, {shoppingListId, currentIndex, previousIndex}: ShoppingListItemMovedAction) => {
+    ShoppingListContainerActions.undoDeleteShoppingListItem,
+    (state: ShoppingListState, {shoppingListItem}) => {
       return {
         ...state,
         shoppingListItems: {
           ...state.shoppingListItems,
-          [shoppingListId]: moveItemInArray(state.shoppingListItems[shoppingListId], previousIndex, currentIndex),
+          [shoppingListItem.shoppingList]: shoppingListItemAdapter.addOne(
+            shoppingListItem,
+            state.shoppingListItems[shoppingListItem.shoppingList]
+          )
         }
       };
     }
   ),
   on(
-    ShoppingListContainerActions.toggleShoppingListItem,
-    (state: ShoppingListState, {shoppingListItemId, shoppingList}: ShoppingListToggleAction) => {
+    ShoppingListEffectActions.bulkUpdateShoppingListItems,
+    (state: ShoppingListState, {shoppingListItems, shoppingListId}) => {
       return {
         ...state,
         shoppingListItems: {
           ...state.shoppingListItems,
-          [shoppingList]: state.shoppingListItems[shoppingList].map(shoppingListItem => {
-            return shoppingListItem.id === shoppingListItemId ? {...shoppingListItem, isChecked: true} : shoppingListItem;
-          }),
-        }
-      };
-    }
-  ),
-  on(
-    ShoppingListContainerActions.unToggleShoppingListItem,
-    (state: ShoppingListState, {shoppingListItemId, shoppingList}: ShoppingListToggleAction) => {
-      return {
-        ...state,
-        shoppingListItems: {
-          ...state.shoppingListItems,
-          [shoppingList]: state.shoppingListItems[shoppingList].map(shoppingListItem => {
-            return shoppingListItem.id === shoppingListItemId ? {...shoppingListItem, isChecked: false} : shoppingListItem;
-          }),
+          [shoppingListId]: shoppingListItemAdapter.updateMany(
+            shoppingListItems.map(shoppingListItem => ({id: shoppingListItem.id, changes: shoppingListItem})),
+            state.shoppingListItems[shoppingListId]
+          )
         }
       };
     }
@@ -139,7 +131,7 @@ export const shoppingListReducers = createReducer<ShoppingListState, Action>(
         },
         shoppingListItems: {
           ...state.shoppingListItems,
-          [shoppingList.id]: []
+          [shoppingList.id]: shoppingListItemAdapter.getInitialState(),
         },
         activeShoppingList: shoppingList.id,
       };

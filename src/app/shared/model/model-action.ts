@@ -107,11 +107,6 @@ export interface UndoDeleteRecipeFromStateAction {
   readonly recipe: Recipe;
 }
 
-export interface ShoppingListToggleAction {
-  type: string;
-  shoppingListItemId: string;
-  shoppingList: string;
-}
 
 export interface CookbookSelectedAction {
   type: string;

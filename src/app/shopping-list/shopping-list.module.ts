@@ -13,7 +13,6 @@ import { ShoppingListRoutingModule } from './shopping-list-routing.module';
 import { ShoppingListPageComponent } from './components/shopping-list-page/shopping-list-page.component';
 import { EffectsModule } from '@ngrx/effects';
 import { ShoppingListApiEffects } from './effects/shopping-list-api.effects';
-import { UnToggledPipe } from './pipes/untoggeldItems.pipe';
 
 
 @NgModule({
@@ -22,7 +21,6 @@ import { UnToggledPipe } from './pipes/untoggeldItems.pipe';
     ShoppingListFormComponent,
     ShoppingListContainerComponent,
     ShoppingListPageComponent,
-    UnToggledPipe
   ],
   imports: [
     CommonModule,

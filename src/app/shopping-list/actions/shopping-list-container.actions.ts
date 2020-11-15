@@ -10,14 +10,10 @@ export const addShoppingListItem = createAction(
   props<{ optimisticId: string, shoppingListItem: BasicShoppingListItem }>()
 );
 
-export const toggleShoppingListItem = createAction(
-  '[Shopping List Container] Toggle Shopping List Items',
-  props<{ shoppingListItemId: string,  shoppingList: string}>()
-);
 
-export const unToggleShoppingListItem = createAction(
+export const undoDeleteShoppingListItem = createAction(
   '[Shopping List Container] unToggle Shopping List Items',
-  props<{ shoppingListItemId: string,  shoppingList: string}>()
+  props<{ shoppingListItem: ShoppingListItem}>()
 );
 
 export const deleteShoppingListItem = createAction(
