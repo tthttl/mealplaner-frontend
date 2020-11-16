@@ -12,17 +12,9 @@ import {
   Recipe,
   RecipeIngredient,
   SelectedIngredient,
-  ShoppingListItem as ShoppingListItemClient,
   User
 } from '../../shared/model/model';
-import {
-  CookbookApi,
-  I18n as I18nApi,
-  IngredientApi,
-  RecipeApi,
-  ShoppingListItemApi as ShoppingListItemApi,
-  UserApi
-} from '../../shared/model/model-api';
+import { CookbookApi, I18n as I18nApi, IngredientApi, RecipeApi, UserApi } from '../../shared/model/model-api';
 import { DEFAULT_LANGUAGE } from './constants';
 
 export function mapI18nApiToI18nClient(i18nApi: I18nApi): I18nClient {
@@ -133,12 +125,6 @@ export function addItemAtIndex<T extends Recipe | List>(newItem: T, items: T[]):
   return indexToInsert > -1 ? [...items.slice(0, indexToInsert), newItem, ...items.slice(indexToInsert)] : [...items, newItem];
 }
 
-export function mapShoppingListItemApiToShoppingListItem(shoppingListApi: ShoppingListItemApi): ShoppingListItemClient {
-  return {
-    ...shoppingListApi,
-    isChecked: false,
-  };
-}
 
 export function mapSelectedIngredientToBasicShoppingListItem(ingredient: SelectedIngredient, shoppingListId: string = ''):
   BasicShoppingListItem {

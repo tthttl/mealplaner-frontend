@@ -13,10 +13,12 @@ describe('shoppingListReducers', () => {
       }))).toEqual({
         ...initialShoppingListState,
         shoppingLists: {
-          items: {ids: ['1', '2'], entities: {
-            1: shoppingLists[0],
-            2: shoppingLists[1],
-          }}
+          items: {
+            ids: ['1', '2'], entities: {
+              1: shoppingLists[0],
+              2: shoppingLists[1],
+            }
+          }
         },
       });
     });
@@ -47,8 +49,8 @@ describe('shoppingListReducers', () => {
   describe('ShoppingListApiActions.loadShoppingListItemsSuccess', () => {
     it('should add shopping list item for one list', () => {
       const shoppingListItems: ShoppingListItem[] = [
-        {title: 'Apple', shoppingList: '32', amount: 1, unit: 'kg', id: '42', order: 2, isChecked: false},
-        {title: 'Banana', shoppingList: '32', amount: 1, unit: 'kg', id: '1', order: 1, isChecked: false},
+        {id: '42', title: 'Apple', shoppingList: '32', amount: 1, unit: 'kg', order: 2},
+        {id: '1', title: 'Banana', shoppingList: '32', amount: 1, unit: 'kg', order: 1},
       ];
 
       expect(shoppingListReducers({...initialShoppingListState}, ShoppingListApiActions.loadShoppingListItemsSuccess({
@@ -56,7 +58,13 @@ describe('shoppingListReducers', () => {
       }))).toEqual({
         ...initialShoppingListState,
         shoppingListItems: {
-          1234: [...shoppingListItems]
+          1234: {
+            ids: ['42', '1'],
+            entities: {
+              42: {id: '42', title: 'Apple', shoppingList: '32', amount: 1, unit: 'kg', order: 2},
+              1: {id: '1', title: 'Banana', shoppingList: '32', amount: 1, unit: 'kg', order: 1},
+            }
+          }
         }
       });
     });
@@ -64,27 +72,35 @@ describe('shoppingListReducers', () => {
 
   describe('ShoppingListContainerActions.addShoppingListItem$', () => {
     it('should optimistically add item to shopping list', () => {
-      const shoppingListItems: ShoppingListItem[] = [
-        {title: 'Apple', shoppingList: '1234', amount: 1, unit: 'kg', id: '42', order: 2, isChecked: false},
-        {title: 'Banana', shoppingList: '1234', amount: 1, unit: 'kg', id: '1', order: 1, isChecked: false},
-      ];
-
       const shoppingListItem: ShoppingListItem = {
-        title: 'Cherries', shoppingList: '1234', amount: 1, unit: 'kg', id: 'optimisticId', isChecked: false
+        title: 'Cherries', shoppingList: '1234', amount: 1, unit: 'kg', id: 'optimisticId'
       };
 
       expect(
         shoppingListReducers({
             ...initialShoppingListState,
             shoppingListItems: {
-              1234: [...shoppingListItems]
+              1234: {
+                ids: ['42', '1'],
+                entities: {
+                  42: {title: 'Apple', shoppingList: '1234', amount: 1, unit: 'kg', id: '42', order: 2},
+                  1: {title: 'Banana', shoppingList: '1234', amount: 1, unit: 'kg', id: '1', order: 1},
+                }
+              }
             }
           },
           ShoppingListContainerActions.addShoppingListItem({optimisticId: 'optimisticId', shoppingListItem})
         )).toEqual({
         ...initialShoppingListState,
         shoppingListItems: {
-          1234: [{...shoppingListItem}, ...shoppingListItems]
+          1234: {
+            ids: ['optimisticId', '42', '1'],
+            entities: {
+              42: {title: 'Apple', shoppingList: '1234', amount: 1, unit: 'kg', id: '42', order: 2},
+              1: {title: 'Banana', shoppingList: '1234', amount: 1, unit: 'kg', id: '1', order: 1},
+              optimisticId: {title: 'Cherries', shoppingList: '1234', amount: 1, unit: 'kg', id: 'optimisticId'},
+            }
+          }
         }
       });
     });
@@ -93,22 +109,33 @@ describe('shoppingListReducers', () => {
   describe('ShoppingListContainerActions.deleteShoppingListItem', () => {
     it('should optimistically remove item from shopping list', () => {
       const shoppingListItems: ShoppingListItem[] = [
-        {title: 'Apple', shoppingList: '1234', amount: 1, unit: 'kg', id: '42', order: 2, isChecked: false},
-        {title: 'Banana', shoppingList: '1234', amount: 1, unit: 'kg', id: '1', order: 1, isChecked: false},
+        {title: 'Apple', shoppingList: '1234', amount: 1, unit: 'kg', id: '42', order: 2},
+        {title: 'Banana', shoppingList: '1234', amount: 1, unit: 'kg', id: '1', order: 1},
       ];
 
       expect(
         shoppingListReducers({
             ...initialShoppingListState,
             shoppingListItems: {
-              1234: [...shoppingListItems]
+              1234: {
+                ids: ['42', '1'],
+                entities: {
+                  42: {title: 'Apple', shoppingList: '1234', amount: 1, unit: 'kg', id: '42', order: 2},
+                  1: {title: 'Banana', shoppingList: '1234', amount: 1, unit: 'kg', id: '1', order: 1},
+                }
+              }
             }
           },
           ShoppingListContainerActions.deleteShoppingListItem({shoppingListItem: shoppingListItems[0]})
         )).toEqual({
         ...initialShoppingListState,
         shoppingListItems: {
-          1234: [shoppingListItems[1]]
+          1234: {
+            ids: ['1'],
+            entities: {
+              1: {title: 'Banana', shoppingList: '1234', amount: 1, unit: 'kg', id: '1', order: 1},
+            }
+          }
         }
       });
     });
@@ -116,116 +143,71 @@ describe('shoppingListReducers', () => {
 
   describe('ShoppingListApiActions.addShoppingListItemSuccess,\n', () => {
     it('should update optimistic ID with with from Server', () => {
-      const shoppingListItems: ShoppingListItem[] = [
-        {id: 'optimistic', title: 'Apple', shoppingList: '1234', amount: 1, unit: 'kg', order: 2, isChecked: false},
-        {id: '1', title: 'Banana', shoppingList: '1234', amount: 1, unit: 'kg', order: 1, isChecked: false},
-      ];
-
       expect(
         shoppingListReducers({
             ...initialShoppingListState,
             shoppingListItems: {
-              1234: [...shoppingListItems]
+              1234: {
+                ids: ['42', '1'],
+                entities: {
+                  optimistic: {title: 'Apple', shoppingList: '1234', amount: 1, unit: 'kg', id: 'optimistic', order: 2},
+                  1: {title: 'Banana', shoppingList: '1234', amount: 1, unit: 'kg', id: '1', order: 1},
+                }
+              }
             }
           },
           ShoppingListApiActions.addShoppingListItemSuccess({
             optimisticId: 'optimistic',
-            shoppingListItem: {id: 'backendId', title: 'Apple', shoppingList: '1234', amount: 1, unit: 'kg', order: 2, isChecked: false}
+            shoppingListItem: {id: 'backendId', title: 'Apple', shoppingList: '1234', amount: 1, unit: 'kg', order: 2}
           })
         )).toEqual({
         ...initialShoppingListState,
         shoppingListItems: {
-          1234: [
-            {id: 'backendId', title: 'Apple', shoppingList: '1234', amount: 1, unit: 'kg', order: 2, isChecked: false},
-            shoppingListItems[1]
-          ]
+          1234: {
+            ids: ['backendId', '1'],
+            entities: {
+              backendId: {title: 'Apple', shoppingList: '1234', amount: 1, unit: 'kg', id: 'backendId', order: 2},
+              1: {title: 'Banana', shoppingList: '1234', amount: 1, unit: 'kg', id: '1', order: 1},
+            }
+          }
         }
       });
     });
   });
 
-  describe('ShoppingListContainerActions.moveShoppingListItem', () => {
+  describe('ShoppingListContainerActions.bulkUpdateShoppingListItems', () => {
     it('should optimistically update order of shopping list', () => {
-      const shoppingListItems: ShoppingListItem[] = [
-        {title: 'Cherries', shoppingList: '42', amount: 1, unit: 'kg', id: '1', order: 3, isChecked: false},
-        {title: 'Apple', shoppingList: '42', amount: 1, unit: 'kg', id: '42', order: 2, isChecked: false},
-        {title: 'Banana', shoppingList: '42', amount: 1, unit: 'kg', id: '1', order: 1, isChecked: false},
-      ];
-
       expect(
         shoppingListReducers({
             ...initialShoppingListState,
             shoppingListItems: {
-              1234: [...shoppingListItems]
+              1234: {
+                ids: ['1', '42', '91'],
+                entities: {
+                  1: {title: 'Cherries', shoppingList: '42', amount: 1, unit: 'kg', id: '1', order: 3},
+                  42: {title: 'Apple', shoppingList: '42', amount: 1, unit: 'kg', id: '42', order: 2},
+                  91: {title: 'Banana', shoppingList: '42', amount: 1, unit: 'kg', id: '91', order: 1},
+                }
+              }
             }
           },
-          ShoppingListContainerActions.moveShoppingListItem({shoppingListId: '1234', currentIndex: 1, previousIndex: 0})
+          ShoppingListEffectActions.bulkUpdateShoppingListItems({
+            shoppingListId: '1234', shoppingListItems: [
+              {title: 'Cherries', shoppingList: '42', amount: 1, unit: 'kg', id: '1', order: 2},
+              {title: 'Apple', shoppingList: '42', amount: 1, unit: 'kg', id: '42', order: 3}
+            ]
+          })
         )).toEqual({
         ...initialShoppingListState,
         shoppingListItems: {
-          1234: [
-            {title: 'Apple', shoppingList: '42', amount: 1, unit: 'kg', id: '42', order: 2, isChecked: false},
-            {title: 'Cherries', shoppingList: '42', amount: 1, unit: 'kg', id: '1', order: 3, isChecked: false},
-            {title: 'Banana', shoppingList: '42', amount: 1, unit: 'kg', id: '1', order: 1, isChecked: false},
-          ]
-        }
-      });
-    });
-  });
-
-  describe('ShoppingListContainerActions.toggleShoppingListItem', () => {
-    it('should optimistically update order of shopping list', () => {
-      const shoppingListItems: ShoppingListItem[] = [
-        {title: 'Cherries', shoppingList: '1234', amount: 1, unit: 'kg', id: '1', order: 3, isChecked: false},
-        {title: 'Apple', shoppingList: '1234', amount: 1, unit: 'kg', id: '42', order: 2, isChecked: false},
-        {title: 'Banana', shoppingList: '1234', amount: 1, unit: 'kg', id: '12', order: 1, isChecked: false},
-      ];
-
-      expect(
-        shoppingListReducers({
-            ...initialShoppingListState,
-            shoppingListItems: {
-              1234: [...shoppingListItems]
+          1234: {
+            ids: ['42', '1', '91'],
+            entities: {
+              1: {title: 'Cherries', shoppingList: '42', amount: 1, unit: 'kg', id: '1', order: 2},
+              42: {title: 'Apple', shoppingList: '42', amount: 1, unit: 'kg', id: '42', order: 3},
+              91: {title: 'Banana', shoppingList: '42', amount: 1, unit: 'kg', id: '91', order: 1},
             }
-          },
-          ShoppingListContainerActions.toggleShoppingListItem({shoppingList: '1234', shoppingListItemId: '42'})
-        )).toEqual({
-        ...initialShoppingListState,
-        shoppingListItems: {
-          1234: [
-            {title: 'Cherries', shoppingList: '1234', amount: 1, unit: 'kg', id: '1', order: 3, isChecked: false},
-            {title: 'Apple', shoppingList: '1234', amount: 1, unit: 'kg', id: '42', order: 2, isChecked: true},
-            {title: 'Banana', shoppingList: '1234', amount: 1, unit: 'kg', id: '12', order: 1, isChecked: false},
-          ]
-        }
-      });
-    });
-  });
-
-  describe('ShoppingListContainerActions.unToggleShoppingListItem', () => {
-    it('should optimistically update order of shopping list', () => {
-      const shoppingListItems: ShoppingListItem[] = [
-        {title: 'Cherries', shoppingList: '1234', amount: 1, unit: 'kg', id: '1', order: 3, isChecked: false},
-        {title: 'Apple', shoppingList: '1234', amount: 1, unit: 'kg', id: '42', order: 2, isChecked: true},
-        {title: 'Banana', shoppingList: '1234', amount: 1, unit: 'kg', id: '12', order: 1, isChecked: false},
-      ];
-
-      expect(
-        shoppingListReducers({
-            ...initialShoppingListState,
-            shoppingListItems: {
-              1234: [...shoppingListItems]
-            }
-          },
-          ShoppingListContainerActions.unToggleShoppingListItem({shoppingList: '1234', shoppingListItemId: '42'})
-        )).toEqual({
-        ...initialShoppingListState,
-        shoppingListItems: {
-          1234: [
-            {title: 'Cherries', shoppingList: '1234', amount: 1, unit: 'kg', id: '1', order: 3, isChecked: false},
-            {title: 'Apple', shoppingList: '1234', amount: 1, unit: 'kg', id: '42', order: 2, isChecked: false},
-            {title: 'Banana', shoppingList: '1234', amount: 1, unit: 'kg', id: '12', order: 1, isChecked: false},
-          ]
+          }
         }
       });
     });
@@ -239,12 +221,14 @@ describe('shoppingListReducers', () => {
             ...initialShoppingListState,
             activeShoppingList: '1234',
             shoppingLists: {
-              items: {ids: ['1234'], entities: {
+              items: {
+                ids: ['1234'], entities: {
                   1234: {id: '1234', title: 'Test 1'},
-                }}
+                }
+              }
             },
             shoppingListItems: {
-              1234: []
+              1234: {ids: [], entities: {}}
             }
           },
           ShoppingListApiActions.createShoppingListSuccess({shoppingList: {id: '8888', title: 'Test Added'}})
@@ -252,14 +236,16 @@ describe('shoppingListReducers', () => {
         ...initialShoppingListState,
         activeShoppingList: '8888',
         shoppingLists: {
-          items: {ids: ['1234', '8888'], entities: {
+          items: {
+            ids: ['1234', '8888'], entities: {
               1234: {id: '1234', title: 'Test 1'},
               8888: {id: '8888', title: 'Test Added'},
-            }}
+            }
+          }
         },
         shoppingListItems: {
-          1234: [],
-          8888: [],
+          1234: {ids: [], entities: {}},
+          8888: {ids: [], entities: {}},
         }
       });
     });
@@ -273,13 +259,15 @@ describe('shoppingListReducers', () => {
             ...initialShoppingListState,
             activeShoppingList: '1234',
             shoppingLists: {
-              items: {ids: ['1234', '8888'], entities: {
+              items: {
+                ids: ['1234', '8888'], entities: {
                   1234: {id: '1234', title: 'Test 1'},
                   8888: {id: '8888', title: 'Test 1'},
-                }}
+                }
+              }
             },
             shoppingListItems: {
-              1234: []
+              1234: {ids: [], entities: {}},
             }
           },
           ShoppingListContainerActions.editShoppingList({shoppingList: {id: '8888', title: 'Updated'}})
@@ -287,13 +275,15 @@ describe('shoppingListReducers', () => {
         ...initialShoppingListState,
         activeShoppingList: '1234',
         shoppingLists: {
-          items: {ids: ['1234', '8888'], entities: {
+          items: {
+            ids: ['1234', '8888'], entities: {
               1234: {id: '1234', title: 'Test 1'},
               8888: {id: '8888', title: 'Updated'},
-            }}
+            }
+          }
         },
         shoppingListItems: {
-          1234: []
+          1234: {ids: [], entities: {}},
         }
       });
     });
@@ -307,14 +297,16 @@ describe('shoppingListReducers', () => {
             ...initialShoppingListState,
             activeShoppingList: '1234',
             shoppingLists: {
-              items: {ids: ['1234', '8888'], entities: {
+              items: {
+                ids: ['1234', '8888'], entities: {
                   1234: {id: '1234', title: 'Test 1'},
                   8888: {id: '8888', title: 'Delete'},
-                }}
+                }
+              }
             },
             shoppingListItems: {
-              1234: [],
-              8888: [],
+              1234: {ids: [], entities: {}},
+              8888: {ids: [], entities: {}},
             }
           },
           ShoppingListContainerActions.deleteShoppingList({shoppingList: {id: '8888', title: 'Delete'}})
@@ -322,33 +314,70 @@ describe('shoppingListReducers', () => {
         ...initialShoppingListState,
         activeShoppingList: '1234',
         shoppingLists: {
-          items: {ids: ['1234'], entities: {
+          items: {
+            ids: ['1234'], entities: {
               1234: {id: '1234', title: 'Test 1'},
-            }}
+            }
+          }
         },
         shoppingListItems: {
-          1234: [],
-          8888: [],
+          1234: {ids: [], entities: {}},
+          8888: {ids: [], entities: {}},
         }
       });
     });
   });
 
+  describe('ShoppingListContainerActions.undoDeleteShoppingListItem', () => {
+    it('should revert optimistically delete ShoppingListItem', () => {
+      expect(
+        shoppingListReducers({
+            ...initialShoppingListState,
+            shoppingListItems: {
+              1234: {
+                ids: ['1'],
+                entities: {
+                  1: {title: 'Banana', shoppingList: '1234', amount: 1, unit: 'kg', id: '1', order: 1},
+                }
+              }
+            }
+          },
+          ShoppingListContainerActions.undoDeleteShoppingListItem({
+            shoppingListItem: {id: '2', title: 'Apple', shoppingList: '1234', amount: 1, unit: 'kg', order: 2}
+          })
+        )).toEqual({
+        ...initialShoppingListState,
+        shoppingListItems: {
+          1234: {
+            ids: ['2', '1'],
+            entities: {
+              2: {title: 'Apple', shoppingList: '1234', amount: 1, unit: 'kg', id: '2', order: 2},
+              1: {title: 'Banana', shoppingList: '1234', amount: 1, unit: 'kg', id: '1', order: 1},
+            }
+          }
+        }
+      });
+    });
+  });
+
+
   describe('  ShoppingListContainerActions.undoDeleteShoppingList', () => {
-    it('should revert ptimistically delete ShoppingList', () => {
+    it('should revert optimistically delete ShoppingList', () => {
 
       expect(
         shoppingListReducers({
             ...initialShoppingListState,
             activeShoppingList: '1234',
             shoppingLists: {
-              items: {ids: ['1234'], entities: {
+              items: {
+                ids: ['1234'], entities: {
                   1234: {id: '1234', title: 'Test 1'},
-                }}
+                }
+              }
             },
             shoppingListItems: {
-              1234: [],
-              8888: [],
+              1234: {ids: [], entities: {}},
+              8888: {ids: [], entities: {}},
             }
           },
           ShoppingListContainerActions.undoDeleteShoppingList({shoppingList: {id: '8888', title: 'Delete'}})
@@ -356,14 +385,16 @@ describe('shoppingListReducers', () => {
         ...initialShoppingListState,
         activeShoppingList: '1234',
         shoppingLists: {
-          items: {ids: ['8888', '1234'], entities: {
+          items: {
+            ids: ['8888', '1234'], entities: {
               1234: {id: '1234', title: 'Test 1'},
               8888: {id: '8888', title: 'Delete'},
-            }}
+            }
+          }
         },
         shoppingListItems: {
-          1234: [],
-          8888: [],
+          1234: {ids: [], entities: {}},
+          8888: {ids: [], entities: {}},
         }
       });
     });
@@ -377,13 +408,15 @@ describe('shoppingListReducers', () => {
             ...initialShoppingListState,
             activeShoppingList: '1234',
             shoppingLists: {
-              items: {ids: ['1234'], entities: {
+              items: {
+                ids: ['1234'], entities: {
                   1234: {id: '1234', title: 'Test 1'},
-                }}
+                }
+              }
             },
             shoppingListItems: {
-              1234: [],
-              8888: [],
+              1234: {ids: [], entities: {}},
+              8888: {ids: [], entities: {}},
             }
           },
           ShoppingListApiActions.deleteShoppingListSuccess({shoppingList: {id: '8888', title: 'Delete'}})
@@ -391,12 +424,14 @@ describe('shoppingListReducers', () => {
         ...initialShoppingListState,
         activeShoppingList: '1234',
         shoppingLists: {
-          items: {ids: ['1234'], entities: {
+          items: {
+            ids: ['1234'], entities: {
               1234: {id: '1234', title: 'Test 1'},
-            }}
+            }
+          }
         },
         shoppingListItems: {
-          1234: [],
+          1234: {ids: [], entities: {}},
         }
       });
     });

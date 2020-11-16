@@ -16,7 +16,7 @@
       [currentLang]="currentLanguage"
       (itemAdded)="onItemAdded($event)"></app-shopping-list-form>
     <app-shopping-list
-      [items]="shoppingListItems"
+      [items]="activeShoppingList?.isInitialized ? shoppingListItems : null"
       [translations]="translations"
       [currentLang]="currentLanguage"
       (listItemMoved)="onShoppingListItemMoved($event)"

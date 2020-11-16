@@ -23,7 +23,6 @@ export class ShoppingListComponent {
     } else {
       clearTimeout(this.deleteBuffer[item.id]);
     }
-
   }
 
   drop({previousIndex, currentIndex}: ArrayItemMovedEvent): void {

@@ -1,7 +1,7 @@
 import { FormControl } from '@angular/forms';
 import { TranslatePipe } from '../../i18n/pipes/translate.pipe';
 import { Cookbook, I18n, Recipe, RecipeIngredient } from '../model/model';
-import { CookbookApi, I18n as I18nApi, IngredientApi, RecipeApi, ShoppingListItemApi, UserApi } from '../model/model-api';
+import { CookbookApi, I18n as I18nApi, IngredientApi, RecipeApi, UserApi } from '../model/model-api';
 import {
   addItemAtIndex,
   convertCookbookApisToCookbooks,
@@ -11,7 +11,6 @@ import {
   decodeJwtToken,
   isJwtTokenExpired,
   mapI18nApiToI18nClient,
-  mapShoppingListItemApiToShoppingListItem,
   mapUserApiToUserClient,
   moveItemInArray,
   sortAlphabetically,
@@ -277,21 +276,6 @@ describe(`${addItemAtIndex}`, () => {
   it('should add in the middle', () => {
     const recipes: Recipe[] = [recipeA as Recipe, recipeC as Recipe];
     expect(addItemAtIndex(recipeB as Recipe, recipes));
-  });
-
-
-  describe('mapShoppingListItemApiToShoppingListItem', () => {
-    it('should convert ShoppingListItem', () => {
-      const shoppingListApi: ShoppingListItemApi = {
-        id: 'id',
-        title: 'title',
-        order: 0,
-        shoppingList: 'shoppingList',
-        amount: 1,
-        unit: 'kg',
-      };
-      expect(mapShoppingListItemApiToShoppingListItem(shoppingListApi)).toEqual({...shoppingListApi, isChecked: false});
-    });
   });
 
   describe(`${addItemAtIndex}`, () => {

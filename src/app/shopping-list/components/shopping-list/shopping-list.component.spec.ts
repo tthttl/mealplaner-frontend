@@ -31,10 +31,10 @@ describe('ShoppingListComponent', () => {
 
   it('should render shopping list', () => {
     component.items = [
-      {id: '1', shoppingList: '42', title: 'Mehl', amount: 1, unit: 'kg', isChecked: false},
-      {id: '2', shoppingList: '42', title: 'Mehl', amount: 1, unit: 'kg', isChecked: false},
-      {id: '3', shoppingList: '42', title: 'Mehl', amount: 1, unit: 'kg', isChecked: false},
-      {id: '4', shoppingList: '42', title: 'Mehl', amount: 1, unit: 'kg', isChecked: false},
+      {id: '1', shoppingList: '42', title: 'Mehl', amount: 1, unit: 'kg'},
+      {id: '2', shoppingList: '42', title: 'Mehl', amount: 1, unit: 'kg'},
+      {id: '3', shoppingList: '42', title: 'Mehl', amount: 1, unit: 'kg'},
+      {id: '4', shoppingList: '42', title: 'Mehl', amount: 1, unit: 'kg'},
     ];
 
     fixture.detectChanges();
