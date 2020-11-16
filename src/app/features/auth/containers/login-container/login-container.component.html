@@ -1,0 +1,6 @@
+<app-login-page
+  [translations]="translations$ | async"
+  [currentLang]="currentLanguage$ | async"
+  [backendErrorMessage]="backendError"
+  (credentialsReceived)="login($event)"
+></app-login-page>

@@ -1,15 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthModule } from './auth/auth.module';
-import { LoggedOutGuard } from './shared/guards/logged-out.guard';
-import { ProductPageContainerComponent } from './containers/product-page-container/product-page-container.component';
+import { AuthModule } from './features/auth/auth.module';
 
 
 const routes: Routes = [
   {
     path: '',
-    component: ProductPageContainerComponent,
-    canActivate: [LoggedOutGuard]
+    loadChildren: () => import('./features/product-info/product-info.module').then(m => m.ProductInfoModule)
   },
   {
     path: 'auth',
@@ -17,11 +14,11 @@ const routes: Routes = [
   },
   {
     path: 'meal-planer',
-    loadChildren: () => import('./meal-planer/meal-planer.module').then(m => m.MealPlanerModule)
+    loadChildren: () => import('./features/meal-planer/meal-planer.module').then(m => m.MealPlanerModule)
   },
   {
     path: 'cookbook',
-    loadChildren: () => import('./cookbook/cookbook.module').then(m => m.CookbookModule)
+    loadChildren: () => import('./features/cookbook/cookbook.module').then(m => m.CookbookModule)
   },
 ];
 

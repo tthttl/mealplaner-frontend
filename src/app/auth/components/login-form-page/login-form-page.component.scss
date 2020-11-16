@@ -1,8 +1,0 @@
-@import "../../../../styles/settings/colors";
-@import "../../../../styles/settings/variables";
-@import "../../../../styles/mixins/forms";
-
-
-.login-form {
-    @include authform;
-}

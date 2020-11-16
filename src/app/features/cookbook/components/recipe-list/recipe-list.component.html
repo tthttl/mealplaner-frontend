@@ -1,0 +1,45 @@
+<section class="recipe-list" [ngSwitch]="getPageState(recipes)">
+  <app-input
+    class="search-field"
+    [type]="'search'"
+    [placeholder]="'input.search' | translate:translations:currentLang"
+    #searchField
+  ></app-input>
+  <div *ngSwitchCase="'default'">
+    <div class="recipe" *ngFor="let recipe of recipes">
+      <div class="recipe__row">
+        <div class="recipe__title-box" (click)="onClick(recipe)">
+          <span>{{recipe.title}}</span>
+        </div>
+        <div class="recipe__buttons-box">
+          <app-button class="recipe__button"
+                      [buttonText]="'button.edit' | translate:translations:currentLang"
+                      [iconLeft]="'pen-square'"
+                      [color]="'accent'"
+                      (click)="onEditRecipe(recipe.id)"
+                      [e2eTestName]="'RECIPE-ROW-EDIT'"
+          ></app-button>
+          <app-button class="recipe__button"
+                      [buttonText]="'button.delete' | translate:translations:currentLang"
+                      [iconLeft]="'times'"
+                      [color]="'warn'"
+                      (click)="onDeleteRecipe(recipe)"
+                      [e2eTestName]="'RECIPE-ROW-DELETE'"
+          ></app-button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngSwitchCase="'empty'" class="empty-recipe-list">
+    <img class="empty-shopping-list__image" src="../../../../../assets/empty-shopping-list.png" alt="Empty List"/>
+    <div>{{'shopping-list.is-empty' | translate:translations:currentLang }}
+      <br/> {{'shopping-list.add-product' | translate:translations:currentLang }} </div>
+  </div>
+
+  <div *ngSwitchCase="'loading'">
+    <div class="recipe-skeleton"></div>
+    <div class="recipe-skeleton"></div>
+    <div class="recipe-skeleton"></div>
+    <div class="recipe-skeleton"></div>
+  </div>
+</section>

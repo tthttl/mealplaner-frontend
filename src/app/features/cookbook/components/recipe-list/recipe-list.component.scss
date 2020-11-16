@@ -1,0 +1,126 @@
+@import "../../../../../styles/settings/variables";
+@import "../../../../../styles/settings/breakpoints";
+@import "../../../../../styles/mixins/style";
+
+.recipe-list {
+  width: 100%;
+  display: block;
+  overflow: hidden;
+
+  .search-field{
+    display: block;
+    padding-bottom: 1.5rem;
+  }
+
+  .recipe {
+    border: $border-primary;
+    color: $text-70;
+    font-size: 1rem;
+    box-sizing: border-box;
+    margin-top: 0.5rem;
+
+    @include large {
+      border: none;
+      border-bottom: solid 1px $blue_70;
+      margin: 0;
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+
+    .recipe__row {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+
+      @include large{
+        flex-direction: row;
+        align-items: stretch;
+      }
+    }
+
+    &__title-box {
+      display: flex;
+      flex: 1 1 70%;
+      align-items: center;
+      padding: 0.5rem 0.5rem;
+
+      &:hover {
+        background-color: $blue_20;
+        cursor: pointer;
+      }
+
+      &:active {
+        background-color: $blue_30;
+      }
+
+      @include large{
+        padding: 0 0.5rem;
+      }
+    }
+
+    &__buttons-box {
+      display: flex;
+
+      @include large{
+        border-left: 1px solid;
+        border-image: linear-gradient(
+            to bottom,
+            white,
+            $blue_70,
+            white
+        ) 1 100%;
+      }
+    }
+
+    &__button {
+      width: 100%;
+      padding: 0.5rem 0.5rem;
+    }
+  }
+
+  @include skeleton('.recipe-skeleton', $blue-grey_30, 3.5s) {
+    background: $blue-grey_40;
+    height: 24px;
+    margin: 12px auto 18px 18px;
+    border-radius: $border-radius-default;
+    width: 90%;
+
+    &:nth-child(2){
+      width: 75%;
+    }
+
+    &:nth-child(3){
+      width: 85%;
+    }
+
+    &:nth-child(4){
+      width: 80%;
+      margin-bottom: 24px;
+    }
+  };
+
+  .empty-recipe-list {
+    margin: 0 auto;
+    max-width: 80%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-bottom: 24px;
+    color: $text-40;
+    font-size: 0.8em;
+    text-align: center;
+    font-weight: 500;
+    line-height: 2;
+
+    @include large {
+      font-size: 1.2em;
+    }
+
+    &__image {
+      max-width: 100%;
+    }
+  }
+
+}
