@@ -60,7 +60,7 @@ describe('Logged Out Guard', () => {
       });
     });
 
-    it('should fail when no jwt token is available and not expired', (done) => {
+    it('should fail when jwt token is available and not expired', (done) => {
       store.setState({...initialState, appState: {user: {jwt: validJwt}}});
       guard.canActivate(routeMock as ActivatedRouteSnapshot, routeStateMock as RouterStateSnapshot).subscribe((result: boolean) => {
         expect(result).toBeFalse();
@@ -68,7 +68,7 @@ describe('Logged Out Guard', () => {
       });
     });
 
-    it('should pass when no jwt token is available but  expired', (done) => {
+    it('should pass when jwt token is available but  expired', (done) => {
       store.setState({...initialState, appState: {user: {jwt: expiredJWT}}});
       guard.canActivate(routeMock as ActivatedRouteSnapshot, routeStateMock as RouterStateSnapshot).subscribe((result: boolean) => {
         expect(result).toBeTrue();

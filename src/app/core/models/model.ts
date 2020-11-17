@@ -1,4 +1,5 @@
 import { SUPPORTED_LANGUAGES } from '../constants/constants';
+import { IconName } from '@fortawesome/fontawesome-common-types';
 
 export type I18n = {
   readonly [key: string]: Translations;
@@ -162,4 +163,10 @@ export interface RecipeViewDialogEvent {
   readonly event: 'selectedIngredients' | 'recipe';
   readonly recipe?: Recipe;
   readonly selectedIngredients?: SelectedIngredient[];
+}
+
+export interface Link {
+  key: string;
+  path: string;
+  icon: IconName;
 }

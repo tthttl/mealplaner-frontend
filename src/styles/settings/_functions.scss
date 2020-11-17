@@ -1,0 +1,12 @@
+@function rem($value, $context: 16) {
+  @if (type-of($value) == 'string') {
+    @return $value;
+  }
+
+  $value: $value * 1px;
+  $context: $context * 1px;
+
+  @return ($value / $context) * 1rem;
+}
+
+

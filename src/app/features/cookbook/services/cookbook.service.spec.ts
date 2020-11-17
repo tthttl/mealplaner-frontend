@@ -1,9 +1,7 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { environment } from '../../../../environments/environment';
-import { convertCookbookApisToCookbooks } from '../../../core/helpers/helpers';
 import { Cookbook } from '../../../core/models/model';
-import { CookbookApi } from '../../../core/models/model-api';
 import { CookbookService } from './cookbook.service';
 
 describe(`${CookbookService}`, () => {
@@ -14,7 +12,7 @@ describe(`${CookbookService}`, () => {
 
   const userId = 'userId';
 
-  const cookbook: CookbookApi = {
+  const cookbook: Cookbook = {
     id: '1',
     title: 'cookbook'
   };
@@ -32,7 +30,7 @@ describe(`${CookbookService}`, () => {
   it('loadCookbooks should load Cookbooks', () => {
     cookbookService.loadCookbooks(userId)
       .subscribe((cookbooks: Cookbook[]) => {
-        expect(cookbooks).toEqual(convertCookbookApisToCookbooks([cookbook]));
+        expect(cookbooks).toEqual([cookbook]);
       });
 
     const request = httpClientMock.expectOne(`${environment.apiUrl}/cookbooks?user=${userId}&_sort=title:asc`);

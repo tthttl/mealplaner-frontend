@@ -1,28 +1,18 @@
 <nav class="main-navigation">
   <div class="container main-navigation__content">
     <div class="main-navigation__wrapper">
-      <img class="main-navigation__logo" src="../../../../assets/logo-inverted.png" [routerLink]="['/']" alt="Mealplaner Logo">
+      <img class="main-navigation__logo"
+           src="../../../../assets/logo-inverted.png"
+           [routerLink]="['/']" alt="Mealplaner Logo"
+           [attr.aria-label]="'navigation.go-home' | translate:translations:currentLanguage"
+      >
       <div class="desktop-navigation" *ngIf="isLoggedIn">
         <ul class="desktop-navigation__link-list" data-test="desktop-navigation">
-          <li class="desktop-navigation__link-list-element">
-            <a [routerLink]="['/meal-planer']"
+          <li *ngFor="let link of links" class="desktop-navigation__link-list-element">
+            <a [routerLink]="[link.path]"
                class="desktop-navigation__link"
                routerLinkActive="desktop-navigation__link--active">
-              {{'app.navigation.planer' | translate:translations:currentLang}}
-            </a>
-          </li>
-          <li class="desktop-navigation__link-list-element">
-            <a [routerLink]="['/cookbook']"
-               class="desktop-navigation__link"
-               routerLinkActive="desktop-navigation__link--active">
-              {{'app.navigation.menus' | translate:translations:currentLang}}
-            </a>
-          </li>
-          <li class="desktop-navigation__link-list-element">
-            <a [routerLink]="['/shopping-list']"
-               class="desktop-navigation__link"
-               routerLinkActive="desktop-navigation__link--active">
-              {{'app.navigation.shopping-list' | translate:translations:currentLang}}
+              {{link.key | translate:translations:currentLanguage}}
             </a>
           </li>
         </ul>
@@ -33,18 +23,18 @@
 
       <app-select
         class="main-navigation__secondary-action"
-        [control]="getSelectedLanguage()"
         [noBorder]="true"
         [name]="'language'"
         [options]="supportedLanguages"
         (valueChanged)="changeLanguage($event)"
         [noBackground]="true"
         [noPadding]="true"
+        [ariaLabel]="'navigation.change-language' | translate:translations:currentLanguage"
       >
       </app-select>
 
       <app-button *ngIf="isLoggedIn; else registerTemplate"
-                  [buttonText]="'app.navigation.logout' | translate:translations:currentLang"
+                  [buttonText]="'app.navigation.logout' | translate:translations:currentLanguage"
                   color="inverted" (click)="onLogout()"
                   class="main-navigation__primary-action"
                   data-test="logout-button"></app-button>
@@ -54,13 +44,13 @@
         <a class="main-navigation__secondary-action"
            [routerLink]="['/auth/login']"
            data-test="login-link">
-          {{'app.navigation.login' | translate:translations:currentLang}}
+          {{'app.navigation.login' | translate:translations:currentLanguage}}
         </a>
 
         <a          [routerLink]="['/auth/register']"
                     class="main-navigation__primary-action"
                     data-test="register-link">
-          {{'app.navigation.register' | translate:translations:currentLang }}
+          {{'app.navigation.register' | translate:translations:currentLanguage }}
         </a>
       </ng-template>
     </div>
@@ -70,37 +60,15 @@
 
 <nav *ngIf="isLoggedIn" class="mobile-navigation">
   <ul class=mobile-navigation__link-list data-test="mobile-navigation">
-    <li class="mobile-navigation__link-list-element">
-      <a class="mobile-navigation__link" [routerLink]="['/meal-planer']"
+    <li *ngFor="let link of links" class="mobile-navigation__link-wrapper">
+      <a class="mobile-navigation__link" [routerLink]="[link.path]"
          routerLinkActive="mobile-navigation__link--active">
         <fa-icon class="shopping-list__ellipsis mobile-navigation__link-icon"
-                 [icon]="['fas','calendar-alt']"></fa-icon>
+                 [icon]="['fas', link.icon]"></fa-icon>
         <span
-          class="mobile-navigation__link-text">{{'app.navigation.planer' | translate:translations:currentLang}}</span>
+          class="mobile-navigation__link-text">{{link.key | translate:translations:currentLanguage}}</span>
         <div
           class="mobile-navigation__status"></div>
-      </a>
-    </li>
-
-    <li class="mobile-navigation__link-list-element">
-      <a class="mobile-navigation__link" [routerLink]="['/cookbook']"
-         routerLinkActive="mobile-navigation__link--active">
-        <fa-icon class="shopping-list__ellipsis mobile-navigation__link-icon"
-                 [icon]="['fas','hamburger']"></fa-icon>
-        <span
-          class="mobile-navigation__link-text">{{'app.navigation.menus' | translate:translations:currentLang}}</span>
-        <div class="mobile-navigation__status"></div>
-      </a>
-    </li>
-
-    <li class="mobile-navigation__link-list-element">
-      <a class="mobile-navigation__link" [routerLink]="['/shopping-list']"
-         routerLinkActive="mobile-navigation__link--active">
-        <fa-icon class="shopping-list__ellipsis mobile-navigation__link-icon"
-                 [icon]="['fas','shopping-cart']"></fa-icon>
-        <span
-          class="mobile-navigation__link-text">{{'app.navigation.shopping-list' | translate:translations:currentLang}}</span>
-        <div class="mobile-navigation__status"></div>
       </a>
     </li>
   </ul>

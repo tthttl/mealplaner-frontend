@@ -1,9 +1,7 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { environment } from '../../../../environments/environment';
-import { convertRecipeApiToRecipe, convertRecipesApiToRecipes } from '../../../core/helpers/helpers';
-import { Recipe } from '../../../core/models/model';
-import { IngredientApi, RecipeApi } from '../../../core/models/model-api';
+import { Recipe, RecipeIngredient } from '../../../core/models/model';
 import { RecipeService } from './recipe.service';
 
 describe(`${RecipeService}`, () => {
@@ -12,14 +10,14 @@ describe(`${RecipeService}`, () => {
   let recipeService: RecipeService;
   let httpClientMock: HttpTestingController;
 
-  const ingredient: IngredientApi = {
+  const ingredient: RecipeIngredient = {
     id: '1',
     title: 'ingredient',
     unit: 'tableSpoon',
     amount: 1,
     isStapleFood: false
   };
-  const recipeApiA: RecipeApi = {
+  const recipeApiA: Recipe = {
     id: 'A',
     title: 'recipeA',
     cookbookId: 'cookbookId',
@@ -40,7 +38,7 @@ describe(`${RecipeService}`, () => {
   it('loadRecipes should load Recipes', () => {
     recipeService.loadRecipes(cookbookId)
       .subscribe((recipes: Recipe[]) => {
-        expect(recipes).toEqual(convertRecipesApiToRecipes([recipeApiA]));
+        expect(recipes).toEqual([recipeApiA]);
       });
 
     const request = httpClientMock.expectOne(`${environment.apiUrl}/recipes?cookbook=${cookbookId}&_sort=title:asc`);
@@ -49,9 +47,9 @@ describe(`${RecipeService}`, () => {
   });
 
   it('saveRecipes should save Recipes', () => {
-    recipeService.saveRecipe(cookbookId, convertRecipeApiToRecipe(recipeApiA))
+    recipeService.saveRecipe(cookbookId, recipeApiA)
       .subscribe((recipe: Recipe) => {
-        expect(recipe).toEqual(convertRecipeApiToRecipe(recipeApiA));
+        expect(recipe).toEqual(recipeApiA);
       });
 
     const request = httpClientMock.expectOne(`${environment.apiUrl}/recipes`);
@@ -60,9 +58,9 @@ describe(`${RecipeService}`, () => {
   });
 
   it('editRecipe should edit Recipes', () => {
-    recipeService.editRecipe(cookbookId, convertRecipeApiToRecipe(recipeApiA))
+    recipeService.editRecipe(cookbookId, recipeApiA)
       .subscribe((recipe: Recipe) => {
-        expect(recipe).toEqual(convertRecipeApiToRecipe(recipeApiA));
+        expect(recipe).toEqual(recipeApiA);
       });
 
     const request = httpClientMock.expectOne(`${environment.apiUrl}/recipes/${recipeApiA.id}`);
@@ -71,7 +69,7 @@ describe(`${RecipeService}`, () => {
   });
 
   it('deleteRecipe should delete Recipes', () => {
-    recipeService.deleteRecipe(recipeApiA.id)
+    recipeService.deleteRecipe('A')
       .subscribe((result: boolean) => {
         expect(result).toEqual(true);
       });

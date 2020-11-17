@@ -3,9 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
-import { convertRecipeApiToRecipe, convertRecipesApiToRecipes } from '../../../core/helpers/helpers';
 import { Recipe } from '../../../core/models/model';
-import { RecipeApi } from '../../../core/models/model-api';
 
 @Injectable()
 export class RecipeService {
@@ -13,21 +11,15 @@ export class RecipeService {
   }
 
   loadRecipes(cookBookId: string): Observable<Recipe[]> {
-    return this.httpClient.get<RecipeApi[]>(`${environment.apiUrl}/recipes?cookbook=${cookBookId}&_sort=title:asc`).pipe(
-      map((recipes: RecipeApi[]) => convertRecipesApiToRecipes(recipes))
-    );
+    return this.httpClient.get<Recipe[]>(`${environment.apiUrl}/recipes?cookbook=${cookBookId}&_sort=title:asc`);
   }
 
   saveRecipe(cookBookId: string, recipe: Recipe): Observable<Recipe> {
-    return this.httpClient.post<RecipeApi>(`${environment.apiUrl}/recipes`, {...recipe, cookbook: cookBookId}).pipe(
-      map((savedRecipe: RecipeApi) => convertRecipeApiToRecipe(savedRecipe))
-    );
+    return this.httpClient.post<Recipe>(`${environment.apiUrl}/recipes`, {...recipe, cookbook: cookBookId});
   }
 
   editRecipe(cookBookId: string, recipe: Recipe): Observable<Recipe> {
-    return this.httpClient.put<RecipeApi>(`${environment.apiUrl}/recipes/${recipe.id}`, {...recipe, cookbook: cookBookId}).pipe(
-      map((editedRecipe: RecipeApi) => convertRecipeApiToRecipe(editedRecipe))
-    );
+    return this.httpClient.put<Recipe>(`${environment.apiUrl}/recipes/${recipe.id}`, {...recipe, cookbook: cookBookId});
   }
 
   deleteRecipe(recipeId: string): Observable<boolean> {

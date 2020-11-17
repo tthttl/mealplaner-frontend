@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthModule } from './features/auth/auth.module';
+import { ShoppingListModule } from './features/shopping-list/shopping-list.module';
 
 
 const routes: Routes = [
@@ -11,6 +12,10 @@ const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () => AuthModule
+  },
+  {
+    path: 'shopping-list',
+    loadChildren: () => ShoppingListModule
   },
   {
     path: 'meal-planer',

@@ -3,7 +3,6 @@ import { ShoppingListService } from './shopping-list.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { BasicShoppingListItem, ShoppingList, ShoppingListItem } from '../../../core/models/model';
 import { environment } from '../../../../environments/environment';
-import { ShoppingListItemApi } from '../../../core/models/model-api';
 
 describe('ShoppingListService', () => {
   let injector: TestBed;
@@ -37,7 +36,7 @@ describe('ShoppingListService', () => {
   });
 
   it('getShoppingListItems() should return array of shopping list items', () => {
-    const mockShoppingLists: ShoppingListItemApi[] = [
+    const mockShoppingLists: ShoppingListItem[] = [
       {id: '42', title: 'Apple', amount: 1, unit: 'kg', shoppingList: '32', order: 2},
       {id: '42', title: 'Banana', amount: 1, unit: 'kg', shoppingList: '32', order: 1},
     ];

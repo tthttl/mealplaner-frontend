@@ -3,8 +3,5 @@ import { EMAIL_PATTERN } from '../constants/constants';
 
 
 export function email(control: AbstractControl): { email: true } | null {
-  if (!control.value.match(EMAIL_PATTERN)) {
-    return { email: true };
-  }
-  return null;
+  return control.value.match(EMAIL_PATTERN) ? null :  { email: true };
 }

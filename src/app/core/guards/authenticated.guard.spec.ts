@@ -59,7 +59,7 @@ describe('AuthenticatedGuard', () => {
       });
     });
 
-    it('should allow when no jwt token is available and not expired', (done) => {
+    it('should allow when a jwt token is available and not expired', (done) => {
       store.setState({...initialState, appState: {user: {jwt: validJwt}}});
       guard.canActivate(routeMock as ActivatedRouteSnapshot, routeStateMock as RouterStateSnapshot).subscribe((result: boolean) => {
         expect(result).toBeTrue();
@@ -67,7 +67,7 @@ describe('AuthenticatedGuard', () => {
       });
     });
 
-    it('should allow when no jwt token is available but  expired', (done) => {
+    it('should allow when a jwt token is available but expired', (done) => {
       store.setState({...initialState, appState: {user: {jwt: expiredJWT}}});
       guard.canActivate(routeMock as ActivatedRouteSnapshot, routeStateMock as RouterStateSnapshot).subscribe((result: boolean) => {
         expect(result).toBeFalse();

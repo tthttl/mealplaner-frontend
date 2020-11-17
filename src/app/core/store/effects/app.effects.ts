@@ -6,7 +6,7 @@ import { catchError, exhaustMap, filter, map, withLatestFrom } from 'rxjs/operat
 import { I18n } from '../../models/model';
 import { SetLanguageAction } from '../../models/model-action';
 import { GlobalState, selectTranslations } from '../index';
-import { AppInitializationActions, I18nApiActions, NavActions } from '../actions';
+import { AppInitializationActions, I18nApiActions, NavigationActions } from '../actions';
 import { I18nService } from '../../services/i18n.service';
 
 @Injectable()
@@ -18,8 +18,8 @@ export class AppEffects {
   }
 
   @Effect()
-  getI18n = this.actions$.pipe(
-    ofType(AppInitializationActions.setLanguage, NavActions.changeLanguage),
+  getI18n$ = this.actions$.pipe(
+    ofType(AppInitializationActions.setLanguage, NavigationActions.changeLanguage),
     withLatestFrom(this.store.select(selectTranslations)),
     filter(([action, i18n]: [SetLanguageAction, I18n]) => !i18n || !i18n[action.language]),
     exhaustMap(([action, _]: [SetLanguageAction, I18n]) => this.i18nService.getI18n(action.language).pipe(

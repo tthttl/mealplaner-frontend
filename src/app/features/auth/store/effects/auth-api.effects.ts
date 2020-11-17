@@ -14,7 +14,7 @@ import { AuthService } from '../../services/auth.service';
 import { LoginAction } from '../../../../core/models/model-action';
 import { JwtRefreshResponse, User } from '../../../../core/models/model';
 import { of } from 'rxjs';
-import { AppInitializationActions, ErrorInterceptorActions, NavActions } from '../../../../core/store/actions';
+import { AppInitializationActions, ErrorInterceptorActions, NavigationActions } from '../../../../core/store/actions';
 import { Router } from '@angular/router';
 import { DEFAULT_REDIRECT_URL_FOR_LOGGED_IN_USER } from '../../../../core/constants/constants';
 import { SnackbarService } from '../../../../core/services/snackbar.service';
@@ -55,7 +55,7 @@ export class AuthApiEffects {
 
   @Effect()
   logout = this.actions$.pipe(
-    ofType(ErrorInterceptorActions.logout, NavActions.logout),
+    ofType(ErrorInterceptorActions.logout, NavigationActions.logout),
     exhaustMap(() => this.authService.logout().pipe(
       map(() => AuthApiActions.logoutSuccess()),
       catchError(() => of(AuthApiActions.logoutFailure()))

@@ -3,7 +3,8 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { I18n, Language } from './core/models/model';
 import { GlobalState, isLoggedIn, selectCurrentLanguage, selectTranslations } from './core/store';
-import { NavActions } from './core/store/actions';
+import { NavigationActions } from './core/store/actions';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -12,17 +13,20 @@ import { NavActions } from './core/store/actions';
 })
 export class AppComponent {
   translations$: Observable<I18n | null> = this.store.select(selectTranslations);
-  currentLang$: Observable<Language | null> = this.store.select(selectCurrentLanguage);
-  isLoggedIn: Observable<boolean | null> = this.store.select(isLoggedIn);
+  currentLanguage$: Observable<Language | null> = this.store.select(selectCurrentLanguage);
+  isLoggedIn$: Observable<boolean | null> = this.store.select(isLoggedIn);
 
-  constructor(private store: Store<GlobalState>) {
+  get showBetaTeaser(): boolean {
+    return environment.showBetaTeaser;
   }
 
+  constructor(private store: Store<GlobalState>) {}
+
   onLogout(): void {
-    this.store.dispatch(NavActions.logout());
+    this.store.dispatch(NavigationActions.logout());
   }
 
   changeLanguage(language: Language): void {
-    this.store.dispatch(NavActions.changeLanguage({language}));
+    this.store.dispatch(NavigationActions.changeLanguage({language}));
   }
 }

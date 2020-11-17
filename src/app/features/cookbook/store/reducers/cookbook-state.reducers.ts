@@ -1,5 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { addItemAtIndex, copyOrCreateArray } from '../../../../core/helpers/helpers';
+import { addRecipeAtIndex, copyOrCreateArray } from '../../../../core/helpers/helpers';
 import { Cookbook, Recipe, } from '../../../../core/models/model';
 import {
   CookbookCreatedAction,
@@ -92,7 +92,7 @@ export const cookbookStateReducer = createReducer<CookbookState, Action>(
       ...state,
       recipes: {
         ...state.recipes,
-        [recipe.cookbookId]: addItemAtIndex(recipe, state.recipes[recipe.cookbookId])
+        [recipe.cookbookId]: addRecipeAtIndex(recipe, state.recipes[recipe.cookbookId])
       }
     };
   }),
@@ -146,7 +146,7 @@ export const cookbookStateReducer = createReducer<CookbookState, Action>(
     return {
       ...state,
       cookbooks: [
-        ...addItemAtIndex(cookbook, state.cookbooks)
+        ...addRecipeAtIndex(cookbook, state.cookbooks)
       ]
     };
   }),
