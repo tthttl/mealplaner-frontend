@@ -10,7 +10,10 @@
 
 <div class="product-page__image-wrapper">
   <div class="container">
-    <img class="product-page__img" src="/assets/plate.png" [ngStyle]="{'transform': 'rotate(' + plateRotationDegree + 'deg)'}" alt="TODO"/>
+    <img
+      class="product-page__img" src="/assets/plate.png"
+      [ngStyle]="{'transform': 'rotate(' + plateRotationDegree + 'deg)'}"
+      alt="{{'product-page.meal-alt-text' | translate:translations:currentLanguage}}}"/>
   </div>
 </div>
 
@@ -23,7 +26,7 @@
       </p>
     </div>
     <div class="product-page__feature-explanation-image-wrapper product-page__feature-explanation-image-wrapper--hidden" >
-      <img src="/assets/meal.png" alt="TODO"/>
+      <img src="/assets/meal.png" alt="{{'product-page.meal-illustration-text' | translate:translations:currentLanguage}}"/>
     </div>
   </section>
 
@@ -35,7 +38,7 @@
       </p>
     </div>
     <div class="product-page__feature-explanation-image-wrapper product-page__feature-explanation-image-wrapper--hidden">
-      <img src="/assets/calender.png" alt="TODO"/>
+      <img src="/assets/calender.png" alt="{{'product-page.planer-illustration-text' | translate:translations:currentLanguage}}"/>
     </div>
   </section>
 
@@ -47,7 +50,7 @@
       </p>
     </div>
     <div class="product-page__feature-explanation-image-wrapper product-page__feature-explanation-image-wrapper--hidden">
-      <img src="/assets/list.png" alt="TODO"/>
+      <img src="/assets/list.png" alt="{{ 'product-page.list-illustration-alt-text' | translate:translations:currentLanguage }}"/>
     </div>
   </section>
 
