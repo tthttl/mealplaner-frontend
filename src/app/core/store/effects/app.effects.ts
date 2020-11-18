@@ -29,7 +29,7 @@ export class AppEffects {
   );
 
   @Effect({dispatch: false})
-  setUserLanguageToLocaleStorge$ = this.actions$.pipe(
+  setUserLanguageToLocaleStore$ = this.actions$.pipe(
     ofType(NavigationActions.changeLanguage),
     tap(({language}) => localStorage.setItem('userLanguage', language)),
   );
