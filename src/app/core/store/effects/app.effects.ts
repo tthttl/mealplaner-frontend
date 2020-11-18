@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
-import { catchError, exhaustMap, filter, map, withLatestFrom } from 'rxjs/operators';
+import { catchError, exhaustMap, filter, map, tap, withLatestFrom } from 'rxjs/operators';
 import { I18n } from '../../models/model';
 import { SetLanguageAction } from '../../models/model-action';
 import { GlobalState, selectTranslations } from '../index';
@@ -26,5 +26,11 @@ export class AppEffects {
       map((i18n: I18n) => I18nApiActions.getI18nSuccess({i18n})),
       catchError(() => of(I18nApiActions.getI18nFailure()))
     ))
+  );
+
+  @Effect({dispatch: false})
+  setUserLanguageToLocaleStorge$ = this.actions$.pipe(
+    ofType(NavigationActions.changeLanguage),
+    tap(({language}) => localStorage.setItem('userLanguage', language)),
   );
 }

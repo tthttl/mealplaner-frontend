@@ -23,6 +23,7 @@ export class SelectComponent<T> implements OnInit, ControlValueAccessor {
   @Input() label: string | undefined;
   @Input() noBorder = false;
   @Input() errors: string[] = [];
+  @Input() defaultValue: T | undefined;
   @Input() isDisabled = false;
   @Input() ariaLabel: string | undefined = undefined;
   @Input() e2eTestName = '';
@@ -39,6 +40,10 @@ export class SelectComponent<T> implements OnInit, ControlValueAccessor {
   ngOnInit(): void {
     this.selectedValue = this.options[0].value;
     this.propagateChange(this.options[0].value);
+
+    if (this.defaultValue) {
+      this.selectedValue = this.defaultValue;
+    }
   }
 
   onChange(option: T | string): void {
