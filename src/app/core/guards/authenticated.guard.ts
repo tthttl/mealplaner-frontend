@@ -14,9 +14,7 @@ export class AuthenticatedGuard implements CanActivate {
   constructor(private router: Router, private store: Store<GlobalState>) {
   }
 
-  canActivate(
-    next: ActivatedRouteSnapshot,
-    {url}: RouterStateSnapshot): Observable<boolean> {
+  canActivate(next: ActivatedRouteSnapshot, {url}: RouterStateSnapshot): Observable<boolean> {
 
     return this.store.select(selectUser).pipe(
       map(user => {

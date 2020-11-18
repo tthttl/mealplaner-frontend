@@ -19,7 +19,7 @@ export function appInitializer(
   return () => new Promise(resolve => {
     store.dispatch(AppInitializationActions.refreshToken());
 
-    const userLanguage: string = localStorage.getItem('userLanguage') || navigator.language.substr(0, 2) || DEFAULT_LANGUAGE;
+    const userLanguage: string = localStorage.getItem('userLanguage') || getBrowserLanguage() || DEFAULT_LANGUAGE;
     const appLanguage: Language = SUPPORTED_LANGUAGES.guard(userLanguage) ? userLanguage as Language : DEFAULT_LANGUAGE;
     store.dispatch(AppInitializationActions.setLanguage({language: appLanguage}));
 
@@ -41,4 +41,8 @@ export function appInitializer(
     ]).subscribe()
       .add(resolve);
   });
+}
+
+function getBrowserLanguage(): string {
+  return navigator.language.substr(0, 2);
 }

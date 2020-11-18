@@ -1,11 +1,18 @@
-.beta-teaser {
-  background: #333333;
-  color: white;
-  text-align: center;
-  padding: 8px;
+@import "../../../../styles/settings/colors";
+@import "../../../../styles/settings/variables";
+@import "../../../../styles/settings/functions";
 
-  &--link {
-    color: #1976d2;
+
+.beta-teaser {
+  position: relative;
+  margin-top: $header-height;
+  padding: $padding-small;
+  color: $text-00;
+  text-align: center;
+  background: $blue_90;
+
+  &__emoji {
+    padding-right: $padding-medium;
   }
 }
 

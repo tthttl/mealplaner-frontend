@@ -24,6 +24,7 @@ export class SelectComponent<T> implements OnInit, ControlValueAccessor {
   @Input() noBorder = false;
   @Input() errors: string[] = [];
   @Input() isDisabled = false;
+  @Input() ariaLabel: string | undefined = undefined;
   @Input() e2eTestName = '';
   @Input() noPadding = false;
   @Input() noBackground = false;

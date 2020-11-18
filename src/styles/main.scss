@@ -1,6 +1,7 @@
 @import "./material_theme";
 @import "./normalize";
 @import "./settings/colors";
+@import "./settings/functions";
 
 body{
   margin: 0;
@@ -10,16 +11,24 @@ body{
 
 .container {
   width: 90%;
-  max-width: 50rem;
+  max-width: rem(800);
   margin: 0 auto;
 }
 
 #main-page {
-  padding: 6rem 0 6rem 0;
+  padding: rem(96) 0 rem(96) 0;
+}
+
+#main-page {
+  padding: rem(96) 0 rem(96) 0;
+
+  &.main-page--beat {
+    padding-top: rem(48);
+  }
 }
 
 .snackbar {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   color: $text-100;
 
   .mat-button-wrapper {
@@ -32,7 +41,7 @@ a {
 }
 
 /* Loading Animation*/
-$anim_time: 1.8;
+$animation_time: 1.8;
 
 #loading-indicator {
   height: 100vh;
@@ -49,8 +58,8 @@ $anim_time: 1.8;
   position: relative;
   margin: 0 auto;
   top: 0;
-  width: 300px;
-  height: 300px;
+  width: rem(300);
+  height: rem(300);
   overflow: hidden;
   #area {
     position: absolute;
@@ -60,13 +69,13 @@ $anim_time: 1.8;
     height: 50%;
     background-color: transparent;
     transform-origin: 15% 60%;
-    animation: flip #{$anim_time}s ease-in-out infinite;
+    animation: flip #{$animation_time}s ease-in-out infinite;
     #sides {
       position: absolute;
       width: 100%;
       height: 100%;
       transform-origin: 15% 60%;
-      animation: switchSide #{$anim_time}s ease-in-out infinite;
+      animation: switchSide #{$animation_time}s ease-in-out infinite;
       #handle {
         position: absolute;
         bottom: 18%;
@@ -96,7 +105,7 @@ $anim_time: 1.8;
       width: 100%;
       height: 100%;
       transform: rotateX(85deg);
-      animation: jump #{$anim_time}s ease-in-out infinite;
+      animation: jump #{$animation_time}s ease-in-out infinite;
       #pastry {
         position: absolute;
         bottom: 26%;
@@ -104,10 +113,10 @@ $anim_time: 1.8;
         width: 40%;
         height: 45%;
         background-color: $yellow_40;
-        box-shadow: 0 0 3px 0 $yellow_60;
+        box-shadow: 0 0 rem(3) 0 $yellow_60;
         border-radius: 100%;
         transform-origin: -20% 0;
-        animation: fly #{$anim_time}s ease-in-out infinite;
+        animation: fly #{$animation_time}s ease-in-out infinite;
       }
     }
   }

@@ -3,18 +3,16 @@ import { isAfter, isDate } from 'date-fns';
 import { TranslatePipe } from '../../shared/pipes/translate.pipe';
 import {
   BasicShoppingListItem,
-  Cookbook,
   I18n as I18nClient,
   I18n,
   JwtPayload,
   Language,
   List,
   Recipe,
-  RecipeIngredient,
   SelectedIngredient,
   User
 } from '../models/model';
-import { CookbookApi, I18n as I18nApi, IngredientApi, RecipeApi, UserApi } from '../../core/models/model-api';
+import { I18n as I18nApi, UserApi } from '../../core/models/model-api';
 import { DEFAULT_LANGUAGE } from '../constants/constants';
 
 export function mapI18nApiToI18nClient(i18nApi: I18nApi): I18nClient {
@@ -32,10 +30,12 @@ export function mapUserApiToUserClient(userApi: UserApi): User {
   };
 }
 
-export function translateValidationErrors(formControl: FormControl,
-                                          translatePipe: TranslatePipe,
-                                          translations: I18n | null,
-                                          language: Language | null): string[] {
+export function translateValidationErrors(
+  formControl: FormControl,
+  translatePipe: TranslatePipe,
+  translations: I18n | null,
+  language: Language | null
+): string[] {
   if (formControl.invalid && formControl.errors && formControl.touched) {
     return Object.keys(formControl.errors).map(error => translatePipe
       .transform(`errors.validation.${error}`, translations || {}, language || DEFAULT_LANGUAGE));
@@ -73,43 +73,6 @@ export function moveItemInArray<T>(array: T[], previousIndex: number, currentInd
   return copy;
 }
 
-export function convertRecipesApiToRecipes(recipes: RecipeApi[]): Recipe[] {
-  return recipes.map((recipe: RecipeApi) => convertRecipeApiToRecipe(recipe));
-}
-
-export function convertRecipeApiToRecipe(recipe: RecipeApi): Recipe {
-  return {
-    id: recipe.id,
-    title: recipe.title,
-    url: recipe.url,
-    cookbookId: recipe.cookbookId,
-    ingredients: convertIngredientApiArrayToRecipeIngredientArray(recipe.ingredients)
-  };
-}
-
-export function convertIngredientApiArrayToRecipeIngredientArray(ingredients: IngredientApi[]): RecipeIngredient[] {
-  return ingredients.map((ingredient: IngredientApi) => {
-    return {
-      id: ingredient.id,
-      title: ingredient.title,
-      unit: ingredient.unit,
-      amount: ingredient.amount,
-      isStapleFood: ingredient.isStapleFood || false
-    };
-  });
-}
-
-export function convertCookbookApisToCookbooks(cookbooks: CookbookApi[]): Cookbook[] {
-  return cookbooks.map((cookbook: CookbookApi) => convertCookbookApiToCookbook(cookbook));
-}
-
-export function convertCookbookApiToCookbook(cookbook: CookbookApi): Cookbook {
-  return {
-    id: cookbook.id,
-    title: cookbook.title
-  };
-}
-
 export function sortAlphabetically(a: string, b: string): number {
   if (a > b) {
     return 1;
@@ -120,14 +83,15 @@ export function sortAlphabetically(a: string, b: string): number {
   return 0;
 }
 
-export function addItemAtIndex<T extends Recipe | List>(newItem: T, items: T[]): T[] {
+export function addRecipeAtIndex<T extends Recipe | List>(newItem: T, items: T[]): T[] {
   const indexToInsert = items.findIndex((item: T) => item.title.toLowerCase() > newItem.title.toLowerCase());
   return indexToInsert > -1 ? [...items.slice(0, indexToInsert), newItem, ...items.slice(indexToInsert)] : [...items, newItem];
 }
 
 
-export function mapSelectedIngredientToBasicShoppingListItem(ingredient: SelectedIngredient, shoppingListId: string = ''):
-  BasicShoppingListItem {
+export function mapSelectedIngredientToBasicShoppingListItem(
+  ingredient: SelectedIngredient,
+  shoppingListId: string = ''): BasicShoppingListItem {
   return {
     amount: ingredient.amount,
     unit: ingredient.unit,

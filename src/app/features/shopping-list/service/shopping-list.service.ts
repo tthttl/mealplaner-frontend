@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { BasicShoppingListItem, ShoppingList, ShoppingListItem } from '../../../core/models/model';
-import { ShoppingListItemApi as ShoppingListItemApi } from '../../../core/models/model-api';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +28,7 @@ export class ShoppingListService {
   }
 
   getShoppingListItems(shoppingListId: string): Observable<ShoppingListItem[]> {
-    return this.httpClient.get<ShoppingListItemApi[]>(`${environment.apiUrl}/shopping-list-items?shoppingList=${shoppingListId}`);
+    return this.httpClient.get<ShoppingListItem[]>(`${environment.apiUrl}/shopping-list-items?shoppingList=${shoppingListId}`);
   }
 
   addShoppingListItem(shoppingListItem: BasicShoppingListItem): Observable<ShoppingListItem> {

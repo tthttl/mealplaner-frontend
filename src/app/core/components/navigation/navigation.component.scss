@@ -1,20 +1,22 @@
 @import "../../../../styles/settings/colors";
 @import "../../../../styles/settings/breakpoints";
+@import "../../../../styles/settings/variables";
+@import "../../../../styles/settings/functions";
 
 .main-navigation {
-  z-index: 5;
-  background: $blue_100;
-  width: 100%;
-  height: 3.5rem;
   position: fixed;
   top: 0;
+  height: $header-height;
+  width: 100%;
   display: flex;
   align-items: center;
+  z-index: $z-index-top;
+  background: $blue_100;
 
   &__logo {
-    height: 2rem;
+    height: rem(32);
     width: auto;
-    padding-right: 2rem;
+    padding-right:$padding-medium;
   }
 
   &__content {
@@ -25,46 +27,51 @@
   }
 
   &__actions {
-    height: 2rem;
+    height: rem(32);
     display: flex;
   }
 
   &__wrapper {
-    display: flex;
     height: 100%;
+    display: flex;
     align-items: center;
   }
 
   &__secondary-action {
-    color: white;
-    padding-right: 1.5rem;
+    color: #ffffff;
     display: flex;
     align-items: center;
     text-decoration: none;
+    padding-right: $padding-medium;
+
+    @include medium {
+      padding-right: $padding-large;
+    }
   }
 
   &__primary-action {
-    background: white;
+    background: #ffffff;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 4px;
+    border-radius: $border-radius-small;
     color: $blue_100;
     text-decoration: none;
-    width: 7rem;
+    padding: 0 $padding-medium;
   }
 }
 
 
 .mobile-navigation {
   position: fixed;
-  background: #FFFFFF;
+  background: #ffffff;
   bottom: 0;
-  height: 4.5rem;
+  height: $mobile-navigation-height;
   width: 100%;
-  box-shadow: 0px -4px 6px 0px rgba(224, 224, 224, 1);
-  border-bottom: 0.3rem solid $blue-grey_20;
+  box-shadow: 0 rem(-4) rem(6) 0 $blue-grey_20;
+  border-bottom: rem(5) solid $blue-grey_20;
+  z-index: $z-index-top;
 
   @include large {
     display: none;
@@ -73,10 +80,10 @@
   &__link-list {
     list-style: none;
     display: flex;
-    margin-top: 0.4rem;
+    margin-top: rem(5);
   }
 
-  &__link-list-element {
+  &__link-wrapper {
     flex: 1 1 0;
     display: flex;
     flex-direction: column;
@@ -86,15 +93,15 @@
 
   &__link-icon {
     color: $blue_80;
-    font-size: 1.8rem;
+    font-size: rem(28);
   }
 
   &__link-text {
     color: $blue_80;
-    font-size: 0.8rem;
-    margin-top: -0.3rem;
+    font-size: $font-size-tiny;
+    margin-top: rem(-5);
     display: block;
-    margin-bottom: 0.3rem;
+    margin-bottom: rem(5);
   }
 
 
@@ -106,10 +113,10 @@
     text-decoration: none;
 
     .mobile-navigation__status {
-      width: 5.5rem;
+      width: rem(88);
       margin: 0 auto;
       background-color: $blue_80;
-      height: 0.3rem;
+      height: rem(5);
       position: relative;
       bottom: 0;
     }
@@ -118,7 +125,7 @@
 
 .desktop-navigation {
   display: none;
-  color: white;
+  color: #ffffff;
   list-style: none;
   height: 100%;
 
@@ -127,32 +134,32 @@
   }
 
   &__link-list {
-    color: white;
+    color: #ffffff;
     list-style: none;
     display: flex;
     height: 100%;
   }
 
   &__link {
-    color: #FFFFFF;
+    color: #ffffff;
     text-decoration: none;
     height: 100%;
     display: flex;
     align-items: center;
-    border-bottom: 4px solid transparent;
+    border-bottom: rem(4) solid transparent;
   }
 
   &__link--active {
-    border-bottom: 4px solid $blue-grey_10;
+    border-bottom: rem(4) solid $blue-grey_10;
   }
 
   &__link-list-element {
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: $padding-medium;
+    padding-right: $padding-medium;
     height: 100%;
     display: flex;
     align-items: center;
-    color: white;
+    color: #ffffff;
   }
 }
 

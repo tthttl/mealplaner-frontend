@@ -6,7 +6,7 @@ import {
   AuthenticatedGuardActions,
   ErrorInterceptorActions,
   I18nApiActions,
-  NavActions
+  NavigationActions
 } from '../actions';
 import { AppState, initialAppState } from '../state/app-state';
 
@@ -36,6 +36,8 @@ export const appStateReducer = createReducer<AppState, Action>(
     }),
   on(
     AuthApiActions.refreshTokenFailed,
+    ErrorInterceptorActions.logout,
+    NavigationActions.logout,
     (state) => {
       return {
         ...state,
@@ -64,25 +66,11 @@ export const appStateReducer = createReducer<AppState, Action>(
     }),
   on(
     AppInitializationActions.setLanguage,
-    (state, {language}: { language: Language }) => {
+    NavigationActions.changeLanguage,
+    (state: AppState, {language}: { language: Language }) => {
       return {
         ...state,
         language,
       };
-    }),
-  on(
-    ErrorInterceptorActions.logout,
-    NavActions.logout,
-    (state) => {
-      return {
-        ...state,
-        user: null,
-      };
-    }),
-  on(NavActions.changeLanguage, (state: AppState, {language}: { language: Language }) => {
-    return {
-      ...state,
-      language
-    };
-  })
+    })
 );

@@ -1,3 +1,5 @@
+@import "../settings/functions";
+
 @mixin skeleton($element, $animation-color, $animation-speed) {
   #{$element}:empty {
     @content;
@@ -9,10 +11,10 @@
     content: '';
     display: block;
     position: absolute;
-    left: -150px;
+    left: rem(-150);
     top: 0;
     height: 100%;
-    width: 30px;
+    width: rem(30);
     background: linear-gradient(to right, transparent 0%, #{$animation-color} 50%, transparent 100%);
     animation: load #{$animation-speed} linear infinite;
   }
@@ -20,7 +22,7 @@
 
 @keyframes load {
   0% {
-    left: -150px;
+    left: rem(-150);
   }
   30%   {
     left: 100%;

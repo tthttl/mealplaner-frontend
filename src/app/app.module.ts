@@ -15,7 +15,6 @@ import { AuthModule } from './features/auth/auth.module';
 import { AuthService } from './features/auth/services/auth.service';
 import { BetaTeaserComponent } from './core/components/beta-teaser/beta-teaser.component';
 import { NavigationComponent } from './core/components/navigation/navigation.component';
-import { CookbookModule } from './features/cookbook/cookbook.module';
 import { I18nService } from './core/services/i18n.service';
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
@@ -37,11 +36,10 @@ import { AppEffects } from './core/store/effects/app.effects';
     BrowserAnimationsModule,
     HttpClientModule,
     StoreModule.forRoot(reducers, {metaReducers}),
-    StoreDevtoolsModule.instrument(),
-    AuthModule,
-    CookbookModule,
     EffectsModule.forRoot([AppEffects]),
+    StoreDevtoolsModule.instrument(),
     FontAwesomeModule,
+    AuthModule,
     SharedModule,
     ShoppingListModule
   ],
@@ -49,7 +47,6 @@ import { AppEffects } from './core/store/effects/app.effects';
     {provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AuthService, I18nService, Store, Actions]},
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
-
   ],
   bootstrap: [AppComponent]
 })

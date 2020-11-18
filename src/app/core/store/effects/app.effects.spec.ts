@@ -7,7 +7,7 @@ import { GlobalState, initialState } from '../index';
 import { I18nService } from '../../services/i18n.service';
 import { AppEffects } from './app.effects';
 import SpyObj = jasmine.SpyObj;
-import { I18nApiActions, NavActions } from '../actions';
+import { I18nApiActions, NavigationActions } from '../actions';
 
 describe('i18n Api Effects', () => {
   let actions$;
@@ -33,36 +33,36 @@ describe('i18n Api Effects', () => {
 
     it('should return success action', () => {
       i18nService.getI18n.and.returnValue(of({} as I18nClient));
-      i18nApiEffects.getI18n.subscribe((action: Action) => {
+      i18nApiEffects.getI18n$.subscribe((action: Action) => {
         expect(action.type).toEqual(I18nApiActions.getI18nSuccess.type);
       });
     });
     it('should return failure action', () => {
       i18nService.getI18n.and.returnValue(throwError('error'));
-      i18nApiEffects.getI18n.subscribe((action: Action) => {
+      i18nApiEffects.getI18n$.subscribe((action: Action) => {
         expect(action.type).toEqual(I18nApiActions.getI18nFailure.type);
       });
     });
 
     it('should return success action when language is changed and not yet available in store', () => {
-      actions$ = of({type: NavActions.changeLanguage.type, language: 'en'});
+      actions$ = of({type: NavigationActions.changeLanguage.type, language: 'en'});
       i18nApiEffects = new AppEffects(
         actions$,
         i18nService,
         store);
       i18nService.getI18n.and.returnValue(of({} as I18nClient));
-      i18nApiEffects.getI18n.subscribe((action: Action) => {
+      i18nApiEffects.getI18n$.subscribe((action: Action) => {
         expect(action.type).toEqual(I18nApiActions.getI18nSuccess.type);
       });
     });
     it('should return failure action when language is changed and not yet available in store', () => {
-      actions$ = of({type: NavActions.changeLanguage.type, language: 'en'});
+      actions$ = of({type: NavigationActions.changeLanguage.type, language: 'en'});
       i18nApiEffects = new AppEffects(
         actions$,
         i18nService,
         store);
       i18nService.getI18n.and.returnValue(throwError('error'));
-      i18nApiEffects.getI18n.subscribe((action: Action) => {
+      i18nApiEffects.getI18n$.subscribe((action: Action) => {
         expect(action.type).toEqual(I18nApiActions.getI18nFailure.type);
       });
     });

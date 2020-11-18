@@ -1,11 +1,16 @@
 <app-navigation
-  [isLoggedIn]="isLoggedIn | async"
+  [isLoggedIn]="isLoggedIn$ | async"
   [translations]="translations$ | async"
-  [currentLang]="currentLang$ | async"
+  [currentLanguage]="currentLanguage$ | async"
   (logout)="onLogout()"
   (languageChanged)="changeLanguage($event)"
 ></app-navigation>
+<app-beta-teaser
+  *ngIf="showBetaTeaser"
+  [translations]="translations$ | async"
+  [currentLanguage]="currentLanguage$ | async">
+</app-beta-teaser>
 
-<div id="main-page">
+<div id="main-page" [class.main-page--beat]="showBetaTeaser">
   <router-outlet></router-outlet>
 </div>

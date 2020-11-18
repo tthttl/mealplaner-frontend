@@ -1,12 +1,9 @@
 import { FormControl } from '@angular/forms';
 import { TranslatePipe } from '../../shared/pipes/translate.pipe';
-import { Cookbook, I18n, Recipe, RecipeIngredient } from '../models/model';
-import { CookbookApi, I18n as I18nApi, IngredientApi, RecipeApi, UserApi } from '../models/model-api';
+import { I18n, Recipe } from '../models/model';
+import { I18n as I18nApi, UserApi } from '../models/model-api';
 import {
-  addItemAtIndex,
-  convertCookbookApisToCookbooks,
-  convertIngredientApiArrayToRecipeIngredientArray,
-  convertRecipeApiToRecipe,
+  addRecipeAtIndex,
   copyOrCreateArray,
   decodeJwtToken,
   isJwtTokenExpired,
@@ -170,69 +167,6 @@ describe('Helpers', () => {
       expect(moveItemInArray([0, 1, 2, 3, 4], 3, 1)).toEqual([0, 3, 1, 2, 4]);
     });
   });
-
-  describe('Cookbook converters', () => {
-    const ingredientApi: IngredientApi = {
-      id: '1',
-      title: 'Mehl',
-      unit: 'kg',
-      amount: 1,
-      isStapleFood: true
-    };
-
-    const ingredient: RecipeIngredient = {
-      id: '1',
-      title: 'Mehl',
-      unit: 'kg',
-      amount: 1,
-      isStapleFood: true
-    };
-
-    const recipeApi: RecipeApi = {
-      id: '1',
-      title: 'Recipe',
-      url: 'URL',
-      cookbookId: 'cookbookId',
-      ingredients: [ingredientApi]
-    };
-
-    const recipe: Recipe = {
-      id: '1',
-      title: 'Recipe',
-      url: 'URL',
-      cookbookId: 'cookbookId',
-      ingredients: [ingredient]
-    };
-
-    const cookbookApi: CookbookApi = {
-      id: '1',
-      title: 'Cookbook',
-    };
-
-    const cookbook: Cookbook = {
-      id: '1',
-      title: 'Cookbook',
-    };
-
-    describe('convertRecipeApiToRecipe', () => {
-      it('should convert', () => {
-        expect(convertRecipeApiToRecipe(recipeApi)).toEqual(recipe);
-      });
-    });
-
-    describe('convertIngredientApiArrayToRecipeIngredientArray', () => {
-      it('should convert', () => {
-        expect(convertIngredientApiArrayToRecipeIngredientArray([ingredientApi]))
-          .toEqual([ingredient]);
-      });
-    });
-
-    describe('convertCookbookApisToCookbooks', () => {
-      it('should convert', () => {
-        expect(convertCookbookApisToCookbooks([cookbookApi])).toEqual([cookbook]);
-      });
-    });
-  });
 });
 
 describe(`${sortAlphabetically}`, () => {
@@ -247,7 +181,7 @@ describe(`${sortAlphabetically}`, () => {
   });
 });
 
-describe(`${addItemAtIndex}`, () => {
+describe(`${addRecipeAtIndex}`, () => {
   const recipeA: Partial<Recipe> = {
     id: '1',
     title: 'Recipe A'
@@ -265,30 +199,30 @@ describe(`${addItemAtIndex}`, () => {
 
   it('should add first', () => {
     const recipes: Recipe[] = [recipeB as Recipe, recipeC as Recipe];
-    expect(addItemAtIndex(recipeA as Recipe, recipes));
+    expect(addRecipeAtIndex(recipeA as Recipe, recipes));
   });
 
   it('should add last', () => {
     const recipes: Recipe[] = [recipeA as Recipe, recipeB as Recipe];
-    expect(addItemAtIndex(recipeC as Recipe, recipes));
+    expect(addRecipeAtIndex(recipeC as Recipe, recipes));
   });
 
   it('should add in the middle', () => {
     const recipes: Recipe[] = [recipeA as Recipe, recipeC as Recipe];
-    expect(addItemAtIndex(recipeB as Recipe, recipes));
+    expect(addRecipeAtIndex(recipeB as Recipe, recipes));
   });
 
-  describe(`${addItemAtIndex}`, () => {
+  describe(`${addRecipeAtIndex}`, () => {
     it('should add item at beginning', () => {
-      expect(addItemAtIndex(recipeA as Recipe, [recipeB as Recipe, recipeC as Recipe]))
+      expect(addRecipeAtIndex(recipeA as Recipe, [recipeB as Recipe, recipeC as Recipe]))
         .toEqual([recipeA as Recipe, recipeB as Recipe, recipeC as Recipe]);
     });
     it('should add item in the middle', () => {
-      expect(addItemAtIndex(recipeB as Recipe, [recipeA as Recipe, recipeC as Recipe]))
+      expect(addRecipeAtIndex(recipeB as Recipe, [recipeA as Recipe, recipeC as Recipe]))
         .toEqual([recipeA as Recipe, recipeB as Recipe, recipeC as Recipe]);
     });
     it('should add item at the end', () => {
-      expect(addItemAtIndex(recipeC as Recipe, [recipeA as Recipe, recipeB as Recipe]))
+      expect(addRecipeAtIndex(recipeC as Recipe, [recipeA as Recipe, recipeB as Recipe]))
         .toEqual([recipeA as Recipe, recipeB as Recipe, recipeC as Recipe]);
     });
   });

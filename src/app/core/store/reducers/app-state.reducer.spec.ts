@@ -2,14 +2,20 @@ import { Translations } from '../../models/model';
 import { appStateReducer } from './app-state.reducers';
 import { initialAppState } from '../state/app-state';
 import { AuthApiActions } from '../../../features/auth/store/actions';
-import { AppInitializationActions, AuthenticatedGuardActions, ErrorInterceptorActions, I18nApiActions, NavActions } from '../actions';
+import {
+  AppInitializationActions,
+  AuthenticatedGuardActions,
+  ErrorInterceptorActions,
+  I18nApiActions,
+  NavigationActions
+} from '../actions';
 
 describe('i18nReducer', () => {
   describe('I18nApiActions.getI18nSuccess', () => {
     it('should add de translations to state', () => {
       expect(appStateReducer({...initialAppState},
         I18nApiActions.getI18nSuccess({
-          i18n:  {de: {} }
+          i18n: {de: {}}
         }))).toEqual({
         ...initialAppState,
         i18n: {
@@ -21,7 +27,7 @@ describe('i18nReducer', () => {
     it('should add en translations as second language to state', () => {
       expect(appStateReducer({
           ...initialAppState,
-          i18n:  {de: {} },
+          i18n: {de: {}},
         },
         I18nApiActions.getI18nSuccess({
           i18n: {
@@ -92,12 +98,14 @@ describe('i18nReducer', () => {
       expect(appStateReducer({
           ...initialAppState,
         },
-        AuthApiActions.loginSuccess({user: {
+        AuthApiActions.loginSuccess({
+          user: {
             id: '0',
             name: 'Joe',
             email: 'joe@doe.com',
             jwt: 'jwt'
-          }}))).toEqual({
+          }
+        }))).toEqual({
         ...initialAppState,
         user: {
           id: '0',
@@ -114,12 +122,14 @@ describe('i18nReducer', () => {
       expect(appStateReducer({
           ...initialAppState,
         },
-        AuthApiActions.registerSuccess({user: {
+        AuthApiActions.registerSuccess({
+          user: {
             id: '0',
             name: 'Joe',
             email: 'joe@doe.com',
             jwt: 'jwt'
-          }}))).toEqual({
+          }
+        }))).toEqual({
         ...initialAppState,
         user: {
           id: '0',
@@ -136,12 +146,14 @@ describe('i18nReducer', () => {
       expect(appStateReducer({
           ...initialAppState,
         },
-        AuthApiActions.restPasswordSuccess({user: {
+        AuthApiActions.restPasswordSuccess({
+          user: {
             id: '0',
             name: 'Joe',
             email: 'joe@doe.com',
             jwt: 'jwt'
-          }}))).toEqual({
+          }
+        }))).toEqual({
         ...initialAppState,
         user: {
           id: '0',
@@ -177,6 +189,19 @@ describe('i18nReducer', () => {
     });
   });
 
+  describe('NavigationActions.changeLanguage', () => {
+    it('should switch language in store', () => {
+      expect(appStateReducer({
+          ...initialAppState,
+          language: 'de',
+        },
+        NavigationActions.changeLanguage({language: 'en'}))).toEqual({
+        ...initialAppState,
+        language: 'en'
+      });
+    });
+  });
+
   describe('ErrorInterceptorActions.logout', () => {
     it('should remove user in store', () => {
       expect(appStateReducer({
@@ -195,7 +220,7 @@ describe('i18nReducer', () => {
     });
   });
 
-  describe('NavActions.logout', () => {
+  describe('NavigationActions.logout', () => {
     it('should remove user in store', () => {
       expect(appStateReducer({
           ...initialAppState,
@@ -206,7 +231,7 @@ describe('i18nReducer', () => {
             jwt: 'jwt',
           }
         },
-        NavActions.logout())).toEqual({
+        NavigationActions.logout())).toEqual({
         ...initialAppState,
         user: null
       });
