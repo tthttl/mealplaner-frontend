@@ -15,7 +15,7 @@
     <button *ngIf="showButton" class="auth-form__button">{{ buttonText }}</button>
   </form>
 
-  <section *ngIf="showButton" class="auth-form__helper-section">
+  <section *ngIf="showButton" class="auth-form__footer">
     <ng-container [ngTemplateOutlet]="formFooter"></ng-container>
   </section>
 </div>

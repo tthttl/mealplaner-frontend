@@ -5,7 +5,7 @@ import { GlobalState, selectRequestedUrlBeforeLoginWasRequired } from '../../../
 import {
   AuthApiActions,
   ForgotPasswordContainerActions,
-  LoginPageActions,
+  LoginContainerActions,
   LoginServiceActions,
   RegisterContainerActions, ResetPasswordContainerActions
 } from '../actions';
@@ -16,7 +16,7 @@ import { JwtRefreshResponse, User } from '../../../../core/models/model';
 import { of } from 'rxjs';
 import { AppInitializationActions, ErrorInterceptorActions, NavigationActions } from '../../../../core/store/actions';
 import { Router } from '@angular/router';
-import { DEFAULT_REDIRECT_URL_FOR_LOGGED_IN_USER } from '../../../../core/constants/constants';
+import { DEFAULT_REDIRECT_URL_FOR_LOGGED_IN_USER, REDIRECT_URL_WHEN_LOGOUT } from '../../../../core/constants/constants';
 import { SnackbarService } from '../../../../core/services/snackbar.service';
 
 @Injectable()
@@ -30,8 +30,8 @@ export class AuthApiEffects {
   }
 
   @Effect()
-  login = this.actions$.pipe(
-    ofType(LoginPageActions.login),
+  login$ = this.actions$.pipe(
+    ofType(LoginContainerActions.login),
     exhaustMap(({credentials}: LoginAction) => this.authService.login(credentials).pipe(
       map((user: User) => AuthApiActions.loginSuccess({user})),
       catchError((error) => {
@@ -42,7 +42,7 @@ export class AuthApiEffects {
   );
 
   @Effect()
-  refreshToken = this.actions$.pipe(
+  refreshToken$ = this.actions$.pipe(
     ofType(AppInitializationActions.refreshToken, LoginServiceActions.refreshToken),
     exhaustMap(() => this.authService.refreshToken().pipe(
       map((jwtRenewal: JwtRefreshResponse) => {
@@ -54,7 +54,7 @@ export class AuthApiEffects {
   );
 
   @Effect()
-  logout = this.actions$.pipe(
+  logout$ = this.actions$.pipe(
     ofType(ErrorInterceptorActions.logout, NavigationActions.logout),
     exhaustMap(() => this.authService.logout().pipe(
       map(() => AuthApiActions.logoutSuccess()),
@@ -94,7 +94,7 @@ export class AuthApiEffects {
   );
 
   @Effect({dispatch: false})
-  redirectWhenLoggedIn = this.actions$.pipe(
+  redirectWhenLoggedIn$ = this.actions$.pipe(
     ofType(AuthApiActions.loginSuccess, AuthApiActions.registerSuccess, AuthApiActions.restPasswordSuccess),
     withLatestFrom(this.store.select(selectRequestedUrlBeforeLoginWasRequired)),
     tap(([_, url]) => {
@@ -103,11 +103,11 @@ export class AuthApiEffects {
   );
 
   @Effect({dispatch: false})
-  redirectWhenLoggedOut = this.actions$.pipe(
+  redirectWhenLoggedOut$ = this.actions$.pipe(
     ofType(AuthApiActions.logoutSuccess),
     withLatestFrom(this.store.select(selectRequestedUrlBeforeLoginWasRequired)),
     tap(() => {
-      this.router.navigate(['/']);
+      this.router.navigate([REDIRECT_URL_WHEN_LOGOUT]);
     }),
   );
 }

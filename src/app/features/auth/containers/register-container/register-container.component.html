@@ -1,6 +1,6 @@
 <app-register-page
   [translations]="translations$ | async"
-  [currentLang]="currentLanguage$ | async"
+  [currentLanguage]="currentLanguage$ | async"
   [backendErrorMessage]="backendError"
   (credentialsReceived)="register($event)"
 ></app-register-page>

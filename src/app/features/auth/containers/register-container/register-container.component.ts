@@ -11,8 +11,7 @@ import { Actions, ofType } from '@ngrx/effects';
   templateUrl: './register-container.component.html',
   styleUrls: ['./register-container.component.scss']
 })
-export class RegisterContainerComponent implements OnInit {
-
+export class RegisterContainerComponent {
   translations$: Observable<I18n | null> = this.store.select(selectTranslations);
   currentLanguage$: Observable<Language> = this.store.pipe(select(state => state.appState.language));
   backendError: string | undefined;
@@ -21,9 +20,6 @@ export class RegisterContainerComponent implements OnInit {
     this.actions$.pipe(ofType(AuthApiActions.registerFailure)).subscribe(({error}: { error: string }) => {
       this.backendError = error;
     });
-  }
-
-  ngOnInit(): void {
   }
 
   register(credentials: RegisterCredentials): void {
