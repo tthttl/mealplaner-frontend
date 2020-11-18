@@ -1,0 +1,86 @@
+@import "../../../../../styles/settings/colors";
+@import "../../../../../styles/settings/variables";
+
+.auth-form {
+  max-width: 500px;
+
+  &__header {
+    background: $blue_100;
+    color: $blue_10;
+    text-align: center;
+    font-size: 1.4em;
+    letter-spacing: 3px;
+    padding: 1.0em 0;
+    margin: 0 20px;
+  }
+
+  &__form {
+    background: $blue-grey_10;
+    margin: 0 20px;
+    padding: 24px 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__button {
+    background: $blue_100;
+    position: relative;
+    border: none;
+    display: block;
+    color: $blue-grey_10;
+    width: 100%;
+    font-size: 1.3em;
+    padding: 10px 0;
+    cursor: pointer;
+
+    &::before {
+      content: "";
+      position: absolute;
+      display: block;
+      height: 10px;
+      width: 10px;
+      top: 32px;
+      left: -20px;
+      border-style: solid;
+      border-width: 20px;
+      border-color: transparent $blue_70 transparent transparent;
+      z-index: -1;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      display: block;
+      height: 10px;
+      width: 10px;
+      top: 32px;
+      right: -20px;
+      border-style: solid;
+      border-width: 20px;
+      border-color: transparent  transparent transparent $blue_70;
+      z-index: -1;
+    }
+  }
+
+  &__helper-section {
+    color: $blue_grey_40;
+    background: $blue-grey_10;
+    text-align: center;
+    margin: 0 20px;
+    padding: 24px 0;
+    line-height: 1.5;
+  }
+
+  &__backend-error {
+    width: 80%;
+    padding: 8px 4px;
+    color: $red_10;
+    background: $red_50;
+    margin: 0 auto;
+    border-radius: $border-radius-default;
+  }
+
+  &__link {
+    color: $blue_80;
+  }
+}

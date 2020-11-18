@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { take } from 'rxjs/operators';
-import { List, ListPickerDialogEvent } from '../../model/model';
-import { DialogService } from '../../services/dialog.service';
+import { List, ListPickerDialogEvent } from '../../../core/models/model';
+import { DialogService } from '../../../core/services/dialog.service';
 import { ListPickerDialogComponent } from '../list-picker-dialog/list-picker-dialog.component';
 
 @Component({

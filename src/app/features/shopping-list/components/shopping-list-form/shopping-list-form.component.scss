@@ -1,0 +1,54 @@
+@import "../../../../../styles/settings/colors";
+@import "../../../../../styles/settings/breakpoints";
+@import "../../../../../styles/settings/variables";
+
+.add-items-form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  padding: 12px;
+
+  @include large {
+    flex-direction:  row;
+  }
+
+  &--input-amount {
+    @include large {
+      max-width: 8rem;
+    }
+  }
+
+  &--input {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    flex: 1 1 auto;
+
+    &:not(:nth-child(3)) {
+      border-bottom: 1px solid $blue-grey_90;
+    };
+
+    @include large {
+      padding-bottom: 0;
+      padding-right: 1rem;
+
+      &:not(:nth-child(3)) {
+        border-bottom: none;
+      };
+
+    }
+  }
+
+  &--input-unit {
+    @include large {
+      max-width: 8.5rem;
+    }
+  }
+
+  &--submit {
+    height: 2.5rem;
+
+    @include large {
+      height: auto;
+    }
+  }
+}

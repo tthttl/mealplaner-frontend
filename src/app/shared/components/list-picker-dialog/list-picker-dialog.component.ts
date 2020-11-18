@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { DialogData, List } from '../../model/model';
+import { DialogData, List } from '../../../core/models/model';
 
 @Component({
   selector: 'app-list-picker-dialog',
