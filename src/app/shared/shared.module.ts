@@ -12,17 +12,19 @@ import { ListHeaderComponent } from './components/list-header/list-header.compon
 import { EditListDialogComponent } from './components/edit-list-dialog/edit-list-dialog.component';
 import { TranslatePipe } from './pipes/translate.pipe';
 
+const declarations = [
+  ButtonComponent,
+  InputComponent,
+  SelectComponent,
+  ListHeaderComponent,
+  ListPickerDialogComponent,
+  EditListDialogComponent,
+  TranslatePipe
+];
+
 
 @NgModule({
-  declarations: [
-    ButtonComponent,
-    InputComponent,
-    SelectComponent,
-    ListHeaderComponent,
-    ListPickerDialogComponent,
-    EditListDialogComponent,
-    TranslatePipe
-  ],
+  declarations,
   imports: [
     CommonModule,
     FormsModule,
@@ -32,13 +34,7 @@ import { TranslatePipe } from './pipes/translate.pipe';
     MatDialogModule,
   ],
   exports: [
-    ButtonComponent,
-    InputComponent,
-    SelectComponent,
-    ListHeaderComponent,
-    ListPickerDialogComponent,
-    EditListDialogComponent,
-    TranslatePipe
+    ...declarations
   ],
 })
 export class SharedModule {

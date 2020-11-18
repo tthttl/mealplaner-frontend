@@ -16,7 +16,6 @@
           [noBorder]="true"
           [name]="'name'"
           [placeholder]="'auth.register.name' | translate:translations:currentLang"
-          [ariaLabel]="'auth.register.name' | translate:translations:currentLang"
           [formControl]="getFormControl('name')"
           [errors]="getErrorsFor('name')"></app-input>
 
@@ -31,7 +30,6 @@
           [noBorder]="true"
           [name]="'email'"
           [placeholder]="'auth.register.email' | translate:translations:currentLang"
-          [ariaLabel]="'auth.register.email' | translate:translations:currentLang"
           [formControl]="getFormControl('email')"
           [errors]="getErrorsFor('email')"></app-input>
       </div>
@@ -45,7 +43,6 @@
           [noBorder]="true"
           [name]="'password'"
           [placeholder]="'auth.register.password' | translate:translations:currentLang"
-          [ariaLabel]="'auth.register.password' | translate:translations:currentLang"
           [formControl]="getFormControl('password')"
           [errors]="getErrorsFor('password')"></app-input>
       </div>
@@ -60,7 +57,6 @@
           [noBorder]="true"
           [name]="'invitationCode'"
           [placeholder]="'auth.register.invitationCode' | translate:translations:currentLang"
-          [ariaLabel]="'auth.register.invitationCode' | translate:translations:currentLang"
           [formControl]="getFormControl('invitationCode')"
           [errors]="getErrorsFor('invitationCode')"
           [ariaDescribedBy]="'project-disclaimer'"></app-input>

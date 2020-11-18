@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IconName } from '@fortawesome/fontawesome-common-types';
-import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-button',
@@ -23,5 +22,4 @@ export class ButtonComponent {
   onClick(event: MouseEvent): void {
     this.clicked.emit(event);
   }
-
 }

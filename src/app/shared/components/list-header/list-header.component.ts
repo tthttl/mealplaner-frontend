@@ -10,22 +10,20 @@ import { ListPickerDialogComponent } from '../list-picker-dialog/list-picker-dia
   styleUrls: ['./list-header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ListHeaderComponent implements OnInit {
+export class ListHeaderComponent {
   @Input() selectedList: List | null | undefined = undefined;
   @Input() lists: List[] | null | undefined = undefined;
   @Input() defaultTitle = '';
   @Input() addListLabel = '';
   @Input() buttonLabel = '';
+  @Input() ariaEditLabel = '';
+  @Input() ariaDeleteLabel = '';
   @Output() createList: EventEmitter<undefined> = new EventEmitter();
   @Output() selectList: EventEmitter<List> = new EventEmitter();
   @Output() editList: EventEmitter<List> = new EventEmitter();
   @Output() deleteList: EventEmitter<List> = new EventEmitter();
 
-  constructor(private dialogService: DialogService) {
-  }
-
-  ngOnInit(): void {
-  }
+  constructor(private dialogService: DialogService) {}
 
   openList(): void {
     const dialogRef = this.dialogService.openDialog(ListPickerDialogComponent, {
@@ -33,6 +31,8 @@ export class ListHeaderComponent implements OnInit {
       translations: {
         'new-list': this.addListLabel,
         'default-title': this.defaultTitle,
+        'aria-edit': this.ariaEditLabel,
+        'aria-delete': this.ariaDeleteLabel,
       }
     });
     dialogRef.afterClosed()

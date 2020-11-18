@@ -15,7 +15,7 @@ describe('TranslatePipe', () => {
     expect(new TranslatePipe().transform(i18n.en.test, i18n, 'en')).toEqual(i18n.en.test);
   });
 
-  it('should return matching translation in german language when no language is supplied', () => {
+  it('should return matching translation in default language when no language is supplied', () => {
     expect(new TranslatePipe().transform(i18n.de.test, i18n)).toEqual(i18n.de.test);
   });
 

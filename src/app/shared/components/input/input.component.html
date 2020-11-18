@@ -1,37 +1,22 @@
-<div class="input-group">
-  <div class="input">
-    <label class="input__label" *ngIf="label" [for]="inputId">{{label}}</label>
-    <div class="field-wrapper">
-      <input class="input__field"
-             [type]="type"
-             [id]="inputId"
-             [(ngModel)]="currentValue"
-             (ngModelChange)="onChange($event)"
-             [class.input__field--no-border]="noBorder"
-             (blur)="onBlur()"
-             [attr.name]="name"
-             [autocomplete]="autocomplete"
-             [placeholder]="placeholder"
-             [attr.data-test]="e2eTestName"
-             [attr.min]="minValue"
-             [attr.aria-label]="ariaLabel"
-             [attr.aria-describedby]="ariaDescribedBy"
-      >
-      <app-button class="input__button"
-                  *ngIf="!!buttonText"
-                  [buttonText]="buttonText"
-                  [buttonType]="buttonType"
-                  [attr.data-test]="buttonTestName"
-                  [isDisabled]="isDisabled"
-                  [isInputGroup]="true"
-                  [color]="color"
-                  [hasErrors]="errors && errors.length > 0"
-                  (clicked)="onClicked($event)"
-      ></app-button>
-    </div>
-    <div>
-      <div class="input__error" *ngFor="let error of errors">{{error}}</div>
-    </div>
+<div class="input">
+  <label class="input__label" *ngIf="label" [for]="inputId">{{label}}</label>
+    <input class="input__field"
+           [(ngModel)]="currentValue"
+           [type]="type"
+           [id]="inputId"
+           [class.input__field--no-border]="noBorder"
+           [attr.name]="name"
+           [autocomplete]="autocomplete"
+           [placeholder]="placeholder"
+           [attr.data-test]="e2eTestName"
+           [attr.min]="minValue"
+           [attr.aria-label]="placeholder"
+           [attr.aria-describedby]="ariaDescribedBy"
+           (blur)="onBlur()"
+           (ngModelChange)="onChange($event)"
+    >
+  <div>
+    <div class="input__error" *ngFor="let error of errors">{{error}}</div>
   </div>
 </div>
 

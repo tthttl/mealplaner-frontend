@@ -1,12 +1,13 @@
 @import "./colors";
 @import "./functions";
 
-$border-primary: 2px solid $blue_70;
+$border-primary: 1px solid $blue_70;
 $border-radius-default: 4px;
 $border-radius-small: 4px;
 $header-height: rem(56);
 $mobile-navigation-height: rem(72);
 
+$padding-tiny: rem(4);
 $padding-small: rem(8);
 $padding-medium: rem(16);
 $padding-large: rem(32);
@@ -15,3 +16,4 @@ $z-index-top: 10;
 
 $font-size-tiny: rem(13);
 $font-size-small: rem(16);
+$font-size-medium: rem(24);

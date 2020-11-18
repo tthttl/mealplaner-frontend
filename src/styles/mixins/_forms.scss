@@ -19,9 +19,14 @@
   border-radius: $border-radius-default;
   border: $border-primary;
   padding: $padding-medium $padding-small;
+  background-color: transparent;
+
+  &--border-accent {
+    border: 1px solid $cyan_70;
+  }
 
   &--border-error {
-    border: rem(2) solid $red_70;
+    border: 1px solid $red_70;
   }
 
   &--no-border {

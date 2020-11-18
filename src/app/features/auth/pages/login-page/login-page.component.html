@@ -16,7 +16,6 @@
           [noBorder]="true"
           [name]="'email'"
           [placeholder]="'auth.login.email' | translate:translations:currentLang"
-          [ariaLabel]="'auth.login.email' | translate:translations:currentLang"
           [formControl]="getFormControl('identifier')"
           [errors]="getErrorsFor('identifier')"></app-input>
       </div>
@@ -30,7 +29,6 @@
           [noBorder]="true"
           [name]="'password'"
           [placeholder]="'auth.login.password' | translate:translations:currentLang"
-          [ariaLabel]="'auth.login.password' | translate:translations:currentLang"
           [formControl]="getFormControl('password')"
           [errors]="getErrorsFor('password')"></app-input>
       </div>

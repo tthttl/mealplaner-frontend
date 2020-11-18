@@ -1,9 +1,11 @@
 @import "../../../../styles/settings/colors";
+@import "../../../../styles/settings/functions";
+@import "../../../../styles/settings/variables";
 
 
 .list-picker {
-  max-height: 300px;
-  width: 400px;
+  max-height: rem(300);
+  width: rem(400);
   margin: 0;
   max-width: 100%;
 
@@ -28,27 +30,26 @@
   }
 
   &__item-title {
-    padding: 15px 5px;
+    padding: $padding-medium $padding-tiny;
     flex-grow: 1;
   }
 
   &__item--add {
     font-weight: 500;
     color: $cyan_80;
-    font-size: 1.1em;
-    background: none;
+    font-size: $font-size-small;
   }
 
-  &__actions {
+  &__item-actions {
     flex-shrink: 0;
-    padding: 15px 5px 15px 0;
+    padding: $padding-medium $padding-tiny $padding-medium 0;
   }
 
-  &__icon {
-    padding-right: 5px;
+  &__item-icon {
+    padding-right: $padding-tiny;
   }
 
-  &__action:nth-child(2) {
-    padding-left: 10px
+  &__item-action:nth-child(2) {
+    padding-left: $padding-medium
   }
 }

@@ -15,22 +15,15 @@ import { v4 as uuid } from 'uuid';
   ]})
 export class InputComponent implements ControlValueAccessor {
 
-  @Input() buttonText = '';
-  @Input() buttonType = 'button';
-  @Input() buttonTestName = '';
-  @Input() color = 'primary';
-  @Input() noBorder = false;
-  @Input() ariaLabel = '';
-  @Input() ariaDescribedBy = '';
-  @Input() iconLeft: string | undefined;
-  @Input() minValue: number | null = null;
-
   @Input() type = 'text';
-  @Input() name = '';
+  @Input() name: string | undefined;
+  @Input() noBorder = false;
+  @Input() ariaDescribedBy: string | undefined;
+  @Input() minValue: number | undefined;
   @Input() label: string | undefined;
   @Input() errors: string[] = [];
   @Input() isDisabled = false;
-  @Input() autocomplete = 'on';
+  @Input() autocomplete: 'on' | 'off' = 'on';
   @Input() placeholder = '';
   @Input() e2eTestName = '';
   @Output() clicked: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
