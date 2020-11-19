@@ -1,7 +1,7 @@
 <section [ngSwitch]="getPageState(items)" class="shopping-list">
-  <div *ngSwitchCase="'default'" cdkDropList (cdkDropListDropped)="drop($event)">
+  <div *ngSwitchCase="'default'" cdkDropList (cdkDropListDropped)="moveItem($event)">
     <div class="shopping-list__item" *ngFor="let item of items" cdkDrag>
-      <div class="shopping-list__item-column-wrapper">
+      <div class="shopping-list__item-row-wrapper">
         <mat-checkbox
           class="shopping-list__item-text"
           [color]="'primary'"
@@ -12,7 +12,7 @@
         </mat-checkbox>
         <fa-icon
           cdkDragHandle
-          class="shopping-list__ellipsis"
+          class="shopping-list__drag-icon"
           [icon]="['fas','ellipsis-v']"
         ></fa-icon>
       </div>
@@ -20,12 +20,12 @@
   </div>
 
 
-  <div *ngSwitchCase="'empty'" class="empty-shopping-list">
-    <img class="empty-shopping-list__image" src="../../../../../assets/empty-shopping-list.png" alt="Empty List"/>
+  <div *ngSwitchCase="'empty'" class="shopping-list--empty">
+    <img class="shopping-list__image" src="../../../../../assets/empty-shopping-list.png" alt="Empty List" />
     <div>{{'shopping-list.is-empty' | translate:translations:currentLang }} <br/> {{'shopping-list.add-product' | translate:translations:currentLang }} </div>
   </div>
 
-  <div *ngSwitchCase="'loading'">
+  <div *ngSwitchCase="'loading'" class="shopping-list--loading">
     <div class="shopping-list__item-skeleton"></div>
     <div class="shopping-list__item-skeleton"></div>
     <div class="shopping-list__item-skeleton"></div>

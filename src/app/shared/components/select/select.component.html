@@ -9,7 +9,7 @@
   [ngClass]="{
     'select__field--error': errors && errors.length > 0,
     'select__field--no-background': noBackground,
-    'select__field--no-border': noBorder,
+    'select__field--no-border': !border,
     'select__field--no-padding': noPadding
   }"
   [attr.disabled]="isDisabled ? '' : null"

@@ -1,31 +1,31 @@
 <div class="form-wrapper">
-  <form class="add-items-form" [formGroup]="addItemForm" (ngSubmit)="onSubmit()">
+  <form class="shopping-list-form" [formGroup]="addItemForm" (ngSubmit)="onSubmit()">
     <app-input
-      class="add-items-form--input add-items-form--input-amount"
+      class="shopping-list-form--input shopping-list-form--input-amount"
       type="number"
       [minValue]="0"
-      [noBorder]="true"
+      [border]="false"
       [name]="'amount'"
       [placeholder]="'shoppingList.addForm.amount' | translate:translations:currentLang"
       [formControl]="getFormControl('amount')"></app-input>
 
     <app-select
-      class="add-items-form--input add-items-form--input-unit"
+      class="shopping-list-form--input shopping-list-form--input-unit"
       [options]="units"
       [name]="'unit'"
-      [noBorder]="true"
+      [border]="false"
       [formControl]="getFormControl('unit')">
     </app-select>
 
     <app-input
-      class="add-items-form--input"
+      class="shopping-list-form--input shopping-list-form--input-title"
       [placeholder]="'shoppingList.addForm.product' | translate:translations:currentLang"
-      [noBorder]="true"
+      [border]="false"
       [formControl]="getFormControl('title')">
     </app-input>
 
     <app-button
-      class="add-items-form--submit"
+      class="shopping-list-form--submit"
       [buttonType]="'submit'"
       [buttonText]="'shoppingList.addForm.addLabel' | translate:translations:currentLang"
       [isDisabled]="addItemForm.invalid"></app-button>

@@ -2,11 +2,11 @@
 @import "../../../../../styles/settings/breakpoints";
 @import "../../../../../styles/settings/variables";
 
-.add-items-form {
+.shopping-list-form {
   display: flex;
   flex-direction: column;
-  margin-bottom: 10px;
-  padding: 12px;
+  margin-bottom: $padding-small;
+  padding: $padding-medium;
 
   @include large {
     flex-direction:  row;
@@ -14,13 +14,12 @@
 
   &--input-amount {
     @include large {
-      max-width: 8rem;
+      max-width: rem(128);
     }
   }
 
   &--input {
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+    padding-top: $padding-small 0;
     flex: 1 1 auto;
 
     &:not(:nth-child(3)) {
@@ -29,7 +28,7 @@
 
     @include large {
       padding-bottom: 0;
-      padding-right: 1rem;
+      padding-right: $padding-medium;
 
       &:not(:nth-child(3)) {
         border-bottom: none;
@@ -40,12 +39,12 @@
 
   &--input-unit {
     @include large {
-      max-width: 8.5rem;
+      max-width: rem(136);
     }
   }
 
   &--submit {
-    height: 2.5rem;
+    height: rem(40);
 
     @include large {
       height: auto;

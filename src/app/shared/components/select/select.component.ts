@@ -21,7 +21,7 @@ export class SelectComponent<T> implements OnInit, ControlValueAccessor {
   @Input() name = '';
   @Input() options: SelectOption<T>[] = [];
   @Input() label: string | undefined;
-  @Input() noBorder = false;
+  @Input() border = true;
   @Input() errors: string[] = [];
   @Input() defaultValue: T | undefined;
   @Input() isDisabled = false;

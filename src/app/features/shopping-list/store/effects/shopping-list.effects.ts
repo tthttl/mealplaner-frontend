@@ -14,7 +14,7 @@ import { ShoppingListService } from '../../service/shopping-list.service';
 import { moveItemInArray } from '../../../../core/helpers/helpers';
 
 @Injectable()
-export class ShoppingListApiEffects {
+export class ShoppingListEffects {
   constructor(
     private actions$: Actions,
     private shoppingListService: ShoppingListService,
@@ -112,7 +112,7 @@ export class ShoppingListApiEffects {
             return ShoppingListApiActions.deleteShoppingListItemSuccess({shoppingListItem});
           }),
           catchError(() => of(ShoppingListApiActions.deleteShoppingListItemFailure({shoppingListItem})))
-        ))
+        )),
       );
     })
   );
@@ -179,7 +179,7 @@ export class ShoppingListApiEffects {
   );
 
   @Effect()
-  deleteShoppingListIfCurrentGetsDeleted$ = this.actions$.pipe(
+  deleteShoppingList$ = this.actions$.pipe(
     ofType(ShoppingListContainerActions.deleteShoppingList),
     concatMap(({shoppingList}) => {
       return of({}).pipe(

@@ -17,7 +17,7 @@ export class InputComponent implements ControlValueAccessor {
 
   @Input() type = 'text';
   @Input() name: string | undefined;
-  @Input() noBorder = false;
+  @Input() border = true;
   @Input() ariaDescribedBy: string | undefined;
   @Input() minValue: number | undefined;
   @Input() label: string | undefined;

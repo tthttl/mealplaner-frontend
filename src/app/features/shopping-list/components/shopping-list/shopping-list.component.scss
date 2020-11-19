@@ -2,6 +2,7 @@
 @import "../../../../../styles/settings/breakpoints";
 @import "../../../../../styles/mixins/style";
 @import "../../../../../styles/settings/variables";
+@import "../../../../../styles/settings/functions";
 
 .shopping-list {
   width: 100%;
@@ -11,44 +12,32 @@
   &__item {
     border-top: solid 1px $blue-grey_30;
     color: $text-70;
-    font-size: 16px;
+    font-size: $font-size-small;
     box-sizing: border-box;
-    background: white;
+    background: #ffffff;
   }
 
-  &__item-column-wrapper {
+  &__item-row-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
 
   &__item-text {
-    padding: 20px 10px 15px 10px;
+    padding: $padding-medium $padding-small;
     display: block;
   }
 
-  &__ellipsis {
+  &__drag-icon {
     color: $blue-grey_50;
-    padding: 0 20px;
+    padding: 0 $padding-small;
     cursor: move;
-  }
-
-  &__status {
-    height: 5px;
-    width: 0;
-    flex-basis: 100%;
-    background: $blue_50;
-
-    &--deleted {
-      width: 100%;
-      transition: width 1.5s linear;
-    }
   }
 
   @include skeleton('.shopping-list__item-skeleton', $blue-grey_30, 3.5s) {
     background: $blue-grey_40;
-    height: 24px;
-    margin: 12px auto 18px 18px;
+    height: rem(24);
+    margin: $padding-medium auto $padding-medium $padding-medium;
     border-radius: $border-radius-default;
     width: 90%;
 
@@ -62,18 +51,42 @@
 
     &:nth-child(4){
       width: 80%;
-      margin-bottom: 24px;
+      margin-bottom: rem(24);
     }
   };
 
+  &--empty {
+    margin: 0 auto;
+    max-width: 80%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-bottom: $padding-large;
+    color: $text-40;
+    font-size: $font-size-small;
+    text-align: center;
+    font-weight: 500;
+    line-height: 2;
+
+    @include large {
+      font-size: $font-size-normal;
+    }
+
+
+  }
+
+
+  &__image {
+    max-width: 100%;
+  }
 }
 
 .cdk-drag-preview {
   box-sizing: border-box;
-  border-radius: 4px;
-  box-shadow: 0 5px 5px -3px $blue-grey_30,
-  0 8px 10px 1px $blue-grey_20,
-  0 3px 14px 2px $blue-grey_10;
+  border-radius: $border-radius-default;
+  box-shadow: 0 rem(5) rem(5) rem(-3) $blue-grey_30,
+  0 rem(8) rem(10) 1px $blue-grey_20,
+  0 rem(3) rem(14) rem(2) $blue-grey_10;
 }
 
 .cdk-drag-placeholder {
@@ -88,24 +101,4 @@
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-.empty-shopping-list {
-  margin: 0 auto;
-  max-width: 80%;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  padding-bottom: 24px;
-  color: $text-40;
-  font-size: 0.8em;
-  text-align: center;
-  font-weight: 500;
-  line-height: 2;
 
-  @include large {
-    font-size: 1.2em;
-  }
-
-  &__image {
-    max-width: 100%;
-  }
-}

@@ -53,7 +53,7 @@ describe('ShoppingListComponent', () => {
     const label = hostElement.querySelector('.shopping-list__item-text');
     label.click();
 
-    component.itemDeleted.subscribe((item: ShoppingListItem) => {
+    component.shoppingListItemDeleted.subscribe((item: ShoppingListItem) => {
       expect(item).toEqual(shoppingListItem);
     });
 
@@ -67,7 +67,7 @@ describe('ShoppingListComponent', () => {
 
     fixture.detectChanges();
 
-    spyOn(component.itemDeleted, 'emit');
+    spyOn(component.shoppingListItemDeleted, 'emit');
 
     const hostElement = fixture.nativeElement;
     const label = hostElement.querySelector('.shopping-list__item-text');
@@ -75,15 +75,15 @@ describe('ShoppingListComponent', () => {
     tick(200);
     label.click();
     tick(100);
-    expect(component.itemDeleted.emit).toHaveBeenCalledTimes(0);
+    expect(component.shoppingListItemDeleted.emit).toHaveBeenCalledTimes(0);
   }));
 
 
   it('should emit listItemMoved event', fakeAsync(() => {
-    component.listItemMoved.subscribe((item: ArrayItemMovedEvent) => {
+    component.shoppingListItemMoved.subscribe((item: ArrayItemMovedEvent) => {
       expect(item).toEqual({currentIndex: 3, previousIndex: 8});
     });
 
-    component.drop({currentIndex: 3, previousIndex: 8});
+    component.moveItem({currentIndex: 3, previousIndex: 8});
   }));
 });
