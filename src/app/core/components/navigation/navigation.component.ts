@@ -31,7 +31,9 @@ export class NavigationComponent {
     this.logout.emit();
   }
 
-  changeLanguage(language: Language): void {
-    this.languageChanged.emit(language);
+  changeLanguage(language: Language | null): void {
+    if (language) {
+      this.languageChanged.emit(language);
+    }
   }
 }
