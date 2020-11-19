@@ -201,7 +201,7 @@ export class ShoppingListEffects {
     withLatestFrom(this.store),
     filter(([{shoppingList}, store]) => shoppingList.id === store.shoppingListState.activeShoppingList),
     map(([_, store]) => {
-      const idOfFirstShoppingList = Object.keys(store.shoppingListState.shoppingLists.items.entities)[0];
+      const idOfFirstShoppingList = Object.keys(store.shoppingListState.shoppingLists.entities)[0];
       return ShoppingListEffectActions.setActiveShoppingList({shoppingListId: idOfFirstShoppingList});
     })
   );
