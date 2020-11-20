@@ -4,7 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DialogData, Recipe, RecipeIngredient } from '../../../../core/models/model';
 
 @Component({
-  selector: 'app-recipe-page',
+  selector: 'app-recipe-dialog',
   templateUrl: './add-recipe-dialog.component.html',
   styleUrls: ['./add-recipe-dialog.component.scss']
 })
@@ -24,7 +24,7 @@ export class AddRecipeDialogComponent implements OnInit {
     this.dialogData.data.ingredients.forEach((ingredient: RecipeIngredient) => {
       ((this.ingredientsForm.controls.ingredients as FormArray).controls).push(new FormGroup({
         id: new FormControl(ingredient.id),
-        isSelected: new FormControl(ingredient.isStapleFood),
+        isSelected: new FormControl(!ingredient.isStapleFood),
         title: new FormControl(ingredient.title),
         amount: new FormControl(ingredient.amount),
         unit: new FormControl(ingredient.unit)
@@ -33,21 +33,10 @@ export class AddRecipeDialogComponent implements OnInit {
     this.ingredients = this.ingredientsForm.controls.ingredients as FormArray;
   }
 
-  onEdit(): void {
-    this.dialogRef.close();
-  }
-
   onAddIngredients(): void {
     this.dialogRef.close({
       event: 'selectedIngredients',
       selectedIngredients: this.ingredients.controls.map((control: AbstractControl) => (control as FormGroup).value)
-    });
-  }
-
-  onAddRecipe(): void{
-    this.dialogRef.close({
-      event: 'recipe',
-      recipe: this.dialogData.data
     });
   }
 
@@ -58,5 +47,4 @@ export class AddRecipeDialogComponent implements OnInit {
   toggleSelected(ingredient: AbstractControl, isSelected: boolean): void {
     this.getFormControl(ingredient, 'isSelected').setValue(isSelected);
   }
-
 }

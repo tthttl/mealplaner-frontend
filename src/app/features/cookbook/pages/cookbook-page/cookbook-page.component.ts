@@ -8,21 +8,20 @@ import { Cookbook, I18n, Language, List, Recipe } from '../../../../core/models/
   styleUrls: ['./cookbook-page.component.scss']
 })
 export class CookbookPageComponent {
-
   @Input() translations: I18n | null = {};
-  @Input() currentLang: Language | null = DEFAULT_LANGUAGE;
+  @Input() currentLanguage: Language | null = DEFAULT_LANGUAGE;
   @Input() recipes: Recipe[] | undefined | null;
   @Input() cookbooks: Cookbook[] | undefined | null;
-  @Input() selectedList: Cookbook | undefined | null;
-  @Output() inputChanged: EventEmitter<string> = new EventEmitter<string>();
+  @Input() selectedCookbook: Cookbook | undefined | null;
+  @Output() searchStringChanged: EventEmitter<string> = new EventEmitter<string>();
   @Output() editRecipe: EventEmitter<string> = new EventEmitter<string>();
   @Output() deleteRecipe: EventEmitter<Recipe> = new EventEmitter<Recipe>();
   @Output() clickRecipe: EventEmitter<Recipe> = new EventEmitter<Recipe>();
   @Output() createRecipe: EventEmitter<void> = new EventEmitter<void>();
-  @Output() createList: EventEmitter<undefined> = new EventEmitter();
-  @Output() selectList: EventEmitter<List> = new EventEmitter();
-  @Output() editList: EventEmitter<List> = new EventEmitter();
-  @Output() deleteList: EventEmitter<List> = new EventEmitter();
+  @Output() createCookbook: EventEmitter<undefined> = new EventEmitter();
+  @Output() selectCookbook: EventEmitter<List> = new EventEmitter();
+  @Output() editCookbook: EventEmitter<List> = new EventEmitter();
+  @Output() deleteCookbook: EventEmitter<List> = new EventEmitter();
 
   onEditRecipe(id: string | undefined): void {
     if (id) {
@@ -39,27 +38,26 @@ export class CookbookPageComponent {
   }
 
   onInputChanged(searchTerm: string): void {
-    this.inputChanged.emit(searchTerm);
+    this.searchStringChanged.emit(searchTerm);
   }
 
   click(): void {
     this.createRecipe.emit();
   }
 
-  onCreateList(): void {
-    this.createList.emit();
+  onCreateCookbook(): void {
+    this.createCookbook.emit();
   }
 
-  onSelectList(list: List): void {
-    this.selectList.emit(list);
+  onSelectCookbook(list: List): void {
+    this.selectCookbook.emit(list);
   }
 
-  onEditList(list: List): void {
-    this.editList.emit(list);
+  onEditCookbook(list: List): void {
+    this.editCookbook.emit(list);
   }
 
-  onDeleteList(list: List): void {
-    this.deleteList.emit(list);
+  onDeleteCookbook(list: List): void {
+    this.deleteCookbook.emit(list);
   }
-
 }

@@ -15,8 +15,8 @@ import { CookbookContainerActions } from '../../store/actions';
 })
 export class RecipeContainerComponent implements OnInit {
 
-  translations$: Observable<I18n | null>;
-  currentLang$: Observable<Language | null>;
+  translations$: Observable<I18n | null> = this.store.select(selectTranslations);
+  currentLanguage$: Observable<Language | null> = this.store.select((state: GlobalState) => state.appState.language);
   id: string | null = '';
   recipe$: Observable<Recipe | undefined> | undefined;
 
@@ -24,10 +24,7 @@ export class RecipeContainerComponent implements OnInit {
     private store: Store<GlobalState>,
     private router: Router,
     private route: ActivatedRoute
-  ) {
-    this.translations$ = this.store.select(selectTranslations);
-    this.currentLang$ = this.store.select((state: GlobalState) => state.appState.language);
-  }
+  ) {}
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');

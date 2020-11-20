@@ -1,32 +1,25 @@
-<div>
+<div class="ingredient-dialog">
   <div mat-dialog-title>{{dialogData.data.title}}</div>
   <h4>{{dialogData.translations['ingredients.label-text']}}</h4>
   <div *ngFor="let ingredient of ingredients.controls" mat-dialog-content>
     <form [formGroup]="ingredientsForm" (ngSubmit)="onAddIngredients()">
-      <div class="ingredient">
+      <div class="ingredient-dialog__list">
         <mat-checkbox
-          class="shopping-list__item-text"
+          class="ingredient-dialog__list-item"
           [checked]="getFormControl(ingredient, 'isSelected').value"
           [color]="'primary'"
           [disableRipple]="true"
           (change)="toggleSelected(ingredient, $event.checked)">
-          <span class="ingredient-column">{{getFormControl(ingredient, 'amount').value}}</span>
-          <span class="ingredient-column">{{getFormControl(ingredient, 'unit').value}}</span>
-          <span class="ingredient-column">{{getFormControl(ingredient, 'title').value}}</span>
+          <span class="ingredient-dialog__list-column">{{getFormControl(ingredient, 'amount').value}} {{getFormControl(ingredient, 'unit').value}}</span>
+          <span class="ingredient-dialog__list-column">{{getFormControl(ingredient, 'title').value}}</span>
         </mat-checkbox>
-
       </div>
     </form>
   </div>
-  <div class="button-group" mat-dialog-actions>
+  <div class="ingredient-dialog__actions" mat-dialog-actions>
     <app-button (click)="onAddIngredients()"
                 [buttonText]="dialogData.translations['button.add-to-shopping-list']"
                 [color]="'accent'"
-                class="button--margin"
-    >
-    </app-button>
-    <app-button (click)="onAddRecipe()"
-                [buttonText]="dialogData.translations['button.add-to-mealplaner']"
     >
     </app-button>
   </div>

@@ -25,7 +25,7 @@
     <div>{{'shopping-list.is-empty' | translate:translations:currentLang }} <br/> {{'shopping-list.add-product' | translate:translations:currentLang }} </div>
   </div>
 
-  <div *ngSwitchCase="'loading'" class="shopping-list--loading">
+  <div *ngSwitchCase="'loading'">
     <div class="shopping-list__item-skeleton"></div>
     <div class="shopping-list__item-skeleton"></div>
     <div class="shopping-list__item-skeleton"></div>

@@ -67,7 +67,6 @@ export class ShoppingListContainerComponent implements OnInit {
         'save-button-text': this.translatePipe.transform('edit-shopping-list.save-button-text', translations, currentLanguage),
         'cancel-button-text': this.translatePipe.transform('edit-shopping-list.cancel-button-text', translations, currentLanguage),
         placeholder: this.translatePipe.transform('edit-shopping-list.placeholder', translations, currentLanguage),
-
       };
     });
   }

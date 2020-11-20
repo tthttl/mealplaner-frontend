@@ -44,9 +44,9 @@ describe('RecipeFormComponent', () => {
   });
 
   it('new ingredient button should be disabled when amount is invalid', () => {
-    const button = hostElement.querySelector('button.icon-wrapper');
+    const button = hostElement.querySelector('button.recipe-form__ingredient-icon-wrapper');
     const amountInput = hostElement.querySelector('input[name="amount"]');
-    const titleInput = hostElement.querySelector('.ingredients input[name="title"]');
+    const titleInput = hostElement.querySelector('.recipe-form__ingredients input[name="title"]');
     amountInput.value = 0;
     amountInput.dispatchEvent(new Event('input'));
     titleInput.value = 'Beer';
@@ -58,7 +58,7 @@ describe('RecipeFormComponent', () => {
   });
 
   it('new ingredient button should be disabled when name is empty', () => {
-    const button = hostElement.querySelector('button.icon-wrapper');
+    const button = hostElement.querySelector('button.recipe-form__ingredient-icon-wrapper');
     const amountInput = hostElement.querySelector('input[name="amount"]');
     amountInput.value = 1;
     amountInput.dispatchEvent(new Event('input'));
@@ -74,7 +74,7 @@ describe('RecipeFormComponent', () => {
     component.recipeForm.markAsTouched();
     const titleInput = hostElement.querySelector('input[name="title"]');
     const amountInput = hostElement.querySelector('input[name="amount"]');
-    const ingredientTitle = hostElement.querySelector('.ingredients input[name="title"]');
+    const ingredientTitle = hostElement.querySelector('.recipe-form__ingredients input[name="title"]');
     const select = hostElement.querySelector('select');
 
     titleInput.value = 'Recipe';
