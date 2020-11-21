@@ -2,7 +2,7 @@
   <div class="container main-navigation__content">
     <div class="main-navigation__wrapper">
       <img class="main-navigation__logo"
-           src="../../../../assets/logo-inverted.png"
+           src="../../../../assets/logo.svg"
            [routerLink]="['/']" alt="Mealplaner Logo"
            [attr.aria-label]="'navigation.go-home' | translate:translations:currentLanguage"
       >
@@ -23,9 +23,10 @@
 
       <app-select
         class="main-navigation__secondary-action"
-        [noBorder]="true"
+        [border]="false"
         [name]="'language'"
         [options]="supportedLanguages"
+        [defaultValue]="currentLanguage"
         (valueChanged)="changeLanguage($event)"
         [noBackground]="true"
         [noPadding]="true"

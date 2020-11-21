@@ -6,8 +6,8 @@ import { I18n as I18nClient } from '../../models/model';
 import { GlobalState, initialState } from '../index';
 import { I18nService } from '../../services/i18n.service';
 import { AppEffects } from './app.effects';
-import SpyObj = jasmine.SpyObj;
 import { I18nApiActions, NavigationActions } from '../actions';
+import SpyObj = jasmine.SpyObj;
 
 describe('i18n Api Effects', () => {
   let actions$;
@@ -15,29 +15,36 @@ describe('i18n Api Effects', () => {
   let i18nApiEffects: AppEffects;
   let store: Store<GlobalState>;
 
-  describe('getI18n', () => {
-    beforeEach(() => {
-      TestBed.configureTestingModule({
-        providers: [
-          provideMockStore({initialState}),
-        ]
-      });
-      store = TestBed.inject(MockStore);
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        provideMockStore({initialState}),
+      ]
+    });
+    store = TestBed.inject(MockStore);
+    i18nService = jasmine.createSpyObj('i18nService', ['getI18n']);
+  });
+
+  describe('getI18n$', () => {
+
+    it('should return success action', () => {
       actions$ = of({type: I18nApiActions.getI18n.type});
-      i18nService = jasmine.createSpyObj('i18nService', ['getI18n']);
       i18nApiEffects = new AppEffects(
         actions$,
         i18nService,
         store);
-    });
-
-    it('should return success action', () => {
       i18nService.getI18n.and.returnValue(of({} as I18nClient));
       i18nApiEffects.getI18n$.subscribe((action: Action) => {
         expect(action.type).toEqual(I18nApiActions.getI18nSuccess.type);
       });
     });
+
     it('should return failure action', () => {
+      actions$ = of({type: I18nApiActions.getI18n.type});
+      i18nApiEffects = new AppEffects(
+        actions$,
+        i18nService,
+        store);
       i18nService.getI18n.and.returnValue(throwError('error'));
       i18nApiEffects.getI18n$.subscribe((action: Action) => {
         expect(action.type).toEqual(I18nApiActions.getI18nFailure.type);
@@ -64,6 +71,22 @@ describe('i18n Api Effects', () => {
       i18nService.getI18n.and.returnValue(throwError('error'));
       i18nApiEffects.getI18n$.subscribe((action: Action) => {
         expect(action.type).toEqual(I18nApiActions.getI18nFailure.type);
+      });
+    });
+  });
+
+
+  describe('setUserLanguageToLocaleStore$', () => {
+    it('should set language to local storage if language changed', () => {
+      spyOn(localStorage, 'setItem');
+      actions$ = of({type: NavigationActions.changeLanguage.type, language: 'en'});
+      i18nApiEffects = new AppEffects(
+        actions$,
+        i18nService,
+        store);
+      i18nService.getI18n.and.returnValue(throwError('error'));
+      i18nApiEffects.setUserLanguageToLocaleStore$.subscribe((action: Action) => {
+        expect(localStorage.setItem).toHaveBeenCalledWith('userLanguage', 'en');
       });
     });
   });

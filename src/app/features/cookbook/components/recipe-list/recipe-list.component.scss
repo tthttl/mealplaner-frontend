@@ -1,5 +1,5 @@
-@import "../../../../../styles/settings/variables";
 @import "../../../../../styles/settings/breakpoints";
+@import "../../../../../styles/settings/variables";
 @import "../../../../../styles/mixins/style";
 
 .recipe-list {
@@ -7,17 +7,17 @@
   display: block;
   overflow: hidden;
 
-  .search-field{
+  &__filter-field{
     display: block;
-    padding-bottom: 1.5rem;
+    padding-bottom: $spacing-large;
   }
 
-  .recipe {
+  &__item {
     border: $border-primary;
     color: $text-70;
-    font-size: 1rem;
+    font-size: $font-size-normal;
     box-sizing: border-box;
-    margin-top: 0.5rem;
+    margin-top: $spacing-small;
 
     @include large {
       border: none;
@@ -28,62 +28,64 @@
         border-bottom: none;
       }
     }
+  }
 
-    .recipe__row {
-      display: flex;
-      justify-content: space-between;
-      flex-direction: column;
 
-      @include large{
-        flex-direction: row;
-        align-items: stretch;
-      }
+
+  &__title-box {
+    display: flex;
+    flex: 1 1 70%;
+    align-items: center;
+    padding: $spacing-small;
+
+    &:hover {
+      background-color: $blue_20;
+      cursor: pointer;
     }
 
-    &__title-box {
-      display: flex;
-      flex: 1 1 70%;
-      align-items: center;
-      padding: 0.5rem 0.5rem;
-
-      &:hover {
-        background-color: $blue_20;
-        cursor: pointer;
-      }
-
-      &:active {
-        background-color: $blue_30;
-      }
-
-      @include large{
-        padding: 0 0.5rem;
-      }
+    &:active {
+      background-color: $blue_30;
     }
 
-    &__buttons-box {
-      display: flex;
-
-      @include large{
-        border-left: 1px solid;
-        border-image: linear-gradient(
-            to bottom,
-            white,
-            $blue_70,
-            white
-        ) 1 100%;
-      }
-    }
-
-    &__button {
-      width: 100%;
-      padding: 0.5rem 0.5rem;
+    @include large{
+      padding: 0 $spacing-small;
     }
   }
 
-  @include skeleton('.recipe-skeleton', $blue-grey_30, 3.5s) {
+  &__buttons-box {
+    display: flex;
+
+    @include large{
+      border-left: 1px solid;
+      border-image: linear-gradient(
+          to bottom,
+          white,
+          $blue_70,
+          white
+      ) 1 100%;
+    }
+  }
+
+  &__button {
+    width: 100%;
+    padding: $spacing-small
+  }
+
+  &__row {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+
+    @include large{
+      flex-direction: row;
+      align-items: stretch;
+    }
+  }
+
+  @include skeleton('.recipe-list__skeleton', $blue-grey_30, 3.5s) {
     background: $blue-grey_40;
-    height: 24px;
-    margin: 12px auto 18px 18px;
+    height: rem(24);
+    margin: $spacing-small auto $spacing-medium $spacing-medium;
     border-radius: $border-radius-default;
     width: 90%;
 
@@ -97,30 +99,30 @@
 
     &:nth-child(4){
       width: 80%;
-      margin-bottom: 24px;
+      margin-bottom: $spacing-large;
     }
   };
 
-  .empty-recipe-list {
+  &--empty {
     margin: 0 auto;
     max-width: 80%;
     display: flex;
     align-items: center;
     flex-direction: column;
-    padding-bottom: 24px;
+    padding-bottom: $spacing-large;
     color: $text-40;
-    font-size: 0.8em;
+    font-size: $font-size-tiny;
     text-align: center;
     font-weight: 500;
     line-height: 2;
 
     @include large {
-      font-size: 1.2em;
+      font-size: $font-size-normal;
     }
+  }
 
-    &__image {
-      max-width: 100%;
-    }
+  &__image {
+    max-width: 100%;
   }
 
 }

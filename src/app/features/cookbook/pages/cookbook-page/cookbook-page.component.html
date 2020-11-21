@@ -1,19 +1,19 @@
 <div class="container">
   <app-list-header
-    [selectedList]="selectedList"
+    [selectedList]="selectedCookbook"
     [lists]="cookbooks"
-    [defaultTitle]="'shopping-list.default-title' | translate:translations:currentLang"
-    [addListLabel]="'shopping-list.new-list' | translate:translations:currentLang"
-    [buttonLabel]="'shopping-list.my-lists' | translate:translations:currentLang"
-    (createList)="onCreateList()"
-    (selectList)="onSelectList($event)"
-    (editList)="onEditList($event)"
-    (deleteList)="onDeleteList($event)"
+    [defaultTitle]="'cookbook.default-title' | translate:translations:currentLanguage"
+    [addListLabel]="'cookbook.new-list' | translate:translations:currentLanguage"
+    [buttonLabel]="'cookbook.my-cookbooks' | translate:translations:currentLanguage"
+    (createList)="onCreateCookbook()"
+    (selectList)="onSelectCookbook($event)"
+    (editList)="onEditCookbook($event)"
+    (deleteList)="onDeleteCookbook($event)"
   >
   </app-list-header>
   <app-recipe-list
     [translations]="translations"
-    [currentLang]="currentLang"
+    [currentLang]="currentLanguage"
     [recipes]="recipes"
     (deleteRecipe)="onDeleteRecipe($event)"
     (editRecipe)="onEditRecipe($event)"
@@ -22,7 +22,7 @@
   ></app-recipe-list>
   <app-button
     class="create-recipe-button"
-    [buttonText]="'button.submit' | translate: translations : currentLang"
+    [buttonText]="'button.submit' | translate: translations : currentLanguage"
     (click)="click()"
   >
   </app-button>

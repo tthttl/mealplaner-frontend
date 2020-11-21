@@ -12,11 +12,11 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './forgot-password-container.component.html',
   styleUrls: ['./forgot-password-container.component.scss']
 })
-export class ForgotPasswordContainerComponent implements OnInit {
+export class ForgotPasswordContainerComponent {
 
   translations$: Observable<I18n | null> = this.store.select(selectTranslations);
   currentLanguage$: Observable<Language> = this.store.pipe(select(state => state.appState.language));
-  emailSent = false;
+  passwordResetRequested = false;
   emailQueryParam: string | undefined;
 
 
@@ -24,12 +24,9 @@ export class ForgotPasswordContainerComponent implements OnInit {
     this.emailQueryParam = this.activatedRout.snapshot.queryParams?.email;
   }
 
-  ngOnInit(): void {
-  }
-
   requestPasswordResetEmail(email: string): void {
     this.store.dispatch(ForgotPasswordContainerActions.requestEmail({email}));
-    this.emailSent = true;
+    this.passwordResetRequested = true;
   }
 
 }

@@ -12,11 +12,10 @@ import { translateValidationErrors } from '../../../../core/helpers/helpers';
   styleUrls: ['./login-page.component.scss']
 })
 export class LoginPageComponent {
-
   @Input() translations: I18n | null = {};
-  @Input() currentLang: Language | null = DEFAULT_LANGUAGE;
+  @Input() currentLanguage: Language | null = DEFAULT_LANGUAGE;
   @Input() backendErrorMessage: string | undefined;
-  @Output() credentialsReceived: EventEmitter<LoginCredentials> = new EventEmitter();
+  @Output() login: EventEmitter<LoginCredentials> = new EventEmitter();
 
   loginForm: FormGroup;
 
@@ -42,7 +41,7 @@ export class LoginPageComponent {
 
   onSubmit(): void {
     if (this.loginForm.valid) {
-      this.credentialsReceived.emit(this.loginForm?.value);
+      this.login.emit(this.loginForm?.value);
       return;
     }
 
@@ -54,7 +53,7 @@ export class LoginPageComponent {
       this.getFormControl(key),
       this.translatePipe,
       this.translations,
-      this.currentLang)
+      this.currentLanguage)
       .filter((error, index) => index === 0);
   }
 }

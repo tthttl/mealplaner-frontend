@@ -1,5 +1,5 @@
 import { ShoppingListService } from '../../service/shopping-list.service';
-import { ShoppingListApiEffects } from './shopping-list-api.effects';
+import { ShoppingListEffects } from './shopping-list.effects';
 import { ShoppingListApiActions, ShoppingListContainerActions, ShoppingListEffectActions } from '../actions';
 import { Observable, of, throwError } from 'rxjs';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
@@ -15,7 +15,7 @@ import SpyObj = jasmine.SpyObj;
 describe('Shopping List Api Effects', () => {
   let actions$: Observable<Action>;
   let shoppingListService: SpyObj<ShoppingListService>;
-  let shoppingListApiEffects: ShoppingListApiEffects;
+  let shoppingListApiEffects: ShoppingListEffects;
   let activatedRoute: ActivatedRoute;
   let router: Router;
   let store: Store<GlobalState>;
@@ -73,17 +73,16 @@ describe('Shopping List Api Effects', () => {
         }),
       ]
     });
-
-    store = TestBed.inject(Store);
-    activatedRoute = TestBed.inject(ActivatedRoute);
-    router = jasmine.createSpyObj('Router', ['navigate']);
   });
 
   describe('getShoppingLists$', () => {
     beforeEach(() => {
+      store = TestBed.inject(Store);
+      activatedRoute = TestBed.inject(ActivatedRoute);
+      router = jasmine.createSpyObj('Router', ['navigate']);
       shoppingListService = jasmine.createSpyObj('shoppingListService', ['getShoppingLists']);
       actions$ = of({type: ShoppingListContainerActions.loadShoppingLists.type});
-      shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
+      shoppingListApiEffects = new ShoppingListEffects(actions$, shoppingListService, activatedRoute, router, store);
     });
 
     it('it should return action', () => {
@@ -104,6 +103,9 @@ describe('Shopping List Api Effects', () => {
 
   describe('chooseCurrentShoppingList$', () => {
     beforeEach(() => {
+      store = TestBed.inject(Store);
+      activatedRoute = TestBed.inject(ActivatedRoute);
+      router = jasmine.createSpyObj('Router', ['navigate']);
       shoppingListService = jasmine.createSpyObj('', ['']);
       actions$ = of({
         type: ShoppingListApiActions.loadShoppingListsSuccess.type,
@@ -112,7 +114,7 @@ describe('Shopping List Api Effects', () => {
     });
 
     it('it should  chose first shopping list by default', () => {
-      shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
+      shoppingListApiEffects = new ShoppingListEffects(actions$, shoppingListService, activatedRoute, router, store);
       shoppingListApiEffects.chooseCurrentShoppingList$.subscribe((action) => {
         expect(action.type).toEqual(ShoppingListEffectActions.setActiveShoppingList.type);
         expect(action.shoppingListId).toEqual('42');
@@ -121,7 +123,7 @@ describe('Shopping List Api Effects', () => {
 
     it('it should  chose requested shopping list in query params if it exists', () => {
       activatedRoute.snapshot.queryParams.shoppingListId = '43';
-      shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
+      shoppingListApiEffects = new ShoppingListEffects(actions$, shoppingListService, activatedRoute, router, store);
       shoppingListApiEffects.chooseCurrentShoppingList$.subscribe((action) => {
         expect(action.type).toEqual(ShoppingListEffectActions.setActiveShoppingList.type);
         expect(action.shoppingListId).toEqual('43');
@@ -130,7 +132,7 @@ describe('Shopping List Api Effects', () => {
 
     it('it should  chose requested shopping list in local storage if it exists', () => {
       spyOn(localStorage, 'getItem').and.callFake(() => '43');
-      shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
+      shoppingListApiEffects = new ShoppingListEffects(actions$, shoppingListService, activatedRoute, router, store);
       shoppingListApiEffects.chooseCurrentShoppingList$.subscribe((action) => {
         expect(action.type).toEqual(ShoppingListEffectActions.setActiveShoppingList.type);
         expect(action.shoppingListId).toEqual('43');
@@ -140,7 +142,7 @@ describe('Shopping List Api Effects', () => {
     it('it should chose first shopping list if requested id in query params and local storage does not exists', () => {
       activatedRoute.snapshot.queryParams.shoppingListId = '98';
       spyOn(localStorage, 'getItem').and.callFake(() => '99');
-      shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
+      shoppingListApiEffects = new ShoppingListEffects(actions$, shoppingListService, activatedRoute, router, store);
       shoppingListApiEffects.chooseCurrentShoppingList$.subscribe((action) => {
         expect(action.type).toEqual(ShoppingListEffectActions.setActiveShoppingList.type);
         expect(action.shoppingListId).toEqual('42');
@@ -151,6 +153,9 @@ describe('Shopping List Api Effects', () => {
 
   describe('setQueryParameterForActiveShoppingList$', () => {
     beforeEach(() => {
+      store = TestBed.inject(Store);
+      activatedRoute = TestBed.inject(ActivatedRoute);
+      router = jasmine.createSpyObj('Router', ['navigate']);
       shoppingListService = jasmine.createSpyObj('', ['']);
       router = jasmine.createSpyObj('Router', ['navigate']);
     });
@@ -160,7 +165,7 @@ describe('Shopping List Api Effects', () => {
         type: ShoppingListEffectActions.setActiveShoppingList.type,
         shoppingListId: '42',
       });
-      shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
+      shoppingListApiEffects = new ShoppingListEffects(actions$, shoppingListService, activatedRoute, router, store);
       shoppingListApiEffects.setQueryParameterForActiveShoppingList$.subscribe(() => {
         expect(router.navigate).toHaveBeenCalledWith([], {relativeTo: activatedRoute, queryParams: {shoppingListId: '42'}});
       });
@@ -171,7 +176,7 @@ describe('Shopping List Api Effects', () => {
         type: ShoppingListContainerActions.changeShoppingList.type,
         shoppingListId: '42',
       });
-      shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
+      shoppingListApiEffects = new ShoppingListEffects(actions$, shoppingListService, activatedRoute, router, store);
       shoppingListApiEffects.setQueryParameterForActiveShoppingList$.subscribe(() => {
         expect(router.navigate).toHaveBeenCalledWith([], {relativeTo: activatedRoute, queryParams: {shoppingListId: '42'}});
       });
@@ -180,6 +185,9 @@ describe('Shopping List Api Effects', () => {
 
   describe('setLocalStorageForActiveShoppingList$', () => {
     beforeEach(() => {
+      store = TestBed.inject(Store);
+      activatedRoute = TestBed.inject(ActivatedRoute);
+      router = jasmine.createSpyObj('Router', ['navigate']);
       spyOn(localStorage, 'setItem');
     });
 
@@ -188,7 +196,7 @@ describe('Shopping List Api Effects', () => {
         type: ShoppingListEffectActions.setActiveShoppingList.type,
         shoppingListId: '42',
       });
-      shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
+      shoppingListApiEffects = new ShoppingListEffects(actions$, shoppingListService, activatedRoute, router, store);
       shoppingListApiEffects.setLocalStorageForActiveShoppingList$.subscribe(() => {
         expect(localStorage.setItem).toHaveBeenCalledWith('selectedShoppingListId', '42');
       });
@@ -199,7 +207,7 @@ describe('Shopping List Api Effects', () => {
         type: ShoppingListContainerActions.changeShoppingList.type,
         shoppingListId: '42',
       });
-      shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
+      shoppingListApiEffects = new ShoppingListEffects(actions$, shoppingListService, activatedRoute, router, store);
       shoppingListApiEffects.setLocalStorageForActiveShoppingList$.subscribe(() => {
         expect(localStorage.setItem).toHaveBeenCalledWith('selectedShoppingListId', '42');
       });
@@ -210,7 +218,7 @@ describe('Shopping List Api Effects', () => {
     beforeEach(() => {
       actions$ = of({type: ShoppingListEffectActions.setActiveShoppingList.type});
       shoppingListService = jasmine.createSpyObj('shoppingListService', ['getShoppingListItems']);
-      shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
+      shoppingListApiEffects = new ShoppingListEffects(actions$, shoppingListService, activatedRoute, router, store);
     });
 
     it('it should return success action', () => {
@@ -230,9 +238,12 @@ describe('Shopping List Api Effects', () => {
 
   describe('addShoppingListItem$', () => {
     beforeEach(() => {
+      store = TestBed.inject(Store);
+      activatedRoute = TestBed.inject(ActivatedRoute);
+      router = jasmine.createSpyObj('Router', ['navigate']);
       actions$ = of({type: ShoppingListContainerActions.addShoppingListItem.type});
       shoppingListService = jasmine.createSpyObj('shoppingListService', ['addShoppingListItem']);
-      shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
+      shoppingListApiEffects = new ShoppingListEffects(actions$, shoppingListService, activatedRoute, router, store);
     });
 
     it('it should return success action', () => {
@@ -252,9 +263,12 @@ describe('Shopping List Api Effects', () => {
 
   describe('deleteShoppingListItem$', () => {
     beforeEach(() => {
+      store = TestBed.inject(Store);
+      activatedRoute = TestBed.inject(ActivatedRoute);
+      router = jasmine.createSpyObj('Router', ['navigate']);
       actions$ = of({type: ShoppingListContainerActions.deleteShoppingListItem.type, shoppingListItem: {id: '42'}});
       shoppingListService = jasmine.createSpyObj('shoppingListService', ['deleteShoppingListItem']);
-      shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
+      shoppingListApiEffects = new ShoppingListEffects(actions$, shoppingListService, activatedRoute, router, store);
     });
 
     it('it should return success action', () => {
@@ -274,6 +288,9 @@ describe('Shopping List Api Effects', () => {
 
   describe('moveShoppingListItem$', () => {
     beforeEach(() => {
+      store = TestBed.inject(Store);
+      activatedRoute = TestBed.inject(ActivatedRoute);
+      router = jasmine.createSpyObj('Router', ['navigate']);
       shoppingListService = jasmine.createSpyObj('shoppingListService', ['updateShoppingListItem']);
     });
 
@@ -284,8 +301,8 @@ describe('Shopping List Api Effects', () => {
         previousIndex: 0,
         currentIndex: 2
       });
-      shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
-      // shoppingListService.updateShoppingListItem.and.returnValue(of({} as ShoppingListItem));
+      shoppingListApiEffects = new ShoppingListEffects(actions$, shoppingListService, activatedRoute, router, store);
+      shoppingListService.updateShoppingListItem.and.returnValue(of({} as ShoppingListItem));
       shoppingListApiEffects.moveShoppingListItem$.subscribe((action) => {
         expect(action.shoppingListItems).toEqual([
           {id: '43', title: 'Item 2', order: 4, shoppingList: '42', unit: 'kg', amount: 1},
@@ -303,7 +320,7 @@ describe('Shopping List Api Effects', () => {
         previousIndex: 2,
         currentIndex: 1
       });
-      shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
+      shoppingListApiEffects = new ShoppingListEffects(actions$, shoppingListService, activatedRoute, router, store);
       // shoppingListService.updateShoppingListItem.and.returnValue(of({} as ShoppingListItem));
       shoppingListApiEffects.moveShoppingListItem$.subscribe((action) => {
         expect(action.shoppingListItems).toEqual([
@@ -317,10 +334,13 @@ describe('Shopping List Api Effects', () => {
 
   describe('bulkUpdateShoppingListItem$', () => {
     beforeEach(() => {
+      store = TestBed.inject(Store);
+      activatedRoute = TestBed.inject(ActivatedRoute);
+      router = jasmine.createSpyObj('Router', ['navigate']);
       shoppingListService = jasmine.createSpyObj('shoppingListService', ['updateShoppingListItem']);
     });
 
-    it('should call api 3 tiems for 3 items', () => {
+    it('should call api 3 times for 3 items', () => {
       actions$ = of({
         type: ShoppingListEffectActions.bulkUpdateShoppingListItems.type,
         shoppingListItems: [
@@ -329,7 +349,7 @@ describe('Shopping List Api Effects', () => {
           {id: '42', title: 'Item 1', order: 2, shoppingList: '42', unit: 'kg', amount: 1},
         ]
       });
-      shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
+      shoppingListApiEffects = new ShoppingListEffects(actions$, shoppingListService, activatedRoute, router, store);
       shoppingListService.updateShoppingListItem.and.returnValue(of({} as ShoppingListItem));
       shoppingListApiEffects.bulkUpdateShoppingListItem$.subscribe((action: Action) => {
         expect(shoppingListService.updateShoppingListItem).toHaveBeenCalledTimes(3);
@@ -341,9 +361,12 @@ describe('Shopping List Api Effects', () => {
 
   describe('createShoppingList$', () => {
     beforeEach(() => {
+      store = TestBed.inject(Store);
+      activatedRoute = TestBed.inject(ActivatedRoute);
+      router = jasmine.createSpyObj('Router', ['navigate']);
       actions$ = of({type: ShoppingListContainerActions.createShoppingList.type});
       shoppingListService = jasmine.createSpyObj('shoppingListService', ['createShoppingList']);
-      shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
+      shoppingListApiEffects = new ShoppingListEffects(actions$, shoppingListService, activatedRoute, router, store);
     });
 
     it('it should return success action', () => {
@@ -364,7 +387,7 @@ describe('Shopping List Api Effects', () => {
   describe('selectNewlyCreatedShoppingList$', () => {
     it('it should return success action', () => {
       actions$ = of({type: ShoppingListApiActions.createShoppingListSuccess.type, shoppingList: {id: '1234', title: 'Testing'}});
-      shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
+      shoppingListApiEffects = new ShoppingListEffects(actions$, shoppingListService, activatedRoute, router, store);
       shoppingListApiEffects.selectNewlyCreatedShoppingList$.subscribe((action) => {
         expect(action.type).toEqual(ShoppingListEffectActions.setActiveShoppingList.type);
         expect(action.shoppingListId).toEqual('1234');
@@ -374,9 +397,12 @@ describe('Shopping List Api Effects', () => {
 
   describe('editShoppingList$', () => {
     beforeEach(() => {
+      store = TestBed.inject(Store);
+      activatedRoute = TestBed.inject(ActivatedRoute);
+      router = jasmine.createSpyObj('Router', ['navigate']);
       actions$ = of({type: ShoppingListContainerActions.editShoppingList.type});
       shoppingListService = jasmine.createSpyObj('shoppingListService', ['updateShoppingList']);
-      shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
+      shoppingListApiEffects = new ShoppingListEffects(actions$, shoppingListService, activatedRoute, router, store);
     });
 
     it('it should return success action', () => {
@@ -394,16 +420,19 @@ describe('Shopping List Api Effects', () => {
     });
   });
 
-  describe('deleteShoppingListIfCurrentGetsDeleted$', () => {
+  describe('deleteShopping$', () => {
     beforeEach(() => {
+      store = TestBed.inject(Store);
+      activatedRoute = TestBed.inject(ActivatedRoute);
+      router = jasmine.createSpyObj('Router', ['navigate']);
       actions$ = of({type: ShoppingListContainerActions.deleteShoppingList.type, shoppingList: {id: '42', title: 'DELETE'}});
       shoppingListService = jasmine.createSpyObj('shoppingListService', ['deleteShoppingList']);
-      shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
+      shoppingListApiEffects = new ShoppingListEffects(actions$, shoppingListService, activatedRoute, router, store);
     });
 
     it('it should return success message', fakeAsync(() => {
       shoppingListService.deleteShoppingList.and.returnValue(of({} as { 'DELETED': true }));
-      shoppingListApiEffects.deleteShoppingListIfCurrentGetsDeleted$.subscribe((action: Action) => {
+      shoppingListApiEffects.deleteShoppingList$.subscribe((action: Action) => {
         expect(action.type).toEqual(ShoppingListApiActions.deleteShoppingListSuccess.type);
       });
       tick(3000);
@@ -411,7 +440,7 @@ describe('Shopping List Api Effects', () => {
 
     it('should return failure action', fakeAsync(() => {
       shoppingListService.deleteShoppingList.and.returnValue(throwError('error'));
-      shoppingListApiEffects.deleteShoppingListIfCurrentGetsDeleted$.subscribe((action: Action) => {
+      shoppingListApiEffects.deleteShoppingList$.subscribe((action: Action) => {
         expect(action.type).toEqual(ShoppingListApiActions.deleteShoppingListFailure.type);
       });
       tick(3000);
@@ -420,23 +449,11 @@ describe('Shopping List Api Effects', () => {
 
   describe('changeShoppingListIfCurrentGetsDeleted$', () => {
     beforeEach(() => {
+      store = TestBed.inject(Store);
+      activatedRoute = TestBed.inject(ActivatedRoute);
+      router = jasmine.createSpyObj('Router', ['navigate']);
       actions$ = of({type: ShoppingListContainerActions.deleteShoppingList.type, shoppingList: {id: '42', title: 'Title'}});
-      shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
-    });
-
-    it('it should return select shoppingList Action when currently selected list gets deleted', () => {
-      shoppingListApiEffects.changeShoppingListIfCurrentGetsDeleted$.subscribe((action) => {
-        expect(action.type).toEqual(ShoppingListEffectActions.setActiveShoppingList.type);
-        expect(action.shoppingListId).toEqual('42');
-      });
-    });
-  });
-
-
-  describe('changeShoppingListIfCurrentGetsDeleted$', () => {
-    beforeEach(() => {
-      actions$ = of({type: ShoppingListContainerActions.deleteShoppingList.type, shoppingList: {id: '42', title: 'Title'}});
-      shoppingListApiEffects = new ShoppingListApiEffects(actions$, shoppingListService, activatedRoute, router, store);
+      shoppingListApiEffects = new ShoppingListEffects(actions$, shoppingListService, activatedRoute, router, store);
     });
 
     it('it should return select shoppingList Action when currently selected list gets deleted', () => {

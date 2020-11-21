@@ -1,6 +1,6 @@
 <app-recipe-form
   [translations]="translations$ | async"
-  [currentLang]=" currentLang$ | async"
+  [currentLanguage]=" currentLanguage$ | async"
   [recipe]="recipe$ | async"
   (recipeSaved)="onRecipeSaved($event)"
 >

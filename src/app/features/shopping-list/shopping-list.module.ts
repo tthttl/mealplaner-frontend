@@ -11,15 +11,15 @@ import { ShoppingListContainerComponent } from './containers/shopping-list-conta
 import { ShoppingListRoutingModule } from './shopping-list-routing.module';
 import { ShoppingListPageComponent } from './pages/shopping-list-page/shopping-list-page.component';
 import { EffectsModule } from '@ngrx/effects';
-import { ShoppingListApiEffects } from './store/effects/shopping-list-api.effects';
+import { ShoppingListEffects } from './store/effects/shopping-list.effects';
 
 
 @NgModule({
   declarations: [
     ShoppingListComponent,
     ShoppingListFormComponent,
-    ShoppingListContainerComponent,
     ShoppingListPageComponent,
+    ShoppingListContainerComponent,
   ],
   imports: [
     CommonModule,
@@ -29,7 +29,7 @@ import { ShoppingListApiEffects } from './store/effects/shopping-list-api.effect
     SharedModule,
     ReactiveFormsModule,
     ShoppingListRoutingModule,
-    EffectsModule.forFeature([ShoppingListApiEffects])
+    EffectsModule.forFeature([ShoppingListEffects])
   ]
 })
 export class ShoppingListModule {

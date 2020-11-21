@@ -9,16 +9,11 @@ import { I18n, Language } from '../../../../core/models/model';
   templateUrl: './product-page-container.component.html',
   styleUrls: ['./product-page-container.component.scss']
 })
-export class ProductPageContainerComponent implements OnInit {
+export class ProductPageContainerComponent {
   translations$: Observable<I18n | null> = this.store.select(selectTranslations);
   currentLanguage$: Observable<Language> = this.store.select(selectCurrentLanguage);
 
   constructor(
     private store: Store<GlobalState>,
-  ) {
-  }
-
-  ngOnInit(): void {
-  }
-
+  ) {}
 }

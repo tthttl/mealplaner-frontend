@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { I18n, Language, LoginCredentials } from '../../../../core/models/model';
 import { select, Store } from '@ngrx/store';
 import { GlobalState, selectTranslations } from '../../../../core/store';
-import { AuthApiActions, LoginPageActions } from '../../store/actions';
+import { AuthApiActions, LoginContainerActions } from '../../store/actions';
 import { Observable } from 'rxjs';
 import { Actions, ofType } from '@ngrx/effects';
 
@@ -11,8 +11,7 @@ import { Actions, ofType } from '@ngrx/effects';
   templateUrl: './login-container.component.html',
   styleUrls: ['./login-container.component.scss']
 })
-export class LoginContainerComponent implements OnInit {
-
+export class LoginContainerComponent {
   translations$: Observable<I18n | null> = this.store.select(selectTranslations);
   currentLanguage$: Observable<Language> = this.store.pipe(select(state => state.appState.language));
   backendError: string | undefined;
@@ -24,10 +23,7 @@ export class LoginContainerComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-  }
-
-  login(credentials: LoginCredentials): void {
-    this.store.dispatch(LoginPageActions.login({credentials}));
+  onLogin(credentials: LoginCredentials): void {
+    this.store.dispatch(LoginContainerActions.login({credentials}));
   }
 }

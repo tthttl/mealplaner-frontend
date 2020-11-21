@@ -89,7 +89,7 @@ describe('AuthService', () => {
     req.flush({ok: true});
   });
 
-  it('resetPassword() should return User', () => {
+  it('resetPassword() should return user', () => {
     const mockUserApi: UserApi = {
       user: {
         _id: '0',
@@ -108,7 +108,7 @@ describe('AuthService', () => {
     req.flush(mockUserApi);
   });
 
-  it('refreshToken() should return RefreshToken', () => {
+  it('refreshToken() should return refresh token', () => {
     const mockJwtRenewal: JwtRefreshResponse = {
       ok: true,
       user: {
@@ -126,6 +126,17 @@ describe('AuthService', () => {
     const req = httpMock.expectOne(`${environment.authUrl}/auth/refresh-token`);
     expect(req.request.method).toBe('POST');
     req.flush(mockJwtRenewal);
+  });
+
+  it('logout() should return true', () => {
+
+    service.logout().subscribe((res) => {
+      expect(res).toEqual({ok: true});
+    });
+
+    const req = httpMock.expectOne(`${environment.authUrl}/auth/logout`);
+    expect(req.request.method).toBe('POST');
+    req.flush({ok: true});
   });
 
   afterEach(() => {

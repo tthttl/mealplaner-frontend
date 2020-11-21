@@ -1,37 +1,25 @@
 @import "../../../../../styles/settings/breakpoints";
 @import "../../../../../styles/settings/variables";
 
-.button-group{
-  margin-top: 1rem;
 
-  .button--margin{
-    margin-right: 1rem;
-    margin-bottom: 1rem;
-    outline: 0;
 
-    @include large{
-      margin-bottom: 0;
-    }
-
+.ingredient-dialog {
+  &_list {
+    width: 100%;
+    display: block;
+    overflow: hidden;
   }
-}
 
-.ingredient{
-  width: 100%;
-  display: block;
-  overflow: hidden;
-
-  .ingredient-column{
+  &__list-column {
     display: inline-block;
-    margin-right: 0.5rem;
-    padding-left: 0.5rem;
+    margin-right: $spacing-small;
 
-    &:first-child{
-      padding-left: 0;
-    }
-
-    &:last-child{
+    &:last-child {
       margin-right: 0;
     }
+  }
+
+  &__actions {
+    margin-top: $spacing-medium;
   }
 }

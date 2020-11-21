@@ -17,7 +17,7 @@ import {
   styleUrls: ['./shopping-list-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ShoppingListPageComponent implements OnInit {
+export class ShoppingListPageComponent {
   @Input() shoppingLists: ShoppingList[] | null = null;
   @Input() shoppingListItems: ShoppingListItem[] | undefined | null = null;
   @Input() activeShoppingList: ShoppingList | undefined | null = undefined;
@@ -34,9 +34,6 @@ export class ShoppingListPageComponent implements OnInit {
   @Output() createShoppingList: EventEmitter<ShoppingList> = new EventEmitter();
 
   constructor() {
-  }
-
-  ngOnInit(): void {
   }
 
   onShoppingListChange(shoppingList: ShoppingList): void {

@@ -7,7 +7,7 @@ import { I18n, Language, Link, SelectOption } from '../../models/model';
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.scss']
 })
-export class NavigationComponent implements OnInit {
+export class NavigationComponent {
   @Input() translations: I18n | null = null;
   @Input() currentLanguage: Language | null = null;
   @Input() isLoggedIn: boolean | null = null;
@@ -27,14 +27,13 @@ export class NavigationComponent implements OnInit {
   constructor() {
   }
 
-  ngOnInit(): void {
-  }
-
   onLogout(): void {
     this.logout.emit();
   }
 
-  changeLanguage(language: Language): void {
-    this.languageChanged.emit(language);
+  changeLanguage(language: Language | null): void {
+    if (language) {
+      this.languageChanged.emit(language);
+    }
   }
 }

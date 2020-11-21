@@ -48,7 +48,7 @@ describe('LoginFormComponent', () => {
   });
 
   it('should emit credentials when inputs are filled and button is clicked', () => {
-    spyOn(component.credentialsReceived, 'emit');
+    spyOn(component.login, 'emit');
     const hostElement = fixture.nativeElement;
     const emailInput = hostElement.querySelector('input[type="email"]');
     const passwordInput = hostElement.querySelector('input[type="password"]');
@@ -62,7 +62,7 @@ describe('LoginFormComponent', () => {
     const button = hostElement.querySelector('button');
     button.click();
 
-    expect(component.credentialsReceived.emit).toHaveBeenCalledWith({
+    expect(component.login.emit).toHaveBeenCalledWith({
       identifier: 'peter.muster@gmail.com',
       password: 'uncrackable'
     });

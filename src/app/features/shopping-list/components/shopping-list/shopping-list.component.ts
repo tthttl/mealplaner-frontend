@@ -11,23 +11,24 @@ export class ShoppingListComponent {
   @Input() items: ShoppingListItem[] | null | undefined = undefined;
   @Input() translations: I18n | null = {};
   @Input() currentLang: Language | null = DEFAULT_LANGUAGE;
-  @Output() itemDeleted: EventEmitter<ShoppingListItem> = new EventEmitter();
-  @Output() listItemMoved: EventEmitter<ArrayItemMovedEvent> = new EventEmitter();
+  @Output() shoppingListItemDeleted: EventEmitter<ShoppingListItem> = new EventEmitter();
+  @Output() shoppingListItemMoved: EventEmitter<ArrayItemMovedEvent> = new EventEmitter();
 
   deleteBuffer: { [key: string]: number } = {};
   deletionDelayInMilliseconds = 300;
 
   itemChecked(item: ShoppingListItem, isChecked: boolean): void {
     if (isChecked) {
-      this.deleteBuffer[item.id] = window.setTimeout(() => this.itemDeleted.emit(item), this.deletionDelayInMilliseconds);
+      // Delay Deletion to make the checkmark visible
+      this.deleteBuffer[item.id] = window.setTimeout(() => this.shoppingListItemDeleted.emit(item), this.deletionDelayInMilliseconds);
     } else {
       clearTimeout(this.deleteBuffer[item.id]);
     }
   }
 
-  drop({previousIndex, currentIndex}: ArrayItemMovedEvent): void {
+  moveItem({previousIndex, currentIndex}: ArrayItemMovedEvent): void {
     if (currentIndex !== previousIndex) {
-      this.listItemMoved.emit({currentIndex, previousIndex});
+      this.shoppingListItemMoved.emit({currentIndex, previousIndex});
     }
   }
 

@@ -59,18 +59,17 @@ describe('RecipeViewComponent', () => {
   it('should display dialogData', () => {
     fixture.detectChanges();
     const title = fixture.nativeElement.querySelector('h4');
-    const ingredientColumns = fixture.nativeElement.querySelectorAll('.ingredient-column');
+    const ingredientColumns = fixture.nativeElement.querySelectorAll('.ingredient-dialog__list-column');
     const buttons = fixture.nativeElement.querySelectorAll('button');
 
     expect(title.innerHTML).toEqual('test');
-    expect(ingredientColumns?.length).toEqual(3);
-    expect(buttons?.length).toEqual(2);
+    expect(ingredientColumns?.length).toEqual(2);
+    expect(buttons?.length).toEqual(1);
     [...ingredientColumns]
       .map((column) => column.innerHTML)
       .forEach((value: string) => expect([
-        dialogData.data.ingredients[0].amount.toString(),
+        dialogData.data.ingredients[0].amount.toString() + ' ' + dialogData.data.ingredients[0].unit,
         dialogData.data.ingredients[0].title,
-        dialogData.data.ingredients[0].unit,
       ]).toContain(value));
   });
 });

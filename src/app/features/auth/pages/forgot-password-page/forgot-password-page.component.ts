@@ -14,8 +14,8 @@ import { translateValidationErrors } from '../../../../core/helpers/helpers';
 export class ForgotPasswordPageComponent implements OnInit {
 
   @Input() translations: I18n | null = {};
-  @Input() currentLang: Language | null = DEFAULT_LANGUAGE;
-  @Input() emailSent = false;
+  @Input() currentLanguage: Language | null = DEFAULT_LANGUAGE;
+  @Input() passwordResetRequested = false;
   @Input() emailPrefillValue: string | undefined;
   @Output() submitResetRequestForm: EventEmitter<string> = new EventEmitter();
 
@@ -54,8 +54,7 @@ export class ForgotPasswordPageComponent implements OnInit {
       this.getFormControl(key),
       this.translatePipe,
       this.translations,
-      this.currentLang)
+      this.currentLanguage)
       .filter((error, index) => index === 0);
   }
-
 }

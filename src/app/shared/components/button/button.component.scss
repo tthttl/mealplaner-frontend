@@ -2,25 +2,25 @@
 @import "../../../../styles/mixins/forms";
 
 .button{
-  background-color: $blue_70;
+  background-color: $blue_90;
   cursor: pointer;
   color: $blue-grey_10;
-   @include button();
+  @include button();
 
   &:hover{
     background-color: $blue_60;
   }
 
   &:active {
-    background-color: $blue_80;
+    background-color: $blue_60;
   }
 
   &--no-left-border-radius{
-    border-radius: 0 4px 4px 0;
+    border-radius: 0 rem(4) rem(4) 0;
   }
 
   &--color-inverted{
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     color: $blue_100;
     font-weight: 400;
 
@@ -34,7 +34,7 @@
   }
 
   &--color-accent{
-    background-color: $cyan_70;
+    background-color: $cyan_90;
     color:$cyan_10;
 
     &:hover{
@@ -71,16 +71,16 @@
   }
 
   &--warning-border{
-    border: 2px solid $red_70;
+    border: rem(2) solid $red_70;
     border-left: none;
   }
 
   .icon-left{
-    padding-right: 0.5rem;
+    padding-right: $spacing-medium;
   }
 
   .icon-right{
-    padding-left: 0.5rem;
+    padding-left: $spacing-medium;
   }
 
 }

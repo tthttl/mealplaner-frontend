@@ -1,19 +1,21 @@
 <label *ngIf="label" class="select__label" for="{{inputId}}">{{label}}</label>
 
 <select
-  [(ngModel)]="selectedValue"
   ngDefaultControl
-  (ngModelChange)="onChange($event)"
-  [attr.disabled]="isDisabled ? '' : null"
-  [attr.data-test]="e2eTestName"
-  [attr.aria-label]="ariaLabel"
-  [class.select__field--no-border]="noBorder"
-  [class.select__field--no-padding]="noPadding"
-  [class.select__field--no-background]="noBackground"
   class="select__field"
   name="{{name}}"
   id="{{inputId}}"
-  [ngClass]="{'select__field--error': errors && errors.length > 0}"
+  [(ngModel)]="selectedValue"
+  [ngClass]="{
+    'select__field--error': errors && errors.length > 0,
+    'select__field--no-background': noBackground,
+    'select__field--no-border': !border,
+    'select__field--no-padding': noPadding
+  }"
+  [attr.disabled]="isDisabled ? '' : null"
+  [attr.data-test]="e2eTestName"
+  [attr.aria-label]="ariaLabel"
+  (ngModelChange)="onChange($event)"
 >
   <option
     *ngFor="let option of options"
@@ -22,7 +24,7 @@
   </option>
 </select>
 
-<div class="error-wrapper">
+<div class="select__error-wrapper">
   <div class="select__error" *ngFor="let error of errors">{{error}}</div>
 </div>
 

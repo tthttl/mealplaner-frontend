@@ -5,11 +5,9 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './mealplaner-container.component.html',
   styleUrls: ['./mealplaner-container.component.scss']
 })
-export class MealplanerContainerComponent implements OnInit {
+export class MealplanerContainerComponent {
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
 
 }

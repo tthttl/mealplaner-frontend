@@ -13,11 +13,9 @@ describe('shoppingListReducers', () => {
       }))).toEqual({
         ...initialShoppingListState,
         shoppingLists: {
-          items: {
-            ids: ['1', '2'], entities: {
-              1: shoppingLists[0],
-              2: shoppingLists[1],
-            }
+          ids: ['1', '2'], entities: {
+            1: shoppingLists[0],
+            2: shoppingLists[1],
           }
         },
       });
@@ -221,10 +219,8 @@ describe('shoppingListReducers', () => {
             ...initialShoppingListState,
             activeShoppingList: '1234',
             shoppingLists: {
-              items: {
-                ids: ['1234'], entities: {
-                  1234: {id: '1234', title: 'Test 1'},
-                }
+              ids: ['1234'], entities: {
+                1234: {id: '1234', title: 'Test 1'},
               }
             },
             shoppingListItems: {
@@ -236,11 +232,9 @@ describe('shoppingListReducers', () => {
         ...initialShoppingListState,
         activeShoppingList: '8888',
         shoppingLists: {
-          items: {
-            ids: ['1234', '8888'], entities: {
-              1234: {id: '1234', title: 'Test 1'},
-              8888: {id: '8888', title: 'Test Added'},
-            }
+          ids: ['1234', '8888'], entities: {
+            1234: {id: '1234', title: 'Test 1'},
+            8888: {id: '8888', title: 'Test Added'},
           }
         },
         shoppingListItems: {
@@ -259,11 +253,9 @@ describe('shoppingListReducers', () => {
             ...initialShoppingListState,
             activeShoppingList: '1234',
             shoppingLists: {
-              items: {
-                ids: ['1234', '8888'], entities: {
-                  1234: {id: '1234', title: 'Test 1'},
-                  8888: {id: '8888', title: 'Test 1'},
-                }
+              ids: ['1234', '8888'], entities: {
+                1234: {id: '1234', title: 'Test 1'},
+                8888: {id: '8888', title: 'Test 1'},
               }
             },
             shoppingListItems: {
@@ -275,11 +267,9 @@ describe('shoppingListReducers', () => {
         ...initialShoppingListState,
         activeShoppingList: '1234',
         shoppingLists: {
-          items: {
-            ids: ['1234', '8888'], entities: {
-              1234: {id: '1234', title: 'Test 1'},
-              8888: {id: '8888', title: 'Updated'},
-            }
+          ids: ['1234', '8888'], entities: {
+            1234: {id: '1234', title: 'Test 1'},
+            8888: {id: '8888', title: 'Updated'},
           }
         },
         shoppingListItems: {
@@ -297,11 +287,9 @@ describe('shoppingListReducers', () => {
             ...initialShoppingListState,
             activeShoppingList: '1234',
             shoppingLists: {
-              items: {
-                ids: ['1234', '8888'], entities: {
-                  1234: {id: '1234', title: 'Test 1'},
-                  8888: {id: '8888', title: 'Delete'},
-                }
+              ids: ['1234', '8888'], entities: {
+                1234: {id: '1234', title: 'Test 1'},
+                8888: {id: '8888', title: 'Delete'},
               }
             },
             shoppingListItems: {
@@ -314,10 +302,8 @@ describe('shoppingListReducers', () => {
         ...initialShoppingListState,
         activeShoppingList: '1234',
         shoppingLists: {
-          items: {
-            ids: ['1234'], entities: {
-              1234: {id: '1234', title: 'Test 1'},
-            }
+          ids: ['1234'], entities: {
+            1234: {id: '1234', title: 'Test 1'},
           }
         },
         shoppingListItems: {
@@ -369,10 +355,8 @@ describe('shoppingListReducers', () => {
             ...initialShoppingListState,
             activeShoppingList: '1234',
             shoppingLists: {
-              items: {
-                ids: ['1234'], entities: {
-                  1234: {id: '1234', title: 'Test 1'},
-                }
+              ids: ['1234'], entities: {
+                1234: {id: '1234', title: 'Test 1'},
               }
             },
             shoppingListItems: {
@@ -385,11 +369,9 @@ describe('shoppingListReducers', () => {
         ...initialShoppingListState,
         activeShoppingList: '1234',
         shoppingLists: {
-          items: {
-            ids: ['8888', '1234'], entities: {
-              1234: {id: '1234', title: 'Test 1'},
-              8888: {id: '8888', title: 'Delete'},
-            }
+          ids: ['8888', '1234'], entities: {
+            1234: {id: '1234', title: 'Test 1'},
+            8888: {id: '8888', title: 'Delete'},
           }
         },
         shoppingListItems: {
@@ -408,10 +390,8 @@ describe('shoppingListReducers', () => {
             ...initialShoppingListState,
             activeShoppingList: '1234',
             shoppingLists: {
-              items: {
-                ids: ['1234'], entities: {
-                  1234: {id: '1234', title: 'Test 1'},
-                }
+              ids: ['1234'], entities: {
+                1234: {id: '1234', title: 'Test 1'},
               }
             },
             shoppingListItems: {
@@ -424,10 +404,8 @@ describe('shoppingListReducers', () => {
         ...initialShoppingListState,
         activeShoppingList: '1234',
         shoppingLists: {
-          items: {
-            ids: ['1234'], entities: {
-              1234: {id: '1234', title: 'Test 1'},
-            }
+          ids: ['1234'], entities: {
+            1234: {id: '1234', title: 'Test 1'},
           }
         },
         shoppingListItems: {

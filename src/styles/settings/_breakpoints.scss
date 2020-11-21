@@ -1,12 +1,14 @@
+@import "./functions";
+
 @mixin medium {
-  @media (min-width: 26em) {
+  @media (min-width: rem(418)) {
     @content;
   }
 }
 
 
 @mixin large {
-  @media (min-width: 50em) {
+  @media (min-width: rem(800)) {
     @content;
   }
 }

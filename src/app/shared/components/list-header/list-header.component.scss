@@ -1,12 +1,13 @@
 @import "../../../../styles/settings/colors";
 @import "../../../../styles/settings/variables";
 @import "../../../../styles/mixins/style";
+@import "../../../../styles/settings/functions";
 
 
 
-.shopping-list-header {
-  padding-bottom: 24px;
-  padding-left: 10px;
+.list-header {
+  padding-bottom: $spacing-large;
+  padding-left: $spacing-small;
   color: $blue-grey_80;
   display: flex;
   align-items: baseline;
@@ -15,21 +16,21 @@
 
   &__title {
     font-weight: 400;
-    font-size: 1.5em;
+    font-size: $font-size-medium;
   }
 
-  @include skeleton('.shopping-list-header__title-wrapper', $blue-grey_30, 3.5s) {
+  @include skeleton('.list-header__title-wrapper', $blue-grey_30, 3.5s) {
     background: $blue-grey_40;
     width: 60%;
-    height: 24px;
+    height: rem(24);
     align-self: center;
     border-radius: $border-radius-default;
   };
 
-  @include skeleton('.shopping-list-header__button', $cyan_70, 3.5s) {
+  @include skeleton('.list-header__button', $cyan_70, 3.5s) {
     background: $cyan_80;
-    width: 80px;
-    height: 30px;
+    width: rem(80);
+    height: rem(30);
     cursor: wait;
     border-radius: $border-radius-default;
   };
@@ -38,7 +39,7 @@
   &__button {
     border: none;
     color: #ffffff;
-    padding: 4px 16px;
+    padding: $spacing-tiny $spacing-medium;
     border-radius: $border-radius-default;
     background-color: $cyan_80;
     cursor: pointer;

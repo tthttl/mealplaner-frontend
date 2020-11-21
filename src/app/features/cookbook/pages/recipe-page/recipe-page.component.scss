@@ -2,93 +2,91 @@
 @import "../../../../../styles/settings/breakpoints";
 @import "../../../../../styles/mixins/forms";
 @import "../../../../../styles/settings/variables";
+@import "../../../../../styles/settings/functions";
 
 .recipe-form {
 
   &__input {
     display: block;
-    margin-bottom: 1rem;
+    margin-bottom: $spacing-medium;
   }
 
   &__button {
     display: block;
-    margin-top: 2rem;
+    margin-top: $spacing-large;
   }
 
-  .ingredients-label{
+  &__ingredients_label {
     @include label;
   }
 
-}
-
-.ingredients {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  overflow: hidden;
-  border: $border-primary;
-  border-radius: $border-radius-default;
-
-  &__button{
-    margin: 0 2rem 1rem 2rem;
+  &__ingredients {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    border: $border-primary;
+    border-radius: $border-radius-default;
   }
 
-  &__row {
+  &__ingredients-row {
     width: 100%;
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    //mixin
     border-bottom: 1px solid $blue_70;
-    padding: 1rem 2rem;
+    padding: $spacing-medium $spacing-large;
 
     @include large {
       flex-direction: row;
     }
 
-    &--last {
+    &:last-of-type {
       border-bottom: none;
     }
-
-    &--input-amount {
-      @include large {
-        max-width: 8rem;
-      }
-    }
-
-    &--input {
-      padding-bottom: 1rem;
-      flex: 1 1 auto;
-
-      @include large {
-        padding-bottom: 0;
-        padding-right: 1rem;
-
-        &:last-child {
-          padding-right: 0;
-        }
-      }
-    }
-
-    &--input-unit {
-      @include large {
-        max-width: 8.5rem;
-      }
-    }
-
-    &--input-toggle {
-      margin-bottom: 1rem;
-      color: $blue_70;
-      @include large {
-        max-width: 10rem;
-        margin: auto 0;
-      }
-    }
-
   }
 
-  .icon-wrapper {
+  &__ingredient-input {
+    padding-bottom: $spacing-medium;
+    flex: 1 1 auto;
+
+    @include large {
+      padding-bottom: 0;
+      padding-right: $spacing-medium;
+
+      &:last-child {
+        padding-right: 0;
+      }
+    }
+  }
+
+  &__ingredient-amount {
+    @include large {
+      max-width: rem(128);
+    }
+  }
+
+  &__ingredient-unit {
+    @include large {
+      max-width: rem(136);
+    }
+  }
+
+  &__ingredient-toggle {
+    margin-bottom: $spacing-medium;
+    color: $blue_70;
+    @include large {
+      max-width: rem(160);
+      margin: auto 0;
+    }
+  }
+
+  &__ingredients-button {
+    margin: 0 $spacing-large $spacing-medium $spacing-large;
+  }
+
+  &__ingredient-icon-wrapper {
     background-color: $red_70;
     border-radius: $border-radius-default;
     @include button();
@@ -104,37 +102,37 @@
       width: fit-content;
       height: unset;
     }
+  }
 
-    .delete-icon {
-      color: $red_70;
-      cursor: pointer;
-      margin: auto;
-      font-size: 1.5rem;
-      visibility: hidden;
+  &__ingredient-delete-icon {
+    color: $red_70;
+    cursor: pointer;
+    margin: auto;
+    font-size: $font-size-medium;
+    visibility: hidden;
 
-      @include large() {
-        visibility: visible;
-      }
-
-      &--disabled {
-        color: $blue-grey_10;
-        cursor: not-allowed;
-
-        @include large {
-          color: $blue-grey_50;
-        }
-      }
+    @include large() {
+      visibility: visible;
     }
 
-    .delete-text {
+    &--disabled {
       color: $blue-grey_10;
+      cursor: not-allowed;
 
-      @include large() {
-        display: none;
+      @include large {
+        color: $blue-grey_50;
       }
     }
   }
 
+  &__ingredient-delete-text {
+    color: $blue-grey_10;
+
+    @include large() {
+      display: none;
+    }
+  }
 }
+
 
 

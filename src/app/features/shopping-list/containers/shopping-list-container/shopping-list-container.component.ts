@@ -36,7 +36,6 @@ import { ShoppingListContainerActions } from '../../store/actions';
   styleUrls: ['./shopping-list-container.component.scss'],
 })
 export class ShoppingListContainerComponent implements OnInit {
-
   translations$: Observable<I18n | null> = this.store.select(selectTranslations);
   currentLanguage$: Observable<Language> = this.store.select(selectCurrentLanguage);
   shoppingListsItems$: Observable<ShoppingListItem[] | undefined | null> = this.store.select(selectCurrentShoppingListItems);
@@ -57,18 +56,17 @@ export class ShoppingListContainerComponent implements OnInit {
       withLatestFrom(this.store.select((state: GlobalState) => state.appState.language))
     ).subscribe(([translations, currentLanguage]: [I18n | null, Language]) => {
       this.createDialogTranslations = {
-        title: this.translatePipe.transform('create-list.title', translations, currentLanguage),
-        'save-button-text': this.translatePipe.transform('create-list.save-button-text', translations, currentLanguage),
-        'cancel-button-text': this.translatePipe.transform('create-list.cancel-button-text', translations, currentLanguage),
-        placeholder: this.translatePipe.transform('create-list.placeholder', translations, currentLanguage),
+        title: this.translatePipe.transform('create-shopping-list.heading', translations, currentLanguage),
+        'save-button-text': this.translatePipe.transform('create-shopping-list.save-button-text', translations, currentLanguage),
+        'cancel-button-text': this.translatePipe.transform('create-shopping-list.cancel-button-text', translations, currentLanguage),
+        placeholder: this.translatePipe.transform('create-shopping-list.placeholder', translations, currentLanguage),
       };
 
       this.editDialogTranslations = {
-        title: this.translatePipe.transform('edit-list.title', translations, currentLanguage),
-        'save-button-text': this.translatePipe.transform('edit-list.save-button-text', translations, currentLanguage),
-        'cancel-button-text': this.translatePipe.transform('edit-list.cancel-button-text', translations, currentLanguage),
-        placeholder: this.translatePipe.transform('edit-list.placeholder', translations, currentLanguage),
-
+        title: this.translatePipe.transform('edit-shopping-list.title', translations, currentLanguage),
+        'save-button-text': this.translatePipe.transform('edit-shopping-list.save-button-text', translations, currentLanguage),
+        'cancel-button-text': this.translatePipe.transform('edit-shopping-list.cancel-button-text', translations, currentLanguage),
+        placeholder: this.translatePipe.transform('edit-shopping-list.placeholder', translations, currentLanguage),
       };
     });
   }
