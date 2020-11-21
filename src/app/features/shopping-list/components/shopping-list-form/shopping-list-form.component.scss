@@ -5,8 +5,8 @@
 .shopping-list-form {
   display: flex;
   flex-direction: column;
-  margin-bottom: $padding-small;
-  padding: $padding-medium;
+  margin-bottom: $spacing-small;
+  padding: $spacing-medium;
 
   @include large {
     flex-direction:  row;
@@ -19,7 +19,7 @@
   }
 
   &--input {
-    padding-top: $padding-small 0;
+    padding-top: $spacing-small 0;
     flex: 1 1 auto;
 
     &:not(:nth-child(3)) {
@@ -28,7 +28,7 @@
 
     @include large {
       padding-bottom: 0;
-      padding-right: $padding-medium;
+      padding-right: $spacing-medium;
 
       &:not(:nth-child(3)) {
         border-bottom: none;

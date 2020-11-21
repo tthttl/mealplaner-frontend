@@ -6,13 +6,13 @@
 .beta-teaser {
   position: relative;
   margin-top: $header-height;
-  padding: $padding-small;
+  padding: $spacing-small;
   color: $text-00;
   text-align: center;
   background: $blue_90;
 
   &__emoji {
-    padding-right: $padding-medium;
+    padding-right: $spacing-medium;
   }
 }
 
