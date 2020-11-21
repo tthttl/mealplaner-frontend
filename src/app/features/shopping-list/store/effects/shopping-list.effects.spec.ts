@@ -285,7 +285,7 @@ describe('Shopping List Api Effects', () => {
         currentIndex: 2
       });
       shoppingListApiEffects = new ShoppingListEffects(actions$, shoppingListService, activatedRoute, router, store);
-      // shoppingListService.updateShoppingListItem.and.returnValue(of({} as ShoppingListItem));
+      shoppingListService.updateShoppingListItem.and.returnValue(of({} as ShoppingListItem));
       shoppingListApiEffects.moveShoppingListItem$.subscribe((action) => {
         expect(action.shoppingListItems).toEqual([
           {id: '43', title: 'Item 2', order: 4, shoppingList: '42', unit: 'kg', amount: 1},
@@ -320,7 +320,7 @@ describe('Shopping List Api Effects', () => {
       shoppingListService = jasmine.createSpyObj('shoppingListService', ['updateShoppingListItem']);
     });
 
-    it('should call api 3 tiems for 3 items', () => {
+    it('should call api 3 times for 3 items', () => {
       actions$ = of({
         type: ShoppingListEffectActions.bulkUpdateShoppingListItems.type,
         shoppingListItems: [
