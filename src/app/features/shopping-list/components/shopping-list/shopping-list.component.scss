@@ -24,20 +24,20 @@
   }
 
   &__item-text {
-    padding: $padding-medium $padding-small;
+    padding: $spacing-medium $spacing-small;
     display: block;
   }
 
   &__drag-icon {
     color: $blue-grey_50;
-    padding: 0 $padding-small;
+    padding: 0 $spacing-small;
     cursor: move;
   }
 
   @include skeleton('.shopping-list__item-skeleton', $blue-grey_30, 3.5s) {
     background: $blue-grey_40;
     height: rem(24);
-    margin: $padding-medium auto $padding-medium $padding-medium;
+    margin: $spacing-medium auto $spacing-medium $spacing-medium;
     border-radius: $border-radius-default;
     width: 90%;
 
@@ -61,7 +61,7 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    padding-bottom: $padding-large;
+    padding-bottom: $spacing-large;
     color: $text-40;
     font-size: $font-size-small;
     text-align: center;

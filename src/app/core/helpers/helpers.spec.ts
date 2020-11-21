@@ -10,7 +10,6 @@ import {
   mapI18nApiToI18nClient,
   mapUserApiToUserClient,
   moveItemInArray,
-  sortAlphabetically,
   translateValidationErrors
 } from './helpers';
 import createSpyObj = jasmine.createSpyObj;
@@ -166,18 +165,6 @@ describe('Helpers', () => {
     it('should move item to backwords within the the array', () => {
       expect(moveItemInArray([0, 1, 2, 3, 4], 3, 1)).toEqual([0, 3, 1, 2, 4]);
     });
-  });
-});
-
-describe(`${sortAlphabetically}`, () => {
-  it('should be -1', () => {
-    expect(sortAlphabetically('a', 'b')).toEqual(-1);
-  });
-  it('should be 1', () => {
-    expect(sortAlphabetically('b', 'a')).toEqual(1);
-  });
-  it('should be 0', () => {
-    expect(sortAlphabetically('a', 'a')).toEqual(0);
   });
 });
 

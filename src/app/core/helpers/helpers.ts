@@ -73,16 +73,6 @@ export function moveItemInArray<T>(array: T[], previousIndex: number, currentInd
   return copy;
 }
 
-export function sortAlphabetically(a: string, b: string): number {
-  if (a > b) {
-    return 1;
-  }
-  if (a < b) {
-    return -1;
-  }
-  return 0;
-}
-
 export function addRecipeAtIndex<T extends Recipe | List>(newItem: T, items: T[]): T[] {
   const indexToInsert = items.findIndex((item: T) => item.title.toLowerCase() > newItem.title.toLowerCase());
   return indexToInsert > -1 ? [...items.slice(0, indexToInsert), newItem, ...items.slice(indexToInsert)] : [...items, newItem];

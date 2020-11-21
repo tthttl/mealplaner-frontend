@@ -16,7 +16,7 @@
   &__logo {
     height: rem(32);
     width: auto;
-    padding-right:$padding-medium;
+    padding-right: $spacing-medium;
   }
 
   &__content {
@@ -42,10 +42,10 @@
     display: flex;
     align-items: center;
     text-decoration: none;
-    padding-right: $padding-medium;
+    padding-right: $spacing-medium;
 
     @include medium {
-      padding-right: $padding-large;
+      padding-right: $spacing-large;
     }
   }
 
@@ -58,7 +58,7 @@
     border-radius: $border-radius-small;
     color: $blue_100;
     text-decoration: none;
-    padding: 0 $padding-medium;
+    padding: 0 $spacing-medium;
   }
 }
 
@@ -154,8 +154,8 @@
   }
 
   &__link-list-element {
-    padding-left: $padding-medium;
-    padding-right: $padding-medium;
+    padding-left: $spacing-medium;
+    padding-right: $spacing-medium;
     height: 100%;
     display: flex;
     align-items: center;

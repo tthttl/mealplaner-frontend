@@ -8,8 +8,8 @@ import { BasicShoppingListItem, ShoppingList, ShoppingListItem } from '../../../
   providedIn: 'root'
 })
 export class ShoppingListService {
-  constructor(private httpClient: HttpClient) {
-  }
+  constructor(private httpClient: HttpClient) {}
+
 
   getShoppingLists(userId: string): Observable<ShoppingList[]> {
     return this.httpClient.get<ShoppingList[]>(`${environment.apiUrl}/shopping-lists?user=${userId}`);
