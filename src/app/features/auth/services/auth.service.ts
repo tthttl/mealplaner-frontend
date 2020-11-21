@@ -53,9 +53,9 @@ export class AuthService {
       );
   }
 
-  logout(): Observable<true> {
+  logout(): Observable<{ok: true}> {
     this.stopRefreshTokenTimer();
-    return this.httpClient.post<true>(`${environment.authUrl}/auth/logout`, {});
+    return this.httpClient.post<{ok: true}>(`${environment.authUrl}/auth/logout`, {});
   }
 
   private startRefreshTokenTimer(jwt: string): void {

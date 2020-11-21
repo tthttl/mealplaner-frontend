@@ -1,7 +1,7 @@
 <app-auth-form
-  [heading]="'auth.register.title' | translate:translations:currentLang"
-  [buttonText]="'auth.register.cta' | translate:translations:currentLang"
-  [backedErrorMessage]="backendErrorMessage && (backendErrorMessage | translate:translations:currentLang)"
+  [heading]="'auth.register.title' | translate:translations:currentLanguage"
+  [buttonText]="'auth.register.cta' | translate:translations:currentLanguage"
+  [backedErrorMessage]="backendErrorMessage && (backendErrorMessage | translate:translations:currentLanguage)"
   [authForm]="loginForm"
   (formSubmit)="onSubmit()"
 >
@@ -13,9 +13,9 @@
         <app-input
           class="register-form__input"
           type="text"
-          [noBorder]="true"
+          [border]="false"
           [name]="'name'"
-          [placeholder]="'auth.register.name' | translate:translations:currentLang"
+          [placeholder]="'auth.register.name' | translate:translations:currentLanguage"
           [formControl]="getFormControl('name')"
           [errors]="getErrorsFor('name')"></app-input>
 
@@ -27,9 +27,9 @@
         <app-input
           class="register-form__input"
           type="email"
-          [noBorder]="true"
+          [border]="false"
           [name]="'email'"
-          [placeholder]="'auth.register.email' | translate:translations:currentLang"
+          [placeholder]="'auth.register.email' | translate:translations:currentLanguage"
           [formControl]="getFormControl('email')"
           [errors]="getErrorsFor('email')"></app-input>
       </div>
@@ -40,9 +40,9 @@
         <app-input
           class="register-form__input"
           type="password"
-          [noBorder]="true"
+          [border]="false"
           [name]="'password'"
-          [placeholder]="'auth.register.password' | translate:translations:currentLang"
+          [placeholder]="'auth.register.password' | translate:translations:currentLanguage"
           [formControl]="getFormControl('password')"
           [errors]="getErrorsFor('password')"></app-input>
       </div>
@@ -54,14 +54,14 @@
         <app-input
           class="register-form__input"
           type="text"
-          [noBorder]="true"
+          [border]="false"
           [name]="'invitationCode'"
-          [placeholder]="'auth.register.invitationCode' | translate:translations:currentLang"
+          [placeholder]="'auth.register.invitationCode' | translate:translations:currentLanguage"
           [formControl]="getFormControl('invitationCode')"
           [errors]="getErrorsFor('invitationCode')"
           [ariaDescribedBy]="'project-disclaimer'"></app-input>
       </div>
-      <div class="register-form__helper" id="project-disclaimer" [innerHTML]="'auth.register.disclaimer' | translate:translations:currentLang">
+      <div class="register-form__helper" id="project-disclaimer" [innerHTML]="'auth.register.disclaimer' | translate:translations:currentLanguage">
 
       </div>
 
@@ -69,7 +69,7 @@
   </ng-template>
 
   <ng-template #formFooter>
-    <div class="register-form__hint" [innerHTML]="'auth.register.already-registered'  | translate:translations:currentLang ">
+    <div class="register-form__hint" [innerHTML]="'auth.register.already-registered'  | translate:translations:currentLanguage ">
 
     </div>
   </ng-template>

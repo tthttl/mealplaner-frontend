@@ -19,7 +19,6 @@ export class AuthFormComponent {
   /* tslint:disable no-any*/
   @ContentChild('formTemplate') formTemplate: TemplateRef<any> | null;
   @ContentChild('formFooter') formFooter: TemplateRef<any> | null;
-
   /* tslint:enable no-any*/
 
   constructor() {

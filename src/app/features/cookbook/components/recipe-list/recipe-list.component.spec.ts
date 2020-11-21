@@ -53,7 +53,7 @@ describe('RecipeListComponent', () => {
     component.translations = formData.translations;
     fixture.detectChanges();
 
-    const recipeRows = fixture.debugElement.queryAll(By.css('.recipe__row'));
+    const recipeRows = fixture.debugElement.queryAll(By.css('.recipe-list__row'));
     expect(recipeRows?.length).toEqual(3);
   });
 
@@ -92,7 +92,7 @@ describe('RecipeListComponent', () => {
     fixture.detectChanges();
 
     const recipe = fixture.nativeElement
-      .querySelector('.recipe__title-box');
+      .querySelector('.recipe-list__title-box');
 
     recipe.click();
 

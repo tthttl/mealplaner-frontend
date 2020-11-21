@@ -14,7 +14,7 @@ import { I18n, Language, Recipe, RecipeIngredient, SelectOption, Unit } from '..
 export class RecipePageComponent implements OnInit {
 
   @Input() translations: I18n | null = {};
-  @Input() currentLang: Language | null = DEFAULT_LANGUAGE;
+  @Input() currentLanguage: Language | null = DEFAULT_LANGUAGE;
   @Input() recipe: Recipe | null | undefined;
   @Output() recipeSaved: EventEmitter<Recipe> = new EventEmitter<Recipe>();
 
@@ -134,30 +134,30 @@ export class RecipePageComponent implements OnInit {
       this.getFormControl(key),
       this.translatePipe,
       this.translations,
-      this.currentLang);
+      this.currentLanguage);
   }
 
   createUnits(): SelectOption<string>[] {
     return [
       {
         value: 'tableSpoon',
-        key: this.translatePipe.transform('forms.units.tablespoon', this.translations, this.currentLang)
+        key: this.translatePipe.transform('forms.units.tablespoon', this.translations, this.currentLanguage)
       },
       {
         value: 'coffeeSpoon',
-        key: this.translatePipe.transform('forms.units.coffee-spoon', this.translations, this.currentLang)
+        key: this.translatePipe.transform('forms.units.coffee-spoon', this.translations, this.currentLanguage)
       },
       {
         value: 'pinch',
-        key: this.translatePipe.transform('forms.units.pinch', this.translations, this.currentLang)
+        key: this.translatePipe.transform('forms.units.pinch', this.translations, this.currentLanguage)
       },
       {
         value: 'pack',
-        key: this.translatePipe.transform('forms.units.pack', this.translations, this.currentLang)
+        key: this.translatePipe.transform('forms.units.pack', this.translations, this.currentLanguage)
       },
       {
         value: 'piece',
-        key: this.translatePipe.transform('forms.units.piece', this.translations, this.currentLang)
+        key: this.translatePipe.transform('forms.units.piece', this.translations, this.currentLanguage)
       },
       {value: 'kg', key: 'kg'},
       {value: 'g', key: 'g'},

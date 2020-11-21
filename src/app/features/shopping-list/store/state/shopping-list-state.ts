@@ -10,17 +10,13 @@ export const shoppingListItemAdapter = createEntityAdapter<ShoppingListItem>({
 });
 
 export interface ShoppingListState {
-  readonly shoppingLists: {
-    items: EntityState<ShoppingList>
-  };
+  readonly shoppingLists: EntityState<ShoppingList>;
   readonly shoppingListItems: { [key: string]: EntityState<ShoppingListItem> };
   readonly activeShoppingList: string | undefined;
 }
 
 export const initialShoppingListState: ShoppingListState = {
-  shoppingLists: {
-    items: shoppingListAdapter.getInitialState(),
-  },
+  shoppingLists: shoppingListAdapter.getInitialState(),
   shoppingListItems: {},
   activeShoppingList: undefined,
 };

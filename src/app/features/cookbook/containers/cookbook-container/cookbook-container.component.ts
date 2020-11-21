@@ -42,16 +42,15 @@ import { AddRecipeDialogComponent } from '../../components/add-recipe-dialog/add
   styleUrls: ['./cookbook-container.component.scss']
 })
 export class CookbookContainerComponent implements OnInit, OnDestroy {
-
-  translations$: Observable<I18n | null>;
-  currentLang$: Observable<Language>;
-  recipes$: Observable<Recipe[]>;
-  cookbooks$: Observable<Cookbook[]>;
+  translations$: Observable<I18n | null> = this.store.select(selectTranslations);
+  currentLanguage$: Observable<Language> = this.store.select((state: GlobalState) => state.appState.language);
+  recipes$: Observable<Recipe[]> = this.selectRecipes();
+  cookbooks$: Observable<Cookbook[]> = this.store.select(selectCookbooks);
   selectedCookbook$: Observable<Cookbook | undefined>;
-  activeShoppingList$: Observable<ShoppingList | undefined>;
+  activeShoppingList$: Observable<ShoppingList | undefined> = this.store.select(activeShoppingList);
   private destroy$: Subject<void> = new Subject<void>();
 
-  private recipeViewTranslations: {} = {};
+  private addRecipeDialogTranslations: {} = {};
   private createListDialogTranslations: {} = {};
   private editListDialogTranslations: {} = {};
 
@@ -62,10 +61,6 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
     private dialogService: DialogService,
     private translatePipe: TranslatePipe,
   ) {
-    this.translations$ = this.store.select(selectTranslations);
-    this.currentLang$ = this.store.select((state: GlobalState) => state.appState.language);
-    this.recipes$ = this.selectRecipes();
-    this.cookbooks$ = this.store.select(selectCookbooks);
     this.selectedCookbook$ = this.store.select((state: GlobalState) => {
       if (state.cookbookState.activeCookbookId) {
         return state.cookbookState.cookbooks.find((cookbook: Cookbook) => cookbook.id === state.cookbookState.activeCookbookId);
@@ -73,7 +68,6 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
         return state.cookbookState.cookbooks[0];
       }
     });
-    this.activeShoppingList$ = this.store.select(activeShoppingList);
   }
 
   ngOnInit(): void {
@@ -86,22 +80,22 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
     this.store.select(selectTranslations).pipe(
       withLatestFrom(this.store.select((state: GlobalState) => state.appState.language))
     ).subscribe(([translations, currentLanguage]: [I18n | null, Language]) => {
-      this.recipeViewTranslations = {
+      this.addRecipeDialogTranslations = {
         'ingredients.label-text': this.translatePipe.transform('ingredients.label-text', translations, currentLanguage),
         'button.add-to-shopping-list': this.translatePipe.transform('button.add-to-shopping-list', translations, currentLanguage),
         'button.add-to-mealplaner': this.translatePipe.transform('button.add-to-mealplaner', translations, currentLanguage),
       };
       this.createListDialogTranslations = {
-        title: this.translatePipe.transform('create-list.title', translations, currentLanguage),
-        'save-button-text': this.translatePipe.transform('create-list.save-button-text', translations, currentLanguage),
-        'cancel-button-text': this.translatePipe.transform('create-list.cancel-button-text', translations, currentLanguage),
+        title: this.translatePipe.transform('create-cookbook.heading', translations, currentLanguage),
+        'save-button-text': this.translatePipe.transform('create-cookbook.save-button-text', translations, currentLanguage),
+        'cancel-button-text': this.translatePipe.transform('create-cookbook.cancel-button-text', translations, currentLanguage),
         placeholder: this.translatePipe.transform('create-cookbook.placeholder', translations, currentLanguage),
       };
       this.editListDialogTranslations = {
-        title: this.translatePipe.transform('edit-list.title', translations, currentLanguage),
-        'save-button-text': this.translatePipe.transform('edit-list.save-button-text', translations, currentLanguage),
-        'cancel-button-text': this.translatePipe.transform('edit-list.cancel-button-text', translations, currentLanguage),
-        placeholder: this.translatePipe.transform('edit-list.placeholder', translations, currentLanguage),
+        title: this.translatePipe.transform('edit-cookbook.heading', translations, currentLanguage),
+        'save-button-text': this.translatePipe.transform('edit-cookbook.save-button-text', translations, currentLanguage),
+        'cancel-button-text': this.translatePipe.transform('edit-cookbook.cancel-button-text', translations, currentLanguage),
+        placeholder: this.translatePipe.transform('edit-cookbook.placeholder', translations, currentLanguage),
       };
     });
   }
@@ -130,7 +124,7 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
   onClickRecipe(recipe: Recipe): void {
     const dialogRef = this.dialogService.openDialog(AddRecipeDialogComponent, {
       data: recipe,
-      translations: this.recipeViewTranslations,
+      translations: this.addRecipeDialogTranslations,
     });
     dialogRef.afterClosed()
       .pipe(
@@ -165,7 +159,7 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
       });
   }
 
-  onInputChanged(searchTerm: string): void {
+  onSearchStringChanged(searchTerm: string): void {
     this.recipes$ = this.selectRecipes().pipe(
       map((recipes: Recipe[]) => {
         return recipes.filter((recipe: Recipe) => recipe.title.toLowerCase().includes(searchTerm.toLowerCase()));
@@ -180,7 +174,7 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
     );
   }
 
-  onCreateList(): void {
+  onCreateCookbook(): void {
     const dialogRef = this.dialogService.openDialog(EditListDialogComponent, {
       data: {},
       translations: this.createListDialogTranslations,
@@ -194,11 +188,11 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
       });
   }
 
-  onSelectList(list: List): void {
+  onSelectCookbook(list: List): void {
     this.store.dispatch(CookbookContainerActions.selectCookbook({selectedCookbookId: list.id}));
   }
 
-  onEditList(list: List): void {
+  onEditCookbook(list: List): void {
     const dialogRef = this.dialogService.openDialog(EditListDialogComponent, {
       data: list,
       translations: this.editListDialogTranslations,
@@ -212,7 +206,7 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
       });
   }
 
-  onDeleteList(list: List): void {
+  onDeleteCookbook(list: List): void {
     const snackBarRef = this.snackBarService.openSnackBar('message.undo', 'message.action');
     this.store.dispatch(CookbookContainerActions.deleteCookbookFromState({cookbook: list}));
     snackBarRef.afterDismissed().pipe(take(1))

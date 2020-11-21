@@ -15,8 +15,7 @@ export class ProductPageComponent implements OnInit {
   plateRotationDegree = 0;
   elements: HTMLElement[] = [];
 
-  constructor() {
-  }
+  constructor() {}
 
   ngOnInit(): void {
     this.windowHeight = window.innerHeight;

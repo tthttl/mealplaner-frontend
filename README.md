@@ -48,3 +48,10 @@ When the user calls or refreshes the page. The App gets initialized in the app.i
 
 ##Authentication
 TODO
+
+
+##Sizes
+In this project we use rem as main Unit. 
+There is a helper function which converts px to rems.
+When writing css use this function.
+Expect for the unit 1px. This gets to small when converting to rem. Therefore use 1px as px instead in this case.

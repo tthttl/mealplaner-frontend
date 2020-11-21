@@ -1,4 +1,6 @@
+@import "../../../../../styles/settings/variables";
+
 .create-recipe-button{
   display: block;
-  padding-top: 1.5rem;
+  padding-top: $padding-large;
 }

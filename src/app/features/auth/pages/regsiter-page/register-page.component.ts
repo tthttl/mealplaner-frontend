@@ -16,7 +16,7 @@ export class RegisterPageComponent {
   @Input() buttonText = '';
   @Input() translations: I18n | null = {};
   @Input() backendErrorMessage: string | undefined;
-  @Input() currentLang: Language | null = DEFAULT_LANGUAGE;
+  @Input() currentLanguage: Language | null = DEFAULT_LANGUAGE;
   @Output() credentialsReceived: EventEmitter<RegisterCredentials> = new EventEmitter();
 
   loginForm: FormGroup;
@@ -59,7 +59,7 @@ export class RegisterPageComponent {
       this.getFormControl(key),
       this.translatePipe,
       this.translations,
-      this.currentLang)
+      this.currentLanguage)
       .filter((error, index) => index === 0);
   }
 }

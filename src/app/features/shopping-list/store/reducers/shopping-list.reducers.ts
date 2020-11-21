@@ -19,9 +19,7 @@ export const shoppingListReducers = createReducer<ShoppingListState, Action>(
     (state: ShoppingListState, {shoppingLists}: LoadShoppingListsSuccessAction) => {
       return {
         ...state,
-        shoppingLists: {
-          items: shoppingListAdapter.addMany(shoppingLists, state.shoppingLists.items),
-        }
+        shoppingLists: shoppingListAdapter.addMany(shoppingLists, state.shoppingLists),
       };
     }),
   on(
@@ -38,9 +36,7 @@ export const shoppingListReducers = createReducer<ShoppingListState, Action>(
     (state: ShoppingListState, {shoppingListId, shoppingListItems}: LoadShoppingListItemsSuccessAction) => {
       return {
         ...state,
-        shoppingLists: {
-          items: shoppingListAdapter.updateOne({id: shoppingListId, changes: {isInitialized: true}}, state.shoppingLists.items),
-        },
+        shoppingLists: shoppingListAdapter.updateOne({id: shoppingListId, changes: {isInitialized: true}}, state.shoppingLists),
         shoppingListItems: {
           ...state.shoppingListItems,
           [shoppingListId]: shoppingListItemAdapter.addMany(shoppingListItems, shoppingListItemAdapter.getInitialState()),
@@ -126,9 +122,7 @@ export const shoppingListReducers = createReducer<ShoppingListState, Action>(
     (state: ShoppingListState, {shoppingList}) => {
       return {
         ...state,
-        shoppingLists: {
-          items: shoppingListAdapter.addOne(shoppingList, state.shoppingLists.items),
-        },
+        shoppingLists: shoppingListAdapter.addOne(shoppingList, state.shoppingLists),
         shoppingListItems: {
           ...state.shoppingListItems,
           [shoppingList.id]: shoppingListItemAdapter.getInitialState(),
@@ -142,9 +136,7 @@ export const shoppingListReducers = createReducer<ShoppingListState, Action>(
     (state: ShoppingListState, {shoppingList}) => {
       return {
         ...state,
-        shoppingLists: {
-          items: shoppingListAdapter.updateOne({id: shoppingList.id, changes: shoppingList}, state.shoppingLists.items),
-        },
+        shoppingLists: shoppingListAdapter.updateOne({id: shoppingList.id, changes: shoppingList}, state.shoppingLists),
       };
     }
   ),
@@ -153,10 +145,7 @@ export const shoppingListReducers = createReducer<ShoppingListState, Action>(
     (state: ShoppingListState, {shoppingList}) => {
       return {
         ...state,
-        shoppingLists: {
-          ...state.shoppingLists,
-          items: shoppingListAdapter.removeOne(shoppingList.id, state.shoppingLists.items),
-        },
+        shoppingLists: shoppingListAdapter.removeOne(shoppingList.id, state.shoppingLists),
       };
     }
   ),
@@ -165,10 +154,7 @@ export const shoppingListReducers = createReducer<ShoppingListState, Action>(
     (state: ShoppingListState, {shoppingList}) => {
       return {
         ...state,
-        shoppingLists: {
-          ...state.shoppingLists,
-          items: shoppingListAdapter.addOne(shoppingList, state.shoppingLists.items),
-        },
+        shoppingLists: shoppingListAdapter.addOne(shoppingList, state.shoppingLists),
       };
     }
   ),

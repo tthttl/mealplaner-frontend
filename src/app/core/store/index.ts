@@ -69,14 +69,14 @@ export const isLoggedIn = createSelector(
 
 export const selectShoppingListsEntity = createSelector(
   selectShoppingListState,
-  (shoppingListState: ShoppingListState) => shoppingListState.shoppingLists.items
+  (shoppingListState: ShoppingListState) => shoppingListState.shoppingLists
 );
 
 export const selectShoppingLists = shoppingListAdapter.getSelectors(selectShoppingListsEntity).selectAll ;
 
 export const activeShoppingList = createSelector(
   selectShoppingListState,
-  (shoppingListState: ShoppingListState) => shoppingListState.shoppingLists.items.entities[shoppingListState.activeShoppingList || '']
+  (shoppingListState: ShoppingListState) => shoppingListState.shoppingLists.entities[shoppingListState.activeShoppingList || '']
 );
 
 export const activeShoppingListId = createSelector(

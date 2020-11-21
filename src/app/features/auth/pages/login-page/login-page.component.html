@@ -1,8 +1,9 @@
 <app-auth-form
-  [heading]="'auth.login.title' | translate:translations:currentLang"
-  [buttonText]="'auth.login.cta' | translate:translations:currentLang"
+  class="login-form"
+  [heading]="'auth.login.title' | translate:translations:currentLanguage"
+  [buttonText]="'auth.login.cta' | translate:translations:currentLanguage"
   [authForm]="loginForm"
-  [backedErrorMessage]="backendErrorMessage && (backendErrorMessage | translate:translations:currentLang)"
+  [backedErrorMessage]="backendErrorMessage && (backendErrorMessage | translate:translations:currentLanguage)"
   (formSubmit)="onSubmit()"
 >
   <ng-template #formTemplate let-form="form">
@@ -13,9 +14,9 @@
         <app-input
           class="login-form__input"
           type="email"
-          [noBorder]="true"
+          [border]="false"
           [name]="'email'"
-          [placeholder]="'auth.login.email' | translate:translations:currentLang"
+          [placeholder]="'auth.login.email' | translate:translations:currentLanguage"
           [formControl]="getFormControl('identifier')"
           [errors]="getErrorsFor('identifier')"></app-input>
       </div>
@@ -26,9 +27,9 @@
         <app-input
           class="login-form__input"
           type="password"
-          [noBorder]="true"
+          [border]="false"
           [name]="'password'"
-          [placeholder]="'auth.login.password' | translate:translations:currentLang"
+          [placeholder]="'auth.login.password' | translate:translations:currentLanguage"
           [formControl]="getFormControl('password')"
           [errors]="getErrorsFor('password')"></app-input>
       </div>
@@ -37,9 +38,9 @@
 
   <ng-template #formFooter>
     <div class="login-form__hint">
-      <a [routerLink]="['/auth/forgot']" [queryParams]="email ? {email: email} : {}"> {{ 'auth.login.forgot-password' | translate:translations:currentLang}}</a>
+      <a [routerLink]="['/auth/forgot']" [queryParams]="email ? {email: email} : {}"> {{ 'auth.login.forgot-password' | translate:translations:currentLanguage}}</a>
     </div>
-    <div class="login-form__hint" [innerHTML]="'auth.login.not-registered' | translate:translations:currentLang " >
+    <div class="login-form__hint" [innerHTML]="'auth.login.not-registered' | translate:translations:currentLanguage " >
     </div>
   </ng-template>
 </app-auth-form>
