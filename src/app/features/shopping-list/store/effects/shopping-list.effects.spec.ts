@@ -421,18 +421,4 @@ describe('Shopping List Api Effects', () => {
       tick(3000);
     }));
   });
-
-  describe('changeShoppingListIfCurrentGetsDeleted$', () => {
-    beforeEach(() => {
-      actions$ = of({type: ShoppingListContainerActions.deleteShoppingList.type, shoppingList: {id: '42', title: 'Title'}});
-      shoppingListApiEffects = new ShoppingListEffects(actions$, shoppingListService, activatedRoute, router, snackBarService, store);
-    });
-
-    it('it should return select shoppingList Action when currently selected list gets deleted', () => {
-      shoppingListApiEffects.changeShoppingListIfCurrentGetsDeleted$.subscribe((action) => {
-        expect(action.type).toEqual(ShoppingListEffectActions.setActiveShoppingList.type);
-        expect(action.shoppingListId).toEqual('42');
-      });
-    });
-  });
 });

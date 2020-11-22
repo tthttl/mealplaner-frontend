@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { BasicShoppingListItem, ShoppingList, ShoppingListItem } from '../../../../core/models/model';
+import { Observable } from 'rxjs';
 
 export const setActiveShoppingList = createAction(
   '[Shopping List Effect] Set Active ShoppingList',
@@ -55,4 +56,9 @@ export const retryEditShoppingList = createAction(
 export const undoOptimisticEditShoppingList = createAction(
   '[Shopping List API] Undo Optimistic edit Shopping',
   props<{ shoppingList: ShoppingList }>()
+);
+
+export const retryUpdateShoppingListItems = createAction(
+  '[Shopping List API] Retry update Shopping List Items',
+  props<{ shoppingListItems: ShoppingListItem[] }>()
 );

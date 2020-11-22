@@ -37,7 +37,7 @@ export const updateShoppingListItemSuccess = createAction(
 );
 export const updateShoppingListItemFailure = createAction(
   '[Shopping List API] Delete Shopping List Items Failure',
-  props<{ updateObservables: Observable<ShoppingListItem>[] }>()
+  props<{shoppingListItems: ShoppingListItem[] }>()
 );
 
 export const createShoppingListSuccess = createAction(

@@ -189,17 +189,32 @@ export class ShoppingListEffects {
 
   @Effect()
   bulkUpdateShoppingListItem$ = this.actions$.pipe(
-    ofType(ShoppingListEffectActions.bulkUpdateShoppingListItems),
+    ofType(ShoppingListEffectActions.bulkUpdateShoppingListItems, ShoppingListEffectActions.retryUpdateShoppingListItems),
     map(({shoppingListItems}) => {
-      return shoppingListItems.map(shoppingListItem => this.shoppingListService.updateShoppingListItem(shoppingListItem));
+      return {
+        shoppingListItems,
+        updateObservables: shoppingListItems.map(shoppingListItem => this.shoppingListService.updateShoppingListItem(shoppingListItem))
+      };
     }),
-    concatMap((updateObservables: Observable<ShoppingListItem>[]) => {
+    concatMap(({shoppingListItems, updateObservables}) => {
       const a = forkJoin(updateObservables);
       return a.pipe(
         tap(() => console.log('success')),
         map(() => ShoppingListApiActions.updateShoppingListItemSuccess()),
-        catchError(() => of(ShoppingListApiActions.updateShoppingListItemFailure({updateObservables}))));
+        catchError(() => of(ShoppingListApiActions.updateShoppingListItemFailure({shoppingListItems}))));
     })
+  );
+
+  @Effect()
+  retryUpdateShoppingListItem$ = this.actions$.pipe(
+    ofType(ShoppingListApiActions.updateShoppingListItemFailure),
+    switchMap(({shoppingListItems}) => {
+      return this.snackBarService.openSnackBar('backend-failed.error-message', 'backend-failed.retry').afterDismissed().pipe(
+        take(1),
+        filter(({dismissedByAction}) => dismissedByAction),
+        map(() => ShoppingListEffectActions.retryUpdateShoppingListItems({shoppingListItems}))
+      );
+    }),
   );
 
   @Effect()
