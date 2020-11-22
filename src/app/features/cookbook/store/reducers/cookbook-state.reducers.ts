@@ -26,7 +26,6 @@ export const cookbookStateReducer = createReducer<CookbookState, Action>(
   on(CookbookApiActions.loadCookbookSuccess,
     (state: CookbookState, {cookbooks}: { cookbooks: Cookbook[] }) => ({
       ...state,
-      activeCookbookId: state.activeCookbookId ? state.activeCookbookId : cookbooks[0].id,
       cookbooks
     })
   ),
@@ -159,5 +158,11 @@ export const cookbookStateReducer = createReducer<CookbookState, Action>(
         [recipe.cookbookId]: addItemAtIndex(recipe, state.recipes[recipe.cookbookId])
       }
     };
-  })
+  }),
+  on(CookbookApiActions.setActiveCookbookIdAsQueryParam, (state: CookbookState, {selectedCookbookId}: {selectedCookbookId: string}) => {
+    return {
+      ...state,
+      activeCookbookId: selectedCookbookId
+    };
+  }),
 );

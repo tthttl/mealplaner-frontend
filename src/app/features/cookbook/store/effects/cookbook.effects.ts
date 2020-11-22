@@ -4,6 +4,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { catchError, concatMap, exhaustMap, filter, map, mergeMap, switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import { SELECTED_COOKBOOK_ID } from '../../../../core/constants/constants';
 import { Cookbook, Recipe } from '../../../../core/models/model';
 import { StorageService } from '../../../../core/services/storage.service';
 import { GlobalState } from '../../../../core/store';
@@ -28,7 +29,7 @@ export class CookbookEffects {
   loadCookbooks$ = this.actions$.pipe(
     ofType(CookbookContainerActions.loadCookbook),
     withLatestFrom(this.store),
-    exhaustMap(([_, store]) => this.cookbookService.loadCookbooks(store.appState.user?.id!).pipe( // select userId from state
+    exhaustMap(([_, store]) => this.cookbookService.loadCookbooks(store.appState.user?.id!).pipe(
       map((cookbooks: Cookbook[]) => CookbookApiActions.loadCookbookSuccess({cookbooks})),
       catchError(() => of(CookbookApiActions.loadCookbookFailure()))
     ))
@@ -38,7 +39,8 @@ export class CookbookEffects {
   loadRecipes$ = this.actions$.pipe(
     ofType(CookbookContainerActions.loadRecipes, CookbookApiActions.loadCookbookSuccess, CookbookContainerActions.selectCookbook),
     withLatestFrom(this.store.select(((state: GlobalState) => state.cookbookState.activeCookbookId))),
-    concatMap(([_, activeCookbookId]) => this.recipeService.loadRecipes(activeCookbookId)
+    map(([_, activeCookbookId]) => activeCookbookId ? activeCookbookId : this.storageService.getItem(SELECTED_COOKBOOK_ID)),
+    concatMap((activeCookbookId: string) => this.recipeService.loadRecipes(activeCookbookId)
       .pipe(
         map((recipes: Recipe[]) => CookbookApiActions.loadRecipesSuccess({cookbookId: activeCookbookId, recipes})),
         catchError(() => of(CookbookApiActions.loadRecipesFailure()))
@@ -103,9 +105,10 @@ export class CookbookEffects {
     ofType(CookbookApiActions.loadCookbookSuccess),
     switchMap(({cookbooks}) => {
       const requestedCookbookId = this.route.snapshot.queryParams.selectedCookbookId;
+      let selectedCookbookId = requestedCookbookId ? requestedCookbookId : this.storageService.getItem(SELECTED_COOKBOOK_ID);
       const cookbookIds = cookbooks.map((cookbook) => cookbook.id);
-      const selectedCookbookId = requestedCookbookId && cookbookIds.includes(requestedCookbookId) ?
-        requestedCookbookId : cookbookIds[0];
+      selectedCookbookId = selectedCookbookId && cookbookIds.includes(selectedCookbookId) ?
+        selectedCookbookId : cookbookIds[0];
       return of(CookbookApiActions.setActiveCookbookIdAsQueryParam({selectedCookbookId})
       );
     }),
@@ -123,7 +126,7 @@ export class CookbookEffects {
   storeSelectedCookbookIdInStorage = this.actions$.pipe(
     ofType(CookbookApiActions.setActiveCookbookIdAsQueryParam, CookbookContainerActions.selectCookbook),
     tap(({selectedCookbookId}) => {
-      this.storageService.setItem('selectedCookbookId', selectedCookbookId);
+      this.storageService.setItem(SELECTED_COOKBOOK_ID, selectedCookbookId);
     })
   );
 
