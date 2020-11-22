@@ -73,6 +73,21 @@ export const shoppingListReducers = createReducer<ShoppingListState, Action>(
     }
   ),
   on(
+    ShoppingListEffectActions.undoOptimisticAddShoppingListItem,
+    (state: ShoppingListState, {optimisticId, shoppingListItem}) => {
+      return {
+        ...state,
+        shoppingListItems: {
+          ...state.shoppingListItems,
+          [shoppingListItem.shoppingList]: shoppingListItemAdapter.removeOne(
+            optimisticId,
+            state.shoppingListItems[shoppingListItem.shoppingList]
+          )
+        }
+      };
+    }
+  ),
+  on(
     ShoppingListContainerActions.deleteShoppingListItem,
     (state: ShoppingListState, {shoppingListItem}: DeleteShoppingListItemAction) => {
       return {
@@ -89,6 +104,7 @@ export const shoppingListReducers = createReducer<ShoppingListState, Action>(
   ),
   on(
     ShoppingListContainerActions.undoDeleteShoppingListItem,
+    ShoppingListEffectActions.undoOptimisticDeleteShoppingListItem,
     (state: ShoppingListState, {shoppingListItem}) => {
       return {
         ...state,
@@ -133,6 +149,15 @@ export const shoppingListReducers = createReducer<ShoppingListState, Action>(
   ),
   on(
     ShoppingListContainerActions.editShoppingList,
+    (state: ShoppingListState, {changes}) => {
+      return {
+        ...state,
+        shoppingLists: shoppingListAdapter.updateOne({id: changes.id, changes}, state.shoppingLists),
+      };
+    }
+  ),
+  on(
+    ShoppingListEffectActions.undoOptimisticEditShoppingList,
     (state: ShoppingListState, {shoppingList}) => {
       return {
         ...state,
@@ -151,6 +176,7 @@ export const shoppingListReducers = createReducer<ShoppingListState, Action>(
   ),
   on(
     ShoppingListContainerActions.undoDeleteShoppingList,
+    ShoppingListEffectActions.undoOptimisticDeleteShoppingList,
     (state: ShoppingListState, {shoppingList}) => {
       return {
         ...state,

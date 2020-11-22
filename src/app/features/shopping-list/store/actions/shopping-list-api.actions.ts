@@ -20,7 +20,7 @@ export const addShoppingListItemSuccess = createAction(
 );
 export const addShoppingListItemFailure = createAction(
   '[Shopping List API] Add Shopping List Items Failure',
-  props<{ shoppingListItem: BasicShoppingListItem }>()
+  props<{ optimisticId: string, shoppingListItem: BasicShoppingListItem }>()
 );
 
 export const deleteShoppingListItemSuccess = createAction(
@@ -47,6 +47,7 @@ export const createShoppingListSuccess = createAction(
 
 export const createShoppingListFailure = createAction(
   '[Shopping List API] Create Shopping List  Failure',
+  props<{ title: string }>()
 );
 
 export const editShoppingListSuccess = createAction(
@@ -56,6 +57,7 @@ export const editShoppingListSuccess = createAction(
 
 export const editShoppingListFailure = createAction(
   '[Shopping List API] Edit Shopping List  Failure',
+  props<{ shoppingList: ShoppingList, changes: ShoppingList }>()
 );
 
 export const deleteShoppingListSuccess = createAction(
@@ -65,4 +67,5 @@ export const deleteShoppingListSuccess = createAction(
 
 export const deleteShoppingListFailure = createAction(
   '[Shopping List API] Delete Shopping List  Failure',
+  props<{ shoppingList: ShoppingList }>()
 );
