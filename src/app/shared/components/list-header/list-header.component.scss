@@ -6,8 +6,8 @@
 
 
 .list-header {
-  padding-bottom: $padding-large;
-  padding-left: $padding-small;
+  padding-bottom: $spacing-large;
+  padding-left: $spacing-small;
   color: $blue-grey_80;
   display: flex;
   align-items: baseline;
@@ -39,7 +39,7 @@
   &__button {
     border: none;
     color: #ffffff;
-    padding: $padding-tiny $padding-medium;
+    padding: $spacing-tiny $spacing-medium;
     border-radius: $border-radius-default;
     background-color: $cyan_80;
     cursor: pointer;

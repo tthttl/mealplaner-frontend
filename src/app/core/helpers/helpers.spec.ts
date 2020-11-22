@@ -11,7 +11,6 @@ import {
   mapI18nApiToI18nClient,
   mapUserApiToUserClient,
   moveItemInArray,
-  sortAlphabetically,
   translateValidationErrors
 } from './helpers';
 import createSpyObj = jasmine.createSpyObj;
@@ -170,19 +169,7 @@ describe('Helpers', () => {
   });
 });
 
-describe(`${sortAlphabetically}`, () => {
-  it('should be -1', () => {
-    expect(sortAlphabetically('a', 'b')).toEqual(-1);
-  });
-  it('should be 1', () => {
-    expect(sortAlphabetically('b', 'a')).toEqual(1);
-  });
-  it('should be 0', () => {
-    expect(sortAlphabetically('a', 'a')).toEqual(0);
-  });
-});
-
-describe(`${addItemAtIndex}`, () => {
+describe(`${addRecipeAtIndex}`, () => {
   const recipeA: Partial<Recipe> = {
     id: '1',
     title: 'Recipe A'

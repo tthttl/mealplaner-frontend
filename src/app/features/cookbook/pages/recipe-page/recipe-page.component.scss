@@ -9,12 +9,12 @@
 
   &__input {
     display: block;
-    margin-bottom: $padding-medium;
+    margin-bottom: $spacing-medium;
   }
 
   &__button {
     display: block;
-    margin-top: $padding-large;
+    margin-top: $spacing-large;
   }
 
   &__ingredients_label {
@@ -37,7 +37,7 @@
     flex-direction: column;
     overflow: hidden;
     border-bottom: 1px solid $blue_70;
-    padding: $padding-medium $padding-large;
+    padding: $spacing-medium $spacing-large;
 
     @include large {
       flex-direction: row;
@@ -49,12 +49,12 @@
   }
 
   &__ingredient-input {
-    padding-bottom: $padding-medium;
+    padding-bottom: $spacing-medium;
     flex: 1 1 auto;
 
     @include large {
       padding-bottom: 0;
-      padding-right: $padding-medium;
+      padding-right: $spacing-medium;
 
       &:last-child {
         padding-right: 0;
@@ -75,7 +75,7 @@
   }
 
   &__ingredient-toggle {
-    margin-bottom: $padding-medium;
+    margin-bottom: $spacing-medium;
     color: $blue_70;
     @include large {
       max-width: rem(160);
@@ -84,7 +84,7 @@
   }
 
   &__ingredients-button {
-    margin: 0 $padding-large $padding-medium $padding-large;
+    margin: 0 $spacing-large $spacing-medium $spacing-large;
   }
 
   &__ingredient-icon-wrapper {

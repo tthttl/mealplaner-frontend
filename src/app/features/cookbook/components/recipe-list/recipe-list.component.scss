@@ -9,7 +9,7 @@
 
   &__filter-field{
     display: block;
-    padding-bottom: $padding-large;
+    padding-bottom: $spacing-large;
   }
 
   &__item {
@@ -17,7 +17,7 @@
     color: $text-70;
     font-size: $font-size-normal;
     box-sizing: border-box;
-    margin-top: $padding-small;
+    margin-top: $spacing-small;
 
     @include large {
       border: none;
@@ -36,7 +36,7 @@
     display: flex;
     flex: 1 1 70%;
     align-items: center;
-    padding: $padding-small;
+    padding: $spacing-small;
 
     &:hover {
       background-color: $blue_20;
@@ -48,7 +48,7 @@
     }
 
     @include large{
-      padding: 0 $padding-small;
+      padding: 0 $spacing-small;
     }
   }
 
@@ -68,7 +68,7 @@
 
   &__button {
     width: 100%;
-    padding: $padding-small
+    padding: $spacing-small
   }
 
   &__row {
@@ -85,7 +85,7 @@
   @include skeleton('.recipe-list__skeleton', $blue-grey_30, 3.5s) {
     background: $blue-grey_40;
     height: rem(24);
-    margin: $padding-small auto $padding-medium $padding-medium;
+    margin: $spacing-small auto $spacing-medium $spacing-medium;
     border-radius: $border-radius-default;
     width: 90%;
 
@@ -99,7 +99,7 @@
 
     &:nth-child(4){
       width: 80%;
-      margin-bottom: $padding-large;
+      margin-bottom: $spacing-large;
     }
   };
 
@@ -109,7 +109,7 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    padding-bottom: $padding-large;
+    padding-bottom: $spacing-large;
     color: $text-40;
     font-size: $font-size-tiny;
     text-align: center;

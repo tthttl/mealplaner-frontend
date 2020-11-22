@@ -10,7 +10,7 @@
     background: $blue-grey_10;
     margin-top: rem(-96);
     padding-top: rem(128);
-    padding-bottom: $padding-medium;
+    padding-bottom: $spacing-medium;
   }
 
   &__heading {
@@ -39,7 +39,7 @@
 
   &__image-wrapper {
     background: $blue-grey_100;
-    padding: $padding-medium 0;
+    padding: $spacing-medium 0;
   }
 
   &__feature-explanation {
@@ -54,7 +54,7 @@
 
   &__feature-explanation-title {
     color: $blue-100;
-    padding-bottom: $padding-medium;
+    padding-bottom: $spacing-medium;
   }
 
   &__feature-explanation:nth-child(even) {
