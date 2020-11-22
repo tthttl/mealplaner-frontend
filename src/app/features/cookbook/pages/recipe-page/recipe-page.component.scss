@@ -138,7 +138,7 @@
 @include skeleton('.recipe__skeleton', $blue-grey_30, 3.5s) {
   background: $blue-grey_40;
   height: rem(24);
-  margin: $padding-small auto $padding-medium $padding-medium;
+  margin: $spacing-small auto $spacing-medium $spacing-medium;
   border-radius: $border-radius-default;
   width: 90%;
 
@@ -152,7 +152,7 @@
 
   &:nth-child(4){
     width: 80%;
-    margin-bottom: $padding-large;
+    margin-bottom: $spacing-large;
   }
 };
 
