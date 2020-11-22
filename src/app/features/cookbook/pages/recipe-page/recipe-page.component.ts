@@ -18,6 +18,7 @@ export class RecipePageComponent implements OnInit, OnDestroy {
   @Input() translations: I18n | null = {};
   @Input() currentLanguage: Language | null = DEFAULT_LANGUAGE;
   @Input() recipe$: Observable<Recipe | undefined> | undefined;
+  @Input() isEmptyForm = false;
   @Output() recipeSaved: EventEmitter<Recipe> = new EventEmitter<Recipe>();
 
   recipeForm: FormGroup;

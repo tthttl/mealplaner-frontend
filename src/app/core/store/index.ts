@@ -9,7 +9,7 @@ import {
   ShoppingListState
 } from '../../features/shopping-list/store/state/shopping-list-state';
 import { isJwtTokenExpired } from '../helpers/helpers';
-import { Cookbook } from '../models/model';
+import { Cookbook, Recipe } from '../models/model';
 import { appStateReducer } from './reducers/app-state.reducers';
 import { AppState, initialAppState } from './state/app-state';
 
@@ -131,4 +131,14 @@ export const selectedCookbook = createSelector(
     } else {
       return cookbookState.cookbooks[0];
     }
+  });
+
+export const selectedRecipe = (selectedCookbookId: string, recipeId: string) => createSelector(
+  (state: GlobalState) => state.cookbookState,
+  (cookbookState: CookbookState) => {
+    const recipesOfCookbook = cookbookState.recipes[selectedCookbookId];
+    if (recipesOfCookbook) {
+      return recipesOfCookbook.find((recipe: Recipe) => recipe.id === recipeId);
+    }
+    return undefined;
   });
