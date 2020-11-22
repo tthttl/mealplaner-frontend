@@ -1,14 +1,14 @@
-import { ShoppingListService } from '../../service/shopping-list.service';
-import { ShoppingListEffects } from './shopping-list.effects';
-import { ShoppingListApiActions, ShoppingListContainerActions, ShoppingListEffectActions } from '../actions';
-import { Observable, of, throwError } from 'rxjs';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Action, Store } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
-import { ActivatedRoute, Router } from '@angular/router';
-import { GlobalState, initialState, selectUserID } from '../../../../core/store';
+import { Observable, of, throwError } from 'rxjs';
 import { ShoppingList, ShoppingListItem } from '../../../../core/models/model';
+import { GlobalState, initialState, selectUserID } from '../../../../core/store';
+import { ShoppingListService } from '../../service/shopping-list.service';
+import { ShoppingListApiActions, ShoppingListContainerActions, ShoppingListEffectActions } from '../actions';
 import { initialShoppingListState } from '../state/shopping-list-state';
+import { ShoppingListEffects } from './shopping-list.effects';
 import SpyObj = jasmine.SpyObj;
 
 
@@ -49,12 +49,10 @@ describe('Shopping List Api Effects', () => {
               ...initialShoppingListState,
               activeShoppingList: '42',
               shoppingLists: {
-                items: {
-                  ids: ['42', '99'],
-                  entities: {
-                    42: {id: '42', title: 'Title 42'},
-                    99: {id: '99', title: 'Title 99'}
-                  }
+                ids: ['42', '99'],
+                entities: {
+                  42: {id: '42', title: 'Title 42'},
+                  99: {id: '99', title: 'Title 99'}
                 }
               },
               shoppingListItems: {
@@ -385,14 +383,14 @@ describe('Shopping List Api Effects', () => {
   });
 
   describe('selectNewlyCreatedShoppingList$', () => {
-    it('it should return success action', () => {
+    it('it should return success action', fakeAsync(() => {
       actions$ = of({type: ShoppingListApiActions.createShoppingListSuccess.type, shoppingList: {id: '1234', title: 'Testing'}});
       shoppingListApiEffects = new ShoppingListEffects(actions$, shoppingListService, activatedRoute, router, store);
       shoppingListApiEffects.selectNewlyCreatedShoppingList$.subscribe((action) => {
         expect(action.type).toEqual(ShoppingListEffectActions.setActiveShoppingList.type);
         expect(action.shoppingListId).toEqual('1234');
       });
-    });
+    }));
   });
 
   describe('editShoppingList$', () => {
