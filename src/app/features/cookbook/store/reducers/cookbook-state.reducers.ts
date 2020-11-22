@@ -153,6 +153,7 @@ export const cookbookStateReducer = createReducer<CookbookState, Action>(
   on(RecipeApiActions.loadRecipeSuccess, (state: CookbookState, {recipe}: LoadRecipeSuccessAction) => {
     return {
       ...state,
+      activeCookbookId: recipe.cookbookId,
       recipes: {
         ...state.recipes,
         [recipe.cookbookId]: addItemAtIndex(recipe, state.recipes[recipe.cookbookId])
