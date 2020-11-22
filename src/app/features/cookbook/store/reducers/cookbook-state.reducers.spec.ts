@@ -34,7 +34,6 @@ describe('CookbookState Reducer', () => {
       CookbookApiActions.loadCookbookSuccess({cookbooks})
     )).toEqual({
       ...initialCookbookState,
-      activeCookbookId: cookbooks[0].id,
       cookbooks
     });
   });

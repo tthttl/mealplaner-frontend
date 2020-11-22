@@ -169,7 +169,7 @@ describe('Helpers', () => {
   });
 });
 
-describe(`${addRecipeAtIndex}`, () => {
+describe(`${addItemAtIndex}`, () => {
   const recipeA: Partial<Recipe> = {
     id: '1',
     title: 'Recipe A'
