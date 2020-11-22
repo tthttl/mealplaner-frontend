@@ -1,5 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { addRecipeAtIndex, copyOrCreateArray } from '../../../../core/helpers/helpers';
+import { addItemAtIndex, copyOrCreateArray } from '../../../../core/helpers/helpers';
 import { Cookbook, Recipe, } from '../../../../core/models/model';
 import {
   CookbookCreatedAction,
@@ -13,11 +13,12 @@ import {
   CreateRecipeSuccessFailureAction,
   DeleteRecipeFromStateAction,
   EditRecipeSuccessAction,
+  LoadRecipesSuccessAction,
   LoadRecipeSuccessAction,
   UndoCookbookDeletedFromStateAction,
   UndoDeleteRecipeFromStateAction
 } from '../../../../core/models/model-action';
-import { CookbookApiActions, CookbookContainerActions } from '../actions';
+import { CookbookApiActions, CookbookContainerActions, RecipeApiActions, RecipeContainerActions } from '../actions';
 import { CookbookState, initialCookbookState } from '../state/cookbook-state';
 
 export const cookbookStateReducer = createReducer<CookbookState, Action>(
@@ -29,7 +30,7 @@ export const cookbookStateReducer = createReducer<CookbookState, Action>(
       cookbooks
     })
   ),
-  on(CookbookApiActions.loadRecipesSuccess, (state: CookbookState, {cookbookId, recipes}: LoadRecipeSuccessAction) => {
+  on(CookbookApiActions.loadRecipesSuccess, (state: CookbookState, {cookbookId, recipes}: LoadRecipesSuccessAction) => {
     return {
       ...state,
       recipes: {
@@ -38,7 +39,7 @@ export const cookbookStateReducer = createReducer<CookbookState, Action>(
       }
     };
   }),
-  on(CookbookContainerActions.createRecipe, (state: CookbookState, {optimisticId, recipeToSave}: CreateRecipeAction) => {
+  on(RecipeContainerActions.createRecipe, (state: CookbookState, {optimisticId, recipeToSave}: CreateRecipeAction) => {
     return {
       ...state,
       recipes: {
@@ -47,7 +48,7 @@ export const cookbookStateReducer = createReducer<CookbookState, Action>(
       }
     };
   }),
-  on(CookbookApiActions.createRecipeSuccess, (state: CookbookState, {optimisticId, recipe}: CreateRecipeSuccessAction) => {
+  on(RecipeApiActions.createRecipeSuccess, (state: CookbookState, {optimisticId, recipe}: CreateRecipeSuccessAction) => {
     return {
       ...state,
       recipes: {
@@ -58,7 +59,7 @@ export const cookbookStateReducer = createReducer<CookbookState, Action>(
       }
     };
   }),
-  on(CookbookApiActions.createRecipeFailure, (state: CookbookState, {optimisticId, cookbookId}: CreateRecipeSuccessFailureAction) => {
+  on(RecipeApiActions.createRecipeFailure, (state: CookbookState, {optimisticId, cookbookId}: CreateRecipeSuccessFailureAction) => {
     return {
       ...state,
       recipes: {
@@ -67,7 +68,7 @@ export const cookbookStateReducer = createReducer<CookbookState, Action>(
       }
     };
   }),
-  on(CookbookApiActions.editRecipeSuccess, (state: CookbookState, {recipe}: EditRecipeSuccessAction) => {
+  on(RecipeApiActions.editRecipeSuccess, (state: CookbookState, {recipe}: EditRecipeSuccessAction) => {
     return {
       ...state,
       recipes: {
@@ -92,7 +93,7 @@ export const cookbookStateReducer = createReducer<CookbookState, Action>(
       ...state,
       recipes: {
         ...state.recipes,
-        [recipe.cookbookId]: addRecipeAtIndex(recipe, state.recipes[recipe.cookbookId])
+        [recipe.cookbookId]: addItemAtIndex(recipe, state.recipes[recipe.cookbookId])
       }
     };
   }),
@@ -146,8 +147,17 @@ export const cookbookStateReducer = createReducer<CookbookState, Action>(
     return {
       ...state,
       cookbooks: [
-        ...addRecipeAtIndex(cookbook, state.cookbooks)
+        ...addItemAtIndex(cookbook, state.cookbooks)
       ]
     };
   }),
+  on(RecipeApiActions.loadRecipeSuccess, (state: CookbookState, {recipe}: LoadRecipeSuccessAction) => {
+    return {
+      ...state,
+      recipes: {
+        ...state.recipes,
+        [recipe.cookbookId]: addItemAtIndex(recipe, state.recipes[recipe.cookbookId])
+      }
+    };
+  })
 );

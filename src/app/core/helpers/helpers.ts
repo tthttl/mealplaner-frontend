@@ -1,6 +1,8 @@
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { isAfter, isDate } from 'date-fns';
+import { I18n as I18nApi, UserApi } from '../../core/models/model-api';
 import { TranslatePipe } from '../../shared/pipes/translate.pipe';
+import { DEFAULT_LANGUAGE } from '../constants/constants';
 import {
   BasicShoppingListItem,
   I18n as I18nClient,
@@ -12,8 +14,6 @@ import {
   SelectedIngredient,
   User
 } from '../models/model';
-import { I18n as I18nApi, UserApi } from '../../core/models/model-api';
-import { DEFAULT_LANGUAGE } from '../constants/constants';
 
 export function mapI18nApiToI18nClient(i18nApi: I18nApi): I18nClient {
   return {
@@ -83,7 +83,7 @@ export function sortAlphabetically(a: string, b: string): number {
   return 0;
 }
 
-export function addRecipeAtIndex<T extends Recipe | List>(newItem: T, items: T[]): T[] {
+export function addItemAtIndex<T extends Recipe | List>(newItem: T, items: T[] = []): T[] {
   const indexToInsert = items.findIndex((item: T) => item.title.toLowerCase() > newItem.title.toLowerCase());
   return indexToInsert > -1 ? [...items.slice(0, indexToInsert), newItem, ...items.slice(indexToInsert)] : [...items, newItem];
 }
@@ -102,4 +102,8 @@ export function mapSelectedIngredientToBasicShoppingListItem(
 
 export function copyOrCreateArray<T extends object>(arrayMap: { [key: string]: T[] }, arrayId: string): T[] {
   return !!arrayMap[arrayId] ? [...arrayMap[arrayId]] : ([] as T[]);
+}
+
+export function isFormChanged(formGroup: FormGroup): boolean {
+  return formGroup.touched || formGroup.dirty;
 }

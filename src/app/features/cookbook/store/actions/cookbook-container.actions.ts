@@ -25,14 +25,6 @@ export const selectCookbook = createAction(
 );
 
 export const loadRecipes = createAction('[Cookbook Container] Get Recipes');
-export const createRecipe = createAction(
-  '[Cookbook Container] Create Recipe',
-  props<{ optimisticId: string, recipeToSave: Recipe }>()
-);
-export const editRecipe = createAction(
-  '[Cookbook Container] Edit Recipe',
-  props<{ recipeToEdit: Recipe }>()
-);
 export const deleteRecipe = createAction(
   '[Cookbook Container] Delete Recipe',
   props<{ recipe: Recipe }>()

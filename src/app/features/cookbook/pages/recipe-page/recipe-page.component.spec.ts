@@ -109,7 +109,7 @@ describe('RecipeFormComponent', () => {
 
   it('inputs should be pre-filled when recipe is supplied as input', () => {
     spyOn(component.recipeSaved, 'emit');
-    component.recipe = {
+    component.recipe$ = {
       title: 'Recipe',
       url: 'URL',
       cookbookId: 'cookbookId',

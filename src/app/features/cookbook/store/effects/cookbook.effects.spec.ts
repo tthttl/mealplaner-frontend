@@ -5,10 +5,11 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { Observable, of, throwError } from 'rxjs';
 import { Cookbook, Recipe } from '../../../../core/models/model';
 import { CookbookSelectedAction, SetActiveCookbookIdAsQueryParamAction } from '../../../../core/models/model-action';
+import { StorageService } from '../../../../core/services/storage.service';
 import { GlobalState, initialState } from '../../../../core/store';
-import { CookbookApiActions, CookbookContainerActions } from '../actions';
 import { CookbookService } from '../../services/cookbook.service';
 import { RecipeService } from '../../services/recipe.service';
+import { CookbookApiActions, CookbookContainerActions, RecipeApiActions, RecipeContainerActions } from '../actions';
 import { CookbookEffects } from './cookbook.effects';
 import SpyObj = jasmine.SpyObj;
 
@@ -17,6 +18,7 @@ let router: SpyObj<Router>;
 let store: MockStore;
 let recipeService: SpyObj<RecipeService>;
 let activatedRoute: Partial<ActivatedRoute>;
+let storageService: SpyObj<StorageService>;
 
 describe('Cookbook Effects', () => {
 
@@ -44,6 +46,7 @@ describe('Cookbook Effects', () => {
     router = jasmine.createSpyObj('Router', ['navigate']);
     recipeService = jasmine.createSpyObj('RecipeService', ['loadRecipes', 'saveRecipe', 'editRecipe', 'deleteRecipe']);
     cookbookService = jasmine.createSpyObj('CookbookService', ['loadCookbooks', 'saveCookbook', 'editCookbook', 'deleteCookbook']);
+    storageService = jasmine.createSpyObj('StorageService', ['setItem', 'getItem']);
     activatedRoute = {
       snapshot: {
         queryParams: {
@@ -103,34 +106,34 @@ describe('Cookbook Effects', () => {
   });
 
   it('saveRecipe should return success action', () => {
-    cookbookEffects = createEffects(of({type: CookbookContainerActions.createRecipe.type}));
+    cookbookEffects = createEffects(of({type: RecipeContainerActions.createRecipe.type}));
     recipeService.saveRecipe.and.returnValue(of({cookbookId: 'cookbookId'} as Recipe));
     cookbookEffects.saveRecipe$.subscribe((action: Action) => {
-      expect(action.type).toEqual(CookbookApiActions.createRecipeSuccess.type);
+      expect(action.type).toEqual(RecipeApiActions.createRecipeSuccess.type);
     });
   });
 
   it('saveRecipe should return failure action', () => {
-    cookbookEffects = createEffects(of({type: CookbookContainerActions.createRecipe.type}));
+    cookbookEffects = createEffects(of({type: RecipeContainerActions.createRecipe.type}));
     recipeService.saveRecipe.and.returnValue(throwError('error'));
     cookbookEffects.saveRecipe$.subscribe((action: Action) => {
-      expect(action.type).toEqual(CookbookApiActions.createRecipeFailure.type);
+      expect(action.type).toEqual(RecipeApiActions.createRecipeFailure.type);
     });
   });
 
   it('editRecipe should return success action', () => {
-    cookbookEffects = createEffects(of({type: CookbookContainerActions.editRecipe.type}));
+    cookbookEffects = createEffects(of({type: RecipeContainerActions.editRecipe.type}));
     recipeService.editRecipe.and.returnValue(of({cookbookId: 'cookbookId'} as Recipe));
     cookbookEffects.editRecipe$.subscribe((action: Action) => {
-      expect(action.type).toEqual(CookbookApiActions.editRecipeSuccess.type);
+      expect(action.type).toEqual(RecipeApiActions.editRecipeSuccess.type);
     });
   });
 
   it('editRecipe should return failure action', () => {
-    cookbookEffects = createEffects(of({type: CookbookContainerActions.editRecipe.type}));
+    cookbookEffects = createEffects(of({type: RecipeContainerActions.editRecipe.type}));
     recipeService.editRecipe.and.returnValue(throwError('error'));
     cookbookEffects.editRecipe$.subscribe((action: Action) => {
-      expect(action.type).toEqual(CookbookApiActions.editRecipeFailure.type);
+      expect(action.type).toEqual(RecipeApiActions.editRecipeFailure.type);
     });
   });
 
@@ -151,14 +154,14 @@ describe('Cookbook Effects', () => {
   });
 
   it('should navigate to cookbook on createRecipeSuccess', () => {
-    cookbookEffects = createEffects(of({type: CookbookApiActions.createRecipeSuccess.type, recipe: {cookbookId: 'cookbookId'} as Recipe}));
+    cookbookEffects = createEffects(of({type: RecipeApiActions.createRecipeSuccess.type, recipe: {cookbookId: 'cookbookId'} as Recipe}));
     cookbookEffects.navigateToCookbook$.subscribe(() => {
       expect(router.navigate).toHaveBeenCalledWith(['/cookbook'], {queryParams: {selectedCookbookId: 'cookbookId'}});
     });
   });
 
   it('should navigate to cookbook on editRecipeSuccess', () => {
-    cookbookEffects = createEffects(of({type: CookbookApiActions.editRecipeSuccess.type, recipe: {cookbookId: 'cookbookId'} as Recipe}));
+    cookbookEffects = createEffects(of({type: RecipeApiActions.editRecipeSuccess.type, recipe: {cookbookId: 'cookbookId'} as Recipe}));
     cookbookEffects.navigateToCookbook$.subscribe(() => {
       expect(router.navigate).toHaveBeenCalledWith(['/cookbook'], {queryParams: {selectedCookbookId: 'cookbookId'}});
     });
@@ -276,6 +279,7 @@ function createEffects(actions$: Observable<Action>): CookbookEffects {
     store as Store<GlobalState>,
     recipeService,
     router,
-    activatedRoute as ActivatedRoute
+    activatedRoute as ActivatedRoute,
+    storageService
   );
 }

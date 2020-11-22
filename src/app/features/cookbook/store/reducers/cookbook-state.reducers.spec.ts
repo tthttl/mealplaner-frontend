@@ -1,5 +1,5 @@
 import { Cookbook, Recipe } from '../../../../core/models/model';
-import { CookbookApiActions, CookbookContainerActions } from '../actions';
+import { CookbookApiActions, CookbookContainerActions, RecipeApiActions, RecipeContainerActions } from '../actions';
 import { initialCookbookState } from '../state/cookbook-state';
 import { cookbookStateReducer } from './cookbook-state.reducers';
 
@@ -53,7 +53,7 @@ describe('CookbookState Reducer', () => {
     });
   });
 
-  describe(`${CookbookContainerActions.createRecipe}`, () => {
+  describe(`${RecipeContainerActions.createRecipe}`, () => {
     it('should add new Recipe with optimisticId', () => {
       expect(cookbookStateReducer(
         {
@@ -61,7 +61,7 @@ describe('CookbookState Reducer', () => {
             cookbookId: []
           }
         },
-        CookbookContainerActions.createRecipe({optimisticId: 'optimisticId', recipeToSave: recipeA as Recipe}))
+        RecipeContainerActions.createRecipe({optimisticId: 'optimisticId', recipeToSave: recipeA as Recipe}))
       ).toEqual({
         ...initialCookbookState,
         recipes: {
@@ -71,7 +71,7 @@ describe('CookbookState Reducer', () => {
     });
   });
 
-  describe(`${CookbookApiActions.createRecipeSuccess}`, () => {
+  describe(`${RecipeApiActions.createRecipeSuccess}`, () => {
     it('should override optimisticId', () => {
       expect(cookbookStateReducer(
         {
@@ -79,7 +79,7 @@ describe('CookbookState Reducer', () => {
             cookbookId: [{...recipeA, id: 'optimisticId'} as Recipe]
           }
         },
-        CookbookApiActions.createRecipeSuccess({optimisticId: 'optimisticId', recipe: recipeA as Recipe}))
+        RecipeApiActions.createRecipeSuccess({optimisticId: 'optimisticId', recipe: recipeA as Recipe}))
       ).toEqual({
         ...initialCookbookState,
         recipes: {
@@ -89,7 +89,7 @@ describe('CookbookState Reducer', () => {
     });
   });
 
-  describe(`${CookbookApiActions.editRecipeSuccess}`, () => {
+  describe(`${RecipeApiActions.editRecipeSuccess}`, () => {
     it('should modify existing Recipe', () => {
       expect(cookbookStateReducer(
         {
@@ -97,7 +97,7 @@ describe('CookbookState Reducer', () => {
             cookbookId: [recipeA as Recipe]
           }
         },
-        CookbookApiActions.editRecipeSuccess(
+        RecipeApiActions.editRecipeSuccess(
           {recipe: {id: '1', title: 'modified', cookbookId} as Recipe}))
       ).toEqual({
         ...initialCookbookState,

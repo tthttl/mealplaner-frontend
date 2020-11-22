@@ -63,7 +63,7 @@ export interface ShoppingListItemMovedAction {
 }
 
 
-export interface LoadRecipeSuccessAction {
+export interface LoadRecipesSuccessAction {
   readonly type: string;
   readonly cookbookId: string;
   readonly recipes: Recipe[];
@@ -148,6 +148,11 @@ export interface UndoCookbookDeletedFromStateAction {
 export interface SetActiveCookbookIdAsQueryParamAction {
   type: string;
   selectedCookbookId: string;
+}
+
+export interface LoadRecipeSuccessAction {
+  type: string;
+  recipe: Recipe;
 }
 
 export interface LoginFailureAction {

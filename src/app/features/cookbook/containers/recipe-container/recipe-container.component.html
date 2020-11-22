@@ -1,7 +1,7 @@
-<app-recipe-form
+<app-recipe-page
   [translations]="translations$ | async"
   [currentLanguage]=" currentLanguage$ | async"
-  [recipe]="recipe$ | async"
+  [recipe$]="recipe$"
   (recipeSaved)="onRecipeSaved($event)"
 >
-</app-recipe-form>
+</app-recipe-page>

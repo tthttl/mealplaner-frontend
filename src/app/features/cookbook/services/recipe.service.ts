@@ -14,6 +14,10 @@ export class RecipeService {
     return this.httpClient.get<Recipe[]>(`${environment.apiUrl}/recipes?cookbook=${cookBookId}&_sort=title:asc`);
   }
 
+  loadRecipe(recipeId: string): Observable<Recipe> {
+    return this.httpClient.get<Recipe>(`${environment.apiUrl}/recipes/${recipeId}`);
+  }
+
   saveRecipe(cookBookId: string, recipe: Recipe): Observable<Recipe> {
     return this.httpClient.post<Recipe>(`${environment.apiUrl}/recipes`, {...recipe, cookbook: cookBookId});
   }

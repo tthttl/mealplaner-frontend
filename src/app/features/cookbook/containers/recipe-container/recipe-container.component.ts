@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { map, switchMap, take } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { v4 as uuid } from 'uuid';
 import { I18n, Language, Recipe } from '../../../../core/models/model';
-import { GlobalState, selectActiveCookbook, selectTranslations } from '../../../../core/store';
-import { CookbookContainerActions } from '../../store/actions';
+import { StorageService } from '../../../../core/services/storage.service';
+import { GlobalState, selectActiveCookbookId, selectTranslations } from '../../../../core/store';
+import { RecipeContainerActions } from '../../store/actions';
+import { CookbookState } from '../../store/state/cookbook-state';
 
 @Component({
   selector: 'app-recipe-container',
@@ -23,29 +25,34 @@ export class RecipeContainerComponent implements OnInit {
   constructor(
     private store: Store<GlobalState>,
     private router: Router,
-    private route: ActivatedRoute
-  ) {}
+    private route: ActivatedRoute,
+    private storageService: StorageService,
+  ) {
+  }
 
   ngOnInit(): void {
+    const selectedCookbookId = this.storageService.getItem('selectedCookbookId');
     this.id = this.route.snapshot.paramMap.get('id');
     if (this.id) {
-      this.recipe$ = this.store.select(selectActiveCookbook).pipe(
-        switchMap((activeCookbookId: string) => this.store
-          .select((state: GlobalState) => state.cookbookState.recipes[activeCookbookId])
-        ),
-        map((recipes: Recipe[]) => {
-          return recipes.find((recipe: Recipe) => recipe.id === this.id);
-        })
-      );
+      this.store.dispatch(RecipeContainerActions.loadRecipe({id: this.id!}));
+      this.recipe$ = this.store.pipe(
+        map((state: GlobalState) => state.cookbookState),
+        map((cookbookState: CookbookState) => {
+          const recipesOfCookbook = cookbookState.recipes[selectedCookbookId];
+          if (recipesOfCookbook) {
+            return recipesOfCookbook.find((recipe: Recipe) => recipe.id === this.id);
+          }
+          return undefined;
+        }));
     }
   }
 
   onRecipeSaved(recipe: Recipe): void {
     !!this.id ?
-      this.store.dispatch(CookbookContainerActions.editRecipe({recipeToEdit: recipe})) :
-      this.store.select(selectActiveCookbook).pipe(
+      this.store.dispatch(RecipeContainerActions.editRecipe({recipeToEdit: recipe})) :
+      this.store.select(selectActiveCookbookId).pipe(
         take(1)
-      ).subscribe((activeCookbookId: string) => this.store.dispatch(CookbookContainerActions.createRecipe({
+      ).subscribe((activeCookbookId: string) => this.store.dispatch(RecipeContainerActions.createRecipe({
           optimisticId: uuid(),
           recipeToSave: {
             ...recipe,
