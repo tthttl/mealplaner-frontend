@@ -123,7 +123,9 @@ export class ShoppingListContainerComponent implements OnInit {
       .pipe(take(1))
       .subscribe((result: EditListDialogEvent | undefined) => {
         if (result?.event === 'edit') {
-          this.store.dispatch(ShoppingListContainerActions.editShoppingList({shoppingList: result.list}));
+          this.store.dispatch(
+            ShoppingListContainerActions.editShoppingList({shoppingList, changes: result.list})
+          );
         }
       });
   }

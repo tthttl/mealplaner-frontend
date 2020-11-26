@@ -33,7 +33,7 @@ export const createShoppingList = createAction(
 
 export const editShoppingList = createAction(
   '[Shopping List Container] Edit ShoppingList',
-  props<{ shoppingList: ShoppingList }>()
+  props<{ shoppingList: ShoppingList, changes: ShoppingList }>()
 );
 
 export const deleteShoppingList = createAction(
