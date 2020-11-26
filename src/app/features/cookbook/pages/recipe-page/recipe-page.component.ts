@@ -4,7 +4,7 @@ import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DEFAULT_LANGUAGE } from '../../../../core/constants/constants';
-import { isFormChanged, translateValidationErrors } from '../../../../core/helpers/helpers';
+import { isFormTouchedOrDirty, translateValidationErrors } from '../../../../core/helpers/helpers';
 import { I18n, Language, Recipe, RecipeIngredient, SelectOption, Unit } from '../../../../core/models/model';
 import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
 
@@ -90,7 +90,7 @@ export class RecipePageComponent implements OnInit, OnDestroy {
 
   onSubmit(): void {
     this.destroy$.next();
-    if (!isFormChanged(this.recipeForm)) {
+    if (!isFormTouchedOrDirty(this.recipeForm)) {
       this.location.back();
       return;
     }
@@ -109,7 +109,7 @@ export class RecipePageComponent implements OnInit, OnDestroy {
   }
 
   getButtonText(): string {
-    if (isFormChanged(this.recipeForm)) {
+    if (isFormTouchedOrDirty(this.recipeForm)) {
       return this.getFormControl('id').value ? 'button.modify' : 'button.submit';
     }
     return 'button.back';

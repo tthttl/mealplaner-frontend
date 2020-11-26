@@ -94,6 +94,6 @@ export function copyOrCreateArray<T extends object>(arrayMap: { [key: string]: T
   return !!arrayMap[arrayId] ? [...arrayMap[arrayId]] : ([] as T[]);
 }
 
-export function isFormChanged(formGroup: FormGroup): boolean {
+export function isFormTouchedOrDirty(formGroup: FormGroup): boolean {
   return formGroup.touched || formGroup.dirty;
 }

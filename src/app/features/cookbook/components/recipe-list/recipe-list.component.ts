@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { fromEvent, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, takeUntil } from 'rxjs/operators';
-import { DEBOUNCE_TIME, DEFAULT_LANGUAGE } from '../../../../core/constants/constants';
+import { DEFAULT_LANGUAGE, INPUT_DEBOUNCE_TIME } from '../../../../core/constants/constants';
 import { I18n, Language, Recipe } from '../../../../core/models/model';
 
 @Component({
@@ -29,7 +29,7 @@ export class RecipeListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     fromEvent<InputEvent>(this.searchField?.nativeElement, 'input').pipe(
       takeUntil(this.destroy$),
-      debounceTime(DEBOUNCE_TIME),
+      debounceTime(INPUT_DEBOUNCE_TIME),
       distinctUntilChanged(),
       map((event: InputEvent) => (event?.target as HTMLInputElement).value)
     ).subscribe((value: string) => this.inputChanged.emit(value));

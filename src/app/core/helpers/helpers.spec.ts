@@ -6,7 +6,7 @@ import {
   addItemAtIndex,
   copyOrCreateArray,
   decodeJwtToken,
-  isFormChanged,
+  isFormTouchedOrDirty,
   isJwtTokenExpired,
   mapI18nApiToI18nClient,
   mapUserApiToUserClient,
@@ -228,17 +228,17 @@ describe(`${addItemAtIndex}`, () => {
 
   describe('isFormChanged', () => {
     it('should return false when form is not touched or dirty', () => {
-      expect(isFormChanged(new FormGroup({}))).toBeFalsy();
+      expect(isFormTouchedOrDirty(new FormGroup({}))).toBeFalsy();
     });
     it('should return true when form is touched', () => {
       const formGroup = new FormGroup({});
       formGroup.markAllAsTouched();
-      expect(isFormChanged(formGroup)).toBeTruthy();
+      expect(isFormTouchedOrDirty(formGroup)).toBeTruthy();
     });
     it('should return true when form is dirt', () => {
       const formGroup = new FormGroup({});
       formGroup.markAsDirty();
-      expect(isFormChanged(formGroup)).toBeTruthy();
+      expect(isFormTouchedOrDirty(formGroup)).toBeTruthy();
     });
   });
 

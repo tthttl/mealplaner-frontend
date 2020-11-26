@@ -69,7 +69,6 @@ describe('RecipeViewComponent', () => {
     const result = [...ingredientColumns]
       .map((column) => column.innerHTML)
       .reduce((previous: string, current: string) => previous + ' ' + current);
-    console.log(result);
     expect(result).toEqual(dialogData.data.ingredients[0].amount.toString() + ' '
       + dialogData.data.ingredients[0].unit + ' ' + dialogData.data.ingredients[0].title);
   });
