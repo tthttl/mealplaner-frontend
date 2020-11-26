@@ -262,7 +262,9 @@ describe('shoppingListReducers', () => {
               1234: {ids: [], entities: {}},
             }
           },
-          ShoppingListContainerActions.editShoppingList({shoppingList: {id: '8888', title: 'Updated'}})
+          ShoppingListContainerActions.editShoppingList(
+            {shoppingList: {id: '8888', title: 'Test 1'}, changes: {id: '8888', title: 'Updated'}}
+            )
         )).toEqual({
         ...initialShoppingListState,
         activeShoppingList: '1234',
