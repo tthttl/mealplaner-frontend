@@ -208,7 +208,7 @@ describe('Shopping List Api Effects', () => {
       });
       shoppingListApiEffects = createEffect(actions$, shoppingListService, router);
       shoppingListApiEffects.setLocalStorageForActiveShoppingList$.subscribe(() => {
-        expect(localStorage.setItem).toHaveBeenCalledWith('selectedShoppingListId', '42');
+        expect(storageService.setItem).toHaveBeenCalledWith(STORAGE_SELECTED_SHOPPING_LIST_ID, '42');
       });
     });
   });
