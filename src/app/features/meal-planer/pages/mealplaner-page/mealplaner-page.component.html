@@ -1,0 +1,20 @@
+<div class="container">
+  <app-list-header
+    [selectedList]="activeMealPlaner"
+    [lists]="mealPlaners"
+    [defaultTitle]="'shopping-list.default-title' | translate:translations:currentLanguage"
+    [addListLabel]="'shopping-list.new-list' | translate:translations:currentLanguage"
+    [buttonLabel]="'shopping-list.label' | translate:translations:currentLanguage"
+    [ariaDeleteLabel]="'shopping-list.delete' | translate:translations:currentLanguage"
+    [ariaEditLabel]="'shopping-list.edit' | translate:translations:currentLanguage"
+    (selectList)="onSelectList($event)"
+    (editList)="onEditList($event)"
+    (deleteList)="onDeleteList($event)"
+    (createList)="onCreateList()"></app-list-header>
+  <app-schedule
+    [selectedDate]="selectedDate"
+    [translations]="translations"
+    [currentLanguage]="currentLanguage"
+    (dateChanged)="onChangeWeekDay($event)">
+  </app-schedule>
+</div>

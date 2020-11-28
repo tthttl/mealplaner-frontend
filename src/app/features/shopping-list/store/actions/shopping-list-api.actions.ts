@@ -1,6 +1,5 @@
 import { createAction, props } from '@ngrx/store';
 import { BasicShoppingListItem, ShoppingList, ShoppingListItem } from '../../../../core/models/model';
-import { Observable } from 'rxjs';
 
 export const loadShoppingListItemsSuccess = createAction(
   '[Shopping List API] Load Shopping List Items Success',
@@ -37,7 +36,7 @@ export const updateShoppingListItemSuccess = createAction(
 );
 export const updateShoppingListItemFailure = createAction(
   '[Shopping List API] Delete Shopping List Items Failure',
-  props<{shoppingListItems: ShoppingListItem[] }>()
+  props<{ shoppingListItems: ShoppingListItem[] }>()
 );
 
 export const createShoppingListSuccess = createAction(

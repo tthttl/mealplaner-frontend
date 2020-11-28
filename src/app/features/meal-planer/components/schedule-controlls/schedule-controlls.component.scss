@@ -1,0 +1,26 @@
+@import "../../../../../styles/settings/functions";
+@import "../../../../../styles/settings/variables";
+@import "../../../../../styles/settings/colors";
+
+
+.schedule-controls {
+  display: flex;
+  flex-direction: row;
+  height: rem(40);
+  font-size: $font-size-normal;
+
+  &__date {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $blue-grey_100;
+  }
+
+  &__toggle {
+    background-color: transparent;
+    border: none;
+    color: $blue_100;
+    cursor: pointer;
+  }
+}
