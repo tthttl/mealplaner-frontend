@@ -24,7 +24,8 @@ describe('RecipeViewComponent', () => {
       ]
     },
     translations: {
-      'ingredients.label-text': 'test'
+      'ingredients.label-text': 'test',
+      kg: 'kg'
     }
   };
 
@@ -65,11 +66,10 @@ describe('RecipeViewComponent', () => {
     expect(title.innerHTML).toEqual('test');
     expect(ingredientColumns?.length).toEqual(2);
     expect(buttons?.length).toEqual(1);
-    [...ingredientColumns]
+    const result = [...ingredientColumns]
       .map((column) => column.innerHTML)
-      .forEach((value: string) => expect([
-        dialogData.data.ingredients[0].amount.toString() + ' ' + dialogData.data.ingredients[0].unit,
-        dialogData.data.ingredients[0].title,
-      ]).toContain(value));
+      .reduce((previous: string, current: string) => previous + ' ' + current);
+    expect(result).toEqual(dialogData.data.ingredients[0].amount.toString() + ' '
+      + dialogData.data.ingredients[0].unit + ' ' + dialogData.data.ingredients[0].title);
   });
 });

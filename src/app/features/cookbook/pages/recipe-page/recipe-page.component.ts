@@ -1,26 +1,30 @@
 import { LocationStrategy } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { DEFAULT_LANGUAGE } from '../../../../core/constants/constants';
-import { translateValidationErrors } from '../../../../core/helpers/helpers';
+import { isFormTouchedOrDirty, translateValidationErrors } from '../../../../core/helpers/helpers';
 import { I18n, Language, Recipe, RecipeIngredient, SelectOption, Unit } from '../../../../core/models/model';
+import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
 
 @Component({
-  selector: 'app-recipe-form',
+  selector: 'app-recipe-page',
   templateUrl: './recipe-page.component.html',
   styleUrls: ['./recipe-page.component.scss']
 })
-export class RecipePageComponent implements OnInit {
+export class RecipePageComponent implements OnInit, OnDestroy {
 
   @Input() translations: I18n | null = {};
   @Input() currentLanguage: Language | null = DEFAULT_LANGUAGE;
-  @Input() recipe: Recipe | null | undefined;
+  @Input() recipe$: Observable<Recipe | undefined> | undefined;
+  @Input() isEmptyForm = false;
   @Output() recipeSaved: EventEmitter<Recipe> = new EventEmitter<Recipe>();
 
   recipeForm: FormGroup;
   ingredients: FormArray;
   units: SelectOption<string>[] = [];
+  destroy$: Subject<void> = new Subject<void>();
 
   constructor(
     private translatePipe: TranslatePipe,
@@ -40,41 +44,30 @@ export class RecipePageComponent implements OnInit {
 
   ngOnInit(): void {
     this.units = this.createUnits();
-    this.fillForm();
+    this.recipe$?.pipe(takeUntil(this.destroy$)).subscribe((recipe: Recipe | undefined) => this.fillForm(recipe));
   }
 
-  fillForm(): void {
-    if (!!this.recipe) {
-      Object.keys(this.recipe).forEach((key: string) => {
+  fillForm(recipe: Recipe | undefined): void {
+    if (!!recipe) {
+      Object.keys(recipe).forEach((key: string) => {
         if (key === 'ingredients') {
-          this.recipe?.ingredients.forEach((ingredient: RecipeIngredient, index: number) => {
-            if (index === 0) {
-              this.overwriteFirstIngredient(ingredient);
-            } else {
-              (this.recipeForm.controls.ingredients as FormArray)
-                .push(this.createNewIngredientFormGroup(
-                  ingredient.id,
-                  ingredient.title,
-                  ingredient.amount,
-                  ingredient.unit,
-                  ingredient.isStapleFood)
-                );
-            }
+          (this.recipeForm.controls.ingredients as FormArray).controls = [];
+          recipe?.ingredients.forEach((ingredient: RecipeIngredient, index: number) => {
+            (this.recipeForm.controls.ingredients as FormArray)
+              .push(this.createNewIngredientFormGroup(
+                ingredient.id,
+                ingredient.title,
+                ingredient.amount,
+                ingredient.unit,
+                ingredient.isStapleFood)
+              );
           });
         } else {
           // @ts-ignore
-          this.getFormControl(key).setValue(this.recipe[key]);
+          this.getFormControl(key).setValue(recipe[key]);
         }
       });
     }
-  }
-
-  overwriteFirstIngredient(ingredient: RecipeIngredient): void {
-    Object.keys(ingredient).forEach((key: string) => {
-      ((this.recipeForm.controls.ingredients as FormArray).at(0) as FormGroup).controls[key]
-        // @ts-ignore
-        .setValue(ingredient[key]);
-    });
   }
 
   getFormControl(key: string): FormControl {
@@ -96,7 +89,8 @@ export class RecipePageComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (!this.recipeForm.touched) {
+    this.destroy$.next();
+    if (!isFormTouchedOrDirty(this.recipeForm)) {
       this.location.back();
       return;
     }
@@ -115,10 +109,10 @@ export class RecipePageComponent implements OnInit {
   }
 
   getButtonText(): string {
-    if (!this.recipeForm.touched) {
-      return 'button.back';
+    if (isFormTouchedOrDirty(this.recipeForm)) {
+      return this.getFormControl('id').value ? 'button.modify' : 'button.submit';
     }
-    return this.recipe ? 'button.modify' : 'button.submit';
+    return 'button.back';
   }
 
   addEmptyIngredientRow(): void {
@@ -127,6 +121,7 @@ export class RecipePageComponent implements OnInit {
 
   deleteIngredient(index: number): void {
     (this.recipeForm?.controls.ingredients as FormArray).removeAt(index);
+    this.recipeForm.markAllAsTouched();
   }
 
   getErrorsFor(key: string): string[] {
@@ -141,23 +136,23 @@ export class RecipePageComponent implements OnInit {
     return [
       {
         value: 'tableSpoon',
-        key: this.translatePipe.transform('forms.units.tablespoon', this.translations, this.currentLanguage)
+        key: this.translatePipe.transform('unit.table-spoon', this.translations, this.currentLanguage)
       },
       {
         value: 'coffeeSpoon',
-        key: this.translatePipe.transform('forms.units.coffee-spoon', this.translations, this.currentLanguage)
+        key: this.translatePipe.transform('unit.coffee-spoon', this.translations, this.currentLanguage)
       },
       {
         value: 'pinch',
-        key: this.translatePipe.transform('forms.units.pinch', this.translations, this.currentLanguage)
+        key: this.translatePipe.transform('unit.pinch', this.translations, this.currentLanguage)
       },
       {
         value: 'pack',
-        key: this.translatePipe.transform('forms.units.pack', this.translations, this.currentLanguage)
+        key: this.translatePipe.transform('unit.pack', this.translations, this.currentLanguage)
       },
       {
         value: 'piece',
-        key: this.translatePipe.transform('forms.units.piece', this.translations, this.currentLanguage)
+        key: this.translatePipe.transform('unit.piece', this.translations, this.currentLanguage)
       },
       {value: 'kg', key: 'kg'},
       {value: 'g', key: 'g'},
@@ -167,5 +162,9 @@ export class RecipePageComponent implements OnInit {
     ];
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
 }

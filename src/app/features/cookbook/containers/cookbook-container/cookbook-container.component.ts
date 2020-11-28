@@ -4,10 +4,6 @@ import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
 import { map, switchMap, take, withLatestFrom } from 'rxjs/operators';
 import { v4 as uuid } from 'uuid';
-import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
-
-
-import { EditListDialogComponent } from '../../../../shared/components/edit-list-dialog/edit-list-dialog.component';
 import { mapSelectedIngredientToBasicShoppingListItem } from '../../../../core/helpers/helpers';
 import {
   BasicShoppingListItem,
@@ -28,13 +24,18 @@ import {
   activeShoppingList,
   activeShoppingListId,
   GlobalState,
-  selectActiveCookbook,
+  selectActiveCookbookId,
   selectCookbooks,
+  selectedCookbook,
   selectTranslations
 } from '../../../../core/store';
+
+
+import { EditListDialogComponent } from '../../../../shared/components/edit-list-dialog/edit-list-dialog.component';
+import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
+import { AddRecipeDialogComponent } from '../../components/add-recipe-dialog/add-recipe-dialog.component';
 import { CookbookApiActions, CookbookContainerActions } from '../../store/actions';
 import { copyIngredientsToShoppingList, copyRecipeToMealplaner } from '../../store/actions/cookbook-container.actions';
-import { AddRecipeDialogComponent } from '../../components/add-recipe-dialog/add-recipe-dialog.component';
 
 @Component({
   selector: 'app-cookbook-container',
@@ -61,13 +62,7 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
     private dialogService: DialogService,
     private translatePipe: TranslatePipe,
   ) {
-    this.selectedCookbook$ = this.store.select((state: GlobalState) => {
-      if (state.cookbookState.activeCookbookId) {
-        return state.cookbookState.cookbooks.find((cookbook: Cookbook) => cookbook.id === state.cookbookState.activeCookbookId);
-      } else {
-        return state.cookbookState.cookbooks[0];
-      }
-    });
+    this.selectedCookbook$ = this.store.select(selectedCookbook);
   }
 
   ngOnInit(): void {
@@ -84,6 +79,16 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
         'ingredients.label-text': this.translatePipe.transform('ingredients.label-text', translations, currentLanguage),
         'button.add-to-shopping-list': this.translatePipe.transform('button.add-to-shopping-list', translations, currentLanguage),
         'button.add-to-mealplaner': this.translatePipe.transform('button.add-to-mealplaner', translations, currentLanguage),
+        kg: 'kg',
+        g: 'g',
+        l: 'l',
+        dl: 'dl',
+        ml: 'ml',
+        tableSpoon: this.translatePipe.transform('unit.table-spoon', translations, currentLanguage),
+        coffeeSpoon: this.translatePipe.transform('unit.coffee-spoon', translations, currentLanguage),
+        pinch: this.translatePipe.transform('unit.pinch', translations, currentLanguage),
+        piece: this.translatePipe.transform('unit.piece', translations, currentLanguage),
+        pack: this.translatePipe.transform('unit.pack', translations, currentLanguage),
       };
       this.createListDialogTranslations = {
         title: this.translatePipe.transform('create-cookbook.heading', translations, currentLanguage),
@@ -168,7 +173,7 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
   }
 
   selectRecipes(): Observable<Recipe[]> {
-    return this.store.select(selectActiveCookbook).pipe(
+    return this.store.select(selectActiveCookbookId).pipe(
       switchMap((activeCookbookId: string) => this.store
         .select((state: GlobalState) => state.cookbookState.recipes[activeCookbookId]))
     );
@@ -189,7 +194,7 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
   }
 
   onSelectCookbook(list: List): void {
-    this.store.dispatch(CookbookContainerActions.selectCookbook({selectedCookbookId: list.id}));
+        this.store.dispatch(CookbookContainerActions.selectCookbook({selectedCookbookId: list.id}));
   }
 
   onEditCookbook(list: List): void {
