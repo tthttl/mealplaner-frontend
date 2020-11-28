@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { forkJoin, interval, Observable, of } from 'rxjs';
+import { forkJoin, interval, of } from 'rxjs';
 import {
   catchError,
   concatMap,
-  delay, delayWhen,
+  delayWhen,
   exhaustMap,
   filter,
   map,
@@ -17,15 +17,16 @@ import {
   tap,
   withLatestFrom
 } from 'rxjs/operators';
-import { CookbookContainerActions } from '../../../cookbook/store/actions';
-import { DELETION_DELAY } from '../../../../core/constants/constants';
+import { DELETION_DELAY, STORAGE_SELECTED_SHOPPING_LIST_ID } from '../../../../core/constants/constants';
+import { moveItemInArray } from '../../../../core/helpers/helpers';
 import { ShoppingList, ShoppingListItem } from '../../../../core/models/model';
 import { ChangeShoppingListAction, SetActiveShoppingListAction } from '../../../../core/models/model-action';
-import { GlobalState, selectCurrentShoppingListItems, selectUserID } from '../../../../core/store';
-import { ShoppingListApiActions, ShoppingListContainerActions, ShoppingListEffectActions } from '../actions';
-import { ShoppingListService } from '../../service/shopping-list.service';
-import { moveItemInArray } from '../../../../core/helpers/helpers';
 import { SnackbarService } from '../../../../core/services/snackbar.service';
+import { StorageService } from '../../../../core/services/storage.service';
+import { GlobalState, selectCurrentShoppingListItems, selectUserID } from '../../../../core/store';
+import { CookbookContainerActions } from '../../../cookbook/store/actions';
+import { ShoppingListService } from '../../service/shopping-list.service';
+import { ShoppingListApiActions, ShoppingListContainerActions, ShoppingListEffectActions } from '../actions';
 
 @Injectable()
 export class ShoppingListEffects {
@@ -35,7 +36,9 @@ export class ShoppingListEffects {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private snackBarService: SnackbarService,
-    private store: Store<GlobalState>) {
+    private store: Store<GlobalState>,
+    private storageService: StorageService,
+    ) {
   }
 
   @Effect()
@@ -60,7 +63,7 @@ export class ShoppingListEffects {
         return of(ShoppingListEffectActions.setActiveShoppingList({shoppingListId: requestedShoppingListId}));
       }
 
-      const savedShoppingListId = localStorage.getItem('selectedShoppingListId');
+      const savedShoppingListId = this.storageService.getItem(STORAGE_SELECTED_SHOPPING_LIST_ID);
       if (savedShoppingListId && shoppingListsIds.includes(savedShoppingListId)) {
         return of(ShoppingListEffectActions.setActiveShoppingList({shoppingListId: savedShoppingListId}));
       }
@@ -87,7 +90,7 @@ export class ShoppingListEffects {
       ShoppingListContainerActions.changeShoppingList
     ),
     tap(({shoppingListId}) => {
-      localStorage.setItem('selectedShoppingListId', shoppingListId);
+      this.storageService.setItem(STORAGE_SELECTED_SHOPPING_LIST_ID, shoppingListId);
     })
   );
 

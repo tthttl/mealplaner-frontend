@@ -1,11 +1,17 @@
 import { ActionReducerMap, createFeatureSelector, createSelector, MetaReducer } from '@ngrx/store';
 import { cookbookStateReducer } from '../../features/cookbook/store/reducers/cookbook-state.reducers';
 import { CookbookState, initialCookbookState } from '../../features/cookbook/store/state/cookbook-state';
-import { isJwtTokenExpired } from '../helpers/helpers';
-import { appStateReducer } from './reducers/app-state.reducers';
 import { shoppingListReducers } from '../../features/shopping-list/store/reducers/shopping-list.reducers';
+import {
+  initialShoppingListState,
+  shoppingListAdapter,
+  shoppingListItemAdapter,
+  ShoppingListState
+} from '../../features/shopping-list/store/state/shopping-list-state';
+import { isJwtTokenExpired } from '../helpers/helpers';
+import { Cookbook, Recipe } from '../models/model';
+import { appStateReducer } from './reducers/app-state.reducers';
 import { AppState, initialAppState } from './state/app-state';
-import { initialShoppingListState, shoppingListAdapter, shoppingListItemAdapter, ShoppingListState } from '../../features/shopping-list/store/state/shopping-list-state';
 
 export interface GlobalState {
   appState: AppState;
@@ -72,7 +78,7 @@ export const selectShoppingListsEntity = createSelector(
   (shoppingListState: ShoppingListState) => shoppingListState.shoppingLists
 );
 
-export const selectShoppingLists = shoppingListAdapter.getSelectors(selectShoppingListsEntity).selectAll ;
+export const selectShoppingLists = shoppingListAdapter.getSelectors(selectShoppingListsEntity).selectAll;
 
 export const activeShoppingList = createSelector(
   selectShoppingListState,
@@ -113,6 +119,26 @@ export const selectCookbooks = createSelector(
   selectCookbookState,
   (cookbookState: CookbookState) => cookbookState.cookbooks);
 
-export const selectActiveCookbook = createSelector(
+export const selectActiveCookbookId = createSelector(
   selectCookbookState,
   (cookbookState: CookbookState) => cookbookState.activeCookbookId);
+
+export const selectedCookbook = createSelector(
+  selectCookbookState,
+  (cookbookState: CookbookState) => {
+    if (cookbookState.activeCookbookId) {
+      return cookbookState.cookbooks.find((cookbook: Cookbook) => cookbook.id === cookbookState.activeCookbookId);
+    } else {
+      return cookbookState.cookbooks[0];
+    }
+  });
+
+export const selectedRecipe = (selectedCookbookId: string, recipeId: string) => createSelector(
+  (state: GlobalState) => state.cookbookState,
+  (cookbookState: CookbookState) => {
+    const recipesOfCookbook = cookbookState.recipes[selectedCookbookId];
+    if (recipesOfCookbook) {
+      return recipesOfCookbook.find((recipe: Recipe) => recipe.id === recipeId);
+    }
+    return undefined;
+  });

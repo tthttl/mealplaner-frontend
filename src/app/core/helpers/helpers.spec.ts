@@ -1,11 +1,12 @@
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { TranslatePipe } from '../../shared/pipes/translate.pipe';
 import { I18n, Recipe } from '../models/model';
 import { I18n as I18nApi, UserApi } from '../models/model-api';
 import {
-  addRecipeAtIndex,
+  addItemAtIndex,
   copyOrCreateArray,
   decodeJwtToken,
+  isFormTouchedOrDirty,
   isJwtTokenExpired,
   mapI18nApiToI18nClient,
   mapUserApiToUserClient,
@@ -168,7 +169,7 @@ describe('Helpers', () => {
   });
 });
 
-describe(`${addRecipeAtIndex}`, () => {
+describe(`${addItemAtIndex}`, () => {
   const recipeA: Partial<Recipe> = {
     id: '1',
     title: 'Recipe A'
@@ -186,30 +187,30 @@ describe(`${addRecipeAtIndex}`, () => {
 
   it('should add first', () => {
     const recipes: Recipe[] = [recipeB as Recipe, recipeC as Recipe];
-    expect(addRecipeAtIndex(recipeA as Recipe, recipes));
+    expect(addItemAtIndex(recipeA as Recipe, recipes));
   });
 
   it('should add last', () => {
     const recipes: Recipe[] = [recipeA as Recipe, recipeB as Recipe];
-    expect(addRecipeAtIndex(recipeC as Recipe, recipes));
+    expect(addItemAtIndex(recipeC as Recipe, recipes));
   });
 
   it('should add in the middle', () => {
     const recipes: Recipe[] = [recipeA as Recipe, recipeC as Recipe];
-    expect(addRecipeAtIndex(recipeB as Recipe, recipes));
+    expect(addItemAtIndex(recipeB as Recipe, recipes));
   });
 
-  describe(`${addRecipeAtIndex}`, () => {
+  describe(`${addItemAtIndex}`, () => {
     it('should add item at beginning', () => {
-      expect(addRecipeAtIndex(recipeA as Recipe, [recipeB as Recipe, recipeC as Recipe]))
+      expect(addItemAtIndex(recipeA as Recipe, [recipeB as Recipe, recipeC as Recipe]))
         .toEqual([recipeA as Recipe, recipeB as Recipe, recipeC as Recipe]);
     });
     it('should add item in the middle', () => {
-      expect(addRecipeAtIndex(recipeB as Recipe, [recipeA as Recipe, recipeC as Recipe]))
+      expect(addItemAtIndex(recipeB as Recipe, [recipeA as Recipe, recipeC as Recipe]))
         .toEqual([recipeA as Recipe, recipeB as Recipe, recipeC as Recipe]);
     });
     it('should add item at the end', () => {
-      expect(addRecipeAtIndex(recipeC as Recipe, [recipeA as Recipe, recipeB as Recipe]))
+      expect(addItemAtIndex(recipeC as Recipe, [recipeA as Recipe, recipeB as Recipe]))
         .toEqual([recipeA as Recipe, recipeB as Recipe, recipeC as Recipe]);
     });
   });
@@ -222,6 +223,22 @@ describe(`${addRecipeAtIndex}`, () => {
     it('should create empty array', () => {
       expect(copyOrCreateArray({1: [{id: 1}, {id: 2}]}, '2'))
         .toEqual([]);
+    });
+  });
+
+  describe('isFormChanged', () => {
+    it('should return false when form is not touched or dirty', () => {
+      expect(isFormTouchedOrDirty(new FormGroup({}))).toBeFalsy();
+    });
+    it('should return true when form is touched', () => {
+      const formGroup = new FormGroup({});
+      formGroup.markAllAsTouched();
+      expect(isFormTouchedOrDirty(formGroup)).toBeTruthy();
+    });
+    it('should return true when form is dirt', () => {
+      const formGroup = new FormGroup({});
+      formGroup.markAsDirty();
+      expect(isFormTouchedOrDirty(formGroup)).toBeTruthy();
     });
   });
 

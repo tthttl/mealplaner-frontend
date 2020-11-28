@@ -27,7 +27,8 @@ export class AddRecipeDialogComponent implements OnInit {
         isSelected: new FormControl(!ingredient.isStapleFood),
         title: new FormControl(ingredient.title),
         amount: new FormControl(ingredient.amount),
-        unit: new FormControl(ingredient.unit)
+        unit: new FormControl(ingredient.unit),
+        unitLabel: new FormControl(this.dialogData.translations[ingredient.unit])
       }));
     });
     this.ingredients = this.ingredientsForm.controls.ingredients as FormArray;
