@@ -6,6 +6,8 @@ import {
   addRecipeAtIndex,
   copyOrCreateArray,
   decodeJwtToken,
+  getWeekDayIndex,
+  getFirstDateOfWeek,
   isJwtTokenExpired,
   mapI18nApiToI18nClient,
   mapUserApiToUserClient,
@@ -225,4 +227,15 @@ describe(`${addRecipeAtIndex}`, () => {
     });
   });
 
+  describe(`getFirstDateOfWeek`, () => {
+    it('should return First Day of Week', () => {
+      expect(getFirstDateOfWeek(new Date(2020, 10, 28))).toEqual(new Date(2020, 10, 23));
+    });
+  });
+
+  describe(`getDayIndex`, () => {
+    it('should return Day Index', () => {
+      expect(getWeekDayIndex(new Date(2020, 10, 28))).toEqual(5);
+    });
+  });
 });
