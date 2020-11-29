@@ -1,0 +1,39 @@
+[
+  {
+    "id": "5fc3c81acd499e1ce864079f",
+    "title": "Gipfeli",
+    "url": "gipfeli.com",
+    "cookbookId": "5fa51417b79f0403d33f530d",
+    "ingredients": [
+      {
+        "id": "5fc3c81acd499e1ce86407a0",
+        "unit": "g",
+        "amount": 1,
+        "title": "Nutella",
+        "isStapleFood": false
+      }
+    ]
+  },
+  {
+    "id": "5fc3c7f0cd499e1ce864079a",
+    "title": "Mutschli",
+    "url": "mutschli.com",
+    "cookbookId": "5fa51417b79f0403d33f530d",
+    "ingredients": [
+      {
+        "id": "5fc3c7f0cd499e1ce864079b",
+        "unit": "piece",
+        "amount": 1,
+        "title": "Egg",
+        "isStapleFood": true
+      },
+      {
+        "id": "5fc3c7f0cd499e1ce864079c",
+        "unit": "kg",
+        "amount": 1,
+        "title": "Mehl",
+        "isStapleFood": false
+      }
+    ]
+  }
+]

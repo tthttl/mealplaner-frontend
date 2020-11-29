@@ -24,6 +24,7 @@
     class="create-recipe-button"
     [buttonText]="'button.submit' | translate: translations : currentLanguage"
     (click)="click()"
+    [e2eTestName]="'add-recipe'"
   >
   </app-button>
 </div>
