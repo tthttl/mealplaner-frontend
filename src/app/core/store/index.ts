@@ -12,23 +12,28 @@ import { isJwtTokenExpired } from '../helpers/helpers';
 import { Cookbook, Recipe } from '../models/model';
 import { appStateReducer } from './reducers/app-state.reducers';
 import { AppState, initialAppState } from './state/app-state';
+import { initialMealPlanerState, mealPlanerAdapter, MealPlanerState } from '../../features/meal-planer/store/state/meal-planer-state';
+import { mealPlanerStateReducers } from '../../features/meal-planer/store/reducers/meal-paner-state.reducers';
 
 export interface GlobalState {
   appState: AppState;
   cookbookState: CookbookState;
   shoppingListState: ShoppingListState;
+  mealPlanerState: MealPlanerState;
 }
 
 export const initialState: GlobalState = {
   appState: initialAppState,
   cookbookState: initialCookbookState,
   shoppingListState: initialShoppingListState,
+  mealPlanerState: initialMealPlanerState,
 };
 
 export const reducers: ActionReducerMap<GlobalState> = {
   appState: appStateReducer,
   shoppingListState: shoppingListReducers,
-  cookbookState: cookbookStateReducer
+  cookbookState: cookbookStateReducer,
+  mealPlanerState: mealPlanerStateReducers,
 };
 
 export const metaReducers: MetaReducer<GlobalState>[] = [];
@@ -37,6 +42,7 @@ export const selectAppState = createFeatureSelector<GlobalState, AppState>('appS
 export const selectCookbookState =
   createFeatureSelector<GlobalState, CookbookState>('cookbookState');
 export const selectShoppingListState = createFeatureSelector<GlobalState, ShoppingListState>('shoppingListState');
+export const selectMealPlanerState = createFeatureSelector<GlobalState, MealPlanerState>('mealPlanerState');
 
 export const selectTranslations = createSelector(
   selectAppState,
@@ -142,3 +148,29 @@ export const selectedRecipe = (selectedCookbookId: string, recipeId: string) => 
     }
     return undefined;
   });
+
+export const selectSelectedDate = createSelector(
+  selectMealPlanerState,
+  (mealPlanerState: MealPlanerState) => mealPlanerState.selectedDate);
+
+export const selectMealPlanerEntity = createSelector(
+  selectMealPlanerState,
+  (mealPlanerState: MealPlanerState) => mealPlanerState.mealPlaners
+);
+
+export const selectMealPlaners = mealPlanerAdapter.getSelectors(selectMealPlanerEntity).selectAll ;
+
+export const activeMealPlaner = createSelector(
+  selectMealPlanerState,
+  (mealPlanerState: MealPlanerState) => mealPlanerState.mealPlaners.entities[mealPlanerState.activeMealPlaner || '']
+);
+
+export const activeMealPlanerId = createSelector(
+  selectMealPlanerState,
+  (mealPlanerState: MealPlanerState) => mealPlanerState.activeMealPlaner
+);
+
+export const isActiveMealPlanerLoading = createSelector(
+  selectMealPlanerState,
+  (mealPlanerState: MealPlanerState) => mealPlanerState.activeMealPlaner
+);

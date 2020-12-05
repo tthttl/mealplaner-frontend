@@ -97,3 +97,16 @@ export function copyOrCreateArray<T extends object>(arrayMap: { [key: string]: T
 export function isFormTouchedOrDirty(formGroup: FormGroup): boolean {
   return formGroup.touched || formGroup.dirty;
 }
+
+/* First Weekday is Monday */
+export function getFirstDateOfWeek(date: Date): Date {
+  const weekday = date.getDay();
+  const weekStartDate = date.getDate() - weekday + (weekday === 0 ? -6 : 1);
+  return new Date(date.setDate(weekStartDate));
+}
+
+/* First Weekday is Monday */
+export function getWeekDayIndex(date: Date): number {
+  const today = date.getDay() - 1;
+  return today >= 0 ? today : 6;
+}

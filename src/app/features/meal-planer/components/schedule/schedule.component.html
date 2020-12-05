@@ -1,0 +1,40 @@
+<div class="schedule">
+  <app-schedule-controlls
+    class="schedule__controls"
+    [selectedDate]="selectedDate"
+    [translations]="translations"
+    [currentLanguage]="currentLanguage"
+    (dateChanged)="onDateChange($event)"></app-schedule-controlls>
+  <app-schedule-days-controlls
+    [selectedDayIndex]="selectedDayIndex"
+    [translations]="translations"
+    [currentLanguage]="currentLanguage"
+    (changeDayIndex)="onChangeWeekDay($event)"
+  ></app-schedule-days-controlls>
+  <div class="schedule__content">
+    <div class="schedule__heading">
+      Frühstück
+    </div>
+    <div class="schedule__element">
+      <fa-icon *ngIf="'chevron-left'"
+               [icon]="['fas', 'plus-circle']"></fa-icon>
+      Add Frühstück
+    </div>
+    <div class="schedule__heading">
+      Mittagessen
+    </div>
+    <div class="schedule__element">
+      <fa-icon *ngIf="'chevron-left'"
+               [icon]="['fas', 'plus-circle']"></fa-icon>
+      Add Mittagessn
+    </div>
+    <div class="schedule__heading">
+      Abendessen
+    </div>
+    <div class="schedule__element">
+      <fa-icon *ngIf="'chevron-left'"
+               [icon]="['fas', 'plus-circle']"></fa-icon>
+      Add Abendessen
+    </div>
+  </div>
+</div>

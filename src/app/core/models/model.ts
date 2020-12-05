@@ -170,3 +170,18 @@ export interface Link {
   path: string;
   icon: IconName;
 }
+
+type mealType = 'breakfast' | 'lunch' | 'dinner';
+
+export interface Meal {
+  id: string;
+  type: mealType;
+  date: string;
+  recipe: Recipe;
+}
+
+export interface MealPlaner {
+  id: string;
+  title: string;
+  isInitialized?: boolean;
+}
