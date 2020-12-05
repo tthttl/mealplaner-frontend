@@ -7,13 +7,17 @@
         [placeholder]="'recipe-form.placeholder.title' | translate:translations:currentLanguage"
         [label]="'recipe-form.label.title' | translate:translations:currentLanguage"
         [errors]="getErrorsFor('title')"
-        [formControl]="getFormControl('title')"></app-input>
+        [formControl]="getFormControl('title')"
+        [e2eTestName]="'recipe-title'"
+      ></app-input>
       <app-input
         class="recipe-form__input recipe-form--input-url"
         [name]="'url'"
         [placeholder]="'recipe-form.placeholder.url' | translate:translations:currentLanguage"
         [label]="'recipe-form.label.url' | translate:translations:currentLanguage"
-        [formControl]="getFormControl('url')"></app-input>
+        [formControl]="getFormControl('url')"
+        [e2eTestName]="'recipe-url'"
+      ></app-input>
 
       <label class="recipe-form__ingredients_label">{{'ingredients.label-text' | translate:translations:currentLanguage}}</label>
       <div class="recipe-form__ingredients recipe-form__input">
@@ -26,19 +30,25 @@
             [minValue]="0"
             [name]="'amount'"
             [placeholder]="'recipe-form.placeholder.amount' | translate:translations:currentLanguage"
-            [formControl]="getIngredientFormControl(ingredient, 'amount')">
+            [formControl]="getIngredientFormControl(ingredient, 'amount')"
+            [e2eTestName]="'ingredient-amount'"
+          >
           </app-input>
           <app-select
             class="recipe-form__ingredient-input recipe-form__ingredient-unit"
             [options]="units"
             [name]="'unit'"
-            [formControl]="getIngredientFormControl(ingredient, 'unit')">
+            [formControl]="getIngredientFormControl(ingredient, 'unit')"
+            [e2eTestName]="'ingredient-unit'"
+          >
           </app-select>
           <app-input
             class="recipe-form__ingredient-input"
             [name]="'title'"
             [placeholder]="'recipe-form.placeholder.title' | translate:translations:currentLanguage"
-            [formControl]="getIngredientFormControl(ingredient, 'title')">
+            [formControl]="getIngredientFormControl(ingredient, 'title')"
+            [e2eTestName]="'ingredient-title'"
+          >
           </app-input>
           <mat-slide-toggle
             class="recipe-form__ingredient-toggle"
@@ -65,7 +75,9 @@
           [buttonText]="'recipe-form.button.new-ingredient' | translate:translations:currentLanguage"
           [isDisabled]="ingredients.invalid"
           [color]="'accent'"
-          (clicked)="addEmptyIngredientRow()">
+          (clicked)="addEmptyIngredientRow()"
+          [e2eTestName]="'new-ingredient'"
+        >
         </app-button>
       </div>
 
@@ -73,7 +85,9 @@
         class="recipe-form__button"
         [buttonType]="'submit'"
         [buttonText]="getButtonText() | translate:translations:currentLanguage"
-        [isDisabled]="recipeForm.invalid"></app-button>
+        [isDisabled]="recipeForm.invalid"
+        [e2eTestName]="'create-recipe'"
+      ></app-button>
     </form>
   </div>
 

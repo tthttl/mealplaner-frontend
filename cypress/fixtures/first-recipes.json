@@ -1,0 +1,53 @@
+[
+  {
+    "id": "5f8b288b156dbbc51217d3db",
+    "title": "Wienerli",
+    "url": "wienerli.ch",
+    "cookbookId": "5f354c276f00a266bb82025c",
+    "ingredients": [
+      {
+        "id": "5f8b288b156dbbc51217d3dc",
+        "unit": "tableSpoon",
+        "amount": 1,
+        "title": "Salz",
+        "isStapleFood": true
+      },
+      {
+        "id": "5fb90f9d4f93d9cf92a914b5",
+        "unit": "kg",
+        "amount": 2,
+        "title": "Mehl",
+        "isStapleFood": false
+      },
+      {
+        "id": "5fba564c4f93d9cf92a914fa",
+        "unit": "l",
+        "amount": 2,
+        "title": "Wasser",
+        "isStapleFood": true
+      }
+    ]
+  },
+  {
+    "id": "5f849a9f465eca58cd8daa79",
+    "title": "Cookie",
+    "url": "url",
+    "cookbookId": "5f354c276f00a266bb82025c",
+    "ingredients": [
+      {
+        "id": "5f849a9f465eca58cd8daa7a",
+        "unit": "kg",
+        "amount": 1,
+        "title": "cookie zutat",
+        "isStapleFood": false
+      },
+      {
+        "id": "5f886d6ff38d6e8a89e12aba",
+        "unit": "g",
+        "amount": 1,
+        "title": "Chocolate",
+        "isStapleFood": true
+      }
+    ]
+  }
+]

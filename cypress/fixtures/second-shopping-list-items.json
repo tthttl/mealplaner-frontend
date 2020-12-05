@@ -1,0 +1,18 @@
+[
+  {
+    "id": "5fb8e3f84f93d9cf92a91491",
+    "title": "Salt",
+    "order": 2,
+    "shoppingList": "5f987dc4c93a64d6e82dc51b",
+    "amount": 10,
+    "unit": "pinch"
+  },
+  {
+    "id": "5fb8e2df4f93d9cf92a91490",
+    "title": "Cheetos",
+    "order": 1,
+    "shoppingList": "5f987dc4c93a64d6e82dc51b",
+    "amount": 12,
+    "unit": "pack"
+  }
+]
