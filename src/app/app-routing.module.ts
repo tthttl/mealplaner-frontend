@@ -1,9 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthModule } from './features/auth/auth.module';
-import { ShoppingListModule } from './features/shopping-list/shopping-list.module';
-import { CookbookModule } from './features/cookbook/cookbook.module';
-import { MealPlanerModule } from './features/meal-planer/meal-planer.module';
+import { CustomPreloadingStrategyService } from './core/services/custom-preloading-strategy.service';
 
 
 const routes: Routes = [
@@ -13,24 +10,26 @@ const routes: Routes = [
   },
   {
     path: 'auth',
-    loadChildren: () => AuthModule
+    loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule)
   },
   {
     path: 'shopping-list',
-    loadChildren: () => ShoppingListModule
+    data: {usedBy: ['cookbook', 'meal-planer']},
+    loadChildren: () => import('./features/shopping-list/shopping-list.module').then(m => m.ShoppingListModule)
   },
   {
     path: 'cookbook',
-    loadChildren: () => CookbookModule
+    data: {usedBy: ['meal-planer']},
+    loadChildren: () => import('./features/cookbook/cookbook.module').then(m => m.CookbookModule)
   },
   {
     path: 'meal-planer',
-    loadChildren: () => MealPlanerModule,
+    loadChildren: () => import('./features/meal-planer/meal-planer.module').then(m => m.MealPlanerModule),
   },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {preloadingStrategy: CustomPreloadingStrategyService})],
   exports: [RouterModule]
 })
 export class AppRoutingModule {
