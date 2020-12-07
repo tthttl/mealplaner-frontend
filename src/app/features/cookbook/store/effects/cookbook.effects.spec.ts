@@ -12,6 +12,7 @@ import { RecipeService } from '../../services/recipe.service';
 import { CookbookApiActions, CookbookContainerActions, RecipeApiActions, RecipeContainerActions } from '../actions';
 import { CookbookEffects } from './cookbook.effects';
 import SpyObj = jasmine.SpyObj;
+import { LoadMealDialogActions } from '../../../meal-planer/store/actions';
 
 let cookbookService: SpyObj<CookbookService>;
 let router: SpyObj<Router>;
@@ -85,6 +86,22 @@ describe('Cookbook Effects', () => {
     cookbookEffects = createEffects(of({type: CookbookContainerActions.loadRecipes.type}));
     recipeService.loadRecipes.and.returnValue(throwError('error'));
     cookbookEffects.loadRecipes$.subscribe((action: Action) => {
+      expect(action.type).toEqual(CookbookApiActions.loadRecipesFailure.type);
+    });
+  });
+
+  it('loadSpecificRecipes should return success action', () => {
+    cookbookEffects = createEffects(of({type: LoadMealDialogActions.loadRecipesForSelectedCookbook.type, id: 'cookBookId'}));
+    recipeService.loadRecipes.and.returnValue(of([{cookbookId: 'cookBookId'}] as Recipe[]));
+    cookbookEffects.loadSpecificRecipes$.subscribe((action: Action) => {
+      expect(action.type).toEqual(CookbookApiActions.loadRecipesSuccess.type);
+    });
+  });
+
+  it('loadSpecificRecipes should return failure action', () => {
+    cookbookEffects = createEffects(of({type: LoadMealDialogActions.loadRecipesForSelectedCookbook.type, id: 'cookBookId'}));
+    recipeService.loadRecipes.and.returnValue(throwError('error'));
+    cookbookEffects.loadSpecificRecipes$.subscribe((action: Action) => {
       expect(action.type).toEqual(CookbookApiActions.loadRecipesFailure.type);
     });
   });

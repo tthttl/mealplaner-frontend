@@ -142,11 +142,8 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
             this.store.dispatch(copyRecipeToMealplaner({recipe: event.recipe!}));
             break;
           case 'selectedIngredients':
-            event.selectedIngredients?.filter((item: SelectedIngredient) => item.isSelected)
-              .map((item: SelectedIngredient) => mapSelectedIngredientToBasicShoppingListItem(item, shoppingListId))
-              .map((item: BasicShoppingListItem) => {
-                return item;
-              })
+            event.selectedIngredients
+              ?.map((item: SelectedIngredient) => mapSelectedIngredientToBasicShoppingListItem(item, shoppingListId))
               .forEach((item: BasicShoppingListItem) => this.store.dispatch(copyIngredientsToShoppingList({
                 optimisticId: uuid(),
                 shoppingListItem: item
