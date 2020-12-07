@@ -155,6 +155,13 @@ export interface EditListDialogEvent {
   list: List;
 }
 
+export interface AddMealDialogEvent {
+  event: 'addMeal';
+  mealType: MealType;
+  recipe: Recipe;
+  shoppingListItems: BasicShoppingListItem[];
+}
+
 export interface SelectedIngredient extends Ingredient {
   isSelected: boolean;
 }
@@ -170,18 +177,26 @@ export interface Link {
   path: string;
   icon: IconName;
 }
-
-type mealType = 'breakfast' | 'lunch' | 'dinner';
+export type MealType = 'breakfast' | 'lunch' | 'dinner';
 
 export interface Meal {
   id: string;
-  type: mealType;
+  type: MealType;
   date: string;
   recipe: Recipe;
 }
+
+export type DayPlan = {
+  [key in MealType]: Meal[];
+};
 
 export interface MealPlaner {
   id: string;
   title: string;
   isInitialized?: boolean;
+}
+
+export interface MealPlanerAddEvent {
+  recipe: Recipe;
+  shoppingListItems: BasicShoppingListItem[];
 }
