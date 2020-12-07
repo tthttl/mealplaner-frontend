@@ -36,7 +36,7 @@ export const cookbookStateReducer = createReducer<CookbookState, Action>(
     return {
       ...state,
       recipes: {
-        ...state.recipes,
+        ...state?.recipes,
         [cookbookId]: recipes
       }
     };
@@ -55,7 +55,7 @@ export const cookbookStateReducer = createReducer<CookbookState, Action>(
       ...state,
       recipes: {
         ...state.recipes,
-        [recipe.cookbookId]: state.recipes[recipe.cookbookId].map((item: Recipe) => {
+        [recipe.cookbookId]: state.recipes[recipe.cookbookId]?.map((item: Recipe) => {
           return item.id === optimisticId ? recipe : item;
         })
       }
