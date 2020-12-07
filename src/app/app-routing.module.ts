@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthModule } from './features/auth/auth.module';
 import { ShoppingListModule } from './features/shopping-list/shopping-list.module';
+import { CookbookModule } from './features/cookbook/cookbook.module';
+import { MealPlanerModule } from './features/meal-planer/meal-planer.module';
 
 
 const routes: Routes = [
@@ -18,12 +20,12 @@ const routes: Routes = [
     loadChildren: () => ShoppingListModule
   },
   {
-    path: 'meal-planer',
-    loadChildren: () => import('./features/meal-planer/meal-planer.module').then(m => m.MealPlanerModule)
+    path: 'cookbook',
+    loadChildren: () => CookbookModule
   },
   {
-    path: 'cookbook',
-    loadChildren: () => import('./features/cookbook/cookbook.module').then(m => m.CookbookModule)
+    path: 'meal-planer',
+    loadChildren: () => MealPlanerModule,
   },
 ];
 

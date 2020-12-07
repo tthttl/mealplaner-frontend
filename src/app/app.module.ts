@@ -22,6 +22,7 @@ import { SharedModule } from './shared/shared.module';
 import { metaReducers, reducers } from './core/store';
 import { ShoppingListModule } from './features/shopping-list/shopping-list.module';
 import { AppEffects } from './core/store/effects/app.effects';
+import { CookbookModule } from './features/cookbook/cookbook.module';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { AppEffects } from './core/store/effects/app.effects';
     FontAwesomeModule,
     AuthModule,
     SharedModule,
-    ShoppingListModule
+    ShoppingListModule,
+    CookbookModule,
   ],
   providers: [
     {provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AuthService, I18nService, Store, Actions]},

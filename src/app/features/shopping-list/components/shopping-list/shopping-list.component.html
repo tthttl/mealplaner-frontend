@@ -8,7 +8,7 @@
           [disableRipple]="true"
           (change)="itemChecked(item, $event.checked)">
           <span
-            class="shopping-list__label">{{item.amount}} {{'shopping-list.' + item.unit | translate:translations:currentLang }} {{item.title}}</span>
+            class="shopping-list__label">{{item.amount}} {{'unit.' + item.unit | translate:translations:currentLang }} {{item.title}}</span>
         </mat-checkbox>
         <fa-icon
           cdkDragHandle
@@ -18,7 +18,6 @@
       </div>
     </div>
   </div>
-
 
   <div *ngSwitchCase="'empty'" class="shopping-list--empty">
     <img class="shopping-list__image" src="../../../../../assets/empty-shopping-list.png" alt="Empty List" />
