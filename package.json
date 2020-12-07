@@ -12,7 +12,8 @@
     "e2e": "ng e2e",
     "docs:json": "compodoc -p ./tsconfig.base.json -e json -d .",
     "storybook": "npm run docs:json && start-storybook -p 6006",
-    "build-storybook": "npm run docs:json && build-storybook"
+    "build-storybook": "npm run docs:json && build-storybook",
+    "gzip": "rm -rf ./dist/*-gzip && gzipper --verbose --output-file-format [filename].[ext] ./dist/mealplaner ./dist/mealplaner-gzip"
   },
   "husky": {
     "hooks": {
@@ -39,6 +40,8 @@
     "@ngrx/entity": "^9.2.0",
     "@ngrx/store": "^9.2.0",
     "date-fns": "^2.16.1",
+    "gzip": "^0.1.0",
+    "gzipper": "^4.3.0",
     "puppeteer": "^5.4.1",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.3",
