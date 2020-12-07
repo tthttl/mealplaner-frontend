@@ -1,0 +1,19 @@
+@import "../../../../styles/settings/colors";
+@import "../../../../styles/settings/variables";
+@import "../../../../styles/settings/functions";
+
+
+.beta-teaser {
+  position: relative;
+  margin-top: $header-height;
+  padding: $spacing-small;
+  color: $text-00;
+  text-align: center;
+  background: $blue_90;
+
+  &__emoji {
+    padding-right: $spacing-medium;
+  }
+}
+
+

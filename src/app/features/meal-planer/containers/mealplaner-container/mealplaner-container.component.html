@@ -1,0 +1,16 @@
+<div class="container">
+  <app-mealplaner-page
+    [selectedDate]="selectedDate | async"
+    [translations]="translations$ | async"
+    [currentLanguage]="currentLanguage$ | async"
+    [mealPlaners]="mealPlaners$ | async"
+    [activeMealPlanerId]="activeMealPlanerId$ | async"
+    [activeMealPlaner]="activeMealPlaner$ | async"
+    (dateChanged)="onWeekOffsetChanged($event)"
+    (changeMealPlaner)="onMealPlanerChange($event)"
+    (createMealPlaner)="onMealPlanerCreate()"
+    (deleteMealPlaner)="onMealPlanerDeleted($event)"
+    (editMealPlaner)="onMealPlanerEdit($event)">
+  </app-mealplaner-page>
+</div>
+

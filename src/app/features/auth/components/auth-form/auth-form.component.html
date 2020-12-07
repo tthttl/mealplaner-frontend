@@ -1,0 +1,23 @@
+<div class="container auth-form">
+  <div class="auth-form__header">
+    {{heading}}
+  </div>
+  <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
+
+    <div class="auth-form__form">
+      <div class="auth-form__backend-error" *ngIf="backedErrorMessage">
+        {{backedErrorMessage}}
+      </div>
+
+      <ng-container *ngTemplateOutlet="formTemplate; context: {form: authForm}"></ng-container>
+    </div>
+
+    <button *ngIf="showButton" class="auth-form__button">{{ buttonText }}</button>
+  </form>
+
+  <section *ngIf="showButton" class="auth-form__footer">
+    <ng-container [ngTemplateOutlet]="formFooter"></ng-container>
+  </section>
+</div>
+
+

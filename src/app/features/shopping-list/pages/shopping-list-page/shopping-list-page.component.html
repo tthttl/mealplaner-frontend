@@ -1,0 +1,28 @@
+
+<div class="container">
+  <app-list-header
+    [selectedList]="activeShoppingList"
+    [lists]="shoppingLists"
+    [defaultTitle]="'shopping-list.default-title' | translate:translations:currentLanguage"
+    [addListLabel]="'shopping-list.new-list' | translate:translations:currentLanguage"
+    [buttonLabel]="'shopping-list.label' | translate:translations:currentLanguage"
+    [ariaDeleteLabel]="'shopping-list.delete' | translate:translations:currentLanguage"
+    [ariaEditLabel]="'shopping-list.edit' | translate:translations:currentLanguage"
+    (selectList)="onSelectList($event)"
+    (editList)="onEditList($event)"
+    (deleteList)="onDeleteList($event)"
+    (createList)="onCreateList()"></app-list-header>
+  <div class="shopping-list-wrapper">
+    <app-shopping-list-form
+      [translations]="translations"
+      [currentLang]="currentLanguage"
+      (itemAdded)="onItemAdded($event)"></app-shopping-list-form>
+    <app-shopping-list
+      [items]="activeShoppingList?.isInitialized ? shoppingListItems : null"
+      [translations]="translations"
+      [currentLang]="currentLanguage"
+      (shoppingListItemMoved)="onShoppingListItemMoved($event)"
+      (shoppingListItemDeleted)="onShoppingListItemDeleted($event)"></app-shopping-list>
+  </div>
+</div>
+

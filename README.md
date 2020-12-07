@@ -38,3 +38,20 @@ This application is set up with a CI/CD pipeline using GitLab CI. The pipeline d
 * Run `linting` and `unit testing` on every push 
 * Deploy to staging area (beat.mealplaner.app) after merging to master.
 * Deploy to production when creating a tag. 
+
+##APP Initialization
+When the user calls or refreshes the page. The App gets initialized in the app.initializers.ts file. This file does the following:
+* Try to relogin using the refresh token. (Detail Description in Authentication)
+* Determines the preferred Language of the user based on his previous visit or browser Settings.
+* Determines if the preferred language is supported. If not fallback to the default Language.
+* Load the I18n for the determined language.
+
+##Authentication
+TODO
+
+
+##Sizes
+In this project we use rem as main Unit. 
+There is a helper function which converts px to rems.
+When writing css use this function.
+Expect for the unit 1px. This gets to small when converting to rem. Therefore use 1px as px instead in this case.

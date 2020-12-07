@@ -11,20 +11,17 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { appInitializer } from './app.initializer';
-import { AuthModule } from './auth/auth.module';
-import { AuthService } from './auth/services/auth.service';
-import { BetaTeaserComponent } from './components/beta-teaser/beta-teaser.component';
-import { NavigationComponent } from './components/navigation/navigation.component';
-import { ProductPageComponent } from './components/product-page/product-page.component';
-import { CookbookModule } from './cookbook/cookbook.module';
-import { I18nModule } from './i18n/i18n.module';
-import { I18nService } from './i18n/services/i18n.service';
-import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
-import { JwtInterceptor } from './shared/interceptors/jwt.interceptor';
+import { AuthModule } from './features/auth/auth.module';
+import { AuthService } from './features/auth/services/auth.service';
+import { BetaTeaserComponent } from './core/components/beta-teaser/beta-teaser.component';
+import { NavigationComponent } from './core/components/navigation/navigation.component';
+import { I18nService } from './core/services/i18n.service';
+import { ErrorInterceptor } from './core/interceptors/error.interceptor';
+import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
 import { SharedModule } from './shared/shared.module';
-import { metaReducers, reducers } from './shared/state';
-import { ShoppingListModule } from './shopping-list/shopping-list.module';
-import { ProductPageContainerComponent } from './containers/product-page-container/product-page-container.component';
+import { metaReducers, reducers } from './core/store';
+import { ShoppingListModule } from './features/shopping-list/shopping-list.module';
+import { AppEffects } from './core/store/effects/app.effects';
 
 
 @NgModule({
@@ -32,8 +29,6 @@ import { ProductPageContainerComponent } from './containers/product-page-contain
     AppComponent,
     BetaTeaserComponent,
     NavigationComponent,
-    ProductPageComponent,
-    ProductPageContainerComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,20 +36,17 @@ import { ProductPageContainerComponent } from './containers/product-page-contain
     BrowserAnimationsModule,
     HttpClientModule,
     StoreModule.forRoot(reducers, {metaReducers}),
+    EffectsModule.forRoot([AppEffects]),
     StoreDevtoolsModule.instrument(),
-    I18nModule,
-    AuthModule,
-    CookbookModule,
-    EffectsModule.forRoot([]),
     FontAwesomeModule,
+    AuthModule,
     SharedModule,
     ShoppingListModule
   ],
   providers: [
-    { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AuthService, I18nService, Store, Actions] },
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-
+    {provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AuthService, I18nService, Store, Actions]},
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
   ],
   bootstrap: [AppComponent]
 })

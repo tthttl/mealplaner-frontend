@@ -1,7 +1,7 @@
 import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { v4 as uuid } from 'uuid';
-import { SelectOption } from '../../model/model';
+import { SelectOption } from '../../../core/models/model';
 
 
 @Component({
@@ -21,9 +21,11 @@ export class SelectComponent<T> implements OnInit, ControlValueAccessor {
   @Input() name = '';
   @Input() options: SelectOption<T>[] = [];
   @Input() label: string | undefined;
-  @Input() noBorder = false;
+  @Input() border = true;
   @Input() errors: string[] = [];
+  @Input() defaultValue: T | undefined;
   @Input() isDisabled = false;
+  @Input() ariaLabel: string | undefined = undefined;
   @Input() e2eTestName = '';
   @Input() noPadding = false;
   @Input() noBackground = false;
@@ -38,6 +40,10 @@ export class SelectComponent<T> implements OnInit, ControlValueAccessor {
   ngOnInit(): void {
     this.selectedValue = this.options[0].value;
     this.propagateChange(this.options[0].value);
+
+    if (this.defaultValue) {
+      this.selectedValue = this.defaultValue;
+    }
   }
 
   onChange(option: T | string): void {

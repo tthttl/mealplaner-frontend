@@ -1,0 +1,101 @@
+@import "../../../../../styles/settings/colors";
+@import "../../../../../styles/settings/breakpoints";
+@import "../../../../../styles/settings/variables";
+@import "../../../../../styles/settings/functions";
+
+
+.product-page {
+  &__header {
+    text-align: center;
+    background: $blue-grey_10;
+    margin-top: rem(-96);
+    padding-top: rem(128);
+    padding-bottom: $spacing-medium;
+  }
+
+  &__heading {
+    color: $blue-grey_80;
+    font-size: $font-size-big;
+  }
+
+  &__lead-text {
+    color: $blue-grey_60;
+    max-width: rem(550);
+    margin: rem(30) auto;
+    font-size: $font-size-normal;
+    line-height: 1.8;
+  }
+
+  &__cta {
+    width: rem(300);
+    margin: rem(40) auto;
+  }
+
+  &__img {
+    max-width: 80%;
+    margin: 0 auto;
+    display: block;
+  }
+
+  &__image-wrapper {
+    background: $blue-grey_100;
+    padding: $spacing-medium 0;
+  }
+
+  &__feature-explanation {
+    display: flex;
+    flex-direction: column;
+    padding-top: rem(80);
+
+    @include medium {
+      flex-direction: row;
+    }
+  }
+
+  &__feature-explanation-title {
+    color: $blue-100;
+    padding-bottom: $spacing-medium;
+  }
+
+  &__feature-explanation:nth-child(even) {
+    @include medium {
+      flex-direction: row-reverse;
+    }
+  }
+
+  &__feature-explanation-text {
+    flex: 1 1 0;
+    align-self: center;
+    line-height: 1.8;
+    color: $blue-grey_80;
+  }
+
+  &__feature-explanation-image-wrapper {
+    flex: 1 1 0;
+    align-self: center;
+
+    img {
+      max-width: 100%;
+    }
+
+    &--hidden {
+      visibility: hidden;
+    }
+
+    &--visible {
+      animation: fade-in 1.6s;
+    }
+  }
+}
+
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: scale(.8, .8)
+  }
+  to {
+    opacity: 1;
+  }
+}
+

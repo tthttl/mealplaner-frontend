@@ -2,7 +2,7 @@
   <div class="list-picker__item list-picker__item--add"  (click)="createList()">
     <section class="list-picker__item-title">
       <fa-icon
-        class="list-picker__icon"
+        class="list-picker__item-icon"
         [icon]="['fas','plus']"
       ></fa-icon>
       {{dialogData.translations['new-list']}}
@@ -13,16 +13,18 @@
     <section class="list-picker__item-title" (click)="selectList(list)">
       {{list.title || dialogData.translations['default-title']}}
     </section>
-    <section class="list-picker__actions">
+    <section class="list-picker__item-actions">
       <fa-icon
-        class="list-picker__action"
+        class="list-picker__item-action"
         (click)="editList(list)"
+        [attr.aria-label]="(list.title || dialogData.translations['default-title']) + ' ' + dialogData.translations['aria-edit']"
         [icon]="['fas','edit']"
       ></fa-icon>
       <fa-icon
-        class="list-picker__action"
+        class="list-picker__item-action"
         *ngIf="dialogData.data.length > 1"
         (click)="deleteList(list)"
+        [attr.aria-label]="(list.title || dialogData.translations['default-title']) + ' ' + dialogData.translations['aria-delete']"
         [icon]="['fas','trash-alt']"
       ></fa-icon>
     </section>

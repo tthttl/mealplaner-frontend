@@ -1,12 +1,12 @@
-<div class="shopping-list-header">
-  <div class="shopping-list-header__title-wrapper">
-    <h2 *ngIf="selectedList" class="shopping-list-header__title">
+<div class="list-header">
+  <div class="list-header__title-wrapper">
+    <h2 *ngIf="selectedList" class="list-header__title">
       {{selectedList?.title || defaultTitle}}
     </h2>
   </div>
 
 
-  <button (click)="openList()" class="shopping-list-header__button">
+  <button (click)="openList()" class="list-header__button">
     <span *ngIf="buttonLabel && lists?.length">{{buttonLabel}}</span>
   </button>
 </div>

@@ -1,0 +1,45 @@
+<section class="recipe-list" [ngSwitch]="getPageState(recipes)">
+  <app-input
+    class="recipe-list__filter-field"
+    [type]="'search'"
+    [placeholder]="'input.search' | translate:translations:currentLang"
+    #searchField
+  ></app-input>
+  <div *ngSwitchCase="'default'">
+    <div class="recipe-list__item" *ngFor="let recipe of recipes">
+      <div class="recipe-list__row">
+        <div class="recipe-list__title-box" (click)="onClick(recipe)">
+          <span>{{recipe.title}}</span>
+        </div>
+        <div class="recipe-list__buttons-box">
+          <app-button class="recipe-list__button"
+                      [buttonText]="'button.edit' | translate:translations:currentLang"
+                      [iconLeft]="'pen-square'"
+                      [color]="'accent'"
+                      (click)="onEditRecipe(recipe.id)"
+                      [e2eTestName]="'RECIPE-ROW-EDIT'"
+          ></app-button>
+          <app-button class="recipe-list__button"
+                      [buttonText]="'button.delete' | translate:translations:currentLang"
+                      [iconLeft]="'times'"
+                      [color]="'warn'"
+                      (click)="onDeleteRecipe(recipe)"
+                      [e2eTestName]="'RECIPE-ROW-DELETE'"
+          ></app-button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngSwitchCase="'empty'" class="recipe-list--empty">
+    <img class="recipe-list__image" src="../../../../../assets/meal.png" alt="Empty List"/>
+    <div>{{'cookbook.is-empty' | translate:translations:currentLang }}
+      <br/> {{'cookbook.add-recipe' | translate:translations:currentLang }} </div>
+  </div>
+
+  <div *ngSwitchCase="'loading'">
+    <div class="recipe-list__skeleton"></div>
+    <div class="recipe-list__skeleton"></div>
+    <div class="recipe-list__skeleton"></div>
+    <div class="recipe-list__skeleton"></div>
+  </div>
+</section>

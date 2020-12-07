@@ -1,0 +1,51 @@
+<app-auth-form
+  class="login-form"
+  [heading]="'auth.login.title' | translate:translations:currentLanguage"
+  [buttonText]="'auth.login.cta' | translate:translations:currentLanguage"
+  [authForm]="loginForm"
+  [backedErrorMessage]="backendErrorMessage && (backendErrorMessage | translate:translations:currentLanguage)"
+  (formSubmit)="onSubmit()"
+>
+  <ng-template #formTemplate let-form="form">
+    <div [formGroup]="form">
+      <div class="login-form__field">
+        <fa-icon class="login-form__icon"
+                 [icon]="['fas','user']"></fa-icon>
+        <app-input
+          class="login-form__input"
+          type="email"
+          [border]="false"
+          [name]="'email'"
+          [placeholder]="'auth.login.email' | translate:translations:currentLanguage"
+          [formControl]="getFormControl('identifier')"
+          [errors]="getErrorsFor('identifier')"></app-input>
+      </div>
+
+      <div class="login-form__field">
+        <fa-icon class="login-form__icon"
+                 [icon]="['fas','unlock-alt']"></fa-icon>
+        <app-input
+          class="login-form__input"
+          type="password"
+          [border]="false"
+          [name]="'password'"
+          [placeholder]="'auth.login.password' | translate:translations:currentLanguage"
+          [formControl]="getFormControl('password')"
+          [errors]="getErrorsFor('password')"></app-input>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #formFooter>
+    <div class="login-form__hint">
+      <a [routerLink]="['/auth/forgot']" [queryParams]="email ? {email: email} : {}"> {{ 'auth.login.forgot-password' | translate:translations:currentLanguage}}</a>
+    </div>
+    <div class="login-form__hint" [innerHTML]="'auth.login.not-registered' | translate:translations:currentLanguage " >
+    </div>
+  </ng-template>
+</app-auth-form>
+
+
+
+
+

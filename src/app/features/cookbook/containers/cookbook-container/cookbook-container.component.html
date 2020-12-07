@@ -1,0 +1,16 @@
+<app-cookbook-page
+  [translations]="translations$ | async"
+  [currentLanguage]="currentLanguage$ | async"
+  [recipes]="recipes$ | async"
+  [cookbooks]="cookbooks$ | async"
+  [selectedCookbook]="selectedCookbook$ | async"
+  (clickRecipe)="onClickRecipe($event)"
+  (createRecipe)="onCreateRecipe()"
+  (editRecipe)="onEditRecipe($event)"
+  (deleteRecipe)="onDeleteRecipe($event)"
+  (searchStringChanged)="onSearchStringChanged($event)"
+  (createCookbook)="onCreateCookbook()"
+  (selectCookbook)="onSelectCookbook($event)"
+  (editCookbook)="onEditCookbook($event)"
+  (deleteCookbook)="onDeleteCookbook($event)"
+></app-cookbook-page>

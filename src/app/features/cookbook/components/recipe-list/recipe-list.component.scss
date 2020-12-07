@@ -1,0 +1,128 @@
+@import "../../../../../styles/settings/breakpoints";
+@import "../../../../../styles/settings/variables";
+@import "../../../../../styles/mixins/style";
+
+.recipe-list {
+  width: 100%;
+  display: block;
+  overflow: hidden;
+
+  &__filter-field{
+    display: block;
+    padding-bottom: $spacing-large;
+  }
+
+  &__item {
+    border: $border-primary;
+    color: $text-70;
+    font-size: $font-size-normal;
+    box-sizing: border-box;
+    margin-top: $spacing-small;
+
+    @include large {
+      border: none;
+      border-bottom: solid 1px $blue_70;
+      margin: 0;
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+
+
+
+  &__title-box {
+    display: flex;
+    flex: 1 1 70%;
+    align-items: center;
+    padding: $spacing-small;
+
+    &:hover {
+      background-color: $blue_20;
+      cursor: pointer;
+    }
+
+    &:active {
+      background-color: $blue_30;
+    }
+
+    @include large{
+      padding: 0 $spacing-small;
+    }
+  }
+
+  &__buttons-box {
+    display: flex;
+
+    @include large{
+      border-left: 1px solid;
+      border-image: linear-gradient(
+          to bottom,
+          white,
+          $blue_70,
+          white
+      ) 1 100%;
+    }
+  }
+
+  &__button {
+    width: 100%;
+    padding: $spacing-small
+  }
+
+  &__row {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+
+    @include large{
+      flex-direction: row;
+      align-items: stretch;
+    }
+  }
+
+  @include skeleton('.recipe-list__skeleton', $blue-grey_30, 3.5s) {
+    background: $blue-grey_40;
+    height: rem(24);
+    margin: $spacing-small auto $spacing-medium $spacing-medium;
+    border-radius: $border-radius-default;
+    width: 90%;
+
+    &:nth-child(2){
+      width: 75%;
+    }
+
+    &:nth-child(3){
+      width: 85%;
+    }
+
+    &:nth-child(4){
+      width: 80%;
+      margin-bottom: $spacing-large;
+    }
+  };
+
+  &--empty {
+    margin: 0 auto;
+    max-width: 80%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-bottom: $spacing-large;
+    color: $text-40;
+    font-size: $font-size-tiny;
+    text-align: center;
+    font-weight: 500;
+    line-height: 2;
+
+    @include large {
+      font-size: $font-size-normal;
+    }
+  }
+
+  &__image {
+    max-width: 100%;
+  }
+
+}

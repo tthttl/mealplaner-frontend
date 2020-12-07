@@ -1,0 +1,8 @@
+<app-recipe-page
+  [translations]="translations$ | async"
+  [currentLanguage]=" currentLanguage$ | async"
+  [recipe$]="recipe$"
+  [isEmptyForm]="!id"
+  (recipeSaved)="onRecipeSaved($event)"
+>
+</app-recipe-page>

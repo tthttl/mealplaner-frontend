@@ -1,0 +1,15 @@
+<app-shopping-list-page
+  [shoppingLists]="shoppingLists$ | async"
+  [activeShoppingListId]="activeShoppingListId$ | async"
+  [shoppingListItems]="shoppingListsItems$ | async"
+  [translations]="translations$ | async"
+  [activeShoppingList]="activeShoppingList$ | async"
+  [currentLanguage]="currentLanguage$ | async"
+  (changeShoppingList)="onShoppingListChange($event)"
+  (addShoppingListItem)="onShoppingListItemAdded($event)"
+  (deleteShoppingListItem)="onShoppingListItemDeleted($event)"
+  (moveShoppingListItem)="onShoppingListItemMoved($event)"
+  (createShoppingList)="onCreateShoppingList()"
+  (editShoppingList)="onEditShoppingList($event)"
+  (deleteShoppingList)="onShoppingListDelete($event)">
+</app-shopping-list-page>

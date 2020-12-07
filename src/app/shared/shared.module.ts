@@ -10,17 +10,21 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ListPickerDialogComponent } from './components/list-picker-dialog/list-picker-dialog.component';
 import { ListHeaderComponent } from './components/list-header/list-header.component';
 import { EditListDialogComponent } from './components/edit-list-dialog/edit-list-dialog.component';
+import { TranslatePipe } from './pipes/translate.pipe';
+
+const declarations = [
+  ButtonComponent,
+  InputComponent,
+  SelectComponent,
+  ListHeaderComponent,
+  ListPickerDialogComponent,
+  EditListDialogComponent,
+  TranslatePipe
+];
 
 
 @NgModule({
-  declarations: [
-    ButtonComponent,
-    InputComponent,
-    SelectComponent,
-    ListHeaderComponent,
-    ListPickerDialogComponent,
-    EditListDialogComponent,
-  ],
+  declarations,
   imports: [
     CommonModule,
     FormsModule,
@@ -30,12 +34,7 @@ import { EditListDialogComponent } from './components/edit-list-dialog/edit-list
     MatDialogModule,
   ],
   exports: [
-    ButtonComponent,
-    InputComponent,
-    SelectComponent,
-    ListHeaderComponent,
-    ListPickerDialogComponent,
-    EditListDialogComponent,
+    ...declarations
   ],
 })
 export class SharedModule {

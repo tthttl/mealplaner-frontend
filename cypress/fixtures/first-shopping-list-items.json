@@ -1,0 +1,18 @@
+[
+  {
+    "id": "5fb8f93e4f93d9cf92a9149a",
+    "title": "Sugar",
+    "order": 2,
+    "shoppingList": "5f402198ce81539b32be24b7",
+    "amount": 10,
+    "unit": "g"
+  },
+  {
+    "id": "5fb8f93e4f93d9cf92a91499",
+    "title": "Chocolate chip cookie",
+    "order": 1,
+    "shoppingList": "5f402198ce81539b32be24b7",
+    "amount": 12,
+    "unit": "piece"
+  }
+]

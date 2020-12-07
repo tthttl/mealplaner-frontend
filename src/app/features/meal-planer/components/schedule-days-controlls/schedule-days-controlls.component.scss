@@ -1,0 +1,36 @@
+@import "../../../../../styles/settings/functions";
+@import "../../../../../styles/settings/variables";
+@import "../../../../../styles/settings/colors";
+
+.days-controls {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  max-width: rem(600);
+  margin: 0 auto;
+
+  &__button {
+    border: none;
+    background: none;
+    border-radius: $border-radius-default;
+    color: $text-100;
+    height: rem(30);
+    width: rem(30);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+
+    &:hover:not(.days-controls__button--active) {
+      background: $blue_70;
+      color: #ffffff;
+    }
+
+    &--active {
+      background: $blue_100;
+      color: #ffffff;
+
+    }
+  }
+}
