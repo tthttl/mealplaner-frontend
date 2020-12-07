@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Actions, Effect, ofType } from '@ngrx/effects';
+import { act, Actions, Effect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { GlobalState, selectUserID } from '../../../../core/store';
 import { SnackbarService } from '../../../../core/services/snackbar.service';
@@ -20,8 +20,8 @@ import {
   tap,
   withLatestFrom
 } from 'rxjs/operators';
-import { MealPlaner } from '../../../../core/models/model';
-import { interval, of } from 'rxjs';
+import { DayPlan, Meal, MealPlaner } from '../../../../core/models/model';
+import { interval, of, pipe } from 'rxjs';
 import { DELETION_DELAY } from '../../../../core/constants/constants';
 import { StorageService } from '../../../../core/services/storage.service';
 
@@ -160,7 +160,7 @@ export class MealPlanersEffects {
           map(() => {
             return MealPlanerApiActions.deleteMealPlanerSuccess({mealPlaner});
           }),
-          catchError(() => of(MealPlanerApiActions.deleteMealPlanerSuccess({mealPlaner})))
+          catchError(() => of(MealPlanerApiActions.deleteMealPlanerFailure({mealPlaner})))
         ))
       );
     })
@@ -169,12 +169,11 @@ export class MealPlanersEffects {
 
   @Effect()
   retryDeleteMealPlaner$ = this.actions$.pipe(
-    ofType(MealPlanerApiActions.deleteMealPlanerSuccess),
+    ofType(MealPlanerApiActions.deleteMealPlanerFailure),
     switchMap(({mealPlaner}) => {
       return this.snackBarService.openSnackBar('backend-failed.error-message', 'backend-failed.retry').afterDismissed().pipe(
         take(1),
         map(({dismissedByAction}) => {
-          console.log(dismissedByAction);
           return dismissedByAction ?
             MealPlanerEffectActions.retryDeleteMealPlaner({mealPlaner}) :
             MealPlanerEffectActions.undoOptimisticDeleteMealPlaner({mealPlaner});
@@ -193,82 +192,104 @@ export class MealPlanersEffects {
     })
   );
 
-  /*@Effect()
-  getShoppingListItems$ = this.actions$.pipe(
-    ofType(ShoppingListEffectActions.setActiveShoppingList, ShoppingListContainerActions.changeShoppingList),
-    exhaustMap(({shoppingListId}: SetActiveShoppingListAction | ChangeShoppingListAction) => {
-      return this.shoppingListService.getShoppingListItems(shoppingListId).pipe(
-        map((shoppingListItems: ShoppingListItem[]) => {
-          return ShoppingListApiActions.loadShoppingListItemsSuccess({shoppingListId, shoppingListItems});
-        }),
-        catchError(() => of(ShoppingListApiActions.loadShoppingListItemsFailure()))
-      );
-    }),
-  );
-
   @Effect()
-  addShoppingListItem$ = this.actions$.pipe(
-    ofType(ShoppingListContainerActions.addShoppingListItem,
-      CookbookContainerActions.copyIngredientsToShoppingList,
-      ShoppingListEffectActions.retryAddShoppingListItem,
+  getMeal$ = this.actions$.pipe(
+    ofType(
+      MealPlanerEffectActions.setActiveMealPlaner,
+      MealPlanerContainerActions.changeSelectedMealPlaner,
+      MealPlanerContainerActions.selectedDateChanged,
     ),
-    concatMap(({optimisticId, shoppingListItem}) => this.shoppingListService.addShoppingListItem(shoppingListItem).pipe(
-      map((shoppingListItemApi: ShoppingListItem) => {
-        return ShoppingListApiActions.addShoppingListItemSuccess({optimisticId, shoppingListItem: shoppingListItemApi});
-      }),
-      catchError(() => of(ShoppingListApiActions.addShoppingListItemFailure({optimisticId, shoppingListItem})))
-    )),
-  );
-
-  @Effect()
-  retryAddShoppingListItem$ = this.actions$.pipe(
-    ofType(ShoppingListApiActions.addShoppingListItemFailure),
-    switchMap(({optimisticId, shoppingListItem}) => {
-      return this.snackBarService.openSnackBar('backend-failed.error-message', 'backend-failed.retry').afterDismissed().pipe(
-        take(1),
-        map(({dismissedByAction}) => {
-          console.log(dismissedByAction);
-          return dismissedByAction ?
-            ShoppingListEffectActions.retryAddShoppingListItem({optimisticId, shoppingListItem}) :
-            ShoppingListEffectActions.undoOptimisticAddShoppingListItem({optimisticId, shoppingListItem});
-        })
-      );
+    withLatestFrom(this.store),
+    map(([_, store]) => {
+      const {activeMealPlaner, selectedDate} = store.mealPlanerState;
+      return {activeMealPlaner, selectedDate};
     }),
-  );
-
-  @Effect()
-  deleteShoppingListItem$ = this.actions$.pipe(
-    ofType(ShoppingListContainerActions.deleteShoppingListItem, ShoppingListEffectActions.retryDeleteShoppingListItem),
-    concatMap(({type, shoppingListItem}) => {
-      return of({}).pipe(
-        delayWhen((action) =>
-          (type !== ShoppingListEffectActions.retryDeleteShoppingListItem.type) ? interval(DELETION_DELAY) :  interval(0)
-        ),
-        takeUntil(this.actions$.pipe(ofType(ShoppingListContainerActions.undoDeleteShoppingListItem))),
-        mergeMap(() => this.shoppingListService.deleteShoppingListItem(shoppingListItem.id).pipe(
-          map(() => {
-            return ShoppingListApiActions.deleteShoppingListItemSuccess({shoppingListItem});
-          }),
-          catchError(() => of(ShoppingListApiActions.deleteShoppingListItemFailure({shoppingListItem})))
-        )),
+    filter(({activeMealPlaner}) => !!activeMealPlaner),
+    exhaustMap(({activeMealPlaner, selectedDate}) => {
+      const activeMealPlanerId = activeMealPlaner || ''; // activeMealPlaner has always a value here
+      return this.mealPlanerService.loadMealsByDay(activeMealPlanerId, selectedDate).pipe(
+        map((meals: Meal[]) => {
+          return meals.reduce((dayPlan, meal) => {
+            if (!dayPlan.hasOwnProperty(meal.type)) {
+              dayPlan[meal.type] = [meal];
+            } else {
+              dayPlan[meal.type].push(meal);
+            }
+            return dayPlan;
+          }, {} as DayPlan);
+        }),
+        map((dayPlan: DayPlan) => {
+          return MealPlanerApiActions.loadMealsSuccess({mealPlanerId: activeMealPlanerId, date: selectedDate, dayPlan});
+        }),
+        catchError(() => of(MealPlanerApiActions.loadMealPlanersFailure)),
       );
     })
   );
 
   @Effect()
-  retryDeleteShoppingListItem$ = this.actions$.pipe(
-    ofType(ShoppingListApiActions.deleteShoppingListItemFailure),
-    switchMap(({shoppingListItem}) => {
-      return this.snackBarService.openSnackBar('backend-failed.error-message', 'backend-failed.retry').afterDismissed().pipe(
-        take(1),
-        map(({dismissedByAction}) => {
-          console.log(dismissedByAction);
-          return dismissedByAction ?
-            ShoppingListEffectActions.retryDeleteShoppingListItem({shoppingListItem}) :
-            ShoppingListEffectActions.undoOptimisticDeleteShoppingListItem({shoppingListItem});
+  addMeal$ = this.actions$.pipe(
+    ofType(MealPlanerContainerActions.addMeal, MealPlanerEffectActions.retryAddMeal),
+    withLatestFrom(this.store.select('mealPlanerState')),
+    concatMap(([action, state]) => {
+      return this.mealPlanerService.addMeal(action.mealType, state.selectedDate, state.activeMealPlaner || '', action.recipe.id || '').pipe(
+        map((mealApi: Meal) => {
+          return MealPlanerApiActions.addMealsSuccess({mealApi, optimisticId: action.optimisticId});
+        }),
+        catchError(() => {
+          return of(MealPlanerApiActions.addMealsFailure(
+            {mealType: action.mealType, recipe: action.recipe, optimisticId: action.optimisticId}
+            ));
         })
       );
     }),
   );
-  */
+
+  @Effect()
+  retryAndMeal$ = this.actions$.pipe(
+    ofType(MealPlanerApiActions.addMealsFailure),
+    switchMap(({mealType, recipe, optimisticId}) => {
+      return this.snackBarService.openSnackBar('backend-failed.error-message', 'backend-failed.retry').afterDismissed().pipe(
+        take(1),
+        map(({dismissedByAction}) => {
+          return dismissedByAction ?
+            MealPlanerEffectActions.retryAddMeal({mealType, recipe, optimisticId}) :
+            MealPlanerEffectActions.undoOptimisticAddMeal({mealType, optimisticId});
+        }));
+    }),
+  );
+
+  @Effect()
+  removeMeal$ = this.actions$.pipe(
+    ofType(MealPlanerContainerActions.removeMeal,  MealPlanerEffectActions.retryRemoveMeal),
+    concatMap(({type, meal}) => {
+      return of({}).pipe(
+        delayWhen((action) =>
+          (type === MealPlanerContainerActions.removeMeal.type) ? interval(DELETION_DELAY) : interval(0)
+        ),
+        takeUntil(this.actions$.pipe(ofType(MealPlanerContainerActions.undoDeleteMealPlaner))),
+        concatMap(() => {
+          return this.mealPlanerService.removeMeal(meal).pipe(
+            map(() => {
+              return MealPlanerApiActions.removeMealsSuccess();
+            }),
+            catchError(() => of(MealPlanerApiActions.removeMealsFailure({meal})))
+          );
+        })
+      );
+    }),
+  );
+
+  @Effect()
+  retryRemoveMeal$ = this.actions$.pipe(
+    ofType(MealPlanerApiActions.removeMealsFailure),
+    switchMap(({meal}) => {
+      return this.snackBarService.openSnackBar('backend-failed.error-message', 'backend-failed.retry').afterDismissed().pipe(
+        take(1),
+        map(({dismissedByAction}) => {
+          return dismissedByAction ?
+            MealPlanerEffectActions.retryRemoveMeal({meal}) :
+            MealPlanerEffectActions.undoOptimisticRemoveMeal({meal});
+        }));
+    }),
+  );
 }
