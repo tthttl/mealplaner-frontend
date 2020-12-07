@@ -1,0 +1,59 @@
+<div class="meal-picker">
+  <h2 mat-dialog-title class="meal-picker__heading">
+    {{'meal-picker.title' | translate:translations:currentLanguage}}
+  </h2>
+
+  <div class="meal-picker__cookbook-select-wrapper">
+    <label for="cookbooks" class="meal-picker__cookbook-select-label">
+      {{ 'meal-picker.cookbook' | translate:translations:currentLanguage }}
+    </label>
+    <select
+      #cookbookSelect
+      name="cookbooks"
+      id="cookbooks"
+      class="meal-picker__cookbook-select"
+      (change)="onChangeCookbook(cookbookSelect.value)">
+        <option
+          *ngFor="let cookbook of cookbooks"
+          [value]="cookbook.id"
+          [selected]="cookbook.id === selectedCookbookId"
+        >{{cookbook.title}}</option>
+    </select>
+  </div>
+
+  <input
+    #mealFilter
+    class="meal-picker__cookbook-filter"
+    [value]="filter"
+    [placeholder]="'meal-picker.filter' |  translate:translations:currentLanguage"
+    [attr.aria-label]="'meal-picker.filter' |  translate:translations:currentLanguage"
+  />
+
+  <section [ngSwitch]="getPageState(selectedCookBookRecipes)" class="meal-picker__meal-list">
+    <ul  *ngSwitchCase="'default'">
+      <li *ngFor="let recipe of selectedCookBookRecipes"
+          class="meal-picker__meal-list-item"
+          (click)="onAddRecipe(recipe)">
+        {{recipe.title}}
+      </li>
+    </ul>
+
+    <div *ngSwitchCase="'loading'">
+      <div class="meal-picker__meal-list-item-skeleton"></div>
+      <div class="meal-picker__meal-list-item-skeleton"></div>
+      <div class="meal-picker__meal-list-item-skeleton"></div>
+      <div class="meal-picker__meal-list-item-skeleton"></div>
+    </div>
+
+    <div *ngSwitchCase="'not-found'">
+      {{ filter + ' ' + ('meal-picker.not-found' | translate:translations:currentLanguage)}} <br />
+    </div>
+
+    <div *ngSwitchCase="'empty'">
+     {{ 'meal-picker.empty-cookbook' | translate:translations:currentLanguage}} <br />
+      <a [href]="'/cookbook?selectedCookbookId=' + selectedCookbookId">
+        {{ 'meal-picker.empty-cookbook-add-recipe' | translate:translations:currentLanguage}}
+      </a>
+    </div>
+  </section>
+</div>

@@ -29,7 +29,10 @@ export const cookbookStateReducer = createReducer<CookbookState, Action>(
       cookbooks
     })
   ),
-  on(CookbookApiActions.loadRecipesSuccess, (state: CookbookState, {cookbookId, recipes}: LoadRecipesSuccessAction) => {
+  on(
+    CookbookApiActions.loadRecipesSuccess,
+    CookbookApiActions.loadSpecificRecipesSuccess,
+    (state: CookbookState, {cookbookId, recipes}: LoadRecipesSuccessAction) => {
     return {
       ...state,
       recipes: {
