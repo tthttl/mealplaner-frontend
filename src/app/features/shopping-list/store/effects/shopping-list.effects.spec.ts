@@ -13,6 +13,7 @@ import { ShoppingListApiActions, ShoppingListContainerActions, ShoppingListEffec
 import { initialShoppingListState } from '../state/shopping-list-state';
 import { ShoppingListEffects } from './shopping-list.effects';
 import SpyObj = jasmine.SpyObj;
+import { MealPlanerContainerActions } from '../../../meal-planer/store/actions';
 
 
 describe('Shopping List Api Effects', () => {
@@ -318,6 +319,29 @@ describe('Shopping List Api Effects', () => {
           {id: '43', title: 'Item 2', order: 2, shoppingList: '42', unit: 'kg', amount: 1},
         ]);
         expect(action.type).toEqual(ShoppingListEffectActions.bulkUpdateShoppingListItems.type);
+      });
+    });
+  });
+
+  describe('addShoppingListItemsFromMealPlaner$', () => {
+    beforeEach(() => {
+      shoppingListService = jasmine.createSpyObj('shoppingListService', ['addShoppingListItem']);
+    });
+
+    it('should call api 3 times for 3 items', () => {
+      actions$ = of({
+        type: MealPlanerContainerActions.addMeal.type,
+        shoppingListItems: [
+          {id: '43', title: 'Item 2', order: 4, shoppingList: '42', unit: 'kg', amount: 1},
+          {id: '44', title: 'Item 3', order: 3, shoppingList: '42', unit: 'kg', amount: 1},
+          {id: '42', title: 'Item 1', order: 2, shoppingList: '42', unit: 'kg', amount: 1},
+        ]
+      });
+      shoppingListApiEffects = createEffect(actions$, shoppingListService);
+      shoppingListService.addShoppingListItem.and.returnValue(of({} as ShoppingListItem));
+      shoppingListApiEffects.addShoppingListItemsFromMealPlaner$.subscribe((action: Action) => {
+        expect(shoppingListService.updateShoppingListItem).toHaveBeenCalledTimes(3);
+        expect(action.type).toEqual(ShoppingListApiActions.updateShoppingListItemSuccess.type);
       });
     });
   });

@@ -94,7 +94,7 @@ describe('Cookbook Effects', () => {
     cookbookEffects = createEffects(of({type: LoadMealDialogActions.loadRecipesForSelectedCookbook.type, id: 'cookBookId'}));
     recipeService.loadRecipes.and.returnValue(of([{cookbookId: 'cookBookId'}] as Recipe[]));
     cookbookEffects.loadSpecificRecipes$.subscribe((action: Action) => {
-      expect(action.type).toEqual(CookbookApiActions.loadRecipesSuccess.type);
+      expect(action.type).toEqual(CookbookApiActions.loadSpecificRecipesSuccess.type);
     });
   });
 
@@ -102,7 +102,7 @@ describe('Cookbook Effects', () => {
     cookbookEffects = createEffects(of({type: LoadMealDialogActions.loadRecipesForSelectedCookbook.type, id: 'cookBookId'}));
     recipeService.loadRecipes.and.returnValue(throwError('error'));
     cookbookEffects.loadSpecificRecipes$.subscribe((action: Action) => {
-      expect(action.type).toEqual(CookbookApiActions.loadRecipesFailure.type);
+      expect(action.type).toEqual(CookbookApiActions.loadSpecificRecipesFailure.type);
     });
   });
 

@@ -27,6 +27,7 @@ import { GlobalState, selectCurrentShoppingListItems, selectUserID } from '../..
 import { CookbookContainerActions } from '../../../cookbook/store/actions';
 import { ShoppingListService } from '../../service/shopping-list.service';
 import { ShoppingListApiActions, ShoppingListContainerActions, ShoppingListEffectActions } from '../actions';
+import { LoadMealDialogActions, MealPlanerContainerActions } from '../../../meal-planer/store/actions';
 
 @Injectable()
 export class ShoppingListEffects {
@@ -43,7 +44,11 @@ export class ShoppingListEffects {
 
   @Effect()
   getShoppingLists$ = this.actions$.pipe(
-    ofType(ShoppingListContainerActions.loadShoppingLists, CookbookContainerActions.loadShoppingLists),
+    ofType(
+      ShoppingListContainerActions.loadShoppingLists,
+      CookbookContainerActions.loadShoppingLists,
+      LoadMealDialogActions.loadShoppingLists,
+    ),
     withLatestFrom(this.store.select(selectUserID)),
     filter(([_, userId]) => !!userId),
     exhaustMap(([_, userId]) => this.shoppingListService.getShoppingLists(userId!).pipe(
@@ -128,7 +133,6 @@ export class ShoppingListEffects {
       return this.snackBarService.openSnackBar('backend-failed.error-message', 'backend-failed.retry').afterDismissed().pipe(
         take(1),
         map(({dismissedByAction}) => {
-          console.log(dismissedByAction);
           return dismissedByAction ?
             ShoppingListEffectActions.retryAddShoppingListItem({optimisticId, shoppingListItem}) :
             ShoppingListEffectActions.undoOptimisticAddShoppingListItem({optimisticId, shoppingListItem});
@@ -163,13 +167,29 @@ export class ShoppingListEffects {
       return this.snackBarService.openSnackBar('backend-failed.error-message', 'backend-failed.retry').afterDismissed().pipe(
         take(1),
         map(({dismissedByAction}) => {
-          console.log(dismissedByAction);
           return dismissedByAction ?
             ShoppingListEffectActions.retryDeleteShoppingListItem({shoppingListItem}) :
             ShoppingListEffectActions.undoOptimisticDeleteShoppingListItem({shoppingListItem});
         })
       );
     }),
+  );
+
+  @Effect()
+  addShoppingListItemsFromMealPlaner$ = this.actions$.pipe(
+    ofType(MealPlanerContainerActions.addMeal),
+    map(({shoppingListItems}) => {
+      return {
+        shoppingListItems,
+        updateObservables: shoppingListItems.map(shoppingListItem => this.shoppingListService.addShoppingListItem(shoppingListItem))
+      };
+    }),
+    concatMap(({shoppingListItems, updateObservables}) => {
+      const a = forkJoin(updateObservables);
+      return a.pipe(
+        map((_, index) => ShoppingListApiActions.addShoppingListItemsSuccess()),
+        catchError(() => of(ShoppingListApiActions.addShoppingListItemsFailure())));
+    })
   );
 
   @Effect()
@@ -202,7 +222,6 @@ export class ShoppingListEffects {
     concatMap(({shoppingListItems, updateObservables}) => {
       const a = forkJoin(updateObservables);
       return a.pipe(
-        tap(() => console.log('success')),
         map(() => ShoppingListApiActions.updateShoppingListItemSuccess()),
         catchError(() => of(ShoppingListApiActions.updateShoppingListItemFailure({shoppingListItems}))));
     })
@@ -301,7 +320,6 @@ export class ShoppingListEffects {
       return this.snackBarService.openSnackBar('backend-failed.error-message', 'backend-failed.retry').afterDismissed().pipe(
         take(1),
         map(({dismissedByAction}) => {
-          console.log(dismissedByAction);
           return dismissedByAction ?
             ShoppingListEffectActions.retryDeleteShoppingList({shoppingList}) :
             ShoppingListEffectActions.undoOptimisticDeleteShoppingList({shoppingList});
