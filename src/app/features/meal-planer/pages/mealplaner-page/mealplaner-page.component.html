@@ -15,6 +15,9 @@
     [selectedDate]="selectedDate"
     [translations]="translations"
     [currentLanguage]="currentLanguage"
-    (dateChanged)="onChangeWeekDay($event)">
+    [dayPlan]="dayPlan"
+    (addMeal)="onAddMeal($event)"
+    (dateChanged)="onChangeWeekDay($event)"
+    (removeMeal)="onRemoveMeal($event)">
   </app-schedule>
 </div>
