@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {
+  activeDayPlan,
   activeMealPlaner,
   activeMealPlanerId,
   GlobalState,
@@ -10,13 +11,25 @@ import {
 } from '../../../../core/store';
 import { Observable } from 'rxjs';
 import { MealPlanerContainerActions } from '../../store/actions';
-import { CreateListDialogEvent, EditListDialogEvent, I18n, Language, MealPlaner, ShoppingList } from '../../../../core/models/model';
+import {
+  AddMealDialogEvent,
+  CreateListDialogEvent,
+  DayPlan,
+  EditListDialogEvent,
+  I18n,
+  Language, Meal,
+  MealPlaner, MealType,
+  ShoppingList
+} from '../../../../core/models/model';
 import { SnackbarService } from '../../../../core/services/snackbar.service';
 import { DialogService } from '../../../../core/services/dialog.service';
 import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
 import { take, withLatestFrom } from 'rxjs/operators';
 import { EditListDialogComponent } from '../../../../shared/components/edit-list-dialog/edit-list-dialog.component';
 import { DELETION_DELAY } from '../../../../core/constants/constants';
+import { AddMealDialogComponent } from '../add-meal-dialog/add-meal-dialog.component';
+import { v4 as uuid } from 'uuid';
+
 
 @Component({
   selector: 'app-mealplaner-container',
@@ -28,8 +41,8 @@ export class MealplanerContainerComponent implements OnInit {
   selectedDate: Observable<Date | null> = this.store.select(selectSelectedDate);
   translations$: Observable<I18n | null> = this.store.select(selectTranslations);
   currentLanguage$: Observable<Language | null> = this.store.select((state: GlobalState) => state.appState.language);
-  // meals$: Observable<Meal[] | undefined | null> = this.store.select(selectCurrentMealPlanerMeals);
-  mealPlaners$: Observable<ShoppingList[] | null> = this.store.select(selectMealPlaners);
+  dayPlan$: Observable<DayPlan | undefined | null> = this.store.select(activeDayPlan);
+  mealPlaners$: Observable<MealPlaner[] | null> = this.store.select(selectMealPlaners);
   activeMealPlaner$: Observable<ShoppingList | undefined> = this.store.select(activeMealPlaner);
   activeMealPlanerId$: Observable<string | undefined> = this.store.select(activeMealPlanerId);
 
@@ -66,16 +79,8 @@ export class MealplanerContainerComponent implements OnInit {
   }
 
   onWeekOffsetChanged(selectedDate: Date): void {
-    console.log('here', selectedDate);
-
     this.store.dispatch(MealPlanerContainerActions.selectedDateChanged({selectedDate}));
   }
-
-  /*
-  onMealAdded(meal: Meal): void {
-    this.store.dispatch(ShoppingListContainerActions.addShoppingListItem({optimisticId: uuid(), shoppingListItem}));
-  }
-   */
 
   onMealPlanerChange(mealPlaner: MealPlaner): void {
     this.store.dispatch(MealPlanerContainerActions.changeSelectedMealPlaner({mealPlanerId: mealPlaner.id}));
@@ -120,5 +125,36 @@ export class MealplanerContainerComponent implements OnInit {
         }
       });
 
+  }
+
+  onAddMeal(mealType: MealType): void {
+    const dialogRef = this.dialogService.openDialog(AddMealDialogComponent, {
+      data: {mealType},
+      translations: this.editDialogTranslations,
+    });
+    dialogRef.afterClosed()
+      .pipe(take(1))
+      .subscribe((result: AddMealDialogEvent | undefined) => {
+        if (result) {
+          this.store.dispatch(MealPlanerContainerActions.addMeal({
+            optimisticId: uuid(),
+            recipe: result.recipe,
+            mealType: result.mealType,
+            shoppingListItems: result.shoppingListItems
+          }));
+        }
+      });
+  }
+
+  onRemoveMeal(meal: Meal): void {
+    this.store.dispatch(MealPlanerContainerActions.removeMeal({meal}));
+    this.snackBarService.openSnackBar('message.undo', 'message.action', DELETION_DELAY)
+      .afterDismissed()
+      .pipe(take(1))
+      .subscribe(({dismissedByAction}) => {
+        if (dismissedByAction) {
+          this.store.dispatch(MealPlanerContainerActions.undoRemoveMeal({meal}));
+        }
+      });
   }
 }

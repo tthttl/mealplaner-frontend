@@ -9,32 +9,45 @@
     [selectedDayIndex]="selectedDayIndex"
     [translations]="translations"
     [currentLanguage]="currentLanguage"
+    [currentDayIndex]="displayedWeekIsActiveWeek && currentTodayIndex"
     (changeDayIndex)="onChangeWeekDay($event)"
   ></app-schedule-days-controlls>
   <div class="schedule__content">
-    <div class="schedule__heading">
-      Frühstück
-    </div>
-    <div class="schedule__element">
-      <fa-icon *ngIf="'chevron-left'"
-               [icon]="['fas', 'plus-circle']"></fa-icon>
-      Add Frühstück
-    </div>
-    <div class="schedule__heading">
-      Mittagessen
-    </div>
-    <div class="schedule__element">
-      <fa-icon *ngIf="'chevron-left'"
-               [icon]="['fas', 'plus-circle']"></fa-icon>
-      Add Mittagessn
-    </div>
-    <div class="schedule__heading">
-      Abendessen
-    </div>
-    <div class="schedule__element">
-      <fa-icon *ngIf="'chevron-left'"
-               [icon]="['fas', 'plus-circle']"></fa-icon>
-      Add Abendessen
-    </div>
+    <template *ngFor="let section of sections" style="display: block">
+      <div class="schedule__heading">
+        {{"meal-planer." + section | translate:translations:currentLanguage}}
+      </div>
+      <div class="schedule__element">
+        <div *ngIf="!dayPlan" class="schedule__element_skeleton"></div>
+        <div *ngIf="dayPlan && dayPlan[section]" >
+          <div *ngFor="let meal of dayPlan[section]" class="schedule__element-wrapper">
+            {{ meal.recipe.title }}
+            <div  class="schedule__element_actions">
+              <a *ngIf="meal.recipe.url" [href]="meal.recipe.url" target="_blank" class="schedule__element_actions_link">
+                <fa-icon [icon]="['fas', 'link']" aria-hidden="true"></fa-icon>
+                <span class="visually-hidden">{{"meal-planer-link." + section | translate:translations:currentLanguage}}</span>
+              </a>
+              <button class="schedule__element_actions_button" (click)="onRemoveMeal(meal)">
+                <fa-icon [icon]="['fas', 'trash']" aria-hidden="true"></fa-icon>
+                <span class="visually-hidden">{{"meal-planer-remove." + section | translate:translations:currentLanguage}}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <button
+          *ngIf="dayPlan && (!dayPlan[section] || dayPlan[section].length === 0) && !displayedDayIsPast"
+          class="schedule__add-button"
+          (click)="addMeal.emit(section)">
+          <fa-icon *ngIf="'chevron-left'"
+                   [icon]="['fas', 'plus-circle']"></fa-icon>
+          {{"meal-planer-add." + section | translate:translations:currentLanguage}}
+        </button>
+        <div
+          *ngIf="dayPlan && (!dayPlan[section] || dayPlan[section].length === 0) && displayedDayIsPast"
+          class="schedule__add-button">
+          {{"meal-planer-add.nothing-planed" | translate:translations:currentLanguage}}
+        </div>
+      </div>
+    </template>
   </div>
 </div>

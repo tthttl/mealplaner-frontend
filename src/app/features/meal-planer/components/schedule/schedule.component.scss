@@ -1,5 +1,6 @@
 @import "../../../../../styles/settings/variables";
 @import "../../../../../styles/settings/colors";
+@import "../../../../../styles/mixins/style";
 @import "../../../../../styles/settings/functions";
 
 
@@ -34,4 +35,34 @@
     padding: $spacing_medium $spacing-small;
     font-size: $font-size-small;
   }
+
+  &__element-wrapper{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__element_actions_link {
+    text-decoration: none;
+  }
+
+  &__element_actions_button {
+    background: none;
+    border: none;
+    color: $blue-100;
+    cursor: pointer;
+  }
+
+  &__add-button {
+    background: none;
+    border: none;
+    color: $blue-100;
+    cursor: pointer;
+  }
+}
+
+@include skeleton('.schedule__element_skeleton', $blue-grey_30, 3.5s) {
+  background: $blue-grey_40;
+  height: rem(24);
+  border-radius: $border-radius-default;
+  width: 90%;
 }
