@@ -43,13 +43,22 @@
 
   &__element_actions_link {
     text-decoration: none;
+    color: $blue-80;
+
+    &:hover {
+      color: $blue-100;
+    }
   }
 
   &__element_actions_button {
     background: none;
     border: none;
-    color: $blue-100;
+    color: $blue-80;
     cursor: pointer;
+
+    &:hover {
+      color: $blue-100;
+    }
   }
 
   &__add-button {
