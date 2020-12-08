@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { v4 as uuid } from 'uuid';
 import { BasicShoppingListItem, ShoppingListItem, SyncItem, SyncMethod } from '../models/model';
@@ -13,19 +13,17 @@ export class SyncService {
   constructor(private dbService: DBService) {
   }
 
-// TODO put write within if
   registerForSync(item: SyncItem): Observable<void> {
-    return fromPromise(this.dbService.write(item)
-      .then(() => console.log('Write successful')));
-    /*if ('serviceWorker' in navigator && 'SyncManager' in window) {
-      return fromPromise(navigator.serviceWorker.ready
-        .then(registration => registration.sync.register(SYNC_SHOPPING_LIST_ITEM_POST))
-        .catch(err => {
-          console.log(`Could not register sync for id ${item.id} \n` + err);
-          throwError(`Could not register sync for id ${item.id} \n`);
+    if ('serviceWorker' in navigator && 'SyncManager' in window) {
+      return fromPromise(this.dbService.write(item)
+        .then(() => {
+          return navigator.serviceWorker.ready
+            .then(registration => registration.sync.register('ShoppingListItems')
+              .then(() => console.log('Sync Successfully registered'))
+              .catch((err) => console.log('Register for sync failed \n' + err)));
         }));
     }
-    return throwError('Offline Mode is not available');*/
+    return throwError('Offline Mode is not available');
   }
 
   createSyncItemForPost(basicShoppingListItem: BasicShoppingListItem, jwt: string): SyncItem {
