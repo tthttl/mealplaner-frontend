@@ -73,7 +73,7 @@ export function moveItemInArray<T>(array: T[], previousIndex: number, currentInd
   return copy;
 }
 
-export function addItemAtIndex<T extends Recipe | List>(newItem: T, items: T[] = []): T[] {
+export function addItemAlphabetically<T extends Recipe | List>(newItem: T, items: T[] = []): T[] {
   const indexToInsert = items.findIndex((item: T) => item.title.toLowerCase() > newItem.title.toLowerCase());
   return indexToInsert > -1 ? [...items.slice(0, indexToInsert), newItem, ...items.slice(indexToInsert)] : [...items, newItem];
 }

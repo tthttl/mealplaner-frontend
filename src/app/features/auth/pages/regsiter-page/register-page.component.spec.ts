@@ -5,6 +5,10 @@ import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
 import { RegisterPageComponent } from './register-page.component';
 import { SharedModule } from '../../../../shared/shared.module';
 import { AuthFormComponent } from '../../components/auth-form/auth-form.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { FaIconComponent, FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { APP_INITIALIZER } from '@angular/core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
 
 describe('RegisterFormComponent', () => {
   let component: RegisterPageComponent;
@@ -12,12 +16,22 @@ describe('RegisterFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, SharedModule],
-      declarations: [RegisterPageComponent, TranslatePipe, AuthFormComponent],
+      imports: [ReactiveFormsModule, SharedModule, RouterTestingModule],
+      declarations: [RegisterPageComponent, FaIconComponent, TranslatePipe, AuthFormComponent],
       providers: [
         {
           provide: TranslatePipe,
           useClass: TranslatePipe
+        },
+        {
+          provide: APP_INITIALIZER,
+          useFactory: (iconLibrary: FaIconLibrary) => {
+            return async () => {
+              iconLibrary.addIconPacks(fas);
+            };
+          },
+          deps: [FaIconLibrary],
+          multi: true,
         },
       ]
     })

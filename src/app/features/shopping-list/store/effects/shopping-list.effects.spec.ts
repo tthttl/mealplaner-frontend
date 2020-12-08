@@ -230,24 +230,26 @@ describe('Shopping List Api Effects', () => {
 
   describe('deleteShoppingListItem$', () => {
     beforeEach(() => {
-      actions$ = of({type: ShoppingListContainerActions.deleteShoppingListItem.type, shoppingListItem: {id: '42'}});
+      actions$ = of({type: ShoppingListEffectActions.retryDeleteShoppingListItem.type, shoppingListItem: {id: '42'}});
       shoppingListService = jasmine.createSpyObj('shoppingListService', ['deleteShoppingListItem']);
       shoppingListApiEffects = createEffect(actions$, shoppingListService);
     });
 
-    it('it should return success action', () => {
+    it('it should return success action', fakeAsync(() => {
       shoppingListService.deleteShoppingListItem.and.returnValue(of({} as { 'DELETED': true }));
       shoppingListApiEffects.deleteShoppingListItem$.subscribe((action: Action) => {
         expect(action.type).toEqual(ShoppingListApiActions.deleteShoppingListItemSuccess.type);
       });
-    });
+      tick();
+    }));
 
-    it('should return failure action', () => {
+    it('should return failure action', fakeAsync(() => {
       shoppingListService.deleteShoppingListItem.and.returnValue(throwError('error'));
       shoppingListApiEffects.deleteShoppingListItem$.subscribe((action: Action) => {
         expect(action.type).toEqual(ShoppingListApiActions.deleteShoppingListItemFailure.type);
       });
-    });
+      tick();
+    }));
   });
 
   describe('moveShoppingListItem$', () => {
@@ -310,8 +312,8 @@ describe('Shopping List Api Effects', () => {
       shoppingListApiEffects = createEffect(actions$, shoppingListService);
       shoppingListService.addShoppingListItem.and.returnValue(of({} as ShoppingListItem));
       shoppingListApiEffects.addShoppingListItemsFromMealPlaner$.subscribe((action: Action) => {
-        expect(shoppingListService.updateShoppingListItem).toHaveBeenCalledTimes(3);
-        expect(action.type).toEqual(ShoppingListApiActions.updateShoppingListItemSuccess.type);
+        expect(shoppingListService.addShoppingListItem).toHaveBeenCalledTimes(3);
+        expect(action.type).toEqual(ShoppingListApiActions.addShoppingListItemsSuccess.type);
       });
     });
   });

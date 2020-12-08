@@ -32,10 +32,10 @@ export const deleteShoppingListItemFailure = createAction(
 );
 
 export const updateShoppingListItemSuccess = createAction(
-  '[Shopping List API] Delete Shopping List Items Success'
+  '[Shopping List API] Update Shopping List Items Success'
 );
 export const updateShoppingListItemFailure = createAction(
-  '[Shopping List API] Delete Shopping List Items Failure',
+  '[Shopping List API] Update Shopping List Items Failure',
   props<{ shoppingListItems: ShoppingListItem[] }>()
 );
 

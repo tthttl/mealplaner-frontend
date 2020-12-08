@@ -55,3 +55,8 @@ In this project we use rem as main Unit.
 There is a helper function which converts px to rems.
 When writing css use this function.
 Expect for the unit 1px. This gets to small when converting to rem. Therefore use 1px as px instead in this case.
+
+##PreLoading Strategy
+There are some modules that depend on others. For example, the meal-planer modules needs the cookbook as well as the shopping-list to load recipes and add items to the shopping-list.
+To keep the advantages from lazyloading a custom preloading strategy was implemented. The implemenation can be found in app/core/services/custom-preloading-strategy.service.ts
+To define a dependence. Add the route to a module which also uses this module For example: the cookbook path: data: {usedBy: ['meal-planer']}.

@@ -3,7 +3,7 @@ import { TranslatePipe } from '../../shared/pipes/translate.pipe';
 import { I18n, Recipe } from '../models/model';
 import { I18n as I18nApi, UserApi } from '../models/model-api';
 import {
-  addItemAtIndex,
+  addItemAlphabetically,
   copyOrCreateArray,
   decodeJwtToken,
   isFormTouchedOrDirty,
@@ -171,7 +171,7 @@ describe('Helpers', () => {
     });
   });
 
-  describe('addItemAtIndex', () => {
+  describe('addItemAlphabetically', () => {
     const recipeA: Partial<Recipe> = {
       id: '1',
       title: 'Recipe A'
@@ -183,23 +183,23 @@ describe('Helpers', () => {
     };
 
     const recipeC: Partial<Recipe> = {
-      id: '2',
-      title: 'Recipe B'
+      id: '3',
+      title: 'Recipe C'
     };
 
     it('should add first', () => {
       const recipes: Recipe[] = [recipeB as Recipe, recipeC as Recipe];
-      expect(addItemAtIndex(recipeA as Recipe, recipes));
+      expect(addItemAlphabetically(recipeA as Recipe, recipes)).toEqual([recipeA as Recipe, recipeB as Recipe, recipeC as Recipe]);
     });
 
     it('should add last', () => {
       const recipes: Recipe[] = [recipeA as Recipe, recipeB as Recipe];
-      expect(addItemAtIndex(recipeC as Recipe, recipes));
+      expect(addItemAlphabetically(recipeC as Recipe, recipes)).toEqual([recipeA as Recipe, recipeB as Recipe, recipeC as Recipe]);
     });
 
     it('should add in the middle', () => {
       const recipes: Recipe[] = [recipeA as Recipe, recipeC as Recipe];
-      expect(addItemAtIndex(recipeB as Recipe, recipes));
+      expect(addItemAlphabetically(recipeB as Recipe, recipes)).toEqual([recipeA as Recipe, recipeB as Recipe, recipeC as Recipe]);
     });
   });
 
@@ -256,5 +256,3 @@ describe('Helpers', () => {
     });
   });
 });
-
-

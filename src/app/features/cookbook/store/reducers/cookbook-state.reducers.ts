@@ -1,5 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { addItemAtIndex, copyOrCreateArray } from '../../../../core/helpers/helpers';
+import { addItemAlphabetically, copyOrCreateArray } from '../../../../core/helpers/helpers';
 import { Cookbook, Recipe, } from '../../../../core/models/model';
 import {
   CookbookCreatedAction,
@@ -95,7 +95,7 @@ export const cookbookStateReducer = createReducer<CookbookState, Action>(
       ...state,
       recipes: {
         ...state.recipes,
-        [recipe.cookbookId]: addItemAtIndex(recipe, state.recipes[recipe.cookbookId])
+        [recipe.cookbookId]: addItemAlphabetically(recipe, state.recipes[recipe.cookbookId])
       }
     };
   }),
@@ -149,7 +149,7 @@ export const cookbookStateReducer = createReducer<CookbookState, Action>(
     return {
       ...state,
       cookbooks: [
-        ...addItemAtIndex(cookbook, state.cookbooks)
+        ...addItemAlphabetically(cookbook, state.cookbooks)
       ]
     };
   }),
@@ -159,7 +159,7 @@ export const cookbookStateReducer = createReducer<CookbookState, Action>(
       activeCookbookId: recipe.cookbookId,
       recipes: {
         ...state.recipes,
-        [recipe.cookbookId]: addItemAtIndex(recipe, state.recipes[recipe.cookbookId])
+        [recipe.cookbookId]: addItemAlphabetically(recipe, state.recipes[recipe.cookbookId])
       }
     };
   }),

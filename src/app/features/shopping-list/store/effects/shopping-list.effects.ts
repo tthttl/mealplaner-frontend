@@ -152,9 +152,7 @@ export class ShoppingListEffects {
         ),
         takeUntil(this.actions$.pipe(ofType(ShoppingListContainerActions.undoDeleteShoppingListItem))),
         mergeMap(() => this.shoppingListService.deleteShoppingListItem(shoppingListItem.id).pipe(
-          map(() => {
-            return ShoppingListApiActions.deleteShoppingListItemSuccess({shoppingListItem});
-          }),
+          map(() => ShoppingListApiActions.deleteShoppingListItemSuccess({shoppingListItem})),
           catchError(() => of(ShoppingListApiActions.deleteShoppingListItemFailure({shoppingListItem})))
         )),
       );
