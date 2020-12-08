@@ -29,11 +29,18 @@
     [attr.aria-label]="'meal-picker.filter' |  translate:translations:currentLanguage"
   />
 
+  <div *ngIf="selectedCookBookRecipes" class="visually-hidden" role="status" aria-live="polite">
+    {{selectedCookBookRecipes.length}} {{'meal-picker.araia-list' | translate:translations:currentLanguage}}
+  </div>
   <section [ngSwitch]="getPageState(selectedCookBookRecipes)" class="meal-picker__meal-list">
     <ul  *ngSwitchCase="'default'">
       <li *ngFor="let recipe of selectedCookBookRecipes"
+          tabindex="0"
           class="meal-picker__meal-list-item"
-          (click)="onAddRecipe(recipe)">
+          (click)="onAddRecipe(recipe)"
+          (keyup.enter)="onAddRecipe(recipe)"
+          (keyup.space)="onAddRecipe(recipe)"
+      >
         {{recipe.title}}
       </li>
     </ul>
