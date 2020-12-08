@@ -3,7 +3,7 @@
     <h1 class="product-page__heading">{{'product-page.heading' | translate:translations:currentLanguage }}</h1>
     <section class="product-page__lead-text" [innerHTML]="'product-page.lead-text' | translate:translations:currentLanguage"></section>
     <section class="product-page__cta">
-      <app-button [buttonText]="'product-page.cta' | translate:translations:currentLanguage" [routerLink]="'auth/register'"></app-button>
+      <app-button-link class="product-page__cta" [linkText]="'product-page.cta' | translate:translations:currentLanguage" [link]="'auth/register'"></app-button-link>
     </section>
   </div>
 </div>
@@ -55,7 +55,7 @@
   </section>
 
   <section class="product-page__cta">
-    <app-button class="product-page__cta" [buttonText]="'product-page.cta' | translate:translations:currentLanguage" [routerLink]="'auth/register'"></app-button>
+    <app-button-link class="product-page__cta" [linkText]="'product-page.cta' | translate:translations:currentLanguage" [link]="'auth/register'"></app-button-link>
   </section>
 </div>
 

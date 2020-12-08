@@ -86,7 +86,7 @@ export class ShoppingListContainerComponent implements OnInit {
   onShoppingListItemDeleted({shoppingListItem}: DeleteShoppingListItemEvent): void {
     this.store.dispatch(ShoppingListContainerActions.deleteShoppingListItem({shoppingListItem}));
 
-    this.snackBarService.openSnackBar('message.undo', 'message.action', 3000)
+    this.snackBarService.openSnackBar('message.undo', 'message.action', DELETION_DELAY)
       .afterDismissed()
       .pipe(take(1))
       .subscribe(({dismissedByAction}) => {

@@ -34,6 +34,9 @@
     padding: $spacing-small 0;
     cursor: pointer;
     font-size: $font-size-normal;
+    &:focus {
+      outline: 2px solid $blue_40;
+    }
 
 
     &::before,
