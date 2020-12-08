@@ -44,7 +44,7 @@ describe('Cookbook Effects', () => {
     });
 
     store = TestBed.inject(MockStore);
-    router = jasmine.createSpyObj('Router', ['navigate', 'routerState']);
+    router = jasmine.createSpyObj('Router', ['navigate'], {routerState: {snapshot: {url: 'cookbook'}}} );
     recipeService = jasmine.createSpyObj('RecipeService', ['loadRecipes', 'saveRecipe', 'editRecipe', 'deleteRecipe']);
     cookbookService = jasmine.createSpyObj('CookbookService', ['loadCookbooks', 'saveCookbook', 'editCookbook', 'deleteCookbook']);
     storageService = jasmine.createSpyObj('StorageService', ['setItem', 'getItem']);
