@@ -159,6 +159,35 @@ describe('Shopping List Api Effects', () => {
     });
   });
 
+  describe('setQueryParameterForActiveShoppingList$', () => {
+    beforeEach(() => {
+      shoppingListService = jasmine.createSpyObj('', ['']);
+      router = jasmine.createSpyObj('Router', ['navigate'], {routerState: {snapshot: {url: 'shopping-list'}}});
+    });
+
+    it('it should  set query parameters after delegated ShoppingListEffectActions', () => {
+      actions$ = of({
+        type: ShoppingListEffectActions.setActiveShoppingList.type,
+        shoppingListId: '42',
+      });
+      shoppingListApiEffects = createEffect(actions$, shoppingListService, router);
+      shoppingListApiEffects.setQueryParameterForActiveShoppingList$.subscribe(() => {
+        expect(router.navigate).toHaveBeenCalledWith([], {relativeTo: activatedRoute, queryParams: {shoppingListId: '42'}});
+      });
+    });
+
+    it('it should  set query parameters after delegated ShoppingListContainerActions', () => {
+      actions$ = of({
+        type: ShoppingListContainerActions.changeShoppingList.type,
+        shoppingListId: '42',
+      });
+      shoppingListApiEffects = createEffect(actions$, shoppingListService, router);
+      shoppingListApiEffects.setQueryParameterForActiveShoppingList$.subscribe(() => {
+        expect(router.navigate).toHaveBeenCalledWith([], {relativeTo: activatedRoute, queryParams: {shoppingListId: '42'}});
+      });
+    });
+  });
+
   describe('setLocalStorageForActiveShoppingList$', () => {
 
     it('it should  set local storage parameters after delegated ShoppingListEffectActions', () => {
