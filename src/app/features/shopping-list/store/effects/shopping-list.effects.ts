@@ -18,7 +18,7 @@ import {
   withLatestFrom
 } from 'rxjs/operators';
 import { DELETION_DELAY, STORAGE_SELECTED_SHOPPING_LIST_ID } from '../../../../core/constants/constants';
-import { moveItemInArray } from '../../../../core/helpers/helpers';
+import { moveItemInArray, stringBetweenChars } from '../../../../core/helpers/helpers';
 import { ShoppingList, ShoppingListItem } from '../../../../core/models/model';
 import { ChangeShoppingListAction, SetActiveShoppingListAction } from '../../../../core/models/model-action';
 import { SnackbarService } from '../../../../core/services/snackbar.service';
@@ -83,6 +83,7 @@ export class ShoppingListEffects {
       ShoppingListEffectActions.setActiveShoppingList,
       ShoppingListContainerActions.changeShoppingList,
     ),
+    filter(() => stringBetweenChars(this.router.routerState.snapshot.url, '/', '?') === 'shopping-list'),
     tap(({shoppingListId}) => {
       this.router.navigate([], {relativeTo: this.activatedRoute, queryParams: {shoppingListId}});
     })

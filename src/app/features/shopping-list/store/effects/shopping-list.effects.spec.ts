@@ -159,36 +159,6 @@ describe('Shopping List Api Effects', () => {
     });
   });
 
-
-  describe('setQueryParameterForActiveShoppingList$', () => {
-    beforeEach(() => {
-      shoppingListService = jasmine.createSpyObj('', ['']);
-      router = jasmine.createSpyObj('Router', ['navigate']);
-    });
-
-    it('it should  set query parameters after delegated ShoppingListEffectActions', () => {
-      actions$ = of({
-        type: ShoppingListEffectActions.setActiveShoppingList.type,
-        shoppingListId: '42',
-      });
-      shoppingListApiEffects = createEffect(actions$, shoppingListService, router);
-      shoppingListApiEffects.setQueryParameterForActiveShoppingList$.subscribe(() => {
-        expect(router.navigate).toHaveBeenCalledWith([], {relativeTo: activatedRoute, queryParams: {shoppingListId: '42'}});
-      });
-    });
-
-    it('it should  set query parameters after delegated ShoppingListContainerActions', () => {
-      actions$ = of({
-        type: ShoppingListContainerActions.changeShoppingList.type,
-        shoppingListId: '42',
-      });
-      shoppingListApiEffects = createEffect(actions$, shoppingListService, router);
-      shoppingListApiEffects.setQueryParameterForActiveShoppingList$.subscribe(() => {
-        expect(router.navigate).toHaveBeenCalledWith([], {relativeTo: activatedRoute, queryParams: {shoppingListId: '42'}});
-      });
-    });
-  });
-
   describe('setLocalStorageForActiveShoppingList$', () => {
 
     it('it should  set local storage parameters after delegated ShoppingListEffectActions', () => {
@@ -348,10 +318,6 @@ describe('Shopping List Api Effects', () => {
 
   describe('bulkUpdateShoppingListItem$', () => {
     beforeEach(() => {
-      shoppingListService = jasmine.createSpyObj('shoppingListService', ['updateShoppingListItem']);
-    });
-
-    it('should call api 3 times for 3 items', () => {
       actions$ = of({
         type: ShoppingListEffectActions.bulkUpdateShoppingListItems.type,
         shoppingListItems: [
@@ -360,7 +326,12 @@ describe('Shopping List Api Effects', () => {
           {id: '42', title: 'Item 1', order: 2, shoppingList: '42', unit: 'kg', amount: 1},
         ]
       });
+      shoppingListService = jasmine.createSpyObj('shoppingListService', ['updateShoppingListItem']);
       shoppingListApiEffects = createEffect(actions$, shoppingListService);
+
+    });
+
+    it('should call api 3 times for 3 items', () => {
       shoppingListService.updateShoppingListItem.and.returnValue(of({} as ShoppingListItem));
       shoppingListApiEffects.bulkUpdateShoppingListItem$.subscribe((action: Action) => {
         expect(shoppingListService.updateShoppingListItem).toHaveBeenCalledTimes(3);

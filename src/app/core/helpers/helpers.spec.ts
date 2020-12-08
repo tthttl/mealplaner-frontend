@@ -13,7 +13,8 @@ import {
   mapI18nApiToI18nClient,
   mapUserApiToUserClient,
   moveItemInArray,
-  translateValidationErrors
+  translateValidationErrors,
+  stringBetweenChars
 } from './helpers';
 import createSpyObj = jasmine.createSpyObj;
 
@@ -169,55 +170,40 @@ describe('Helpers', () => {
       expect(moveItemInArray([0, 1, 2, 3, 4], 3, 1)).toEqual([0, 3, 1, 2, 4]);
     });
   });
-});
 
-describe(`${addItemAtIndex}`, () => {
-  const recipeA: Partial<Recipe> = {
-    id: '1',
-    title: 'Recipe A'
-  };
+  describe('addItemAtIndex', () => {
+    const recipeA: Partial<Recipe> = {
+      id: '1',
+      title: 'Recipe A'
+    };
 
-  const recipeB: Partial<Recipe> = {
-    id: '2',
-    title: 'Recipe B'
-  };
+    const recipeB: Partial<Recipe> = {
+      id: '2',
+      title: 'Recipe B'
+    };
 
-  const recipeC: Partial<Recipe> = {
-    id: '2',
-    title: 'Recipe B'
-  };
+    const recipeC: Partial<Recipe> = {
+      id: '2',
+      title: 'Recipe B'
+    };
 
-  it('should add first', () => {
-    const recipes: Recipe[] = [recipeB as Recipe, recipeC as Recipe];
-    expect(addItemAtIndex(recipeA as Recipe, recipes));
-  });
-
-  it('should add last', () => {
-    const recipes: Recipe[] = [recipeA as Recipe, recipeB as Recipe];
-    expect(addItemAtIndex(recipeC as Recipe, recipes));
-  });
-
-  it('should add in the middle', () => {
-    const recipes: Recipe[] = [recipeA as Recipe, recipeC as Recipe];
-    expect(addItemAtIndex(recipeB as Recipe, recipes));
-  });
-
-  describe(`${addItemAtIndex}`, () => {
-    it('should add item at beginning', () => {
-      expect(addItemAtIndex(recipeA as Recipe, [recipeB as Recipe, recipeC as Recipe]))
-        .toEqual([recipeA as Recipe, recipeB as Recipe, recipeC as Recipe]);
+    it('should add first', () => {
+      const recipes: Recipe[] = [recipeB as Recipe, recipeC as Recipe];
+      expect(addItemAtIndex(recipeA as Recipe, recipes));
     });
-    it('should add item in the middle', () => {
-      expect(addItemAtIndex(recipeB as Recipe, [recipeA as Recipe, recipeC as Recipe]))
-        .toEqual([recipeA as Recipe, recipeB as Recipe, recipeC as Recipe]);
+
+    it('should add last', () => {
+      const recipes: Recipe[] = [recipeA as Recipe, recipeB as Recipe];
+      expect(addItemAtIndex(recipeC as Recipe, recipes));
     });
-    it('should add item at the end', () => {
-      expect(addItemAtIndex(recipeC as Recipe, [recipeA as Recipe, recipeB as Recipe]))
-        .toEqual([recipeA as Recipe, recipeB as Recipe, recipeC as Recipe]);
+
+    it('should add in the middle', () => {
+      const recipes: Recipe[] = [recipeA as Recipe, recipeC as Recipe];
+      expect(addItemAtIndex(recipeB as Recipe, recipes));
     });
   });
 
-  describe(`${copyOrCreateArray}`, () => {
+  describe('copyOrCreateArray', () => {
     it('should copy array', () => {
       expect(copyOrCreateArray({1: [{id: 1}, {id: 2}]}, '1'))
         .toEqual([{id: 1}, {id: 2}]);
@@ -255,4 +241,20 @@ describe(`${addItemAtIndex}`, () => {
       expect(getWeekDayIndex(new Date(2020, 10, 28))).toEqual(5);
     });
   });
+
+  describe(`stringBetweenChars`, () => {
+    it('should return string between to Chars', () => {
+      expect(stringBetweenChars('/shopping-list?shoppingListId=5fb99996b035c5dcdbff76d8', '/', '?')).toEqual('shopping-list');
+    });
+
+    it('should return string after first char if end char is not in string', () => {
+      expect(stringBetweenChars('/shopping-list', '/', '?')).toEqual('shopping-list');
+    });
+
+    it('should return full string of if start end char ar not in strin', () => {
+      expect(stringBetweenChars('shopping-list', '/', '?')).toEqual('shopping-list');
+    });
+  });
 });
+
+

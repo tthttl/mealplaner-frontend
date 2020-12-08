@@ -14,6 +14,7 @@ import { RecipeService } from '../../services/recipe.service';
 import { CookbookApiActions, CookbookContainerActions, RecipeApiActions, RecipeContainerActions } from '../actions';
 import { CookbookState } from '../state/cookbook-state';
 import { LoadMealDialogActions } from '../../../meal-planer/store/actions';
+import { stringBetweenChars } from '../../../../core/helpers/helpers';
 
 @Injectable()
 export class CookbookEffects {
@@ -141,6 +142,7 @@ export class CookbookEffects {
   @Effect({dispatch: false})
   setQueryParameterForActiveShoppingList$ = this.actions$.pipe(
     ofType(CookbookApiActions.setActiveCookbookIdAsQueryParam, CookbookContainerActions.selectCookbook),
+    filter(() => stringBetweenChars(this.router.routerState.snapshot.url, '/', '?') === 'cookbook'),
     tap(({selectedCookbookId}) => {
       this.router.navigate([], {relativeTo: this.route, queryParams: {selectedCookbookId}});
     })

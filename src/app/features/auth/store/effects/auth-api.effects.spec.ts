@@ -207,7 +207,7 @@ describe('Auth Api Effects', () => {
   describe('redirectWhenLoggedIn$', () => {
     beforeEach(() => {
       authService = jasmine.createSpyObj('AuthService', ['']);
-      router = jasmine.createSpyObj('Router', ['navigate']);
+      router = jasmine.createSpyObj('Router', ['navigateByUrl']);
       snackBarService = jasmine.createSpyObj('SnackBarService', ['openSnackBar']);
     });
 
@@ -221,7 +221,7 @@ describe('Auth Api Effects', () => {
         store);
 
       authApiEffects.redirectWhenLoggedIn$.subscribe(() => {
-        expect(router.navigate).toHaveBeenCalledWith([DEFAULT_REDIRECT_URL_FOR_LOGGED_IN_USER]);
+        expect(router.navigateByUrl).toHaveBeenCalledWith(DEFAULT_REDIRECT_URL_FOR_LOGGED_IN_USER);
       });
     });
 
@@ -235,7 +235,7 @@ describe('Auth Api Effects', () => {
         store);
 
       authApiEffects.redirectWhenLoggedIn$.subscribe(() => {
-        expect(router.navigate).toHaveBeenCalledWith([DEFAULT_REDIRECT_URL_FOR_LOGGED_IN_USER]);
+        expect(router.navigateByUrl).toHaveBeenCalledWith(DEFAULT_REDIRECT_URL_FOR_LOGGED_IN_USER);
       });
     });
 
@@ -249,7 +249,7 @@ describe('Auth Api Effects', () => {
         store);
 
       authApiEffects.redirectWhenLoggedIn$.subscribe(() => {
-        expect(router.navigate).toHaveBeenCalledWith([DEFAULT_REDIRECT_URL_FOR_LOGGED_IN_USER]);
+        expect(router.navigateByUrl).toHaveBeenCalledWith(DEFAULT_REDIRECT_URL_FOR_LOGGED_IN_USER);
       });
     });
   });
