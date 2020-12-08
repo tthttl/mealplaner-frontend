@@ -1,0 +1,19 @@
+@import "../../../../styles/settings/colors";
+@import "../../../../styles/mixins/forms";
+
+.button-link {
+  background-color: $blue_90;
+  cursor: pointer;
+  color: $blue-grey_10;
+  text-decoration: none;
+  @include button();
+
+  &:hover {
+    background: $blue_60;
+  }
+
+  &:focus {
+    background: $blue_60;
+    outline: 2px solid $blue_90;
+  }
+}

@@ -425,7 +425,7 @@ describe('Shopping List Api Effects', () => {
     });
   });
 
-  describe('deleteShopping$', () => {
+  describe('deleteShoppingList$', () => {
     beforeEach(() => {
       actions$ = of({type: ShoppingListContainerActions.deleteShoppingList.type, shoppingList: {id: '42', title: 'DELETE'}});
       shoppingListService = jasmine.createSpyObj('shoppingListService', ['deleteShoppingList']);
