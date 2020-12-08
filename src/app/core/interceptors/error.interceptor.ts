@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Observable, throwError } from 'rxjs';
 import { catchError, flatMap, take, tap } from 'rxjs/operators';
-import { Store } from '@ngrx/store';
-import { GlobalState, selectUser } from '../store';
 import { AuthService } from '../../features/auth/services/auth.service';
+import { GlobalState, selectUser } from '../store';
 import { ErrorInterceptorActions } from '../store/actions';
 
 @Injectable()
@@ -26,7 +26,7 @@ export class ErrorInterceptor implements HttpInterceptor {
           }),
           tap(_ => console.error(err)),
           flatMap(_ => {
-            return throwError((err && err.error && err.error.message) || err.statusText);
+            return throwError(err);
           })
         );
       }));

@@ -13,7 +13,8 @@
     "docs:json": "compodoc -p ./tsconfig.base.json -e json -d .",
     "storybook": "npm run docs:json && start-storybook -p 6006",
     "build-storybook": "npm run docs:json && build-storybook",
-    "cypress": "node_modules/.bin/cypress open"
+    "cypress": "node_modules/.bin/cypress open",
+    "build:pwa": "ng build --prod --configuration=production && cp src/app/service-worker.js dist/mealplaner"
   },
   "husky": {
     "hooks": {
@@ -41,6 +42,7 @@
     "@ngrx/entity": "^9.2.0",
     "@ngrx/store": "^9.2.0",
     "date-fns": "^2.16.1",
+    "idb": "^5.0.8",
     "puppeteer": "^5.4.1",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.3",
