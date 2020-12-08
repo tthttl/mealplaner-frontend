@@ -1,11 +1,14 @@
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { By } from '@angular/platform-browser';
 import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
 import { ArrayItemMovedEvent, ShoppingListItem } from '../../../../core/models/model';
 
 import { ShoppingListComponent } from './shopping-list.component';
+import { APP_INITIALIZER } from '@angular/core';
+import { FaIconComponent, FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { fas } from '@fortawesome/free-solid-svg-icons';
 
 describe('ShoppingListComponent', () => {
   let component: ShoppingListComponent;
@@ -13,8 +16,20 @@ describe('ShoppingListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ShoppingListComponent, TranslatePipe],
+      declarations: [ShoppingListComponent, FaIconComponent, TranslatePipe],
       imports: [DragDropModule, MatCheckboxModule],
+      providers: [
+        {
+          provide: APP_INITIALIZER,
+          useFactory: (iconLibrary: FaIconLibrary) => {
+            return async () => {
+              iconLibrary.addIconPacks(fas);
+            };
+          },
+          deps: [FaIconLibrary],
+          multi: true,
+        },
+      ]
     })
       .compileComponents();
   }));
@@ -50,7 +65,7 @@ describe('ShoppingListComponent', () => {
     fixture.detectChanges();
 
     const hostElement = fixture.nativeElement;
-    const label = hostElement.querySelector('.shopping-list__item-text');
+    const label = hostElement.querySelector('.mat-checkbox-label');
     label.click();
 
     component.shoppingListItemDeleted.subscribe((item: ShoppingListItem) => {
@@ -58,6 +73,7 @@ describe('ShoppingListComponent', () => {
     });
 
     tick(300);
+    flush();
   }));
 
 

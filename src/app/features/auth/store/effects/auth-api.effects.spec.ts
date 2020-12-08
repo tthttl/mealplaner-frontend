@@ -19,6 +19,7 @@ import { DEFAULT_REDIRECT_URL_FOR_LOGGED_IN_USER, REDIRECT_URL_WHEN_LOGOUT } fro
 import { SnackbarService } from '../../../../core/services/snackbar.service';
 import { LoginFailureAction } from '../../../../core/models/model-action';
 import SpyObj = jasmine.SpyObj;
+import { MatSnackBarRef } from '@angular/material/snack-bar';
 
 describe('Auth Api Effects', () => {
   let actions$;
@@ -139,32 +140,35 @@ describe('Auth Api Effects', () => {
     beforeEach(() => {
       actions$ = of({type: ResetPasswordContainerActions.resetPassword.type});
       authService = jasmine.createSpyObj('AuthService', ['resetPassword']);
+      snackBarService = jasmine.createSpyObj('SnackbarService', ['openSnackBar']);
       authApiEffects = new AuthApiEffects(
         actions$,
         authService,
         router,
         snackBarService,
         store);
+      // tslint:disable-next-line:no-any
+      snackBarService.openSnackBar.and.returnValue({} as MatSnackBarRef<any>);
     });
 
     it('should return restPasswordSuccess action', () => {
       authService.resetPassword.and.returnValue(of({} as User));
-      authApiEffects.sendPasswordResetMail$.subscribe((action: Action) => {
+      authApiEffects.resetPassword$.subscribe((action: Action) => {
         expect(action.type).toEqual(AuthApiActions.restPasswordSuccess.type);
       });
     });
 
     it('should call snackbar when success', () => {
       authService.resetPassword.and.returnValue(of({} as User));
-      authApiEffects.sendPasswordResetMail$.subscribe(() => {
-        expect(snackBarService).toHaveBeenCalledWith('authBackend.resetPassword.failed');
+      authApiEffects.resetPassword$.subscribe((_: Action) => {
+        expect(snackBarService.openSnackBar).toHaveBeenCalledWith('auth.reset-password.success');
       });
     });
 
 
     it('should return restPasswordFailure action', () => {
       authService.resetPassword.and.returnValue(throwError('error'));
-      authApiEffects.sendPasswordResetMail$.subscribe((action: Action) => {
+      authApiEffects.resetPassword$.subscribe((action: Action) => {
         expect(action.type).toEqual(AuthApiActions.restPasswordFailure.type);
       });
     });
@@ -260,7 +264,7 @@ describe('Auth Api Effects', () => {
     });
 
     it('should redirect when successfully logged out', () => {
-      actions$ = of({type: NavigationActions.logout.type});
+      actions$ = of({type: AuthApiActions.logoutSuccess.type});
       authApiEffects = new AuthApiEffects(
         actions$,
         authService,

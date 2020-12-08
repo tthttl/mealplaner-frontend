@@ -278,11 +278,11 @@ describe('Cookbook Effects', () => {
   });
 
   it('switchCookbookWhenDeleted should switch when current List is deleted', () => {
-    store.setState({cookbookState: {activeCookbookId: cookbook.id}});
+    store.setState({cookbookState: {activeCookbookId: cookbook.id, cookbooks: [{id: '1', title: 'test'}]}});
     cookbookEffects = createEffects(of({type: CookbookContainerActions.deleteCookbookFromState.type, cookbook}));
     cookbookEffects.switchCookbookWhenDeleted$.subscribe((action: Action) => {
       expect(action.type).toEqual(CookbookContainerActions.selectCookbook.type);
-      expect((action as CookbookSelectedAction).selectedCookbookId).toEqual(cookbook.id);
+      expect((action as CookbookSelectedAction).selectedCookbookId).toEqual('1');
     });
   });
 
