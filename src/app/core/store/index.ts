@@ -15,6 +15,7 @@ import { AppState, initialAppState } from './state/app-state';
 import { initialMealPlanerState, mealPlanerAdapter, MealPlanerState } from '../../features/meal-planer/store/state/meal-planer-state';
 import { mealPlanerStateReducers } from '../../features/meal-planer/store/reducers/meal-paner-state.reducers';
 import { formatDate } from '@angular/common';
+import { format } from 'date-fns';
 
 export interface GlobalState {
   appState: AppState;
@@ -197,7 +198,7 @@ export const activeDayPlan = createSelector(
     if (!currentMeals) {
       return null;
     }
-    const currentDayPlan = currentMeals[formatDate(mealPlanerState.selectedDate, 'yyyy-MM-dd', 'de-CH')];
+    const currentDayPlan = currentMeals[format(mealPlanerState.selectedDate, 'yyyy-MM-dd')];
     if (!currentDayPlan) {
       return null;
     }

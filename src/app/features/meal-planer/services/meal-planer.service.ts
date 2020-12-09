@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { Meal, MealPlaner, MealType } from '../../../core/models/model';
 import { formatDate } from '@angular/common';
+import { format } from 'date-fns';
 
 @Injectable({
   providedIn: 'root'
@@ -29,13 +30,13 @@ export class MealPlanerService {
   }
 
   loadMealsByDay(mealPlanerId: string, date: Date): Observable<Meal[]> {
-    return this.httpClient.get<Meal[]>(`${environment.apiUrl}/meals/?mealplaner=${mealPlanerId}&date=${formatDate(date, 'yyyy-MM-dd', 'de-CH')}`);
+    return this.httpClient.get<Meal[]>(`${environment.apiUrl}/meals/?mealplaner=${mealPlanerId}&date=${format(date, 'yyyy-MM-dd')}`);
   }
 
   addMeal(type: MealType, date: Date, mealplanerId: string, recipeId: string): Observable<Meal> {
     return this.httpClient.post<Meal>(`${environment.apiUrl}/meals`, {
       type,
-      date: formatDate(date, 'yyyy-MM-dd', 'de-CH'),
+      date: format(date, 'yyyy-MM-dd'),
       mealplaner: mealplanerId,
       recipe: recipeId,
     });
