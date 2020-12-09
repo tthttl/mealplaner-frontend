@@ -8,6 +8,7 @@ import { AuthFormComponent } from '../../components/auth-form/auth-form.componen
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { APP_INITIALIZER } from '@angular/core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('LoginFormComponent', () => {
   let component: LoginPageComponent;
@@ -15,7 +16,7 @@ describe('LoginFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, SharedModule, FontAwesomeModule],
+      imports: [ReactiveFormsModule, SharedModule, FontAwesomeModule, RouterTestingModule],
       declarations: [LoginPageComponent, TranslatePipe, AuthFormComponent],
       providers: [
         {

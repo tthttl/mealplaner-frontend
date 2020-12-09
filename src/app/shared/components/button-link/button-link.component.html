@@ -1,0 +1,21 @@
+<a
+  class="button-link"
+  [attr.data-test]="e2eTestName"
+  [routerLink]="link"
+  [ngClass]="{
+    'button-link--color-inverted': color === 'inverted' && !isDisabled,
+    'button-link--color-accent': color === 'accent' && !isDisabled,
+    'button-link--color-warning': color === 'warn' && !isDisabled,
+    'button-link--color-disabled': isDisabled
+  }"
+>
+  <fa-icon *ngIf="iconLeft"
+           [icon]="['fas', iconLeft]"
+           class="icon-left"
+  ></fa-icon>
+  {{linkText}}
+  <fa-icon *ngIf="iconRight"
+           [icon]="['fas', iconRight]"
+           class="icon-right"
+  ></fa-icon>
+</a>

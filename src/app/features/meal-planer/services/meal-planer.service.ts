@@ -2,13 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import { MealPlaner } from '../../../core/models/model';
+import { Meal, MealPlaner, MealType } from '../../../core/models/model';
+import { formatDate } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MealPlanerService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) {
+  }
 
   getMealPlaners(userId: string): Observable<MealPlaner[]> {
     return this.httpClient.get<MealPlaner[]>(`${environment.apiUrl}/mealplaners?user=${userId}`);
@@ -26,20 +28,21 @@ export class MealPlanerService {
     return this.httpClient.delete<{ DELETED: true }>(`${environment.apiUrl}/mealplaners/${mealPlanerId}`);
   }
 
-  /*getShoppingListItems(shoppingListId: string): Observable<ShoppingListItem[]> {
-    return this.httpClient.get<ShoppingListItem[]>(`${environment.apiUrl}/shopping-list-items?shoppingList=${shoppingListId}`);
+  loadMealsByDay(mealPlanerId: string, date: Date): Observable<Meal[]> {
+    return this.httpClient.get<Meal[]>(`${environment.apiUrl}/meals/?mealplaner=${mealPlanerId}&date=${formatDate(date, 'yyyy-MM-dd', 'de-CH')}`);
   }
 
-  addShoppingListItem(shoppingListItem: BasicShoppingListItem): Observable<ShoppingListItem> {
-    return this.httpClient.post<ShoppingListItem>(`${environment.apiUrl}/shopping-list-items`, shoppingListItem);
+  addMeal(type: MealType, date: Date, mealplanerId: string, recipeId: string): Observable<Meal> {
+    return this.httpClient.post<Meal>(`${environment.apiUrl}/meals`, {
+      type,
+      date: formatDate(date, 'yyyy-MM-dd', 'de-CH'),
+      mealplaner: mealplanerId,
+      recipe: recipeId,
+    });
   }
 
-  updateShoppingListItem(shoppingListItem: ShoppingListItem): Observable<ShoppingListItem> {
-    return this.httpClient.put<ShoppingListItem>(`${environment.apiUrl}/shopping-list-items/${shoppingListItem.id}`, shoppingListItem);
+  removeMeal(meal: Meal): Observable<{ DELETED: true }> {
+    return this.httpClient.delete<{ DELETED: true }>(`${environment.apiUrl}/meals/${meal.id}`);
   }
-
-  deleteShoppingListItem(shoppingListItemId: string): Observable<{ DELETED: true }> {
-    return this.httpClient.delete<{ DELETED: true }>(`${environment.apiUrl}/shopping-list-items/${shoppingListItemId}`);
-  }*/
 }
 

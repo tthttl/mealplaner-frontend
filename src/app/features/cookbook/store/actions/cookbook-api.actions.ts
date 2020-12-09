@@ -32,6 +32,13 @@ export const deleteRecipeSuccess = createAction(
   '[DeleteRecipe Effect] Delete Recipe Success',
   props<{ deletedRecipe: Recipe }>()
 );
+
+export const loadSpecificRecipesSuccess = createAction(
+  '[LoadRecipe Effect] Get Specific Recipes Success',
+  props<{ cookbookId: string, recipes: Recipe[] }>()
+);
+export const loadSpecificRecipesFailure = createAction('[LoadRecipe Effect] Get Specific Recipes Failure');
+
 export const deleteRecipeFailure = createAction('[DeleteRecipe Effect] Delete Recipe Failure');
 export const undoDeleteRecipeFromState = createAction('[DeleteRecipe Effect] Undo delete Recipe from State',
   props<{ recipe: Recipe }>());

@@ -1,0 +1,12 @@
+<app-add-meal-dialog-page
+  [recipes]="recipes$ | async"
+  [translations]="translations$ | async"
+  [currentLanguage]="currentLanguage$ | async"
+  [cookbooks]="cookBooks$ | async"
+  [preSelectedCookbookId]="preSelectedCookbookId$ | async"
+  [preSelectedShoppingListId]="preSelectedShoppingListId$ | async"
+  [shoppingLists]="shoppingLists$ | async"
+  (addRecipe)="addRecipe($event)"
+  (changeSelectedCookbook)="onSelectedCookbookChanged($event)"
+>
+</app-add-meal-dialog-page>

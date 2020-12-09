@@ -1,5 +1,5 @@
 import { createEntityAdapter } from '@ngrx/entity';
-import { Meal, MealPlaner } from '../../../../core/models/model';
+import { DayPlan, MealPlaner } from '../../../../core/models/model';
 import { EntityState } from '@ngrx/entity/src/models';
 
 export const mealPlanerAdapter = createEntityAdapter<MealPlaner>({
@@ -10,7 +10,11 @@ export const mealPlanerAdapter = createEntityAdapter<MealPlaner>({
 export interface MealPlanerState {
   readonly selectedDate: Date;
   readonly mealPlaners: EntityState<MealPlaner>;
-  readonly meals: { [key: string]: {[key: string]: Meal[]} };
+  readonly meals: {
+    [key: string]: {
+      [key: string]: DayPlan
+    };
+  };
   readonly activeMealPlaner: string | undefined;
 }
 

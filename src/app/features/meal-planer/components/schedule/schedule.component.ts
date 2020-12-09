@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
-import { getWeekDayIndex, getFirstDateOfWeek } from '../../../../core/helpers/helpers';
-import { I18n, Language, Meal } from '../../../../core/models/model';
+import { getFirstDateOfWeek, getWeekDayIndex } from '../../../../core/helpers/helpers';
+import { DayPlan, I18n, Language, Meal, MealType } from '../../../../core/models/model';
+import { differenceInCalendarWeeks, differenceInDays } from 'date-fns';
 
 @Component({
   selector: 'app-schedule',
@@ -11,13 +12,29 @@ export class ScheduleComponent implements OnInit, OnChanges {
   @Input() selectedDate: Date | null | undefined;
   @Input() translations: I18n | null = null;
   @Input() currentLanguage: Language | null = null;
-  @Input() meals: Meal[] = [];
+  @Input() dayPlan: DayPlan | undefined | null = null;
   @Output() dateChanged: EventEmitter<Date> = new EventEmitter();
+  @Output() addMeal: EventEmitter<MealType> = new EventEmitter();
+  @Output() removeMeal: EventEmitter<Meal> = new EventEmitter();
 
-  sections = ['breakfast', 'lunch', 'dinner'];
+  sections: MealType[] = ['breakfast', 'lunch', 'dinner'];
 
   selectedDayIndex: number | undefined;
   selectedWeek: Date | undefined;
+  today = new Date();
+
+  get currentTodayIndex(): number {
+    const today = this.today.getDay() - 1;
+    return today >= 0 ? today : 6;
+  }
+
+  get displayedDayIsPast(): boolean {
+    return differenceInDays(this.selectedDate || new Date(), this.today) < 0;
+  }
+
+  get displayedWeekIsActiveWeek(): boolean {
+    return differenceInCalendarWeeks(this.selectedDate || new Date(), this.today, {weekStartsOn: 1}) === 0;
+  }
 
   constructor() {
   }
@@ -43,5 +60,9 @@ export class ScheduleComponent implements OnInit, OnChanges {
       selectedDate.setDate(selectedDate.getDate() + weekDayIndex);
       this.dateChanged.emit(selectedDate);
     }
+  }
+
+  onRemoveMeal(meal: Meal): void {
+    this.removeMeal.emit(meal);
   }
 }

@@ -1,0 +1,25 @@
+<mat-dialog-content class="mat-typography add-meal-dialog">
+  <app-meal-picker
+    [hidden]="selectedRecipe"
+    [recipes]="recipes"
+    [cookbooks]="cookbooks"
+    [translations]="translations"
+    [preSelectedCookbookId]="preSelectedCookbookId"
+    [currentLanguage]="currentLanguage"
+    (changeSelectedCookbook)="onSelectedCookbookChanged($event)"
+    (selectRecipe)="onSelectRecipe($event)">
+  </app-meal-picker>
+  <app-ingredients-picker
+    *ngIf="selectedRecipe"
+    [translations]="translations"
+    [currentLanguage]="currentLanguage"
+    [preSelectedShoppingListId]="preSelectedShoppingListId"
+    [shoppingLists]="shoppingLists"
+    [ingredientsList]="selectedRecipe.ingredients"
+    (choseIngredients)="onChoseIngredients($event)"
+    (back)="onGoBack()"
+  >
+  </app-ingredients-picker>
+</mat-dialog-content>
+
+

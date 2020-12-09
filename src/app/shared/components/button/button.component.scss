@@ -15,6 +15,11 @@
     background-color: $blue_60;
   }
 
+  &:focus {
+    background: $blue_60;
+    outline: 2px solid $blue_90;
+  }
+
   &--no-left-border-radius{
     border-radius: 0 rem(4) rem(4) 0;
   }
@@ -30,6 +35,11 @@
 
     &:active {
       background-color: $blue-grey_10;
+    }
+
+    &:focus {
+      background-color: $blue-grey_10;
+      outline: 2px solid $blue_90;
     }
   }
 
@@ -82,5 +92,6 @@
   .icon-right{
     padding-left: $spacing-medium;
   }
+
 
 }

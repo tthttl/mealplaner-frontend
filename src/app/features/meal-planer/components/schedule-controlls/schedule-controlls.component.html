@@ -1,20 +1,22 @@
 <div class="schedule-controls">
 
   <button
+    type="button"
     class="schedule-controls__toggle"
-    [attr.aria-label]="'meal-planer-controls.previous-week' |  translate:translations:currentLanguage">
-    <fa-icon *ngIf="'chevron-left'"
-             [icon]="['fas', 'chevron-left']"
-             (click)="weekOffset = weekOffset - 1"
+    [attr.aria-hidden]="true"
+    (click)="weekOffset = weekOffset - 1">
+    <fa-icon [icon]="['fas', 'chevron-left']"
     ></fa-icon>
+    <span class="visually-hidden">{{'meal-planer-controls.previous-week' |  translate:translations:currentLanguage }}</span>
   </button>
   <p  class="schedule-controls__date">{{selectedDate | date:'MMMM dd, y' }}</p>
   <button
+    type="button"
     class="schedule-controls__toggle"
-    [attr.aria-label]="'meal-planer-controls.next-week' |  translate:translations:currentLanguage">
-    <fa-icon *ngIf="'chevron-left'"
-             [icon]="['fas', 'chevron-right']"
-             (click)="weekOffset = weekOffset + 1"></fa-icon>
+    [attr.aria-hidden]="true"
+    (click)="weekOffset = weekOffset + 1">
+    <fa-icon [icon]="['fas', 'chevron-right']"></fa-icon>
+    <span class="visually-hidden">{{'meal-planer-controls.next-week' |  translate:translations:currentLanguage }}</span>
   </button>
 </div>
 

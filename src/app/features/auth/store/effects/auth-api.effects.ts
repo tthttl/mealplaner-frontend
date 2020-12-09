@@ -98,7 +98,7 @@ export class AuthApiEffects {
     ofType(AuthApiActions.loginSuccess, AuthApiActions.registerSuccess, AuthApiActions.restPasswordSuccess),
     withLatestFrom(this.store.select(selectRequestedUrlBeforeLoginWasRequired)),
     tap(([_, url]) => {
-      this.router.navigate([url || DEFAULT_REDIRECT_URL_FOR_LOGGED_IN_USER]);
+      this.router.navigateByUrl(url || DEFAULT_REDIRECT_URL_FOR_LOGGED_IN_USER);
     }),
   );
 

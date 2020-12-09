@@ -22,7 +22,6 @@ export class ResetPasswordContainerComponent {
   constructor(private store: Store<GlobalState>, private actions$: Actions, private activatedRout: ActivatedRoute) {
     this.actions$.pipe(ofType(AuthApiActions.restPasswordFailure)).subscribe(({error}: { error: string }) => {
       this.backendError = error;
-      console.log(error);
     });
 
     this.codeQueryParam = '' + this.activatedRout.snapshot.queryParams?.code;

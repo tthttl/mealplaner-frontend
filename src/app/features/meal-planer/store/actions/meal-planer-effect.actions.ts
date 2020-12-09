@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { MealPlaner } from '../../../../core/models/model';
+import { Meal, MealPlaner, MealType, Recipe } from '../../../../core/models/model';
 
 export const setActiveMealPlaner = createAction(
   '[Meal Planer Effects] Set Active Meal Planer',
@@ -29,4 +29,24 @@ export const retryEditMealPlaner = createAction(
 export const undoOptimisticEditMealPlaner = createAction(
   '[Meal Planer Effects] Undo Optimistic Edit Meal Planer',
   props<{ mealPlaner: MealPlaner }>()
+);
+
+export const retryAddMeal = createAction(
+  '[Meal Planer Effects] Retry Add Meal',
+  props<{ mealType: MealType, recipe: Recipe, optimisticId: string }>()
+);
+
+export const undoOptimisticAddMeal = createAction(
+  '[Meal Planer Effects] Undo Optimistic Add Meal',
+  props<{ mealType: MealType, optimisticId: string }>()
+);
+
+export const retryRemoveMeal = createAction(
+  '[Meal Planer Effects] Retry Delete Meal',
+  props<{ meal: Meal }>()
+);
+
+export const undoOptimisticRemoveMeal = createAction(
+  '[Meal Planer Effects] Undo Optimistic Remove Meal',
+  props<{ meal: Meal }>()
 );

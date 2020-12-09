@@ -13,6 +13,13 @@ import { GlobalState } from '../../core/store';
 import { EffectsModule } from '@ngrx/effects';
 import { MealPlanersEffects } from './store/effects/meal-planers.effects';
 import { MealplanerPageComponent } from './pages/mealplaner-page/mealplaner-page.component';
+import { AddMealDialogComponent } from './containers/add-meal-dialog/add-meal-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { AddMealDialogPageComponent } from './pages/add-meal-dialog-page/add-meal-dialog-page.component';
+import { MealPickerComponent } from './components/meal-picker/meal-picker.component';
+import { IngredientsPickerComponent } from './components/ingredients-picker/ingredients-picker.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 registerLocaleData(localeDe);
 
@@ -23,14 +30,22 @@ registerLocaleData(localeDe);
     ScheduleComponent,
     ScheduleControllsComponent,
     ScheduleDaysControllsComponent,
-    MealplanerPageComponent
+    MealplanerPageComponent,
+    AddMealDialogComponent,
+    AddMealDialogPageComponent,
+    MealPickerComponent,
+    IngredientsPickerComponent
   ],
   imports: [
     CommonModule,
     SharedModule,
     FontAwesomeModule,
     MealPlanerRoutingModule,
-    EffectsModule.forFeature([MealPlanersEffects])
+    EffectsModule.forFeature([MealPlanersEffects]),
+    MatDialogModule,
+    ReactiveFormsModule,
+    MatCheckboxModule,
+    FormsModule,
   ],
   providers: [
     {

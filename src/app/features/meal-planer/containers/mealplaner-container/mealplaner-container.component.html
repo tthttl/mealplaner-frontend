@@ -6,11 +6,14 @@
     [mealPlaners]="mealPlaners$ | async"
     [activeMealPlanerId]="activeMealPlanerId$ | async"
     [activeMealPlaner]="activeMealPlaner$ | async"
+    [dayPlan]="dayPlan$ | async"
     (dateChanged)="onWeekOffsetChanged($event)"
     (changeMealPlaner)="onMealPlanerChange($event)"
     (createMealPlaner)="onMealPlanerCreate()"
     (deleteMealPlaner)="onMealPlanerDeleted($event)"
-    (editMealPlaner)="onMealPlanerEdit($event)">
+    (editMealPlaner)="onMealPlanerEdit($event)"
+    (addMeal)="onAddMeal($event)"
+    (removeMeal)="onRemoveMeal($event)">
   </app-mealplaner-page>
 </div>
 

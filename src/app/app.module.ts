@@ -20,7 +20,6 @@ import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
 import { SharedModule } from './shared/shared.module';
 import { metaReducers, reducers } from './core/store';
-import { ShoppingListModule } from './features/shopping-list/shopping-list.module';
 import { AppEffects } from './core/store/effects/app.effects';
 
 
@@ -41,7 +40,6 @@ import { AppEffects } from './core/store/effects/app.effects';
     FontAwesomeModule,
     AuthModule,
     SharedModule,
-    ShoppingListModule
   ],
   providers: [
     {provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AuthService, I18nService, Store, Actions]},

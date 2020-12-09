@@ -30,7 +30,10 @@
     &--active {
       background: $blue_100;
       color: #ffffff;
+    }
 
+    &--current {
+      border: 2px solid $blue_100;
     }
   }
 }

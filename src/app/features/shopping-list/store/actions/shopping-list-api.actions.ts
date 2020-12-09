@@ -14,11 +14,11 @@ export const loadShoppingListsSuccess = createAction(
 export const loadShoppingListsFailure = createAction('[Shopping List API] Load Shopping Lists Failure');
 
 export const addShoppingListItemSuccess = createAction(
-  '[Shopping List API] Add Shopping List Items Success',
+  '[Shopping List API] Add Shopping List Item Success',
   props<{ optimisticId: string, shoppingListItem: ShoppingListItem }>()
 );
 export const addShoppingListItemFailure = createAction(
-  '[Shopping List API] Add Shopping List Items Failure',
+  '[Shopping List API] Add Shopping List Item Failure',
   props<{ optimisticId: string, shoppingListItem: BasicShoppingListItem }>()
 );
 
@@ -32,11 +32,18 @@ export const deleteShoppingListItemFailure = createAction(
 );
 
 export const updateShoppingListItemSuccess = createAction(
-  '[Shopping List API] Delete Shopping List Items Success'
+  '[Shopping List API] Update Shopping List Items Success'
 );
 export const updateShoppingListItemFailure = createAction(
-  '[Shopping List API] Delete Shopping List Items Failure',
+  '[Shopping List API] Update Shopping List Items Failure',
   props<{ shoppingListItems: ShoppingListItem[] }>()
+);
+
+export const addShoppingListItemsSuccess = createAction(
+  '[Shopping List API] Add Shopping List Items Success'
+);
+export const addShoppingListItemsFailure = createAction(
+  '[Shopping List API] Add Shopping List Items Failure',
 );
 
 export const createShoppingListSuccess = createAction(

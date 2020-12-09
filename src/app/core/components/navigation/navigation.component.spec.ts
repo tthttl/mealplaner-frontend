@@ -4,6 +4,9 @@ import { NavigationComponent } from './navigation.component';
 import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
 import { SharedModule } from '../../../shared/shared.module';
 import { RouterLinkDirectiveStub } from '../../../../../testing/router-link-directive.stub';
+import { FaIconComponent, FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { APP_INITIALIZER } from '@angular/core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
 
 
 describe('NavigationComponent', () => {
@@ -12,8 +15,20 @@ describe('NavigationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [NavigationComponent, TranslatePipe, RouterLinkDirectiveStub],
-      imports: [SharedModule]
+      declarations: [NavigationComponent, FaIconComponent, TranslatePipe, RouterLinkDirectiveStub],
+      imports: [SharedModule],
+      providers: [
+        {
+          provide: APP_INITIALIZER,
+          useFactory: (iconLibrary: FaIconLibrary) => {
+            return async () => {
+              iconLibrary.addIconPacks(fas);
+            };
+          },
+          deps: [FaIconLibrary],
+          multi: true,
+        },
+      ]
     })
       .compileComponents();
   }));

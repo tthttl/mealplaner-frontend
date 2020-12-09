@@ -1,0 +1,74 @@
+@import "../../../../../styles/settings/variables";
+@import "../../../../../styles/settings/colors";
+@import "../../../../../styles/mixins/style";
+@import "../../../../../styles/settings/functions";
+
+.meal-picker {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  &__heading{
+    margin-bottom: $spacing-small;
+  }
+
+  &__cookbook-select-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: $spacing-small;
+  }
+
+  &__cookbook-select-label {
+    font-weight: 500;
+    margin-bottom: $spacing-tiny;
+  }
+
+  &__meal-list {
+    overflow: scroll;
+  }
+
+  &__cookbook-filter {
+    margin-bottom: $spacing-small;
+  }
+
+  &__meal-list-item {
+    list-style: none;
+    padding: $spacing-small $spacing-tiny;
+    cursor: pointer;
+    &:nth-child(odd) {
+      background-color: $blue-grey_20;
+    }
+  }
+}
+
+@include skeleton('.meal-picker__cookbook-select', $blue-grey_30, 3.5s) {
+  background: $blue-grey_40;
+  color: $blue-grey_40;
+  width: rem(200);
+  height: rem(30);
+  outline: none;
+  border: none;
+  cursor: wait;
+  border-radius: $border-radius-default;
+};
+
+@include skeleton('.meal-picker__meal-list-item-skeleton', $blue-grey_30, 3.5s) {
+  background: $blue-grey_40;
+  height: rem(16);
+  margin: $spacing-small 0;
+  border-radius: $border-radius-default;
+  width: 90%;
+
+  &:nth-child(2){
+    width: 75%;
+  }
+
+  &:nth-child(3){
+    width: 85%;
+  }
+
+  &:nth-child(4){
+    width: 80%;
+    margin-bottom: $spacing-large;
+  }
+};
