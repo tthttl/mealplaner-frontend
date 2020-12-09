@@ -110,3 +110,7 @@ export function getWeekDayIndex(date: Date): number {
   const today = date.getDay() - 1;
   return today >= 0 ? today : 6;
 }
+
+export function stringBetweenChars(str: string, charStart: string, charEnd: string ): string {
+  return str.split(charStart).pop()!.split(charEnd)[0];
+}

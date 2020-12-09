@@ -13,7 +13,8 @@ import {
   mapI18nApiToI18nClient,
   mapUserApiToUserClient,
   moveItemInArray,
-  translateValidationErrors
+  translateValidationErrors,
+  stringBetweenChars
 } from './helpers';
 import createSpyObj = jasmine.createSpyObj;
 
@@ -240,6 +241,18 @@ describe('Helpers', () => {
       expect(getWeekDayIndex(new Date(2020, 10, 28))).toEqual(5);
     });
   });
+
+  describe(`stringBetweenChars`, () => {
+    it('should return string between to Chars', () => {
+      expect(stringBetweenChars('/shopping-list?shoppingListId=5fb99996b035c5dcdbff76d8', '/', '?')).toEqual('shopping-list');
+    });
+
+    it('should return string after first char if end char is not in string', () => {
+      expect(stringBetweenChars('/shopping-list', '/', '?')).toEqual('shopping-list');
+    });
+
+    it('should return full string of if start end char ar not in strin', () => {
+      expect(stringBetweenChars('shopping-list', '/', '?')).toEqual('shopping-list');
+    });
+  });
 });
-
-
