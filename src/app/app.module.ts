@@ -21,6 +21,7 @@ import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
 import { SharedModule } from './shared/shared.module';
 import { metaReducers, reducers } from './core/store';
 import { AppEffects } from './core/store/effects/app.effects';
+import { NotFoundComponent } from './core/components/not-found/not-found.component';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { AppEffects } from './core/store/effects/app.effects';
     AppComponent,
     BetaTeaserComponent,
     NavigationComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
