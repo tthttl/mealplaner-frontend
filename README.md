@@ -1,25 +1,23 @@
 # Mealplaner
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.1.
+This project is part of the CAS FEE at HSR in 2020/21.
 
 ## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `npm run start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+The backend repo must be checked out and started as well to be able to interact with the app locally.
 
 ## Code scaffolding
-
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
 ## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Run `npm run build` to build the project. The build artifacts will be stored in the `dist/` directory.
+To create a build for qa run:`npm run build:qa`
+To create a build for prod run: `npm run build:prod`
 
 ## Running unit tests
-
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
 ## Running end-to-end tests
-
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
 ## Git Hooks
@@ -28,12 +26,12 @@ This project uses Husky 🐶 to prevent bad `git commit` and `git push`
 * Before every `git push` all unit tests get executed. If any test fail the push process wil abort, and you get an error message. If you get this error please fix all failing tests.
 
 ## Storybook
-This project uses storybook to test and showcase the Angular components isolated from the rest of the app. This helps us to build efficiently. 
+This project uses storybook to test and showcase the Basic Angular components isolated from the rest of the app. This helps us to build efficiently. 
+Pages and Containers are not covered with storybook.
 * To start storybook locally run `npm run storybook`
 * The master branch is also deployed to storybook.mealplaner.app
 
 ## CI/CD
-
 This application is set up with a CI/CD pipeline using GitLab CI. The pipeline does the follwing:
 * Run `linting` and `unit testing` on every push 
 * Deploy to staging area (beat.mealplaner.app) after merging to master.
@@ -47,7 +45,7 @@ When the user calls or refreshes the page. The App gets initialized in the app.i
 * Load the I18n for the determined language.
 
 ##Authentication
-TODO
+An detailed description of the authentication process is described here https://jasonwatmore.com/post/2020/05/22/angular-9-jwt-authentication-with-refresh-tokens#authentication-service-ts.
 
 
 ##Sizes
@@ -55,6 +53,9 @@ In this project we use rem as main Unit.
 There is a helper function which converts px to rems.
 When writing css use this function.
 Expect for the unit 1px. This gets to small when converting to rem. Therefore use 1px as px instead in this case.
+
+##Colors
+There is a predefined set of colors that build a defined color palette. Please use only colors that are defined as SCSS variables.
 
 ##PreLoading Strategy
 There are some modules that depend on others. For example, the meal-planer modules needs the cookbook as well as the shopping-list to load recipes and add items to the shopping-list.
