@@ -25,7 +25,7 @@ export function mapUserApiToUserClient(userApi: UserApi): User {
   return {
     jwt: userApi.jwt,
     id: userApi.user._id,
-    name: userApi.user.username,
+    name: userApi.user.name,
     email: userApi.user.email,
   };
 }

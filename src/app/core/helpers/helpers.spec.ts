@@ -114,8 +114,9 @@ describe('Helpers', () => {
       jwt: 'jwt',
       user: {
         _id: '0',
-        username: 'Joe',
-        email: 'joe@doe.ch'
+        username: 'joe@doe.ch',
+        email: 'joe@doe.ch',
+        name: 'Joe'
       },
     };
     it('should convert to User', () => {

@@ -18,3 +18,6 @@ export const forgotPasswordFailure = createAction('[Auth API] Forgot Password Fa
 
 export const restPasswordSuccess = createAction('[Auth API] Rest Password Success', props<{ user: User }>());
 export const restPasswordFailure = createAction('[Auth API] Rest Password Failure', props<{ error: string }>());
+
+export const deleteAccountSuccess = createAction('[Auth API] Delete Account Success', props<{}>());
+export const deleteAccountFailure = createAction('[Auth API] Delete Account Failure', props<{ user: User }>());

@@ -14,7 +14,6 @@ import { appStateReducer } from './reducers/app-state.reducers';
 import { AppState, initialAppState } from './state/app-state';
 import { initialMealPlanerState, mealPlanerAdapter, MealPlanerState } from '../../features/meal-planer/store/state/meal-planer-state';
 import { mealPlanerStateReducers } from '../../features/meal-planer/store/reducers/meal-paner-state.reducers';
-import { formatDate } from '@angular/common';
 import { format } from 'date-fns';
 
 export interface GlobalState {
@@ -170,7 +169,7 @@ export const selectMealPlanerEntity = createSelector(
   (mealPlanerState: MealPlanerState) => mealPlanerState.mealPlaners
 );
 
-export const selectMealPlaners = mealPlanerAdapter.getSelectors(selectMealPlanerEntity).selectAll ;
+export const selectMealPlaners = mealPlanerAdapter.getSelectors(selectMealPlanerEntity).selectAll;
 
 export const activeMealPlaner = createSelector(
   selectMealPlanerState,
@@ -194,7 +193,7 @@ export const activeDayPlan = createSelector(
     if (!currentMealPlaner) {
       return null;
     }
-    const currentMeals = mealPlanerState.meals[currentMealPlaner] as {[key: string]: DayPlan};
+    const currentMeals = mealPlanerState.meals[currentMealPlaner] as { [key: string]: DayPlan };
     if (!currentMeals) {
       return null;
     }
