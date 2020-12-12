@@ -6177,12 +6177,12 @@
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": "@import \"../../../../styles/settings/colors\";\n@import \"../../../../styles/mixins/forms\";\n\n.button{\n  background-color: $blue_90;\n  cursor: pointer;\n  color: $blue-grey_10;\n  @include button();\n\n  &:hover{\n    background-color: $blue_60;\n  }\n\n  &:active {\n    background-color: $blue_60;\n  }\n\n  &:focus {\n    background: $blue_60;\n    outline: 2px solid $blue_90;\n  }\n\n  &--no-left-border-radius{\n    border-radius: 0 rem(4) rem(4) 0;\n  }\n\n  &--color-inverted{\n    background-color: #ffffff;\n    color: $blue_100;\n    font-weight: 400;\n\n    &:hover{\n      background-color: $blue-grey_10;\n    }\n\n    &:active {\n      background-color: $blue-grey_10;\n    }\n\n    &:focus {\n      background-color: $blue-grey_10;\n      outline: 2px solid $blue_90;\n    }\n  }\n\n  &--color-accent{\n    background-color: $cyan_90;\n    color:$cyan_10;\n\n    &:hover{\n      background-color: $cyan_60;\n    }\n\n    &:active {\n      background-color: $cyan_80;\n    }\n  }\n\n  &--color-warning{\n    background-color: $red_70;\n    color: $red_10;\n\n    &:hover{\n      background-color: $red_60;\n    }\n\n    &:active {\n      background-color: $red_80;\n    }\n  }\n\n  &--color-disabled{\n    background-color: $blue-grey_50;\n    cursor: not-allowed;\n\n    &:hover,\n    &:active{\n      background-color: $blue-grey_50;\n    }\n\n  }\n\n  &--warning-border{\n    border: rem(2) solid $red_70;\n    border-left: none;\n  }\n\n  .icon-left{\n    padding-right: $spacing-medium;\n  }\n\n  .icon-right{\n    padding-left: $spacing-medium;\n  }\n\n\n}\n",
+                    "data": "@import \"../../../../styles/settings/colors\";\n@import \"../../../../styles/mixins/forms\";\n\n.button{\n  cursor: pointer;\n  @include button();\n  @include buttonColors();\n  @include buttonIcons();\n}\n",
                     "styleUrl": "./button.component.scss"
                 }
             ],
             "stylesData": "",
-            "templateData": "<button\n  class=\"button\"\n  [disabled]=\"isDisabled\"\n  [attr.data-test]=\"e2eTestName\"\n  [type]=\"buttonType\"\n  (click)=\"onClick($event)\"\n  [ngClass]=\"{\n  'button--no-left-border-radius': isInputGroup,\n  'button--color-inverted': color === 'inverted' && !isDisabled,\n  'button--color-accent': color === 'accent' && !isDisabled,\n  'button--color-warning': color === 'warn' && !isDisabled,\n  'button--color-disabled': isDisabled,\n  'button--warning-border': isInputGroup && hasErrors\n  }\"\n>\n  <fa-icon *ngIf=\"iconLeft\"\n           [icon]=\"['fas', iconLeft]\"\n           class=\"icon-left\"\n  ></fa-icon>\n  {{buttonText}}\n  <fa-icon *ngIf=\"iconRight\"\n           [icon]=\"['fas', iconRight]\"\n           class=\"icon-right\"\n  ></fa-icon>\n</button>\n"
+            "templateData": "<button\n  class=\"button\"\n  [disabled]=\"isDisabled\"\n  [attr.data-test]=\"e2eTestName\"\n  [type]=\"buttonType\"\n  (click)=\"onClick($event)\"\n  [ngClass]=\"{\n  'button--color-inverted': color === 'inverted' && !isDisabled,\n  'button--color-accent': color === 'accent' && !isDisabled,\n  'button--color-warning': color === 'warn' && !isDisabled,\n  'button--color-disabled': isDisabled,\n  'button--warning-border': hasErrors\n  }\"\n>\n  <fa-icon *ngIf=\"iconLeft\"\n           [icon]=\"['fas', iconLeft]\"\n           class=\"icon-left\"\n  ></fa-icon>\n  {{buttonText}}\n  <fa-icon *ngIf=\"iconRight\"\n           [icon]=\"['fas', iconRight]\"\n           class=\"icon-right\"\n  ></fa-icon>\n</button>\n"
         },
         {
             "name": "ButtonLinkComponent",
@@ -6316,7 +6316,7 @@
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": "@import \"../../../../styles/settings/colors\";\n@import \"../../../../styles/mixins/forms\";\n\n.button-link {\n  background-color: $blue_90;\n  cursor: pointer;\n  color: $blue-grey_10;\n  text-decoration: none;\n  @include button();\n\n  &:hover {\n    background: $blue_60;\n  }\n\n  &:focus {\n    background: $blue_60;\n    outline: 2px solid $blue_90;\n  }\n}\n",
+                    "data": "@import \"../../../../styles/settings/colors\";\n@import \"../../../../styles/mixins/forms\";\n\n.button-link {\n  background-color: $blue_90;\n  color: $blue-grey_10;\n  text-decoration: none;\n  @include button();\n  @include buttonColors();\n  @include buttonIcons();\n\n}\n",
                     "styleUrl": "./button-link.component.scss"
                 }
             ],
@@ -13542,9 +13542,25 @@
                 "name": "Accent",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/button-link/butto-link.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Accent",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/edit-list-dialog/edit-list-dialog.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Accent",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/button/button.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Accent',\n    isDisabled: buttonData.isDisabled,\n    e2eTestName: buttonData.e2eTestName,\n    clicked: actionsData.clicked,\n    color: 'accent'\n  }\n})"
+                "defaultValue": "Template.bind({})"
             },
             {
                 "name": "actionsData",
@@ -13552,13 +13568,13 @@
                 "subtype": "variable",
                 "file": "src/app/core/components/navigation/navigation.stories.ts",
                 "type": "object",
-                "defaultValue": "{\n  logout: action('clicked')\n}"
+                "defaultValue": "{\n  logout: action('clicked'),\n  languageChanged: action('languageChanged')\n}"
             },
             {
                 "name": "actionsData",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/button/button.stories.ts",
+                "file": "src/app/shared/components/button-link/butto-link.stories.ts",
                 "type": "object",
                 "defaultValue": "{\n  clicked: action('clicked')\n}"
             },
@@ -13574,17 +13590,25 @@
                 "name": "actionsData",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/select/select.stories.ts",
+                "file": "src/app/shared/components/edit-list-dialog/edit-list-dialog.stories.ts",
                 "type": "object",
-                "defaultValue": "{\n  valueChanged: action('valueChanged'),\n}"
+                "defaultValue": "{\n  clicked: action('clicked')\n}"
             },
             {
                 "name": "actionsData",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/features/auth/components/auth-form/auth-form.stories.ts",
+                "file": "src/app/shared/components/button/button.stories.ts",
                 "type": "object",
-                "defaultValue": "{\n  credentialsReceived: action('credentialsReceived')\n}"
+                "defaultValue": "{\n  clicked: action('clicked')\n}"
+            },
+            {
+                "name": "actionsData",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/select/select.stories.ts",
+                "type": "object",
+                "defaultValue": "{\n  valueChanged: action('valueChanged'),\n}"
             },
             {
                 "name": "actionsData",
@@ -13601,6 +13625,14 @@
                 "file": "src/app/features/cookbook/pages/recipe-page/recipe-page.stories.ts",
                 "type": "object",
                 "defaultValue": "{\n  recipeSaved: action('recipeSaved')\n}"
+            },
+            {
+                "name": "actionsData",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/features/auth/components/auth-form/auth-form.stories.ts",
+                "type": "object",
+                "defaultValue": "{\n  credentialsReceived: action('credentialsReceived')\n}"
             },
             {
                 "name": "actionsData",
@@ -13731,6 +13763,14 @@
                 "defaultValue": "createReducer<AppState, Action>(\n  initialAppState,\n  on(\n    I18nApiActions.getI18nSuccess,\n    (state, {i18n}: { i18n: I18n }) => {\n      return {\n        ...state,\n        i18n: {\n          ...state.i18n,\n          ...i18n\n        }\n      };\n    }),\n  on(\n    AuthApiActions.refreshTokenSuccess,\n    (state, {user}: { user: User }) => {\n      return {\n        ...state,\n        user: {\n          ...user\n        }\n      };\n    }),\n  on(\n    AuthApiActions.refreshTokenFailed,\n    ErrorInterceptorActions.logout,\n    AuthApiActions.deleteAccountSuccess,\n    NavigationActions.logout,\n    (state) => {\n      return {\n        ...state,\n        user: null\n      };\n    }),\n  on(\n    AuthApiActions.loginSuccess,\n    AuthApiActions.registerSuccess,\n    AuthApiActions.restPasswordSuccess,\n    (state, {user}: { user: User }) => {\n      return {\n        ...state,\n        user: {\n          ...user\n        },\n      };\n    }),\n  on(\n    AuthenticatedGuardActions.setRequestedUrlBeforeLoginWasRequired,\n    (state, {url}: { url: string }) => {\n      return {\n        ...state,\n        requestedUrlBeforeLoginWasRequired: url\n      };\n    }),\n  on(\n    AppInitializationActions.setLanguage,\n    NavigationActions.changeLanguage,\n    (state: AppState, {language}: { language: Language }) => {\n      return {\n        ...state,\n        language,\n      };\n    })\n)"
             },
             {
+                "name": "betaTeaserData",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/core/components/beta-teaser/beta-teaser.stories.ts",
+                "type": "object",
+                "defaultValue": "{\n  currentLang: 'de',\n  translations: {\n    de: {\n      'beta.teaser': 'Beta Teaser',\n    }\n  }\n}"
+            },
+            {
                 "name": "bulkUpdateShoppingListItems",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -13742,9 +13782,17 @@
                 "name": "buttonData",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/core/components/navigation/navigation.stories.ts",
+                "file": "src/app/shared/components/button-link/butto-link.stories.ts",
                 "type": "object",
-                "defaultValue": "{\n  isLoggedIn: false,\n  currentLang: 'de',\n  translations: {\n    de: {\n      'app.navigation.login': 'Login',\n      'app.navigation.logout': 'Abmelden',\n      'app.navigation.register': 'Registrieren',\n      'app.navigation.planer': 'Menuplaner',\n      'app.navigation.menus': 'Menüs',\n      'app.navigation.shopping-list': 'Einkaufsliste',\n    }\n  }\n}"
+                "defaultValue": "{\n  linkText: 'Primary',\n  buttonType: 'button',\n  isDisabled: false,\n  hasErrors: false,\n  color: 'primary',\n  e2eTestName: 'buttonTest',\n  iconLeft: '',\n  iconRight: '',\n}"
+            },
+            {
+                "name": "buttonData",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/edit-list-dialog/edit-list-dialog.stories.ts",
+                "type": "object",
+                "defaultValue": "{\n  linkText: 'Primary',\n  buttonType: 'button',\n  isDisabled: false,\n  hasErrors: false,\n  color: 'primary',\n  e2eTestName: 'buttonTest',\n  iconLeft: '',\n  iconRight: '',\n}"
             },
             {
                 "name": "buttonData",
@@ -13752,7 +13800,7 @@
                 "subtype": "variable",
                 "file": "src/app/shared/components/button/button.stories.ts",
                 "type": "object",
-                "defaultValue": "{\n  text: 'Primary',\n  isDisabled: false,\n  e2eTestName: 'buttonTest'\n}"
+                "defaultValue": "{\n  buttonText: 'Button',\n  isDisabled: false,\n  hasErrors: false,\n  color: 'primary',\n  e2eTestName: 'buttonTest',\n  iconLeft: '',\n  iconRight: '',\n}"
             },
             {
                 "name": "changeLanguage",
@@ -13918,9 +13966,9 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/button/button.stories.ts",
+                "file": "src/app/shared/components/button-link/butto-link.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: buttonData.text,\n    isDisabled: buttonData.isDisabled,\n    e2eTestName: buttonData.e2eTestName,\n    clicked: actionsData.clicked\n  }\n})"
+                "defaultValue": "Template.bind({})"
             },
             {
                 "name": "Default",
@@ -13942,6 +13990,22 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/edit-list-dialog/edit-list-dialog.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/button/button.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/select/select.stories.ts",
                 "type": "",
                 "defaultValue": "() => ({\n  component: SelectComponent,\n  props: {\n    ...inputData,\n    ...actionsData,\n  }\n})"
@@ -13950,17 +14014,17 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/features/cookbook/components/add-recipe-dialog/add-recipe-dialog.stories.ts",
+                "file": "src/app/features/cookbook/components/recipe-list/recipe-list.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: AddRecipeDialogComponent,\n  props: {}\n})"
+                "defaultValue": "() => ({\n  component: RecipeListComponent,\n  props: {\n    ...formData,\n    ...actionsData\n  }\n})"
             },
             {
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/features/cookbook/components/recipe-list/recipe-list.stories.ts",
+                "file": "src/app/features/cookbook/components/add-recipe-dialog/add-recipe-dialog.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: RecipeListComponent,\n  props: {\n    ...formData,\n    ...actionsData\n  }\n})"
+                "defaultValue": "() => ({\n  component: AddRecipeDialogComponent,\n  props: {}\n})"
             },
             {
                 "name": "Default",
@@ -14182,9 +14246,25 @@
                 "name": "Disabled",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/button-link/butto-link.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Disabled",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/edit-list-dialog/edit-list-dialog.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Disabled",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/button/button.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Disabled',\n    isDisabled: true,\n    e2eTestName: buttonData.e2eTestName,\n    clicked: actionsData.clicked,\n  }\n})"
+                "defaultValue": "Template.bind({})"
             },
             {
                 "name": "Disabled",
@@ -14350,14 +14430,6 @@
                 "name": "formData",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/features/auth/components/auth-form/auth-form.stories.ts",
-                "type": "object",
-                "defaultValue": "{\n  translations: {\n    de: {\n      email: 'Email Adresse',\n      password: 'Passwort',\n      login: 'Anmelden',\n      register: 'Registrieren',\n      'errors.validation.email.required': 'Bitte geben Sie Ihre Email Adresse ein',\n      'errors.validation.email.pattern': 'Valid Email Format braucht @ ein . dann mindestens 2 Zeichen',\n      'errors.validation.password.required': 'Bitte geben Sie Ihre Passwort ein',\n      'errors.validation.password.minlength': 'Passwort muss mindestens 4 character lang sein',\n      'errors.validation.password.pattern': 'Passwort braucht klein und gross Buchstaben und ein Zahl'\n      }\n    }\n}"
-            },
-            {
-                "name": "formData",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/features/cookbook/components/recipe-list/recipe-list.stories.ts",
                 "type": "object",
                 "defaultValue": "{\n  translations: {\n    de: {\n      'input.search': 'Suchen',\n      'button.edit': 'Bearbeiten',\n      'button.delete': 'Löschen'\n    }\n  },\n  recipes: [\n    {\n      id: '1',\n      title: 'Chocolate chip cookie'\n    },\n    {\n      id: '2',\n      title: 'Cheesecake'\n    },\n    {\n      id: '3',\n      title: 'Muffin'\n    }\n  ]\n}"
@@ -14369,6 +14441,14 @@
                 "file": "src/app/features/cookbook/pages/recipe-page/recipe-page.stories.ts",
                 "type": "object",
                 "defaultValue": "{\n  translations: {\n    de: {\n      'recipe-form.placeholder.title': 'Title',\n      'recipe-form.label.title': 'Recipe Title',\n      'recipe-form.placeholder.url': 'Link',\n      'recipe-form.label.url': 'Link to Recipe',\n      'ingredients.label-text': 'Ingredients',\n      'recipe-form.placeholder.amount': 'Quantity',\n      'recipe-form.placeholder.name': 'Name',\n      'recipe-form.text.toggle': 'Basic Ingredient',\n      'recipe-form.button.delete': 'Delete',\n      'recipe-form.button.new-ingredient': 'Add new Ingredient',\n      'recipe-form.button.submit': 'Create',\n      'errors.validation.title.required': 'Titel is required',\n      'recipe-form.button.modify': 'Edit'\n    }\n  }\n}"
+            },
+            {
+                "name": "formData",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/features/auth/components/auth-form/auth-form.stories.ts",
+                "type": "object",
+                "defaultValue": "{\n  translations: {\n    de: {\n      email: 'Email Adresse',\n      password: 'Passwort',\n      login: 'Anmelden',\n      register: 'Registrieren',\n      'errors.validation.email.required': 'Bitte geben Sie Ihre Email Adresse ein',\n      'errors.validation.email.pattern': 'Valid Email Format braucht @ ein . dann mindestens 2 Zeichen',\n      'errors.validation.password.required': 'Bitte geben Sie Ihre Passwort ein',\n      'errors.validation.password.minlength': 'Passwort muss mindestens 4 character lang sein',\n      'errors.validation.password.pattern': 'Passwort braucht klein und gross Buchstaben und ein Zahl'\n      }\n    }\n}"
             },
             {
                 "name": "getI18n",
@@ -14398,9 +14478,41 @@
                 "name": "IconLeft",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/button-link/butto-link.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "IconLeft",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/edit-list-dialog/edit-list-dialog.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "IconLeft",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/button/button.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Add',\n    isDisabled: buttonData.isDisabled,\n    e2eTestName: buttonData.e2eTestName,\n    clicked: actionsData.clicked,\n    iconLeft: 'plus'\n  }\n})"
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "IconRight",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/button-link/butto-link.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "IconRight",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/edit-list-dialog/edit-list-dialog.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
             },
             {
                 "name": "IconRight",
@@ -14408,7 +14520,7 @@
                 "subtype": "variable",
                 "file": "src/app/shared/components/button/button.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Delete',\n    isDisabled: buttonData.isDisabled,\n    e2eTestName: buttonData.e2eTestName,\n    clicked: actionsData.clicked,\n    iconRight: 'trash'\n  }\n})"
+                "defaultValue": "Template.bind({})"
             },
             {
                 "name": "initialAppState",
@@ -14678,17 +14790,17 @@
                 "name": "loadShoppingLists",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/features/shopping-list/store/actions/shopping-list-container.actions.ts",
+                "file": "src/app/features/meal-planer/store/actions/add-meal-dialog.actions.ts",
                 "type": "",
-                "defaultValue": "createAction('[Shopping List Container] Load Shopping Lists')"
+                "defaultValue": "createAction('[Add Meal Dialog] Load ShoppingLists')"
             },
             {
                 "name": "loadShoppingLists",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/features/meal-planer/store/actions/add-meal-dialog.actions.ts",
+                "file": "src/app/features/shopping-list/store/actions/shopping-list-container.actions.ts",
                 "type": "",
-                "defaultValue": "createAction('[Add Meal Dialog] Load ShoppingLists')"
+                "defaultValue": "createAction('[Shopping List Container] Load Shopping Lists')"
             },
             {
                 "name": "loadShoppingListsFailure",
@@ -14728,7 +14840,7 @@
                 "subtype": "variable",
                 "file": "src/app/core/components/navigation/navigation.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: NavigationComponent,\n  props: {\n    ...buttonData,\n    isLoggedIn: true,\n    ...actionsData,\n  }\n})"
+                "defaultValue": "Template.bind({})"
             },
             {
                 "name": "LoggedOut",
@@ -14736,7 +14848,7 @@
                 "subtype": "variable",
                 "file": "src/app/core/components/navigation/navigation.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: NavigationComponent,\n  props: {\n    ...buttonData,\n    ...actionsData,\n  }\n})"
+                "defaultValue": "Template.bind({})"
             },
             {
                 "name": "login",
@@ -14843,6 +14955,14 @@
                 "defaultValue": "() => ({\n  component: ListHeaderComponent,\n  props: {\n    selectedList: {id: 'test', title: 'My ShoppingList'},\n    lists: [{id: 'test', title: 'My ShoppingList'}, {id: 'test', title: 'My ShoppingList'}, {id: 'test', title: 'My ShoppingList'}],\n    defaultTitle: 'Dafault Title',\n    addListLabel: 'Liste Hinufügen',\n    buttonLabel: 'Meine Listen'\n  }\n})"
             },
             {
+                "name": "navigationData",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/core/components/navigation/navigation.stories.ts",
+                "type": "object",
+                "defaultValue": "{\n  isLoggedIn: false,\n  currentLang: 'de',\n  translations: {\n    de: {\n      'app.navigation.login': 'Login',\n      'app.navigation.logout': 'Abmelden',\n      'app.navigation.register': 'Registrieren',\n      'app.navigation.planer': 'Menuplaner',\n      'app.navigation.menus': 'Menüs',\n      'app.navigation.shopping-list': 'Einkaufsliste',\n      'app.navigation.account': 'Konto',\n    }\n  }\n}"
+            },
+            {
                 "name": "OneList",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -14854,7 +14974,23 @@
                 "name": "Primary",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/core/components/beta-teaser/beta-teaser.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Primary",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/core/components/navigation/navigation.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Primary",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/core/components/not-found/not-found.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -15405,6 +15541,14 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/core/components/beta-teaser/beta-teaser.stories.ts",
+                "type": "any",
+                "defaultValue": "(args: BetaTeaserComponent) => ({\n  component: BetaTeaserComponent,\n  props: args,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/core/components/navigation/navigation.stories.ts",
                 "type": "any",
                 "defaultValue": "(args: NavigationComponent) => ({\n  component: NavigationComponent,\n  props: args,\n})"
@@ -15413,9 +15557,41 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/core/components/not-found/not-found.stories.ts",
+                "type": "any",
+                "defaultValue": "(args: NotFoundComponent) => ({\n  component: NotFoundComponent,\n  props: args,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/button-link/butto-link.stories.ts",
+                "type": "any",
+                "defaultValue": "(args: ButtonLinkComponent) => ({\n  component: ButtonLinkComponent,\n  props: args,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/list-header/list-header.stories.ts",
                 "type": "any",
                 "defaultValue": "(args: ListHeaderComponent) => ({\n  component: ListHeaderComponent,\n  props: args,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/edit-list-dialog/edit-list-dialog.stories.ts",
+                "type": "any",
+                "defaultValue": "(args: EditListDialogComponent) => ({\n  component: EditListDialogComponent,\n  props: args,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/button/button.stories.ts",
+                "type": "any",
+                "defaultValue": "(args: ButtonComponent) => ({\n  component: ButtonComponent,\n  props: args,\n})"
             },
             {
                 "name": "undoDeleteCookbookFromState",
@@ -15546,12 +15722,28 @@
                 "defaultValue": "createAction(\n  '[Shopping List API] Update Shopping List Items Success'\n)"
             },
             {
-                "name": "Warning",
+                "name": "Warn",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/button-link/butto-link.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Warn",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/edit-list-dialog/edit-list-dialog.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Warn",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/shared/components/button/button.stories.ts",
                 "type": "",
-                "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Warning',\n    isDisabled: buttonData.isDisabled,\n    e2eTestName: buttonData.e2eTestName,\n    clicked: actionsData.clicked,\n    color: 'warn'\n  }\n})"
+                "defaultValue": "Template.bind({})"
             },
             {
                 "name": "WithAccentButton",
@@ -16167,6 +16359,154 @@
         ],
         "enumerations": [],
         "groupedVariables": {
+            "src/app/shared/components/button-link/butto-link.stories.ts": [
+                {
+                    "name": "Accent",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/button-link/butto-link.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "actionsData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/button-link/butto-link.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  clicked: action('clicked')\n}"
+                },
+                {
+                    "name": "buttonData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/button-link/butto-link.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  linkText: 'Primary',\n  buttonType: 'button',\n  isDisabled: false,\n  hasErrors: false,\n  color: 'primary',\n  e2eTestName: 'buttonTest',\n  iconLeft: '',\n  iconRight: '',\n}"
+                },
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/button-link/butto-link.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Disabled",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/button-link/butto-link.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "IconLeft",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/button-link/butto-link.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "IconRight",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/button-link/butto-link.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/button-link/butto-link.stories.ts",
+                    "type": "any",
+                    "defaultValue": "(args: ButtonLinkComponent) => ({\n  component: ButtonLinkComponent,\n  props: args,\n})"
+                },
+                {
+                    "name": "Warn",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/button-link/butto-link.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                }
+            ],
+            "src/app/shared/components/edit-list-dialog/edit-list-dialog.stories.ts": [
+                {
+                    "name": "Accent",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/edit-list-dialog/edit-list-dialog.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "actionsData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/edit-list-dialog/edit-list-dialog.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  clicked: action('clicked')\n}"
+                },
+                {
+                    "name": "buttonData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/edit-list-dialog/edit-list-dialog.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  linkText: 'Primary',\n  buttonType: 'button',\n  isDisabled: false,\n  hasErrors: false,\n  color: 'primary',\n  e2eTestName: 'buttonTest',\n  iconLeft: '',\n  iconRight: '',\n}"
+                },
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/edit-list-dialog/edit-list-dialog.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Disabled",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/edit-list-dialog/edit-list-dialog.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "IconLeft",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/edit-list-dialog/edit-list-dialog.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "IconRight",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/edit-list-dialog/edit-list-dialog.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/edit-list-dialog/edit-list-dialog.stories.ts",
+                    "type": "any",
+                    "defaultValue": "(args: EditListDialogComponent) => ({\n  component: EditListDialogComponent,\n  props: args,\n})"
+                },
+                {
+                    "name": "Warn",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/edit-list-dialog/edit-list-dialog.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                }
+            ],
             "src/app/shared/components/button/button.stories.ts": [
                 {
                     "name": "Accent",
@@ -16174,7 +16514,7 @@
                     "subtype": "variable",
                     "file": "src/app/shared/components/button/button.stories.ts",
                     "type": "",
-                    "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Accent',\n    isDisabled: buttonData.isDisabled,\n    e2eTestName: buttonData.e2eTestName,\n    clicked: actionsData.clicked,\n    color: 'accent'\n  }\n})"
+                    "defaultValue": "Template.bind({})"
                 },
                 {
                     "name": "actionsData",
@@ -16190,7 +16530,7 @@
                     "subtype": "variable",
                     "file": "src/app/shared/components/button/button.stories.ts",
                     "type": "object",
-                    "defaultValue": "{\n  text: 'Primary',\n  isDisabled: false,\n  e2eTestName: 'buttonTest'\n}"
+                    "defaultValue": "{\n  buttonText: 'Button',\n  isDisabled: false,\n  hasErrors: false,\n  color: 'primary',\n  e2eTestName: 'buttonTest',\n  iconLeft: '',\n  iconRight: '',\n}"
                 },
                 {
                     "name": "Default",
@@ -16198,7 +16538,7 @@
                     "subtype": "variable",
                     "file": "src/app/shared/components/button/button.stories.ts",
                     "type": "",
-                    "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: buttonData.text,\n    isDisabled: buttonData.isDisabled,\n    e2eTestName: buttonData.e2eTestName,\n    clicked: actionsData.clicked\n  }\n})"
+                    "defaultValue": "Template.bind({})"
                 },
                 {
                     "name": "Disabled",
@@ -16206,7 +16546,7 @@
                     "subtype": "variable",
                     "file": "src/app/shared/components/button/button.stories.ts",
                     "type": "",
-                    "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Disabled',\n    isDisabled: true,\n    e2eTestName: buttonData.e2eTestName,\n    clicked: actionsData.clicked,\n  }\n})"
+                    "defaultValue": "Template.bind({})"
                 },
                 {
                     "name": "IconLeft",
@@ -16214,7 +16554,7 @@
                     "subtype": "variable",
                     "file": "src/app/shared/components/button/button.stories.ts",
                     "type": "",
-                    "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Add',\n    isDisabled: buttonData.isDisabled,\n    e2eTestName: buttonData.e2eTestName,\n    clicked: actionsData.clicked,\n    iconLeft: 'plus'\n  }\n})"
+                    "defaultValue": "Template.bind({})"
                 },
                 {
                     "name": "IconRight",
@@ -16222,15 +16562,23 @@
                     "subtype": "variable",
                     "file": "src/app/shared/components/button/button.stories.ts",
                     "type": "",
-                    "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Delete',\n    isDisabled: buttonData.isDisabled,\n    e2eTestName: buttonData.e2eTestName,\n    clicked: actionsData.clicked,\n    iconRight: 'trash'\n  }\n})"
+                    "defaultValue": "Template.bind({})"
                 },
                 {
-                    "name": "Warning",
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/button/button.stories.ts",
+                    "type": "any",
+                    "defaultValue": "(args: ButtonComponent) => ({\n  component: ButtonComponent,\n  props: args,\n})"
+                },
+                {
+                    "name": "Warn",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
                     "file": "src/app/shared/components/button/button.stories.ts",
                     "type": "",
-                    "defaultValue": "() => ({\n  component: ButtonComponent,\n  props: {\n    buttonText: 'Warning',\n    isDisabled: buttonData.isDisabled,\n    e2eTestName: buttonData.e2eTestName,\n    clicked: actionsData.clicked,\n    color: 'warn'\n  }\n})"
+                    "defaultValue": "Template.bind({})"
                 }
             ],
             "src/app/core/components/navigation/navigation.stories.ts": [
@@ -16240,15 +16588,7 @@
                     "subtype": "variable",
                     "file": "src/app/core/components/navigation/navigation.stories.ts",
                     "type": "object",
-                    "defaultValue": "{\n  logout: action('clicked')\n}"
-                },
-                {
-                    "name": "buttonData",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/core/components/navigation/navigation.stories.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  isLoggedIn: false,\n  currentLang: 'de',\n  translations: {\n    de: {\n      'app.navigation.login': 'Login',\n      'app.navigation.logout': 'Abmelden',\n      'app.navigation.register': 'Registrieren',\n      'app.navigation.planer': 'Menuplaner',\n      'app.navigation.menus': 'Menüs',\n      'app.navigation.shopping-list': 'Einkaufsliste',\n    }\n  }\n}"
+                    "defaultValue": "{\n  logout: action('clicked'),\n  languageChanged: action('languageChanged')\n}"
                 },
                 {
                     "name": "LoggedIn",
@@ -16256,7 +16596,7 @@
                     "subtype": "variable",
                     "file": "src/app/core/components/navigation/navigation.stories.ts",
                     "type": "",
-                    "defaultValue": "() => ({\n  component: NavigationComponent,\n  props: {\n    ...buttonData,\n    isLoggedIn: true,\n    ...actionsData,\n  }\n})"
+                    "defaultValue": "Template.bind({})"
                 },
                 {
                     "name": "LoggedOut",
@@ -16264,7 +16604,15 @@
                     "subtype": "variable",
                     "file": "src/app/core/components/navigation/navigation.stories.ts",
                     "type": "",
-                    "defaultValue": "() => ({\n  component: NavigationComponent,\n  props: {\n    ...buttonData,\n    ...actionsData,\n  }\n})"
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "navigationData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/core/components/navigation/navigation.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  isLoggedIn: false,\n  currentLang: 'de',\n  translations: {\n    de: {\n      'app.navigation.login': 'Login',\n      'app.navigation.logout': 'Abmelden',\n      'app.navigation.register': 'Registrieren',\n      'app.navigation.planer': 'Menuplaner',\n      'app.navigation.menus': 'Menüs',\n      'app.navigation.shopping-list': 'Einkaufsliste',\n      'app.navigation.account': 'Konto',\n    }\n  }\n}"
                 },
                 {
                     "name": "Primary",
@@ -16407,40 +16755,6 @@
                     "defaultValue": "() => ({\n  component: SelectComponent,\n  props: {\n    ...inputData,\n    options: [\n      {key: 'Tesla Key', value: {brand: 'Tesla'}},\n      {key: 'Audi Key', value: {brand: 'Audi'}},\n      {key: 'Skoda', value: {brand: 'Skoda'}},\n      {key: 'BMW', value: {brand: 'BMW'}},\n    ],\n    ...actionsData,\n  }\n})"
                 }
             ],
-            "src/app/features/auth/components/auth-form/auth-form.stories.ts": [
-                {
-                    "name": "actionsData",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/features/auth/components/auth-form/auth-form.stories.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  credentialsReceived: action('credentialsReceived')\n}"
-                },
-                {
-                    "name": "formData",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/features/auth/components/auth-form/auth-form.stories.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  translations: {\n    de: {\n      email: 'Email Adresse',\n      password: 'Passwort',\n      login: 'Anmelden',\n      register: 'Registrieren',\n      'errors.validation.email.required': 'Bitte geben Sie Ihre Email Adresse ein',\n      'errors.validation.email.pattern': 'Valid Email Format braucht @ ein . dann mindestens 2 Zeichen',\n      'errors.validation.password.required': 'Bitte geben Sie Ihre Passwort ein',\n      'errors.validation.password.minlength': 'Passwort muss mindestens 4 character lang sein',\n      'errors.validation.password.pattern': 'Passwort braucht klein und gross Buchstaben und ein Zahl'\n      }\n    }\n}"
-                },
-                {
-                    "name": "Login",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/features/auth/components/auth-form/auth-form.stories.ts",
-                    "type": "",
-                    "defaultValue": "() => ({\n  component: AuthFormComponent,\n  props: {\n    credentialsReceived: actionsData.credentialsReceived,\n    translations: formData.translations\n  }\n})"
-                },
-                {
-                    "name": "Register",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/features/auth/components/auth-form/auth-form.stories.ts",
-                    "type": "",
-                    "defaultValue": "() => ({\n  component: AuthFormComponent,\n  props: {\n    credentialsReceived: actionsData.credentialsReceived,\n    translations: formData.translations,\n    buttonText: 'register'\n  }\n})"
-                }
-            ],
             "src/app/features/cookbook/components/recipe-list/recipe-list.stories.ts": [
                 {
                     "name": "actionsData",
@@ -16499,6 +16813,40 @@
                     "file": "src/app/features/cookbook/pages/recipe-page/recipe-page.stories.ts",
                     "type": "object",
                     "defaultValue": "{\n  translations: {\n    de: {\n      'recipe-form.placeholder.title': 'Title',\n      'recipe-form.label.title': 'Recipe Title',\n      'recipe-form.placeholder.url': 'Link',\n      'recipe-form.label.url': 'Link to Recipe',\n      'ingredients.label-text': 'Ingredients',\n      'recipe-form.placeholder.amount': 'Quantity',\n      'recipe-form.placeholder.name': 'Name',\n      'recipe-form.text.toggle': 'Basic Ingredient',\n      'recipe-form.button.delete': 'Delete',\n      'recipe-form.button.new-ingredient': 'Add new Ingredient',\n      'recipe-form.button.submit': 'Create',\n      'errors.validation.title.required': 'Titel is required',\n      'recipe-form.button.modify': 'Edit'\n    }\n  }\n}"
+                }
+            ],
+            "src/app/features/auth/components/auth-form/auth-form.stories.ts": [
+                {
+                    "name": "actionsData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/features/auth/components/auth-form/auth-form.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  credentialsReceived: action('credentialsReceived')\n}"
+                },
+                {
+                    "name": "formData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/features/auth/components/auth-form/auth-form.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  translations: {\n    de: {\n      email: 'Email Adresse',\n      password: 'Passwort',\n      login: 'Anmelden',\n      register: 'Registrieren',\n      'errors.validation.email.required': 'Bitte geben Sie Ihre Email Adresse ein',\n      'errors.validation.email.pattern': 'Valid Email Format braucht @ ein . dann mindestens 2 Zeichen',\n      'errors.validation.password.required': 'Bitte geben Sie Ihre Passwort ein',\n      'errors.validation.password.minlength': 'Passwort muss mindestens 4 character lang sein',\n      'errors.validation.password.pattern': 'Passwort braucht klein und gross Buchstaben und ein Zahl'\n      }\n    }\n}"
+                },
+                {
+                    "name": "Login",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/features/auth/components/auth-form/auth-form.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: AuthFormComponent,\n  props: {\n    credentialsReceived: actionsData.credentialsReceived,\n    translations: formData.translations\n  }\n})"
+                },
+                {
+                    "name": "Register",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/features/auth/components/auth-form/auth-form.stories.ts",
+                    "type": "",
+                    "defaultValue": "() => ({\n  component: AuthFormComponent,\n  props: {\n    credentialsReceived: actionsData.credentialsReceived,\n    translations: formData.translations,\n    buttonText: 'register'\n  }\n})"
                 }
             ],
             "src/app/features/shopping-list/components/shopping-list/shopping-list.stories.ts": [
@@ -17259,6 +17607,32 @@
                     "file": "src/app/core/store/reducers/app-state.reducers.ts",
                     "type": "",
                     "defaultValue": "createReducer<AppState, Action>(\n  initialAppState,\n  on(\n    I18nApiActions.getI18nSuccess,\n    (state, {i18n}: { i18n: I18n }) => {\n      return {\n        ...state,\n        i18n: {\n          ...state.i18n,\n          ...i18n\n        }\n      };\n    }),\n  on(\n    AuthApiActions.refreshTokenSuccess,\n    (state, {user}: { user: User }) => {\n      return {\n        ...state,\n        user: {\n          ...user\n        }\n      };\n    }),\n  on(\n    AuthApiActions.refreshTokenFailed,\n    ErrorInterceptorActions.logout,\n    AuthApiActions.deleteAccountSuccess,\n    NavigationActions.logout,\n    (state) => {\n      return {\n        ...state,\n        user: null\n      };\n    }),\n  on(\n    AuthApiActions.loginSuccess,\n    AuthApiActions.registerSuccess,\n    AuthApiActions.restPasswordSuccess,\n    (state, {user}: { user: User }) => {\n      return {\n        ...state,\n        user: {\n          ...user\n        },\n      };\n    }),\n  on(\n    AuthenticatedGuardActions.setRequestedUrlBeforeLoginWasRequired,\n    (state, {url}: { url: string }) => {\n      return {\n        ...state,\n        requestedUrlBeforeLoginWasRequired: url\n      };\n    }),\n  on(\n    AppInitializationActions.setLanguage,\n    NavigationActions.changeLanguage,\n    (state: AppState, {language}: { language: Language }) => {\n      return {\n        ...state,\n        language,\n      };\n    })\n)"
+                }
+            ],
+            "src/app/core/components/beta-teaser/beta-teaser.stories.ts": [
+                {
+                    "name": "betaTeaserData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/core/components/beta-teaser/beta-teaser.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  currentLang: 'de',\n  translations: {\n    de: {\n      'beta.teaser': 'Beta Teaser',\n    }\n  }\n}"
+                },
+                {
+                    "name": "Primary",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/core/components/beta-teaser/beta-teaser.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/core/components/beta-teaser/beta-teaser.stories.ts",
+                    "type": "any",
+                    "defaultValue": "(args: BetaTeaserComponent) => ({\n  component: BetaTeaserComponent,\n  props: args,\n})"
                 }
             ],
             "src/app/features/shopping-list/store/actions/shopping-list-effect.actions.ts": [
@@ -18186,6 +18560,24 @@
                     "defaultValue": "createReducer<MealPlanerState, Action>(\n  initialMealPlanerState,\n  on(MealPlanerContainerActions.selectedDateChanged, (state: MealPlanerState, {selectedDate}: { selectedDate: Date }) => {\n    return {\n      ...state,\n      selectedDate\n    };\n  }),\n  on(\n    MealPlanerApiActions.loadMealPlanersSuccess,\n    (state: MealPlanerState, {mealPlaners}) => {\n      return {\n        ...state,\n        mealPlaners: mealPlanerAdapter.addMany(mealPlaners, state.mealPlaners),\n      };\n    }),\n  on(\n    MealPlanerEffectActions.setActiveMealPlaner,\n    MealPlanerContainerActions.changeSelectedMealPlaner,\n    (state: MealPlanerState, {mealPlanerId}) => {\n      return {\n        ...state,\n        activeMealPlaner: mealPlanerId || undefined,\n      };\n    }),\n  on(\n    MealPlanerApiActions.createMealPlanerSuccess,\n    (state: MealPlanerState, {mealPlaner}) => {\n      return {\n        ...state,\n        mealPlaners: mealPlanerAdapter.addOne(mealPlaner, state.mealPlaners),\n        meals: {\n          ...state.meals,\n          [mealPlaner.id]: {},\n        },\n        activeMealPlaner: mealPlaner.id,\n      };\n    }\n  ),\n  on(\n    MealPlanerContainerActions.editMealPlaner,\n    (state: MealPlanerState, {changes}) => {\n      return {\n        ...state,\n        mealPlaners: mealPlanerAdapter.updateOne({id: changes.id, changes}, state.mealPlaners),\n      };\n    }\n  ),\n  on(\n    MealPlanerEffectActions.undoOptimisticEditMealPlaner,\n    (state: MealPlanerState, {mealPlaner}) => {\n      return {\n        ...state,\n        mealPlaners: mealPlanerAdapter.updateOne({id: mealPlaner.id, changes: mealPlaner}, state.mealPlaners),\n      };\n    }\n  ),\n  on(\n    MealPlanerContainerActions.deleteMealPlaner,\n    (state: MealPlanerState, {mealPlaner}) => {\n      return {\n        ...state,\n        mealPlaners: mealPlanerAdapter.removeOne(mealPlaner.id, state.mealPlaners),\n      };\n    }\n  ),\n  on(\n    MealPlanerContainerActions.undoDeleteMealPlaner,\n    MealPlanerEffectActions.undoOptimisticDeleteMealPlaner,\n    (state: MealPlanerState, {mealPlaner}) => {\n      return {\n        ...state,\n        mealPlaners: mealPlanerAdapter.addOne(mealPlaner, state.mealPlaners),\n      };\n    }\n  ),\n  on(\n    MealPlanerApiActions.deleteMealPlanerSuccess,\n    (state: MealPlanerState, {mealPlaner}) => {\n      const copyMeals = {...state.meals};\n\n      if (copyMeals.hasOwnProperty(mealPlaner.id)) {\n        delete copyMeals[mealPlaner.id];\n      }\n\n      return {\n        ...state,\n        meals: copyMeals,\n      };\n    }\n  ),\n  on(MealPlanerApiActions.loadMealsSuccess,\n    (state: MealPlanerState, {date, dayPlan, mealPlanerId}) => {\n      return {\n        ...state,\n        meals: {\n          ...state.meals,\n          [mealPlanerId]: {\n            ...state.meals[mealPlanerId],\n            [format(date, 'yyyy-MM-dd')]: dayPlan\n          }\n        }\n      };\n    }\n  ),\n  on(MealPlanerContainerActions.addMeal,\n    (state: MealPlanerState, {optimisticId, mealType, recipe}) => {\n      if (!state.activeMealPlaner) {\n        return state;\n      }\n\n      const date = format(state.selectedDate, 'yyyy-MM-dd');\n\n      return {\n        ...state,\n        meals: {\n          ...state.meals,\n          [state.activeMealPlaner]: {\n            ...state.meals[state.activeMealPlaner],\n            [date]: {\n              ...state.meals[state.activeMealPlaner][date],\n              [mealType]: [{id: optimisticId, type: mealType, recipe, date}]\n            }\n          }\n        }\n      };\n    }\n  ),\n  on(MealPlanerContainerActions.removeMeal,\n    (state: MealPlanerState, {meal}) => {\n      if (!state.activeMealPlaner) {\n        return state;\n      }\n\n      const date = format(state.selectedDate, 'yyyy-MM-dd');\n      const copyDayPlan = {...state.meals[state.activeMealPlaner][date]};\n\n\n      if (copyDayPlan.hasOwnProperty(meal.type)) {\n        delete copyDayPlan[meal.type];\n      }\n\n      return {\n        ...state,\n        meals: {\n          ...state.meals,\n          [state.activeMealPlaner]: {\n            ...state.meals[state.activeMealPlaner],\n            [date]: copyDayPlan\n          }\n        }\n      };\n    }\n  ),\n  on(MealPlanerApiActions.addMealsSuccess,\n    (state: MealPlanerState, {optimisticId, mealApi}) => {\n      if (!state.activeMealPlaner) {\n        return state;\n      }\n\n      const date = format(state.selectedDate, 'yyyy-MM-dd');\n\n      return {\n        ...state,\n        meals: {\n          ...state.meals,\n          [state.activeMealPlaner]: {\n            ...state.meals[state.activeMealPlaner],\n            [date]: {\n              ...state.meals[state.activeMealPlaner][date],\n              [mealApi.type]: state.meals[state.activeMealPlaner][date][mealApi.type].map(meal => {\n                return meal.id === optimisticId ? {...meal, id: mealApi.id} : meal;\n              })\n            }\n          }\n        }\n      };\n    }\n  ),\n  on(MealPlanerEffectActions.undoOptimisticAddMeal,\n    (state: MealPlanerState, {optimisticId, mealType}) => {\n      if (!state.activeMealPlaner) {\n        return state;\n      }\n\n      const date = format(state.selectedDate, 'yyyy-MM-dd');\n\n      return {\n        ...state,\n        meals: {\n          ...state.meals,\n          [state.activeMealPlaner]: {\n            ...state.meals[state.activeMealPlaner],\n            [date]: {\n              ...state.meals[state.activeMealPlaner][date],\n              [mealType]: state.meals[state.activeMealPlaner][date][mealType].filter(meal => {\n                return meal.id !== optimisticId;\n              })\n            }\n          }\n        }\n      };\n    }\n  ),\n  on(MealPlanerContainerActions.undoRemoveMeal,\n    MealPlanerEffectActions.undoOptimisticRemoveMeal,\n    (state: MealPlanerState, {meal}) => {\n      if (!state.activeMealPlaner) {\n        return state;\n      }\n\n      const date = format(state.selectedDate, 'yyyy-MM-dd');\n\n      return {\n        ...state,\n        meals: {\n          ...state.meals,\n          [state.activeMealPlaner]: {\n            ...state.meals[state.activeMealPlaner],\n            [date]: {\n              ...state.meals[state.activeMealPlaner][date],\n              [meal.type]: [...(state.meals[state.activeMealPlaner][date][meal.type] || []), meal]\n            }\n          }\n        }\n      };\n    }\n  )\n)"
                 }
             ],
+            "src/app/core/components/not-found/not-found.stories.ts": [
+                {
+                    "name": "Primary",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/core/components/not-found/not-found.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/core/components/not-found/not-found.stories.ts",
+                    "type": "any",
+                    "defaultValue": "(args: NotFoundComponent) => ({\n  component: NotFoundComponent,\n  props: args,\n})"
+                }
+            ],
             "src/app/features/auth/store/actions/login-service.actions.ts": [
                 {
                     "name": "refreshToken",
@@ -19020,6 +19412,36 @@
                 "status": "low"
             },
             {
+                "filePath": "src/app/core/components/beta-teaser/beta-teaser.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "betaTeaserData",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/core/components/beta-teaser/beta-teaser.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Primary",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/core/components/beta-teaser/beta-teaser.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
                 "filePath": "src/app/core/components/navigation/navigation.component.ts",
                 "type": "component",
                 "linktype": "component",
@@ -19043,16 +19465,6 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
-                "name": "buttonData",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/core/components/navigation/navigation.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
                 "name": "LoggedIn",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
@@ -19064,6 +19476,16 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "LoggedOut",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/core/components/navigation/navigation.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "navigationData",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -19095,6 +19517,26 @@
                 "name": "NotFoundComponent",
                 "coveragePercent": 0,
                 "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/core/components/not-found/not-found.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Primary",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/core/components/not-found/not-found.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
                 "status": "low"
             },
             {
@@ -22476,6 +22918,96 @@
                 "status": "low"
             },
             {
+                "filePath": "src/app/shared/components/button-link/butto-link.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Accent",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/button-link/butto-link.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "actionsData",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/button-link/butto-link.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "buttonData",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/button-link/butto-link.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/button-link/butto-link.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Disabled",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/button-link/butto-link.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "IconLeft",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/button-link/butto-link.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "IconRight",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/button-link/butto-link.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/button-link/butto-link.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Warn",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
                 "filePath": "src/app/shared/components/button-link/button-link.component.ts",
                 "type": "component",
                 "linktype": "component",
@@ -22568,7 +23100,17 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
-                "name": "Warning",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/button/button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Warn",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -22580,6 +23122,96 @@
                 "name": "EditListDialogComponent",
                 "coveragePercent": 0,
                 "coverageCount": "0/9",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/edit-list-dialog/edit-list-dialog.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Accent",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/edit-list-dialog/edit-list-dialog.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "actionsData",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/edit-list-dialog/edit-list-dialog.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "buttonData",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/edit-list-dialog/edit-list-dialog.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/edit-list-dialog/edit-list-dialog.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Disabled",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/edit-list-dialog/edit-list-dialog.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "IconLeft",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/edit-list-dialog/edit-list-dialog.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "IconRight",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/edit-list-dialog/edit-list-dialog.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/edit-list-dialog/edit-list-dialog.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Warn",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
                 "status": "low"
             },
             {

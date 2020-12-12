@@ -3,14 +3,21 @@ import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontaweso
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { action } from '@storybook/addon-actions';
 import { moduleMetadata } from '@storybook/angular';
-import { ButtonComponent } from './button.component';
+import { RouterLinkDirectiveStub } from '../../../../../testing/router-link-directive.stub';
+import { EditListDialogComponent } from '../edit-list-dialog/edit-list-dialog.component';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { ReactiveFormsModule } from '@angular/forms';
+import { InputComponent } from '../input/input.component';
+import { ButtonComponent } from '../button/button.component';
+import { ListPickerDialogComponent } from './list-picker-dialog.component';
 
 export default {
-  title: 'Shared/Button',
+  title: 'Shared/ListPickerDialog',
   excludeStories: /.*Data$/,
   decorators: [
     moduleMetadata({
-      imports: [FontAwesomeModule],
+      declarations: [RouterLinkDirectiveStub, InputComponent, ButtonComponent],
+      imports: [FontAwesomeModule, MatDialogModule, ReactiveFormsModule],
       providers: [
         {
           provide: APP_INITIALIZER,
@@ -21,6 +28,23 @@ export default {
           },
           deps: [FaIconLibrary],
           multi: true,
+        },
+        {
+          provide: MatDialogRef,
+          useValue: {
+          }
+        },
+        {
+          provide: MAT_DIALOG_DATA,
+          useValue: {
+            data: [{id: 'id', title: 'Liste 1'}, {id: 'id', title: 'Liste 2'}],
+            translations: {
+              'new-list': 'Neue Liste',
+              'default-title': 'Meine Liste',
+              'aria-edit': 'Bearbeiten',
+              'aria-delete': 'Löschen'
+            }
+          }
         },
       ]
     })
@@ -46,7 +70,8 @@ export const actionsData = {
 };
 
 export const buttonData = {
-  buttonText: 'Button',
+  linkText: 'Primary',
+  buttonType: 'button',
   isDisabled: false,
   hasErrors: false,
   color: 'primary',
@@ -56,8 +81,8 @@ export const buttonData = {
 };
 
 // tslint:disable-next-line:no-any
-const Template: any = (args: ButtonComponent) => ({
-  component: ButtonComponent,
+const Template: any = (args: ListPickerDialogComponent) => ({
+  component: ListPickerDialogComponent,
   props: args,
 });
 
@@ -67,39 +92,6 @@ Default.args = {
   ...actionsData,
 };
 
-export let Accent = Template.bind({});
-Accent.args = {
-  ...buttonData,
-  ...actionsData,
-  color: 'accent'
-};
 
-export let Warn = Template.bind({});
-Warn.args = {
-  ...buttonData,
-  ...actionsData,
-  color: 'warn'
-};
-
-export let Disabled = Template.bind({});
-Disabled.args = {
-  ...buttonData,
-  ...actionsData,
-  isDisabled: true,
-};
-
-export let IconLeft = Template.bind({});
-IconLeft.args = {
-  ...buttonData,
-  ...actionsData,
-  iconLeft: 'plus'
-};
-
-export let IconRight = Template.bind({});
-IconRight.args = {
-  ...buttonData,
-  ...actionsData,
-  iconRight: 'trash'
-};
 
 

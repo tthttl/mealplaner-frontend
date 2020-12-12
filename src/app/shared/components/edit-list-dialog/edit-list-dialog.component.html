@@ -1,4 +1,5 @@
 <form [formGroup]="listForm" (ngSubmit)="createList()">
+<form [formGroup]="listForm" (ngSubmit)="createList()">
 <h2 mat-dialog-title>{{dialogData.translations['title']}}</h2>
 <mat-dialog-content class="mat-typography creat-list-dialog">
   <app-input  [placeholder]="dialogData.translations['placeholder']" [name]="'title'"  [formControl]="getFormControl('title')"></app-input>
