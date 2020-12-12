@@ -11,7 +11,7 @@ import { RouterLinkDirectiveStub } from '../../../../../testing/router-link-dire
 import { SelectComponent } from '../../../shared/components/select/select.component';
 
 export default {
-  title: 'Navigation',
+  title: 'Core/Navigation',
   excludeStories: /.*Data$/,
   decorators: [
     moduleMetadata({

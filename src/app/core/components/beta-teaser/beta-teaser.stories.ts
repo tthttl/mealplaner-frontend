@@ -8,7 +8,7 @@ import { RouterLinkDirectiveStub } from '../../../../../testing/router-link-dire
 import { BetaTeaserComponent } from './beta-teaser.component';
 
 export default {
-  title: 'BetaTeaser',
+  title: 'Core/BetaTeaser',
   excludeStories: /.*Data$/,
   decorators: [
     moduleMetadata({

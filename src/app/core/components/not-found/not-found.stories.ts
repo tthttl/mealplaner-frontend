@@ -1,7 +1,7 @@
 import { NotFoundComponent } from './not-found.component';
 
 export default {
-  title: 'NotFound',
+  title: 'Core/NotFound',
   excludeStories: /.*Data$/,
 };
 
