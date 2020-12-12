@@ -7,6 +7,7 @@ import { STORAGE_SELECTED_SHOPPING_LIST_ID } from '../../../../core/constants/co
 import { ShoppingList, ShoppingListItem } from '../../../../core/models/model';
 import { SnackbarService } from '../../../../core/services/snackbar.service';
 import { StorageService } from '../../../../core/services/storage.service';
+import { SyncService } from '../../../../core/services/sync.service';
 import { GlobalState, initialState, selectUserID } from '../../../../core/store';
 import { ShoppingListService } from '../../service/shopping-list.service';
 import { ShoppingListApiActions, ShoppingListContainerActions, ShoppingListEffectActions } from '../actions';
@@ -24,6 +25,7 @@ describe('Shopping List Api Effects', () => {
   let store: Store<GlobalState>;
   let snackBarService: SpyObj<SnackbarService>;
   let storageService: SpyObj<StorageService>;
+  let syncService: SpyObj<SyncService>;
 
   class StoreMock {
     select = jasmine.createSpy().and.returnValue(of({}));
@@ -82,11 +84,13 @@ describe('Shopping List Api Effects', () => {
     router = jasmine.createSpyObj('Router', ['navigate']);
     snackBarService = jasmine.createSpyObj('SnackBarService', ['openSnackBar']);
     storageService = jasmine.createSpyObj('StorageService', ['getItem', 'setItem']);
+    syncService = jasmine.createSpyObj('SyncService', ['registerForSync', 'createSyncItemForPost', 'createSyncItem']);
   });
 
   // tslint:disable-next-line:no-any
   function createEffect(actions: Observable<any>, service: ShoppingListService, routerMock?: Router): ShoppingListEffects {
-    return new ShoppingListEffects(actions, service, activatedRoute, routerMock || router, snackBarService, store, storageService);
+    return new ShoppingListEffects(actions, service, activatedRoute, routerMock || router,
+      snackBarService, store, storageService, syncService);
   }
 
   describe('getShoppingLists$', () => {

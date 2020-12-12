@@ -121,10 +121,7 @@ export class ShoppingListEffects {
       }),
       // tslint:disable-next-line:no-any
       catchError((error: any) => {
-        console.log(error.status);
-        console.log(error.status === 504);
-        if (true) {
-          console.log('Registering for Sync');
+        if (error.status === 504) {
           return of(ShoppingListEffectActions.registerShoppingListItemPostForSync({basicShoppingListItem: shoppingListItem, optimisticId}));
         } else {
           return of(ShoppingListApiActions.addShoppingListItemFailure({optimisticId, shoppingListItem}));
@@ -138,7 +135,7 @@ export class ShoppingListEffects {
     ofType(ShoppingListEffectActions.registerShoppingListItemPostForSync),
     withLatestFrom(this.store.select(selectUser)),
     concatMap(([{basicShoppingListItem, optimisticId}, user]) => {
-        const syncItem: SyncItem = this.syncService.createSyncItemForPost(basicShoppingListItem, user?.jwt || '');
+        const syncItem: SyncItem = this.syncService.createSyncItemForPost(basicShoppingListItem, user?.jwt || '', optimisticId);
         return this.syncService.registerForSync(syncItem)
           .pipe(
             map(() => ShoppingListEffectActions.registerShoppingListItemPostForSyncSuccess()),
@@ -179,10 +176,11 @@ export class ShoppingListEffects {
           map(() => {
             return ShoppingListApiActions.deleteShoppingListItemSuccess({shoppingListItem});
           }),
-          catchError(() => {
-            console.log('Registering DELETE');
-            return of(ShoppingListEffectActions.registerShoppingListItemDeleteForSync({shoppingListItem}));
-            // of(ShoppingListApiActions.deleteShoppingListItemFailure({shoppingListItem}))
+          catchError((error) => {
+            if (error.status === 504) {
+              return of(ShoppingListEffectActions.registerShoppingListItemDeleteForSync({shoppingListItem}));
+            }
+            return of(ShoppingListApiActions.deleteShoppingListItemFailure({shoppingListItem}));
           })
         )),
       );
@@ -250,10 +248,11 @@ export class ShoppingListEffects {
       const a = forkJoin(updateObservables);
       return a.pipe(
         map(() => ShoppingListApiActions.updateShoppingListItemSuccess()),
-        catchError(() => {
-          console.log('Registering for Updates');
-          return of(ShoppingListEffectActions.registerShoppingListItemUpdatesForSync({shoppingListItems}));
-          // of(ShoppingListApiActions.updateShoppingListItemFailure({shoppingListItems})); // TODO make status check
+        catchError((error) => {
+          if (error.status === 504) {
+            return of(ShoppingListEffectActions.registerShoppingListItemUpdatesForSync({shoppingListItems}));
+          }
+          return of(ShoppingListApiActions.updateShoppingListItemFailure({shoppingListItems}));
         }));
     })
   );
@@ -265,7 +264,7 @@ export class ShoppingListEffects {
     map(([{shoppingListItems}, user]) => {
       const syncItems: SyncItem[] = shoppingListItems
         .map((shoppingListItem: ShoppingListItem) => this.syncService
-          .createSyncItem(shoppingListItem, user?.jwt || '', 'UPDATE'));
+          .createSyncItem(shoppingListItem, user?.jwt || '', 'PUT'));
       return {
         shoppingListItems,
         registries: syncItems.map((syncItem: SyncItem) => this.syncService.registerForSync(syncItem))

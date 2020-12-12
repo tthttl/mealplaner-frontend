@@ -26,11 +26,11 @@ export class SyncService {
     return throwError('Offline Mode is not available');
   }
 
-  createSyncItemForPost(basicShoppingListItem: BasicShoppingListItem, jwt: string): SyncItem {
+  createSyncItemForPost(basicShoppingListItem: BasicShoppingListItem, jwt: string, optimisticId: string): SyncItem {
     return {
       payload: {
         basicShoppingListItem,
-        id: null,
+        id: optimisticId,
         order: null
       },
       keyPath: uuid(),

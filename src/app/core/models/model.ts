@@ -206,4 +206,4 @@ export interface SyncItem {
   jwt: string; // TODO Remove when refresh-token ist fixed
 }
 
-export type SyncMethod = 'POST' | 'UPDATE' | 'DELETE';
+export type SyncMethod = 'POST' | 'PUT' | 'DELETE';

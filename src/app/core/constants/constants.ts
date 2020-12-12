@@ -9,4 +9,3 @@ export const INPUT_DEBOUNCE_TIME = 300;
 export const STORAGE_SELECTED_COOKBOOK_ID = 'selectedCookbookId';
 export const STORAGE_SELECTED_SHOPPING_LIST_ID = 'selectedShoppingListId';
 export const SUPPORTED_LANGUAGES = StringUnion('de', 'en');
-export const SYNC_SHOPPING_LIST_ITEM_POST = 'ShoppingListItem - POST';
