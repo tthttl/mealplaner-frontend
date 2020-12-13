@@ -51,9 +51,9 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
   activeShoppingList$: Observable<ShoppingList | undefined> = this.store.select(activeShoppingList);
   private destroy$: Subject<void> = new Subject<void>();
 
-  private addRecipeDialogTranslations: {} = {};
-  private createListDialogTranslations: {} = {};
-  private editListDialogTranslations: {} = {};
+  private addRecipeDialogTranslations: {[key: string]: string} = {};
+  private createListDialogTranslations: {[key: string]: string} = {};
+  private editListDialogTranslations: {[key: string]: string} = {};
 
   constructor(
     private store: Store<GlobalState>,

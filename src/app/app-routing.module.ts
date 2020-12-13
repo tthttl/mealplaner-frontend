@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CustomPreloadingStrategyService } from './core/services/custom-preloading-strategy.service';
+import { AuthModule } from './features/auth/auth.module';
+import { AccountContainerComponent } from './features/auth/containers/account-container/account-container.component';
 
 
 const routes: Routes = [
@@ -10,7 +12,7 @@ const routes: Routes = [
   },
   {
     path: 'auth',
-    loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule)
+    loadChildren: () => AuthModule,
   },
   {
     path: 'shopping-list',
@@ -26,6 +28,10 @@ const routes: Routes = [
     path: 'meal-planer',
     loadChildren: () => import('./features/meal-planer/meal-planer.module').then(m => m.MealPlanerModule),
   },
+  {
+    path: 'account',
+    component: AccountContainerComponent
+  }
 ];
 
 @NgModule({

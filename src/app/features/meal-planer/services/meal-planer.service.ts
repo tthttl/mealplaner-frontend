@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { Meal, MealPlaner, MealType } from '../../../core/models/model';
-import { formatDate } from '@angular/common';
 import { format } from 'date-fns';
 
 @Injectable({

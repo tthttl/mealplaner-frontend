@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SUPPORTED_LANGUAGES } from '../../constants/constants';
 import { I18n, Language, Link, SelectOption } from '../../models/model';
 
@@ -18,6 +18,7 @@ export class NavigationComponent {
     {key: 'app.navigation.shopping-list', path: '/shopping-list', icon: 'shopping-cart'},
     {key: 'app.navigation.planer', path: '/meal-planer', icon: 'calendar-alt'},
     {key: 'app.navigation.menus', path: '/cookbook', icon: 'hamburger'},
+    {key: 'app.navigation.account', path: '/account', icon: 'user'},
   ];
 
   supportedLanguages: SelectOption<Language>[] = SUPPORTED_LANGUAGES.values.map((language: Language) => {

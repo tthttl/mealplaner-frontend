@@ -1,0 +1,15 @@
+<div class="account-page container">
+  <h1 class="account-page__heading">{{'account.greeting' | translate:translations:currentLanguage}} {{user?.name}}, </h1>
+  <div class="account-page__lead-text">
+    {{ 'account.lead-text' | translate:translations:currentLanguage}}
+  </div>
+
+  <section class="account-page__actions">
+    <div class="account-page__action">
+      <button type="button" class="account-page__delete-button" (click)="deleteAccount()">{{'account.delete' | translate:translations:currentLanguage}}</button>
+    </div>
+    <div class="account-page__action">
+      <a class="account-page__support-link" href="mailto:info@missionweb.ch">{{'account.support' | translate:translations:currentLanguage}}</a>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,36 @@
+<div class="delete-account-confirmation-dialog">
+  <h1 class="delete-account-confirmation-dialog__title" mat-dialog-title>{{dialogData.translations['title']}}</h1>
+  <div class="delete-account-confirmation-dialog__warning" [innerHTML]="dialogData.translations['warning']">
+  </div>
+  <div class="delete-account-confirmation-dialog__no-undo">
+    {{dialogData.translations['no-undo']}}
+  </div>
+  <div class="delete-account-confirmation-dialog__confirm-task">
+    <label for="confirm-input">
+      {{dialogData.translations['task-label']}}
+      <br/>
+      <span class="delete-account-confirmation-dialog__confirm-text">{{dialogData.data.name}}</span>
+    </label>
+    <input id="confirm-input" class="delete-account-confirmation-dialog__input" [(ngModel)]="confirmInput"/>
+  </div>
+  <div class="delete-account-confirmation-dialog__actions" mat-dialog-actions>
+    <app-button
+      [buttonType]="'button'"
+      [buttonText]="dialogData.translations['button-discard']"
+      [color]="'inverted'"
+      (clicked)="discard()"
+    >
+    </app-button>
+    <app-button
+      [buttonType]="'button'"
+      [isDisabled]="!isConfirmed"
+      [buttonText]="dialogData.translations['button-confirm']"
+      [color]="'primary'"
+      (clicked)="confirm()"
+    >
+    </app-button>
+  </div>
+</div>
+
+
+
