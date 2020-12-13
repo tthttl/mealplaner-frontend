@@ -19,11 +19,12 @@ import {
 } from 'rxjs/operators';
 import { DELETION_DELAY, STORAGE_SELECTED_SHOPPING_LIST_ID } from '../../../../core/constants/constants';
 import { moveItemInArray, stringBetweenChars } from '../../../../core/helpers/helpers';
-import { ShoppingList, ShoppingListItem } from '../../../../core/models/model';
+import { ShoppingList, ShoppingListItem, SyncItem } from '../../../../core/models/model';
 import { ChangeShoppingListAction, SetActiveShoppingListAction } from '../../../../core/models/model-action';
 import { SnackbarService } from '../../../../core/services/snackbar.service';
 import { StorageService } from '../../../../core/services/storage.service';
-import { GlobalState, selectCurrentShoppingListItems, selectUserID } from '../../../../core/store';
+import { SyncService } from '../../../../core/services/sync.service';
+import { GlobalState, selectCurrentShoppingListItems, selectUser, selectUserID } from '../../../../core/store';
 import { CookbookContainerActions } from '../../../cookbook/store/actions';
 import { ShoppingListService } from '../../service/shopping-list.service';
 import { ShoppingListApiActions, ShoppingListContainerActions, ShoppingListEffectActions } from '../actions';
@@ -39,7 +40,8 @@ export class ShoppingListEffects {
     private snackBarService: SnackbarService,
     private store: Store<GlobalState>,
     private storageService: StorageService,
-    ) {
+    private syncService: SyncService,
+  ) {
   }
 
   @Effect()
@@ -123,8 +125,33 @@ export class ShoppingListEffects {
       map((shoppingListItemApi: ShoppingListItem) => {
         return ShoppingListApiActions.addShoppingListItemSuccess({optimisticId, shoppingListItem: shoppingListItemApi});
       }),
-      catchError(() => of(ShoppingListApiActions.addShoppingListItemFailure({optimisticId, shoppingListItem})))
+      // tslint:disable-next-line:no-any
+      catchError((error: any) => {
+        if (error.status === 504) {
+          return of(ShoppingListEffectActions.registerShoppingListItemPostForSync({basicShoppingListItem: shoppingListItem, optimisticId}));
+        } else {
+          return of(ShoppingListApiActions.addShoppingListItemFailure({optimisticId, shoppingListItem}));
+        }
+      })
     )),
+  );
+
+  @Effect()
+  syncShoppingListItemPost = this.actions$.pipe(
+    ofType(ShoppingListEffectActions.registerShoppingListItemPostForSync),
+    withLatestFrom(this.store.select(selectUser)),
+    concatMap(([{basicShoppingListItem, optimisticId}, user]) => {
+        const syncItem: SyncItem = this.syncService.createSyncItemForPost(basicShoppingListItem, user?.jwt || '', optimisticId);
+        return this.syncService.registerForSync(syncItem)
+          .pipe(
+            map(() => ShoppingListEffectActions.registerShoppingListItemPostForSyncSuccess()),
+            catchError(() => of(ShoppingListApiActions.addShoppingListItemFailure({
+              optimisticId,
+              shoppingListItem: syncItem.payload.basicShoppingListItem
+            })))
+          );
+      }
+    )
   );
 
   @Effect()
@@ -148,15 +175,35 @@ export class ShoppingListEffects {
     concatMap(({type, shoppingListItem}) => {
       return of({}).pipe(
         delayWhen((action) =>
-          (type !== ShoppingListEffectActions.retryDeleteShoppingListItem.type) ? interval(DELETION_DELAY) :  interval(0)
+          (type !== ShoppingListEffectActions.retryDeleteShoppingListItem.type) ? interval(DELETION_DELAY) : interval(0)
         ),
         takeUntil(this.actions$.pipe(ofType(ShoppingListContainerActions.undoDeleteShoppingListItem))),
         mergeMap(() => this.shoppingListService.deleteShoppingListItem(shoppingListItem.id).pipe(
           map(() => ShoppingListApiActions.deleteShoppingListItemSuccess({shoppingListItem})),
-          catchError(() => of(ShoppingListApiActions.deleteShoppingListItemFailure({shoppingListItem})))
+          catchError((error) => {
+            if (error.status === 504) {
+              return of(ShoppingListEffectActions.registerShoppingListItemDeleteForSync({shoppingListItem}));
+            }
+            return of(ShoppingListApiActions.deleteShoppingListItemFailure({shoppingListItem}));
+          })
         )),
       );
     })
+  );
+
+  @Effect()
+  syncShoppingListItemDelete = this.actions$.pipe(
+    ofType(ShoppingListEffectActions.registerShoppingListItemDeleteForSync),
+    withLatestFrom(this.store.select(selectUser)),
+    concatMap(([{shoppingListItem}, user]) => {
+        const syncItem: SyncItem = this.syncService.createSyncItem(shoppingListItem, user?.jwt || '', 'DELETE');
+        return this.syncService.registerForSync(syncItem)
+          .pipe(
+            map(() => ShoppingListEffectActions.registerShoppingListItemDeleteForSyncSuccess()),
+            catchError(() => of(ShoppingListApiActions.deleteShoppingListItemFailure({shoppingListItem})))
+          );
+      }
+    )
   );
 
   @Effect()
@@ -222,7 +269,33 @@ export class ShoppingListEffects {
       const a = forkJoin(updateObservables);
       return a.pipe(
         map(() => ShoppingListApiActions.updateShoppingListItemSuccess()),
-        catchError(() => of(ShoppingListApiActions.updateShoppingListItemFailure({shoppingListItems}))));
+        catchError((error) => {
+          if (error.status === 504) {
+            return of(ShoppingListEffectActions.registerShoppingListItemUpdatesForSync({shoppingListItems}));
+          }
+          return of(ShoppingListApiActions.updateShoppingListItemFailure({shoppingListItems}));
+        }));
+    })
+  );
+
+  @Effect()
+  syncShoppingListItemUpdates$ = this.actions$.pipe(
+    ofType(ShoppingListEffectActions.registerShoppingListItemUpdatesForSync),
+    withLatestFrom(this.store.select(selectUser)),
+    map(([{shoppingListItems}, user]) => {
+      const syncItems: SyncItem[] = shoppingListItems
+        .map((shoppingListItem: ShoppingListItem) => this.syncService
+          .createSyncItem(shoppingListItem, user?.jwt || '', 'PUT'));
+      return {
+        shoppingListItems,
+        registries: syncItems.map((syncItem: SyncItem) => this.syncService.registerForSync(syncItem))
+      };
+    }),
+    concatMap(({shoppingListItems, registries}) => {
+      return forkJoin(registries).pipe(
+        map(() => ShoppingListEffectActions.registerShoppingListItemUpdatesForSyncSuccess()),
+        catchError(() => of(ShoppingListApiActions.updateShoppingListItemFailure({shoppingListItems})))
+      );
     })
   );
 
@@ -298,7 +371,7 @@ export class ShoppingListEffects {
     concatMap(({type, shoppingList}) => {
       return of({}).pipe(
         delayWhen((action) =>
-          (type !== ShoppingListEffectActions.retryDeleteShoppingList.type) ? interval(DELETION_DELAY) :  interval(0)
+          (type !== ShoppingListEffectActions.retryDeleteShoppingList.type) ? interval(DELETION_DELAY) : interval(0)
         ),
         takeUntil(this.actions$.pipe(ofType(ShoppingListContainerActions.undoDeleteShoppingList))),
         mergeMap(() => this.shoppingListService.deleteShoppingList(shoppingList.id).pipe(
