@@ -1,11 +1,15 @@
 <nav class="main-navigation">
   <div class="container main-navigation__content">
     <div class="main-navigation__wrapper">
-      <img class="main-navigation__logo"
-           src="../../../../assets/logo.svg"
-           [routerLink]="['/']" alt="Mealplaner Logo"
-           [attr.aria-label]="'navigation.go-home' | translate:translations:currentLanguage"
-      >
+      <a [routerLink]="'/'">
+        <img class="main-navigation__logo"
+             src="../../../../assets/logo.svg"
+             alt="Mealplaner Logo"
+        >
+        <span class="visually-hidden">
+          {{'navigation.go-home' | translate:translations:currentLanguage}}
+        </span>
+      </a>
       <div class="desktop-navigation" *ngIf="isLoggedIn">
         <ul class="desktop-navigation__link-list" data-test="desktop-navigation">
           <li *ngFor="let link of links" class="desktop-navigation__link-list-element">
@@ -49,9 +53,9 @@
           {{'app.navigation.login' | translate:translations:currentLanguage}}
         </a>
 
-        <a          [routerLink]="['/auth/register']"
-                    class="main-navigation__primary-action"
-                    data-test="register-link">
+        <a [routerLink]="['/auth/register']"
+           class="main-navigation__primary-action"
+           data-test="register-link">
           {{'app.navigation.register' | translate:translations:currentLanguage }}
         </a>
       </ng-template>

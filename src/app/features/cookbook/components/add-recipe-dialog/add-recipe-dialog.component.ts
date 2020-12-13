@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { DialogData, Recipe, RecipeIngredient } from '../../../../core/models/model';
+import { DialogData, Recipe, RecipeIngredient, SelectedIngredient } from '../../../../core/models/model';
 
 @Component({
   selector: 'app-recipe-dialog',
@@ -12,7 +12,10 @@ export class AddRecipeDialogComponent implements OnInit {
   ingredientsForm: FormGroup = new FormGroup({
     ingredients: new FormArray([])
   });
-  ingredients: FormArray = new FormArray([]);
+
+  get ingredients(): FormArray {
+    return this.ingredientsForm.controls.ingredients as FormArray;
+  }
 
   constructor(
     public dialogRef: MatDialogRef<AddRecipeDialogComponent>,
@@ -31,13 +34,13 @@ export class AddRecipeDialogComponent implements OnInit {
         unitLabel: new FormControl(this.dialogData.translations[ingredient.unit])
       }));
     });
-    this.ingredients = this.ingredientsForm.controls.ingredients as FormArray;
   }
 
   onAddIngredients(): void {
     this.dialogRef.close({
       event: 'selectedIngredients',
       selectedIngredients: this.ingredients.controls.map((control: AbstractControl) => (control as FormGroup).value)
+        .filter((item: SelectedIngredient) => item.isSelected)
     });
   }
 

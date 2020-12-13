@@ -1,6 +1,8 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { initialMealPlanerState, mealPlanerAdapter, MealPlanerState } from '../state/meal-planer-state';
 import { MealPlanerApiActions, MealPlanerContainerActions, MealPlanerEffectActions } from '../actions';
+import { formatDate } from '@angular/common';
+import { format } from 'date-fns';
 
 export const mealPlanerStateReducers = createReducer<MealPlanerState, Action>(
   initialMealPlanerState,
@@ -92,116 +94,142 @@ export const mealPlanerStateReducers = createReducer<MealPlanerState, Action>(
         meals: copyMeals,
       };
     }
+  ),
+  on(MealPlanerApiActions.loadMealsSuccess,
+    (state: MealPlanerState, {date, dayPlan, mealPlanerId}) => {
+      return {
+        ...state,
+        meals: {
+          ...state.meals,
+          [mealPlanerId]: {
+            ...state.meals[mealPlanerId],
+            [format(date, 'yyyy-MM-dd')]: dayPlan
+          }
+        }
+      };
+    }
+  ),
+  on(MealPlanerContainerActions.addMeal,
+    (state: MealPlanerState, {optimisticId, mealType, recipe}) => {
+      if (!state.activeMealPlaner) {
+        return state;
+      }
+
+      const date = format(state.selectedDate, 'yyyy-MM-dd');
+
+      return {
+        ...state,
+        meals: {
+          ...state.meals,
+          [state.activeMealPlaner]: {
+            ...state.meals[state.activeMealPlaner],
+            [date]: {
+              ...state.meals[state.activeMealPlaner][date],
+              [mealType]: [{id: optimisticId, type: mealType, recipe, date}]
+            }
+          }
+        }
+      };
+    }
+  ),
+  on(MealPlanerContainerActions.removeMeal,
+    (state: MealPlanerState, {meal}) => {
+      if (!state.activeMealPlaner) {
+        return state;
+      }
+
+      const date = format(state.selectedDate, 'yyyy-MM-dd');
+      const copyDayPlan = {...state.meals[state.activeMealPlaner][date]};
+
+
+      if (copyDayPlan.hasOwnProperty(meal.type)) {
+        delete copyDayPlan[meal.type];
+      }
+
+      return {
+        ...state,
+        meals: {
+          ...state.meals,
+          [state.activeMealPlaner]: {
+            ...state.meals[state.activeMealPlaner],
+            [date]: copyDayPlan
+          }
+        }
+      };
+    }
+  ),
+  on(MealPlanerApiActions.addMealsSuccess,
+    (state: MealPlanerState, {optimisticId, mealApi}) => {
+      if (!state.activeMealPlaner) {
+        return state;
+      }
+
+      const date = format(state.selectedDate, 'yyyy-MM-dd');
+
+      return {
+        ...state,
+        meals: {
+          ...state.meals,
+          [state.activeMealPlaner]: {
+            ...state.meals[state.activeMealPlaner],
+            [date]: {
+              ...state.meals[state.activeMealPlaner][date],
+              [mealApi.type]: state.meals[state.activeMealPlaner][date][mealApi.type].map(meal => {
+                return meal.id === optimisticId ? {...meal, id: mealApi.id} : meal;
+              })
+            }
+          }
+        }
+      };
+    }
+  ),
+  on(MealPlanerEffectActions.undoOptimisticAddMeal,
+    (state: MealPlanerState, {optimisticId, mealType}) => {
+      if (!state.activeMealPlaner) {
+        return state;
+      }
+
+      const date = format(state.selectedDate, 'yyyy-MM-dd');
+
+      return {
+        ...state,
+        meals: {
+          ...state.meals,
+          [state.activeMealPlaner]: {
+            ...state.meals[state.activeMealPlaner],
+            [date]: {
+              ...state.meals[state.activeMealPlaner][date],
+              [mealType]: state.meals[state.activeMealPlaner][date][mealType].filter(meal => {
+                return meal.id !== optimisticId;
+              })
+            }
+          }
+        }
+      };
+    }
+  ),
+  on(MealPlanerContainerActions.undoRemoveMeal,
+    MealPlanerEffectActions.undoOptimisticRemoveMeal,
+    (state: MealPlanerState, {meal}) => {
+      if (!state.activeMealPlaner) {
+        return state;
+      }
+
+      const date = format(state.selectedDate, 'yyyy-MM-dd');
+
+      return {
+        ...state,
+        meals: {
+          ...state.meals,
+          [state.activeMealPlaner]: {
+            ...state.meals[state.activeMealPlaner],
+            [date]: {
+              ...state.meals[state.activeMealPlaner][date],
+              [meal.type]: [...(state.meals[state.activeMealPlaner][date][meal.type] || []), meal]
+            }
+          }
+        }
+      };
+    }
   )
-  /*
- on(
-   ShoppingListApiActions.loadShoppingListsSuccess,
-   (state: ShoppingListState, {shoppingLists}: LoadShoppingListsSuccessAction) => {
-     return {
-       ...state,
-       shoppingLists: shoppingListAdapter.addMany(shoppingLists, state.shoppingLists),
-     };
-   }),
-   on(
-    ShoppingListApiActions.loadShoppingListItemsSuccess,
-    (state: ShoppingListState, {shoppingListId, shoppingListItems}: LoadShoppingListItemsSuccessAction) => {
-      return {
-        ...state,
-        shoppingLists: shoppingListAdapter.updateOne({id: shoppingListId, changes: {isInitialized: true}}, state.shoppingLists),
-        shoppingListItems: {
-          ...state.shoppingListItems,
-          [shoppingListId]: shoppingListItemAdapter.addMany(shoppingListItems, shoppingListItemAdapter.getInitialState()),
-        }
-      };
-    }),
-  on(
-    ShoppingListContainerActions.addShoppingListItem,
-    (state: ShoppingListState, {optimisticId, shoppingListItem}: AddShoppingListItemAction) => {
-      return {
-        ...state,
-        shoppingListItems: {
-          ...state.shoppingListItems,
-          [shoppingListItem.shoppingList]: shoppingListItemAdapter.addOne(
-            {id: optimisticId, ...shoppingListItem},
-            state.shoppingListItems[shoppingListItem.shoppingList])
-        }
-      };
-    }
-  ),
-  on(
-    ShoppingListApiActions.addShoppingListItemSuccess,
-    (state: ShoppingListState, action: AddShoppingListItemSuccessAction) => {
-      return {
-        ...state,
-        shoppingListItems: {
-          ...state.shoppingListItems,
-          [action.shoppingListItem.shoppingList]: shoppingListItemAdapter.updateOne(
-            {id: action.optimisticId, changes: action.shoppingListItem},
-            state.shoppingListItems[action.shoppingListItem.shoppingList]
-          )
-        }
-      };
-    }
-  ),
-  on(
-    ShoppingListEffectActions.undoOptimisticAddShoppingListItem,
-    (state: ShoppingListState, {optimisticId, shoppingListItem}) => {
-      return {
-        ...state,
-        shoppingListItems: {
-          ...state.shoppingListItems,
-          [shoppingListItem.shoppingList]: shoppingListItemAdapter.removeOne(
-            optimisticId,
-            state.shoppingListItems[shoppingListItem.shoppingList]
-          )
-        }
-      };
-    }
-  ),
-  on(
-    ShoppingListContainerActions.deleteShoppingListItem,
-    (state: ShoppingListState, {shoppingListItem}: DeleteShoppingListItemAction) => {
-      return {
-        ...state,
-        shoppingListItems: {
-          ...state.shoppingListItems,
-          [shoppingListItem.shoppingList]: shoppingListItemAdapter.removeOne(
-            shoppingListItem.id,
-            state.shoppingListItems[shoppingListItem.shoppingList]
-          )
-        }
-      };
-    }
-  ),
-  on(
-    ShoppingListContainerActions.undoDeleteShoppingListItem,
-    ShoppingListEffectActions.undoOptimisticDeleteShoppingListItem,
-    (state: ShoppingListState, {shoppingListItem}) => {
-      return {
-        ...state,
-        shoppingListItems: {
-          ...state.shoppingListItems,
-          [shoppingListItem.shoppingList]: shoppingListItemAdapter.addOne(
-            shoppingListItem,
-            state.shoppingListItems[shoppingListItem.shoppingList]
-          )
-        }
-      };
-    }
-  ),
-  on(
-    ShoppingListEffectActions.bulkUpdateShoppingListItems,
-    (state: ShoppingListState, {shoppingListItems, shoppingListId}) => {
-      return {
-        ...state,
-        shoppingListItems: {
-          ...state.shoppingListItems,
-          [shoppingListId]: shoppingListItemAdapter.updateMany(
-            shoppingListItems.map(shoppingListItem => ({id: shoppingListItem.id, changes: shoppingListItem})),
-            state.shoppingListItems[shoppingListId]
-          )
-        }
-      };
-    }
-  ),*/
 );

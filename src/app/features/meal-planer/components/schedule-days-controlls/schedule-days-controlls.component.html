@@ -4,6 +4,7 @@
     class="days-controls__button"
     *ngFor="let day of days; index as i"
     [class.days-controls__button--active]="i === selectedDayIndex"
+    [class.days-controls__button--current]="i === currentDayIndex"
     (click)="selectDay(i)">
     {{'weekday-short.' + day | translate:translations:currentLanguage}}
   </button>

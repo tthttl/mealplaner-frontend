@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { I18n, Language, List, Meal, MealPlaner, ShoppingList } from '../../../../core/models/model';
+import { DayPlan, I18n, Language, List, Meal, MealPlaner, MealType, Recipe, ShoppingList } from '../../../../core/models/model';
 
 @Component({
   selector: 'app-mealplaner-page',
@@ -13,12 +13,14 @@ export class MealplanerPageComponent implements OnInit {
   @Input() mealPlaners: MealPlaner[] | null = null;
   @Input() activeMealPlaner: MealPlaner | undefined | null = undefined;
   @Input() activeMealPlanerId: string | undefined | null = undefined;
-  @Input() meals: Meal[] = [];
+  @Input() dayPlan: DayPlan | null | undefined = null;
   @Output() dateChanged: EventEmitter<Date> = new EventEmitter();
   @Output() changeMealPlaner: EventEmitter<MealPlaner> = new EventEmitter();
   @Output() deleteMealPlaner: EventEmitter<MealPlaner> = new EventEmitter();
   @Output() editMealPlaner: EventEmitter<MealPlaner> = new EventEmitter();
   @Output() createMealPlaner: EventEmitter<MealPlaner> = new EventEmitter();
+  @Output() addMeal: EventEmitter<MealType> = new EventEmitter();
+  @Output() removeMeal: EventEmitter<Meal> = new EventEmitter();
 
   constructor() { }
 
@@ -44,5 +46,13 @@ export class MealplanerPageComponent implements OnInit {
 
   onCreateList(): void {
     this.createMealPlaner.emit();
+  }
+
+  onAddMeal(mealType: MealType): void {
+    this.addMeal.emit(mealType);
+  }
+
+  onRemoveMeal(meal: Meal): void {
+    this.removeMeal.emit(meal);
   }
 }

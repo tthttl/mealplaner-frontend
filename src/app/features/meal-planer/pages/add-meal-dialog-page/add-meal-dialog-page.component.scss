@@ -1,0 +1,19 @@
+@import "../../../../../styles/settings/colors";
+@import "../../../../../styles/settings/functions";
+@import "../../../../../styles/settings/variables";
+
+
+.add-meal-dialog {
+  height: rem(400);
+  max-height: 80%;
+  width: rem(400);
+  margin: 0;
+  padding: 0;
+  max-width: 100%;
+
+  &__actions {
+    *:nth-child(2) {
+      margin-left: $spacing-medium;
+    }
+  }
+}

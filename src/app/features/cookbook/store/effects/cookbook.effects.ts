@@ -13,6 +13,8 @@ import { CookbookService } from '../../services/cookbook.service';
 import { RecipeService } from '../../services/recipe.service';
 import { CookbookApiActions, CookbookContainerActions, RecipeApiActions, RecipeContainerActions } from '../actions';
 import { CookbookState } from '../state/cookbook-state';
+import { LoadMealDialogActions } from '../../../meal-planer/store/actions';
+import { stringBetweenChars } from '../../../../core/helpers/helpers';
 
 @Injectable()
 export class CookbookEffects {
@@ -29,7 +31,7 @@ export class CookbookEffects {
 
   @Effect()
   loadCookbooks$ = this.actions$.pipe(
-    ofType(CookbookContainerActions.loadCookbook),
+    ofType(CookbookContainerActions.loadCookbook, LoadMealDialogActions.loadCookbooks),
     withLatestFrom(this.store),
     exhaustMap(([_, store]) => this.cookbookService.loadCookbooks(store.appState.user?.id!).pipe(
       map((cookbooks: Cookbook[]) => CookbookApiActions.loadCookbookSuccess({cookbooks})),
@@ -50,6 +52,17 @@ export class CookbookEffects {
       .pipe(
         map((recipes: Recipe[]) => CookbookApiActions.loadRecipesSuccess({cookbookId, recipes})),
         catchError(() => of(CookbookApiActions.loadRecipesFailure()))
+      )
+    )
+  );
+
+  @Effect()
+  loadSpecificRecipes$ = this.actions$.pipe(
+    ofType(LoadMealDialogActions.loadRecipesForSelectedCookbook),
+    concatMap(({id}) => this.recipeService.loadRecipes(id)
+      .pipe(
+        map((recipes: Recipe[]) => CookbookApiActions.loadSpecificRecipesSuccess({cookbookId: id, recipes})),
+        catchError(() => of(CookbookApiActions.loadSpecificRecipesFailure()))
       )
     )
   );
@@ -129,6 +142,7 @@ export class CookbookEffects {
   @Effect({dispatch: false})
   setQueryParameterForActiveShoppingList$ = this.actions$.pipe(
     ofType(CookbookApiActions.setActiveCookbookIdAsQueryParam, CookbookContainerActions.selectCookbook),
+    filter(() => stringBetweenChars(this.router.routerState.snapshot.url, '/', '?') === 'cookbook'),
     tap(({selectedCookbookId}) => {
       this.router.navigate([], {relativeTo: this.route, queryParams: {selectedCookbookId}});
     })

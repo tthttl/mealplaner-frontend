@@ -35,6 +35,9 @@
     cursor: pointer;
     font-size: $font-size-normal;
     user-select: none;
+    &:focus {
+      outline: 2px solid $blue_40;
+    }
 
 
     &::before,

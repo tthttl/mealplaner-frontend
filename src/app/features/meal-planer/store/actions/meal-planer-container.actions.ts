@@ -1,8 +1,12 @@
 import { createAction, props } from '@ngrx/store';
-import { MealPlaner } from '../../../../core/models/model';
+import { BasicShoppingListItem, Meal, MealPlaner, MealType, Recipe } from '../../../../core/models/model';
 
 export const loadMealPlaners = createAction(
   '[Meal Planer Container] Load Meal Planers'
+);
+
+export const loadCookBooks = createAction(
+  '[Meal Planer Container] Load Cookbooks'
 );
 
 export const selectedDateChanged = createAction(
@@ -34,4 +38,19 @@ export const editMealPlaner = createAction(
   '[Meal Planer Container] Edit Meal Planer',
   props<{ mealPlaner: MealPlaner, changes: MealPlaner }>()
 );
+
+export const addMeal = createAction(
+  '[Meal Planer Container] Add Meal',
+  props<{ optimisticId: string, recipe: Recipe, mealType: MealType, shoppingListItems: BasicShoppingListItem[] }>()
+);
+
+export const removeMeal = createAction(
+  '[Meal Planer Container] Remove Meal',
+  props<{ meal: Meal }>()
+);
+export const undoRemoveMeal = createAction(
+  '[Meal Planer Container] Undo Delete Meal',
+  props<{ meal: Meal }>()
+);
+
 

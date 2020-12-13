@@ -11,6 +11,7 @@ export class ScheduleDaysControllsComponent implements OnInit {
   @Input() selectedDayIndex: number | undefined;
   @Input() translations: I18n | null = null;
   @Input() currentLanguage: Language | null = null;
+  @Input() currentDayIndex: boolean | number = false;
   @Output() changeDayIndex: EventEmitter<number> = new EventEmitter();
 
   days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];

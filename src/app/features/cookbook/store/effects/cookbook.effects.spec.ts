@@ -12,6 +12,7 @@ import { RecipeService } from '../../services/recipe.service';
 import { CookbookApiActions, CookbookContainerActions, RecipeApiActions, RecipeContainerActions } from '../actions';
 import { CookbookEffects } from './cookbook.effects';
 import SpyObj = jasmine.SpyObj;
+import { LoadMealDialogActions } from '../../../meal-planer/store/actions';
 
 let cookbookService: SpyObj<CookbookService>;
 let router: SpyObj<Router>;
@@ -43,7 +44,7 @@ describe('Cookbook Effects', () => {
     });
 
     store = TestBed.inject(MockStore);
-    router = jasmine.createSpyObj('Router', ['navigate']);
+    router = jasmine.createSpyObj('Router', ['navigate'], {routerState: {snapshot: {url: 'cookbook'}}} );
     recipeService = jasmine.createSpyObj('RecipeService', ['loadRecipes', 'saveRecipe', 'editRecipe', 'deleteRecipe']);
     cookbookService = jasmine.createSpyObj('CookbookService', ['loadCookbooks', 'saveCookbook', 'editCookbook', 'deleteCookbook']);
     storageService = jasmine.createSpyObj('StorageService', ['setItem', 'getItem']);
@@ -86,6 +87,22 @@ describe('Cookbook Effects', () => {
     recipeService.loadRecipes.and.returnValue(throwError('error'));
     cookbookEffects.loadRecipes$.subscribe((action: Action) => {
       expect(action.type).toEqual(CookbookApiActions.loadRecipesFailure.type);
+    });
+  });
+
+  it('loadSpecificRecipes should return success action', () => {
+    cookbookEffects = createEffects(of({type: LoadMealDialogActions.loadRecipesForSelectedCookbook.type, id: 'cookBookId'}));
+    recipeService.loadRecipes.and.returnValue(of([{cookbookId: 'cookBookId'}] as Recipe[]));
+    cookbookEffects.loadSpecificRecipes$.subscribe((action: Action) => {
+      expect(action.type).toEqual(CookbookApiActions.loadSpecificRecipesSuccess.type);
+    });
+  });
+
+  it('loadSpecificRecipes should return failure action', () => {
+    cookbookEffects = createEffects(of({type: LoadMealDialogActions.loadRecipesForSelectedCookbook.type, id: 'cookBookId'}));
+    recipeService.loadRecipes.and.returnValue(throwError('error'));
+    cookbookEffects.loadSpecificRecipes$.subscribe((action: Action) => {
+      expect(action.type).toEqual(CookbookApiActions.loadSpecificRecipesFailure.type);
     });
   });
 
@@ -261,11 +278,11 @@ describe('Cookbook Effects', () => {
   });
 
   it('switchCookbookWhenDeleted should switch when current List is deleted', () => {
-    store.setState({cookbookState: {activeCookbookId: cookbook.id}});
+    store.setState({cookbookState: {activeCookbookId: cookbook.id, cookbooks: [{id: '1', title: 'test'}]}});
     cookbookEffects = createEffects(of({type: CookbookContainerActions.deleteCookbookFromState.type, cookbook}));
     cookbookEffects.switchCookbookWhenDeleted$.subscribe((action: Action) => {
       expect(action.type).toEqual(CookbookContainerActions.selectCookbook.type);
-      expect((action as CookbookSelectedAction).selectedCookbookId).toEqual(cookbook.id);
+      expect((action as CookbookSelectedAction).selectedCookbookId).toEqual('1');
     });
   });
 

@@ -6,7 +6,7 @@ import { I18n as I18nClient } from '../../models/model';
 import { GlobalState, initialState } from '../index';
 import { I18nService } from '../../services/i18n.service';
 import { AppEffects } from './app.effects';
-import { I18nApiActions, NavigationActions } from '../actions';
+import { AppInitializationActions, I18nApiActions, NavigationActions } from '../actions';
 import SpyObj = jasmine.SpyObj;
 
 describe('i18n Api Effects', () => {
@@ -28,7 +28,7 @@ describe('i18n Api Effects', () => {
   describe('getI18n$', () => {
 
     it('should return success action', () => {
-      actions$ = of({type: I18nApiActions.getI18n.type});
+      actions$ = of({type: AppInitializationActions.setLanguage.type});
       i18nApiEffects = new AppEffects(
         actions$,
         i18nService,
@@ -40,7 +40,7 @@ describe('i18n Api Effects', () => {
     });
 
     it('should return failure action', () => {
-      actions$ = of({type: I18nApiActions.getI18n.type});
+      actions$ = of({type: AppInitializationActions.setLanguage.type});
       i18nApiEffects = new AppEffects(
         actions$,
         i18nService,

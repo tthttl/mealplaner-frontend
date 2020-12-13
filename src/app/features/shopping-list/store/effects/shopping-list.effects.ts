@@ -18,7 +18,7 @@ import {
   withLatestFrom
 } from 'rxjs/operators';
 import { DELETION_DELAY, STORAGE_SELECTED_SHOPPING_LIST_ID } from '../../../../core/constants/constants';
-import { moveItemInArray } from '../../../../core/helpers/helpers';
+import { moveItemInArray, stringBetweenChars } from '../../../../core/helpers/helpers';
 import { ShoppingList, ShoppingListItem, SyncItem } from '../../../../core/models/model';
 import { ChangeShoppingListAction, SetActiveShoppingListAction } from '../../../../core/models/model-action';
 import { SnackbarService } from '../../../../core/services/snackbar.service';
@@ -28,6 +28,7 @@ import { GlobalState, selectCurrentShoppingListItems, selectUser, selectUserID }
 import { CookbookContainerActions } from '../../../cookbook/store/actions';
 import { ShoppingListService } from '../../service/shopping-list.service';
 import { ShoppingListApiActions, ShoppingListContainerActions, ShoppingListEffectActions } from '../actions';
+import { LoadMealDialogActions, MealPlanerContainerActions } from '../../../meal-planer/store/actions';
 
 @Injectable()
 export class ShoppingListEffects {
@@ -45,7 +46,11 @@ export class ShoppingListEffects {
 
   @Effect()
   getShoppingLists$ = this.actions$.pipe(
-    ofType(ShoppingListContainerActions.loadShoppingLists, CookbookContainerActions.loadShoppingLists),
+    ofType(
+      ShoppingListContainerActions.loadShoppingLists,
+      CookbookContainerActions.loadShoppingLists,
+      LoadMealDialogActions.loadShoppingLists,
+    ),
     withLatestFrom(this.store.select(selectUserID)),
     filter(([_, userId]) => !!userId),
     exhaustMap(([_, userId]) => this.shoppingListService.getShoppingLists(userId!).pipe(
@@ -80,6 +85,7 @@ export class ShoppingListEffects {
       ShoppingListEffectActions.setActiveShoppingList,
       ShoppingListContainerActions.changeShoppingList,
     ),
+    filter(() => stringBetweenChars(this.router.routerState.snapshot.url, '/', '?') === 'shopping-list'),
     tap(({shoppingListId}) => {
       this.router.navigate([], {relativeTo: this.activatedRoute, queryParams: {shoppingListId}});
     })
@@ -173,9 +179,7 @@ export class ShoppingListEffects {
         ),
         takeUntil(this.actions$.pipe(ofType(ShoppingListContainerActions.undoDeleteShoppingListItem))),
         mergeMap(() => this.shoppingListService.deleteShoppingListItem(shoppingListItem.id).pipe(
-          map(() => {
-            return ShoppingListApiActions.deleteShoppingListItemSuccess({shoppingListItem});
-          }),
+          map(() => ShoppingListApiActions.deleteShoppingListItemSuccess({shoppingListItem})),
           catchError((error) => {
             if (error.status === 504) {
               return of(ShoppingListEffectActions.registerShoppingListItemDeleteForSync({shoppingListItem}));
@@ -215,6 +219,23 @@ export class ShoppingListEffects {
         })
       );
     }),
+  );
+
+  @Effect()
+  addShoppingListItemsFromMealPlaner$ = this.actions$.pipe(
+    ofType(MealPlanerContainerActions.addMeal),
+    map(({shoppingListItems}) => {
+      return {
+        shoppingListItems,
+        updateObservables: shoppingListItems.map(shoppingListItem => this.shoppingListService.addShoppingListItem(shoppingListItem))
+      };
+    }),
+    concatMap(({shoppingListItems, updateObservables}) => {
+      const a = forkJoin(updateObservables);
+      return a.pipe(
+        map((_, index) => ShoppingListApiActions.addShoppingListItemsSuccess()),
+        catchError(() => of(ShoppingListApiActions.addShoppingListItemsFailure())));
+    })
   );
 
   @Effect()

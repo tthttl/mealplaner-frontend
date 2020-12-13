@@ -21,8 +21,6 @@ import { I18nService } from './core/services/i18n.service';
 import { metaReducers, reducers } from './core/store';
 import { AppEffects } from './core/store/effects/app.effects';
 import { AuthModule } from './features/auth/auth.module';
-import { AuthService } from './features/auth/services/auth.service';
-import { ShoppingListModule } from './features/shopping-list/shopping-list.module';
 import { SharedModule } from './shared/shared.module';
 
 
@@ -43,7 +41,6 @@ import { SharedModule } from './shared/shared.module';
     FontAwesomeModule,
     AuthModule,
     SharedModule,
-    ShoppingListModule,
     ServiceWorkerModule.register('service-worker.js', { enabled: environment.production })
   ],
   providers: [
