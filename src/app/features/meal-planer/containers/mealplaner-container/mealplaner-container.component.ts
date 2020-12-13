@@ -1,34 +1,37 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import {
-  activeDayPlan,
-  activeMealPlaner,
-  activeMealPlanerId,
-  GlobalState,
-  selectMealPlaners,
-  selectSelectedDate,
-  selectTranslations
-} from '../../../../core/store';
 import { Observable } from 'rxjs';
-import { MealPlanerContainerActions } from '../../store/actions';
+import { take, withLatestFrom } from 'rxjs/operators';
+import { v4 as uuid } from 'uuid';
+import { DELETION_DELAY } from '../../../../core/constants/constants';
 import {
   AddMealDialogEvent,
   CreateListDialogEvent,
   DayPlan,
   EditListDialogEvent,
   I18n,
-  Language, Meal,
-  MealPlaner, MealType,
+  Language,
+  Meal,
+  MealPlaner,
+  MealType,
   ShoppingList
 } from '../../../../core/models/model';
-import { SnackbarService } from '../../../../core/services/snackbar.service';
 import { DialogService } from '../../../../core/services/dialog.service';
-import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
-import { take, withLatestFrom } from 'rxjs/operators';
+import { SnackbarService } from '../../../../core/services/snackbar.service';
+import {
+  activeDayPlan,
+  activeMealPlaner,
+  activeMealPlanerId,
+  GlobalState,
+  isOffline,
+  selectMealPlaners,
+  selectSelectedDate,
+  selectTranslations
+} from '../../../../core/store';
 import { EditListDialogComponent } from '../../../../shared/components/edit-list-dialog/edit-list-dialog.component';
-import { DELETION_DELAY } from '../../../../core/constants/constants';
+import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
+import { MealPlanerContainerActions } from '../../store/actions';
 import { AddMealDialogComponent } from '../add-meal-dialog/add-meal-dialog.component';
-import { v4 as uuid } from 'uuid';
 
 
 @Component({
@@ -45,6 +48,7 @@ export class MealplanerContainerComponent implements OnInit {
   mealPlaners$: Observable<MealPlaner[] | null> = this.store.select(selectMealPlaners);
   activeMealPlaner$: Observable<ShoppingList | undefined> = this.store.select(activeMealPlaner);
   activeMealPlanerId$: Observable<string | undefined> = this.store.select(activeMealPlanerId);
+  isOffline$: Observable<boolean> = this.store.select(isOffline);
 
   private createDialogTranslations: {} = {};
   private editDialogTranslations: {} = {};

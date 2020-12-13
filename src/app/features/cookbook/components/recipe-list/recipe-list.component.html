@@ -11,7 +11,7 @@
         <div class="recipe-list__title-box" (click)="onClick(recipe)">
           <span>{{recipe.title}}</span>
         </div>
-        <div class="recipe-list__buttons-box">
+        <div *ngIf="!isOffline" class="recipe-list__buttons-box">
           <app-button class="recipe-list__button"
                       [buttonText]="'button.edit' | translate:translations:currentLang"
                       [iconLeft]="'pen-square'"

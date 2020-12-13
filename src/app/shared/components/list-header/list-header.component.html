@@ -6,7 +6,7 @@
   </div>
 
 
-  <button (click)="openList()" class="list-header__button">
+  <button *ngIf="!isOffline" (click)="openList()" class="list-header__button">
     <span *ngIf="buttonLabel && lists?.length">{{buttonLabel}}</span>
   </button>
 </div>

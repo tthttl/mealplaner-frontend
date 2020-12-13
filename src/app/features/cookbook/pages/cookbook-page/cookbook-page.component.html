@@ -5,6 +5,7 @@
     [defaultTitle]="'cookbook.default-title' | translate:translations:currentLanguage"
     [addListLabel]="'cookbook.new-list' | translate:translations:currentLanguage"
     [buttonLabel]="'cookbook.my-cookbooks' | translate:translations:currentLanguage"
+    [isOffline]="isOffline"
     (createList)="onCreateCookbook()"
     (selectList)="onSelectCookbook($event)"
     (editList)="onEditCookbook($event)"
@@ -12,6 +13,7 @@
   >
   </app-list-header>
   <app-recipe-list
+    [isOffline]="isOffline"
     [translations]="translations"
     [currentLang]="currentLanguage"
     [recipes]="recipes"

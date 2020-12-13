@@ -26,9 +26,9 @@ import { StorageService } from '../../../../core/services/storage.service';
 import { SyncService } from '../../../../core/services/sync.service';
 import { GlobalState, selectCurrentShoppingListItems, selectUser, selectUserID } from '../../../../core/store';
 import { CookbookContainerActions } from '../../../cookbook/store/actions';
+import { LoadMealDialogActions, MealPlanerContainerActions } from '../../../meal-planer/store/actions';
 import { ShoppingListService } from '../../service/shopping-list.service';
 import { ShoppingListApiActions, ShoppingListContainerActions, ShoppingListEffectActions } from '../actions';
-import { LoadMealDialogActions, MealPlanerContainerActions } from '../../../meal-planer/store/actions';
 
 @Injectable()
 export class ShoppingListEffects {
@@ -127,7 +127,7 @@ export class ShoppingListEffects {
       }),
       // tslint:disable-next-line:no-any
       catchError((error: any) => {
-        if (error.status === 504) {
+        if (error.status === 504 || error.status === 0) {
           return of(ShoppingListEffectActions.registerShoppingListItemPostForSync({basicShoppingListItem: shoppingListItem, optimisticId}));
         } else {
           return of(ShoppingListApiActions.addShoppingListItemFailure({optimisticId, shoppingListItem}));
@@ -181,7 +181,7 @@ export class ShoppingListEffects {
         mergeMap(() => this.shoppingListService.deleteShoppingListItem(shoppingListItem.id).pipe(
           map(() => ShoppingListApiActions.deleteShoppingListItemSuccess({shoppingListItem})),
           catchError((error) => {
-            if (error.status === 504) {
+            if (error.status === 504 || error.status === 0) {
               return of(ShoppingListEffectActions.registerShoppingListItemDeleteForSync({shoppingListItem}));
             }
             return of(ShoppingListApiActions.deleteShoppingListItemFailure({shoppingListItem}));
@@ -270,7 +270,7 @@ export class ShoppingListEffects {
       return a.pipe(
         map(() => ShoppingListApiActions.updateShoppingListItemSuccess()),
         catchError((error) => {
-          if (error.status === 504) {
+          if (error.status === 504 || error.status === 0) {
             return of(ShoppingListEffectActions.registerShoppingListItemUpdatesForSync({shoppingListItems}));
           }
           return of(ShoppingListApiActions.updateShoppingListItemFailure({shoppingListItems}));
