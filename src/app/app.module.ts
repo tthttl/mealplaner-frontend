@@ -21,6 +21,7 @@ import { I18nService } from './core/services/i18n.service';
 import { metaReducers, reducers } from './core/store';
 import { AppEffects } from './core/store/effects/app.effects';
 import { AuthModule } from './features/auth/auth.module';
+import { AuthService } from './features/auth/services/auth.service';
 import { SharedModule } from './shared/shared.module';
 
 
