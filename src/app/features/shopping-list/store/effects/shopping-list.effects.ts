@@ -24,7 +24,7 @@ import { ChangeShoppingListAction, SetActiveShoppingListAction } from '../../../
 import { SnackbarService } from '../../../../core/services/snackbar.service';
 import { StorageService } from '../../../../core/services/storage.service';
 import { SyncService } from '../../../../core/services/sync.service';
-import { GlobalState, selectCurrentShoppingListItems, selectUser, selectUserID } from '../../../../core/store';
+import { GlobalState, selectCurrentShoppingListItems, selectUserID } from '../../../../core/store';
 import { CookbookContainerActions } from '../../../cookbook/store/actions';
 import { LoadMealDialogActions, MealPlanerContainerActions } from '../../../meal-planer/store/actions';
 import { ShoppingListService } from '../../service/shopping-list.service';
@@ -139,9 +139,8 @@ export class ShoppingListEffects {
   @Effect()
   syncShoppingListItemPost = this.actions$.pipe(
     ofType(ShoppingListEffectActions.registerShoppingListItemPostForSync),
-    withLatestFrom(this.store.select(selectUser)),
-    concatMap(([{basicShoppingListItem, optimisticId}, user]) => {
-        const syncItem: SyncItem = this.syncService.createSyncItemForPost(basicShoppingListItem, user?.jwt || '', optimisticId);
+    concatMap(({basicShoppingListItem, optimisticId}) => {
+        const syncItem: SyncItem = this.syncService.createSyncItemForPost(basicShoppingListItem, optimisticId);
         return this.syncService.registerForSync(syncItem)
           .pipe(
             map(() => ShoppingListEffectActions.registerShoppingListItemPostForSyncSuccess()),
@@ -194,9 +193,8 @@ export class ShoppingListEffects {
   @Effect()
   syncShoppingListItemDelete = this.actions$.pipe(
     ofType(ShoppingListEffectActions.registerShoppingListItemDeleteForSync),
-    withLatestFrom(this.store.select(selectUser)),
-    concatMap(([{shoppingListItem}, user]) => {
-        const syncItem: SyncItem = this.syncService.createSyncItem(shoppingListItem, user?.jwt || '', 'DELETE');
+    concatMap(({shoppingListItem}) => {
+        const syncItem: SyncItem = this.syncService.createSyncItem(shoppingListItem, 'DELETE');
         return this.syncService.registerForSync(syncItem)
           .pipe(
             map(() => ShoppingListEffectActions.registerShoppingListItemDeleteForSyncSuccess()),
@@ -281,11 +279,10 @@ export class ShoppingListEffects {
   @Effect()
   syncShoppingListItemUpdates$ = this.actions$.pipe(
     ofType(ShoppingListEffectActions.registerShoppingListItemUpdatesForSync),
-    withLatestFrom(this.store.select(selectUser)),
-    map(([{shoppingListItems}, user]) => {
+    map(({shoppingListItems}) => {
       const syncItems: SyncItem[] = shoppingListItems
         .map((shoppingListItem: ShoppingListItem) => this.syncService
-          .createSyncItem(shoppingListItem, user?.jwt || '', 'PUT'));
+          .createSyncItem(shoppingListItem, 'PUT'));
       return {
         shoppingListItems,
         registries: syncItems.map((syncItem: SyncItem) => this.syncService.registerForSync(syncItem))

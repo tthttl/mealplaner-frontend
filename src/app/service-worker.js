@@ -14,37 +14,47 @@ self.addEventListener('sync', (event) => {
   }
 });
 
-async function backgroundSync() {
+async function backgroundSync(){
+  const jwt = await refreshToken();
+  try {
+    await executeSync(jwt);
+  } catch (error){
+    console.log('backgroundSync Failed');
+    throw error;
+  }
+}
+
+async function executeSync(jwt) {
   let syncItems = await getAllSyncItems();
   syncItems = syncItems.sort((a, b) => a.timeStamp - b.timeStamp);
   let synchronizedItems = 0;
   while(syncItems.length > synchronizedItems){
-    await syncItemWithServer(syncItems[synchronizedItems]);
+    await syncItemWithServer(syncItems[synchronizedItems], jwt);
     if(syncItems[synchronizedItems].method === POST){
-      await backgroundSync();
+      await executeSync(jwt);
       break;
     }
     synchronizedItems++;
   }
 }
 
-async function syncItemWithServer(item) {
+async function syncItemWithServer(item, jwt) {
   switch (item.method) {
     case POST:
       console.log('POSTING');
-      const response = await send(item, POST);
+      const response = await send(item, POST, jwt);
       const savedItem = await response.json();
       await replaceOptimisticIdsWithServerIdInDB(item.payload.id, savedItem.id);
       await deleteItemFromDB(item.keyPath);
       break;
     case PUT:
       console.log('PUTTING');
-      await send(item, PUT);
+      await send(item, PUT, jwt);
       await deleteItemFromDB(item.keyPath);
       break;
     case DELETE:
       console.log('DELETING');
-      await send(item, DELETE);
+      await send(item, DELETE, jwt);
       await deleteItemFromDB(item.keyPath);
       break;
     default:
@@ -52,7 +62,7 @@ async function syncItemWithServer(item) {
   }
 }
 
-function send(item, method) {
+function send(item, method, jwt) {
   const url = method === POST ? URL : URL + '/' + item.payload.id;
   const body = {
     title: item.payload.basicShoppingListItem.title,
@@ -68,7 +78,7 @@ function send(item, method) {
     method: method,
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + item.jwt
+      'Authorization': 'Bearer ' + jwt
     },
     body: JSON.stringify(body)
   })

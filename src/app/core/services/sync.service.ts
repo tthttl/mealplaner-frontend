@@ -34,7 +34,7 @@ export class SyncService {
     return throwError('Offline Mode is not available');
   }
 
-  createSyncItemForPost(basicShoppingListItem: BasicShoppingListItem, jwt: string, optimisticId: string): SyncItem {
+  createSyncItemForPost(basicShoppingListItem: BasicShoppingListItem, optimisticId: string): SyncItem {
     return {
       payload: {
         basicShoppingListItem,
@@ -43,12 +43,11 @@ export class SyncService {
       },
       keyPath: uuid(),
       timeStamp: new Date().getTime(),
-      method: 'POST',
-      jwt
+      method: 'POST'
     };
   }
 
-  createSyncItem(shoppingListItem: ShoppingListItem, jwt: string, method: SyncMethod): SyncItem {
+  createSyncItem(shoppingListItem: ShoppingListItem, method: SyncMethod): SyncItem {
     return {
       payload: {
         basicShoppingListItem: {
@@ -62,8 +61,7 @@ export class SyncService {
       },
       keyPath: uuid(),
       timeStamp: new Date().getTime(),
-      method,
-      jwt
+      method
     };
   }
 
