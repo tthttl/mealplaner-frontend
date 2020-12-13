@@ -4,20 +4,20 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { action } from '@storybook/addon-actions';
 import { moduleMetadata } from '@storybook/angular';
 import { RouterLinkDirectiveStub } from '../../../../../testing/router-link-directive.stub';
-import { EditListDialogComponent } from '../edit-list-dialog/edit-list-dialog.component';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogConfig, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { InputComponent } from '../input/input.component';
 import { ButtonComponent } from '../button/button.component';
-import { ListPickerDialogComponent } from './list-picker-dialog.component';
+import { EditListDialogComponent } from './edit-list-dialog.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 export default {
-  title: 'Shared/ListPickerDialog',
-  excludeStories: /.*Data$/,
+  title: 'Shared/EditListDialog',
+  excludeStories: /.*listData$/,
   decorators: [
     moduleMetadata({
-      declarations: [RouterLinkDirectiveStub, InputComponent, ButtonComponent],
-      imports: [FontAwesomeModule, MatDialogModule, ReactiveFormsModule],
+      declarations: [EditListDialogComponent, RouterLinkDirectiveStub, InputComponent, ButtonComponent],
+      imports: [FontAwesomeModule, MatDialogModule, ReactiveFormsModule, BrowserAnimationsModule],
       providers: [
         {
           provide: APP_INITIALIZER,
@@ -31,23 +31,26 @@ export default {
         },
         {
           provide: MatDialogRef,
-          useValue: {
-          }
+          useValue: {}
+        },
+        {
+          provide: MatDialogConfig,
+          useValue: {}
         },
         {
           provide: MAT_DIALOG_DATA,
           useValue: {
             data: [{id: 'id', title: 'Liste 1'}, {id: 'id', title: 'Liste 2'}],
             translations: {
-              'new-list': 'Neue Liste',
-              'default-title': 'Meine Liste',
-              'aria-edit': 'Bearbeiten',
-              'aria-delete': 'Löschen'
+              title: 'Liste',
+              placeholder: 'Placeholder',
+              'cancel-button-text': 'Abbrechen',
+              'save-button-text': 'Speichern',
             }
-          }
+          },
         },
       ]
-    })
+    }),
   ],
   argTypes: {
     buttonType: {
@@ -65,11 +68,7 @@ export default {
   }
 };
 
-export const actionsData = {
-  clicked: action('clicked')
-};
-
-export const buttonData = {
+export const listData = {
   linkText: 'Primary',
   buttonType: 'button',
   isDisabled: false,
@@ -78,20 +77,33 @@ export const buttonData = {
   e2eTestName: 'buttonTest',
   iconLeft: '',
   iconRight: '',
+  clicked: action('clicked')
 };
 
 // tslint:disable-next-line:no-any
-const Template: any = (args: ListPickerDialogComponent) => ({
-  component: ListPickerDialogComponent,
+const Template: any = (args: EditListDialogComponent) => ({
+  component: EditListDialogComponent,
   props: args,
+  template: `<app-edit-list-dialog>Test</app-edit-list-dialog>`,
 });
 
 export let Default = Template.bind({});
 Default.args = {
-  ...buttonData,
-  ...actionsData,
+  ...listData,
 };
 
+Default.decorators = [
+  // tslint:disable-next-line:no-any
+  (storyFunc: any) => {
+    const story = storyFunc();
 
-
+    return {
+      ...story,
+      template: `
+        <div class="mat-dialog-container">
+            <div class="mat-dialog-content">${story.template}</div>
+        </div>`,
+    };
+  },
+];
 

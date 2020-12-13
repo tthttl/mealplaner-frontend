@@ -58,6 +58,20 @@ export const shoppingListReducers = createReducer<ShoppingListState, Action>(
     }
   ),
   on(
+    ShoppingListApiActions.addShoppingListItemsSuccess,
+    (state: ShoppingListState, {shoppingListItems}) => {
+      return {
+        ...state,
+        shoppingListItems: {
+          ...state.shoppingListItems,
+          [shoppingListItems[0].shoppingList]: shoppingListItemAdapter.addMany(
+            shoppingListItems,
+            state.shoppingListItems[shoppingListItems[0].shoppingList])
+        }
+      };
+    }
+  ),
+  on(
     ShoppingListApiActions.addShoppingListItemSuccess,
     (state: ShoppingListState, action: AddShoppingListItemSuccessAction) => {
       return {

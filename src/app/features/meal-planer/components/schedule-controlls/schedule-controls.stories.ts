@@ -9,17 +9,16 @@ import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
 import { InputComponent } from '../../../../shared/components/input/input.component';
 import { SelectComponent } from '../../../../shared/components/select/select.component';
-import { RecipePageComponent } from './recipe-page.component';
+import { ScheduleControllsComponent } from './schedule-controlls.component';
 
 
 export default {
-  title: 'RecipeForm',
+  title: 'MealPlaner/ScheduleControls',
   excludeStories: /.*Data$/,
   decorators: [
     moduleMetadata({
       imports: [FontAwesomeModule, ReactiveFormsModule, MatSlideToggleModule],
       declarations: [
-        RecipePageComponent,
         TranslatePipe,
         InputComponent,
         SelectComponent,
@@ -46,61 +45,25 @@ export default {
 };
 
 export const actionsData = {
-  recipeSaved: action('recipeSaved')
+  dateChanged: action('dateChanged'),
 };
 
 export const formData = {
   translations: {
     de: {
-      'recipe-form.placeholder.title': 'Title',
-      'recipe-form.label.title': 'Recipe Title',
-      'recipe-form.placeholder.url': 'Link',
-      'recipe-form.label.url': 'Link to Recipe',
-      'ingredients.label-text': 'Ingredients',
-      'recipe-form.placeholder.amount': 'Quantity',
-      'recipe-form.placeholder.name': 'Name',
-      'recipe-form.text.toggle': 'Basic Ingredient',
-      'recipe-form.button.delete': 'Delete',
-      'recipe-form.button.new-ingredient': 'Add new Ingredient',
-      'recipe-form.button.submit': 'Create',
-      'errors.validation.title.required': 'Titel is required',
-      'recipe-form.button.modify': 'Edit'
     }
-  }
+  },
+  selectedDate: new Date(),
 };
 
-export const Default = () => ({
-  component: RecipePageComponent,
-  props: {
-    ...formData,
-    ...actionsData
-  }
+// tslint:disable-next-line:no-any
+const Template: any = (args: ScheduleControllsComponent) => ({
+  component: ScheduleControllsComponent,
+  props: args,
 });
 
-export const Edit = () => ({
-  component: RecipePageComponent,
-  props: {
-    ...formData,
-    ...actionsData,
-    recipe: {
-      title: 'Beef & beer pie',
-      url: 'https://www.bbcgoodfood.com/recipes/beef-beer-pie',
-      ingredients: [
-        {
-          name: 'Beer',
-          amount: 1,
-          unit: 'l',
-          isStapleFood: true,
-        },
-        {
-          name: 'Beef',
-          amount: 1,
-          unit: 'kg',
-          isStapleFood: false,
-        }
-      ]
-    }
-  }
-});
-
-
+export let Default = Template.bind({});
+Default.args = {
+  ...formData,
+  ...actionsData,
+};

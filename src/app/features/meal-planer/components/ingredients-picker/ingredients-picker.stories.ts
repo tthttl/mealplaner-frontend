@@ -9,19 +9,22 @@ import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
 import { InputComponent } from '../../../../shared/components/input/input.component';
 import { SelectComponent } from '../../../../shared/components/select/select.component';
-import { RecipeListComponent } from './recipe-list.component';
-import { ShoppingListComponent } from '../../../shopping-list/components/shopping-list/shopping-list.component';
-import { taskData } from '../../../shopping-list/components/shopping-list/shopping-list.stories';
+import { ScheduleControllsComponent } from '../schedule-controlls/schedule-controlls.component';
+import { ScheduleDaysControllsComponent } from '../schedule-days-controlls/schedule-days-controlls.component';
+import { IngredientsPickerComponent } from './ingredients-picker.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { Unit } from '../../../../core/models/model';
 
 
 export default {
-  title: 'Cookbook/RecipeList',
+  title: 'MealPlaner/IngredientsPicker',
   excludeStories: /.*Data$/,
   decorators: [
     moduleMetadata({
-      imports: [FontAwesomeModule, ReactiveFormsModule, MatSlideToggleModule],
+      imports: [FontAwesomeModule, ReactiveFormsModule, MatSlideToggleModule, MatCheckboxModule],
       declarations: [
-        RecipeListComponent,
+        ScheduleControllsComponent,
+        ScheduleDaysControllsComponent,
         TranslatePipe,
         InputComponent,
         SelectComponent,
@@ -48,38 +51,46 @@ export default {
 };
 
 export const actionsData = {
-  inputChanged: action('inputChanged'),
-  editRecipe: action('editRecipe'),
-  deleteRecipe: action('deleteRecipe')
+  choseIngredients: action('choseIngredients'),
+  changeSelectedCookbook: action('back'),
 };
+
 
 export const formData = {
   translations: {
     de: {
-      'input.search': 'Suchen',
-      'button.edit': 'Bearbeiten',
-      'button.delete': 'Löschen'
+      'unit.kg': 'kg',
+      'unit.tableSpoon': 'EL',
+      'ingredients-picker.back': 'zurück',
+      'ingredients-picker.shopping-list': 'Einkaufsliste',
+      'ingredients-picker.button': 'Hinzufügen'
     }
   },
-  recipes: [
+  currentLanguage: 'de',
+  shoppingLists: [{id: '1', title: 'Shoppinglist 1'}, {id: '2', title: 'Shoppinglist 1'}],
+  preSelectedShoppingListId: '1',
+  ingredientsList: [{
+      title: 'Zutat 1',
+      amount: 2,
+      unit: 'kg',
+      isStableFood: false,
+  },
     {
-      id: '1',
-      title: 'Chocolate chip cookie'
-    },
-    {
-      id: '2',
-      title: 'Cheesecake'
-    },
-    {
-      id: '3',
-      title: 'Muffin'
-    }
-  ]
+      title: 'Grudzutat',
+      amount: 2,
+      unit: 'tableSpoon',
+      isStableFood: true,
+    }]
 };
 
+/*
+
+  @Input() ingredientsList: RecipeIngredient[] | undefined = undefined;
+ */
+
 // tslint:disable-next-line:no-any
-const Template: any = (args: RecipeListComponent) => ({
-  component: RecipeListComponent,
+const Template: any = (args: IngredientsPickerComponent) => ({
+  component: IngredientsPickerComponent,
   props: args,
 });
 
@@ -89,9 +100,4 @@ Default.args = {
   ...actionsData,
 };
 
-export let Loading = Template.bind({});
-Loading.args = {
-  ...formData,
-  ...actionsData,
-  recipes: null
-};
+

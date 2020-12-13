@@ -40,7 +40,8 @@ export const updateShoppingListItemFailure = createAction(
 );
 
 export const addShoppingListItemsSuccess = createAction(
-  '[Shopping List API] Add Shopping List Items Success'
+  '[Shopping List API] Add Shopping List Items Success',
+  props<{ shoppingListItems: ShoppingListItem[] }>()
 );
 export const addShoppingListItemsFailure = createAction(
   '[Shopping List API] Add Shopping List Items Failure',

@@ -9,19 +9,21 @@ import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
 import { InputComponent } from '../../../../shared/components/input/input.component';
 import { SelectComponent } from '../../../../shared/components/select/select.component';
-import { RecipeListComponent } from './recipe-list.component';
-import { ShoppingListComponent } from '../../../shopping-list/components/shopping-list/shopping-list.component';
-import { taskData } from '../../../shopping-list/components/shopping-list/shopping-list.stories';
+import { ScheduleComponent } from './schedule.component';
+import { ScheduleControllsComponent } from '../schedule-controlls/schedule-controlls.component';
+import { ScheduleDaysControllsComponent } from '../schedule-days-controlls/schedule-days-controlls.component';
+import { MealType, Recipe, RecipeIngredient } from '../../../../core/models/model';
 
 
 export default {
-  title: 'Cookbook/RecipeList',
+  title: 'MealPlaner/Schedule',
   excludeStories: /.*Data$/,
   decorators: [
     moduleMetadata({
       imports: [FontAwesomeModule, ReactiveFormsModule, MatSlideToggleModule],
       declarations: [
-        RecipeListComponent,
+        ScheduleControllsComponent,
+        ScheduleDaysControllsComponent,
         TranslatePipe,
         InputComponent,
         SelectComponent,
@@ -48,38 +50,48 @@ export default {
 };
 
 export const actionsData = {
-  inputChanged: action('inputChanged'),
-  editRecipe: action('editRecipe'),
-  deleteRecipe: action('deleteRecipe')
+  dateChanged: action('dateChanged'),
+  addMeal: action('addMeal'),
+  removeMeal: action('removeMeal')
 };
+
 
 export const formData = {
   translations: {
     de: {
-      'input.search': 'Suchen',
-      'button.edit': 'Bearbeiten',
-      'button.delete': 'Löschen'
+      'weekday-short.monday': 'Mo',
+      'weekday-short.tuesday': 'Di',
+      'weekday-short.wednesday': 'Mi',
+      'weekday-short.thursday': 'Do',
+      'weekday-short.friday': 'Fr',
+      'weekday-short.saturday': 'Sa',
+      'weekday-short.sunday': 'So',
+      'meal-planer.breakfast': 'Frühstück',
+      'meal-planer.lunch': 'Mittagessen',
+      'meal-planer.dinner': 'Abendessen',
+      'meal-planer-add.lunch': 'Mittagessen hinzufügen',
+      'meal-planer-add.dinner': 'Abendessen hinzufügen',
     }
   },
-  recipes: [
-    {
-      id: '1',
-      title: 'Chocolate chip cookie'
-    },
-    {
-      id: '2',
-      title: 'Cheesecake'
-    },
-    {
-      id: '3',
-      title: 'Muffin'
-    }
-  ]
+  selectedDate: new Date(),
+  dayPlan: {
+    breakfast: [{
+      id: 'id',
+      type: 'breakfast',
+      date: '',
+      recipe: {
+        title: 'Menu',
+        cookbookId: 'cookbook',
+        ingredients: [],
+        url: 'https://google.com',
+      },
+    }]
+  }
 };
 
 // tslint:disable-next-line:no-any
-const Template: any = (args: RecipeListComponent) => ({
-  component: RecipeListComponent,
+const Template: any = (args: ScheduleComponent) => ({
+  component: ScheduleComponent,
   props: args,
 });
 
@@ -93,5 +105,5 @@ export let Loading = Template.bind({});
 Loading.args = {
   ...formData,
   ...actionsData,
-  recipes: null
+  dayPlan: null
 };

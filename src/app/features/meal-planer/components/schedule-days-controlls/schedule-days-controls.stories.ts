@@ -1,6 +1,4 @@
 import { APP_INITIALIZER } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { action } from '@storybook/addon-actions';
@@ -9,19 +7,16 @@ import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
 import { InputComponent } from '../../../../shared/components/input/input.component';
 import { SelectComponent } from '../../../../shared/components/select/select.component';
-import { RecipeListComponent } from './recipe-list.component';
-import { ShoppingListComponent } from '../../../shopping-list/components/shopping-list/shopping-list.component';
-import { taskData } from '../../../shopping-list/components/shopping-list/shopping-list.stories';
+import { ScheduleDaysControllsComponent } from './schedule-days-controlls.component';
 
 
 export default {
-  title: 'Cookbook/RecipeList',
+  title: 'MealPlaner/ScheduleDaysControls',
   excludeStories: /.*Data$/,
   decorators: [
     moduleMetadata({
-      imports: [FontAwesomeModule, ReactiveFormsModule, MatSlideToggleModule],
+      imports: [FontAwesomeModule],
       declarations: [
-        RecipeListComponent,
         TranslatePipe,
         InputComponent,
         SelectComponent,
@@ -48,50 +43,41 @@ export default {
 };
 
 export const actionsData = {
-  inputChanged: action('inputChanged'),
-  editRecipe: action('editRecipe'),
-  deleteRecipe: action('deleteRecipe')
+  changeDayIndex: action('changeDayIndex'),
 };
 
-export const formData = {
+export const daysData = {
   translations: {
     de: {
-      'input.search': 'Suchen',
-      'button.edit': 'Bearbeiten',
-      'button.delete': 'Löschen'
+      'weekday-short.monday': 'Mo',
+      'weekday-short.tuesday': 'Di',
+      'weekday-short.wednesday': 'Mi',
+      'weekday-short.thursday': 'Do',
+      'weekday-short.friday': 'Fr',
+      'weekday-short.saturday': 'Sa',
+      'weekday-short.sunday': 'So',
     }
   },
-  recipes: [
-    {
-      id: '1',
-      title: 'Chocolate chip cookie'
-    },
-    {
-      id: '2',
-      title: 'Cheesecake'
-    },
-    {
-      id: '3',
-      title: 'Muffin'
-    }
-  ]
+  currentLanguage: 'de',
+  selectedDayIndex: 0,
+  currentDayIndex: 0,
 };
 
 // tslint:disable-next-line:no-any
-const Template: any = (args: RecipeListComponent) => ({
-  component: RecipeListComponent,
+const Template: any = (args: ScheduleDaysControllsComponent) => ({
+  component: ScheduleDaysControllsComponent,
   props: args,
 });
 
 export let Default = Template.bind({});
 Default.args = {
-  ...formData,
+  ...daysData,
   ...actionsData,
 };
 
-export let Loading = Template.bind({});
-Loading.args = {
-  ...formData,
+export let NotCurrentDaySelected = Template.bind({});
+NotCurrentDaySelected.args = {
+  ...daysData,
   ...actionsData,
-  recipes: null
+  selectedDayIndex: 1,
 };

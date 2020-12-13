@@ -13,7 +13,7 @@ import { ShoppingListFormComponent } from './shopping-list-form.component';
 
 export default {
   title: 'ShoppingList/ShoppingListForm',
-  excludeStories: /.*Data$/,
+  excludeStories: /.*formData$/,
   decorators: [
     moduleMetadata({
       declarations: [],
@@ -38,9 +38,6 @@ export default {
   ],
 };
 
-export const actionsData = {
-  itemAdded: action('itemAdded'),
-};
 
 export const formData = {
   translations: {
@@ -52,7 +49,8 @@ export const formData = {
       'shoppingList.addForm.addLabel': 'Hinzufügen',
     }
   },
-  currentLang: 'de'
+  currentLang: 'de',
+  itemAdded: action('itemAdded'),
 };
 
 
@@ -65,5 +63,4 @@ const Template: any = (args: ShoppingListFormComponent) => ({
 export let Default = Template.bind({});
 Default.args = {
   ...formData,
-  ...actionsData,
 };
