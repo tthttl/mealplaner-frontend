@@ -1,0 +1,43 @@
+@import "../../../../../styles/settings/variables";
+@import "../../../../../styles/settings/colors";
+
+
+.account-page {
+  color: $text-100;
+
+  &__heading {
+    font-size: $font-size-medium;
+  }
+
+  &__lead-text {
+    margin: $spacing-small 0 $spacing-medium 0;
+    line-height: 1.8;
+  }
+
+  &__delete-button,
+  &__support-link {
+    background: none;
+    border: none;
+    padding: 0;
+    color: $blue_100;
+    cursor: pointer;
+    text-decoration: none;
+
+    &:hover {
+      color: $blue_80;
+    }
+
+    &:focus {
+      color: $blue_80;
+    }
+  }
+
+  &__action {
+    padding: $spacing-small 0;
+    border-top: 1px solid $blue-grey_30;
+
+    &:last-child {
+      border-bottom: 1px solid $blue-grey_30;
+    }
+  }
+}

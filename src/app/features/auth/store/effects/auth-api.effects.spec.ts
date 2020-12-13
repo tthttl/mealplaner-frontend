@@ -3,6 +3,7 @@ import { AuthApiEffects } from './auth-api.effects';
 import { GlobalState, initialState } from '../../../../core/store';
 import { of, throwError } from 'rxjs';
 import {
+  AccountContainerActions,
   AuthApiActions,
   ForgotPasswordContainerActions,
   LoginContainerActions,
@@ -14,12 +15,13 @@ import { TestBed } from '@angular/core/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { JwtRefreshResponse, User } from '../../../../core/models/model';
 import { Action, Store } from '@ngrx/store';
-import { AppInitializationActions, NavigationActions } from '../../../../core/store/actions';
+import { AppInitializationActions } from '../../../../core/store/actions';
 import { DEFAULT_REDIRECT_URL_FOR_LOGGED_IN_USER, REDIRECT_URL_WHEN_LOGOUT } from '../../../../core/constants/constants';
 import { SnackbarService } from '../../../../core/services/snackbar.service';
 import { LoginFailureAction } from '../../../../core/models/model-action';
-import SpyObj = jasmine.SpyObj;
 import { MatSnackBarRef } from '@angular/material/snack-bar';
+import { UserDetailApi } from '../../../../core/models/model-api';
+import SpyObj = jasmine.SpyObj;
 
 describe('Auth Api Effects', () => {
   let actions$;
@@ -274,6 +276,34 @@ describe('Auth Api Effects', () => {
 
       authApiEffects.redirectWhenLoggedOut$.subscribe(() => {
         expect(router.navigate).toHaveBeenCalledWith([REDIRECT_URL_WHEN_LOGOUT]);
+      });
+    });
+  });
+
+  describe('deleteAccount$', () => {
+    beforeEach(() => {
+      actions$ = of({type: AccountContainerActions.deleteAccount.type});
+      authService = jasmine.createSpyObj('AuthService', ['deleteAccount']);
+      authApiEffects = new AuthApiEffects(
+        actions$,
+        authService,
+        router,
+        snackBarService,
+        store);
+    });
+
+    it('should return deleteAccountSuccess action', () => {
+      authService.deleteAccount.and.returnValue(of({} as UserDetailApi));
+      authApiEffects.deleteAccount$.subscribe((action: Action) => {
+        expect(action.type).toEqual(AuthApiActions.deleteAccountSuccess.type);
+      });
+    });
+
+
+    it('should return deleteAccountFailure action', () => {
+      authService.deleteAccount.and.returnValue(throwError('error'));
+      authApiEffects.deleteAccount$.subscribe((action: Action) => {
+        expect(action.type).toEqual(AuthApiActions.deleteAccountFailure.type);
       });
     });
   });

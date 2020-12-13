@@ -1,0 +1,7 @@
+<app-account-page
+  [currentLanguage]="currentLanguage$ | async"
+  [translations]="translations$ | async"
+  [user]="currentUser$ | async"
+  (delete)="onDelete()"
+>
+</app-account-page>

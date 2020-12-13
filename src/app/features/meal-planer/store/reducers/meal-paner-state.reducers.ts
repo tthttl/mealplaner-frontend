@@ -1,7 +1,6 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { initialMealPlanerState, mealPlanerAdapter, MealPlanerState } from '../state/meal-planer-state';
 import { MealPlanerApiActions, MealPlanerContainerActions, MealPlanerEffectActions } from '../actions';
-import { formatDate } from '@angular/common';
 import { format } from 'date-fns';
 
 export const mealPlanerStateReducers = createReducer<MealPlanerState, Action>(

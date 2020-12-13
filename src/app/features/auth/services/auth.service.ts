@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
 import { decodeJwtToken, mapUserApiToUserClient } from '../../../core/helpers/helpers';
-import { UserApi } from '../../../core/models/model-api';
+import { UserApi, UserDetailApi } from '../../../core/models/model-api';
 import { JwtRefreshResponse, LoginCredentials, RegisterCredentials, User } from '../../../core/models/model';
 import { GlobalState } from '../../../core/store';
 import { Store } from '@ngrx/store';
@@ -30,6 +30,12 @@ export class AuthService {
     return this.httpClient.post<UserApi>(`${environment.authUrl}/auth/local/register`, {username: credentials.email, ...credentials}).pipe(
       map((userApi: UserApi) => mapUserApiToUserClient(userApi)),
       tap(user => this.startRefreshTokenTimer(user.jwt))
+    );
+  }
+
+  deleteAccount(user: User): Observable<UserDetailApi> {
+    return this.httpClient.delete<UserDetailApi>(`${environment.apiUrl}/users/${user.id}`).pipe(
+      tap(() => this.stopRefreshTokenTimer())
     );
   }
 

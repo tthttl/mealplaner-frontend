@@ -37,6 +37,7 @@ export const appStateReducer = createReducer<AppState, Action>(
   on(
     AuthApiActions.refreshTokenFailed,
     ErrorInterceptorActions.logout,
+    AuthApiActions.deleteAccountSuccess,
     NavigationActions.logout,
     (state) => {
       return {

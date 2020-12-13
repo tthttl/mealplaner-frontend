@@ -1,8 +1,8 @@
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { AuthService } from './auth.service';
-import { JwtRefreshResponse } from '../../../core/models/model';
-import { UserApi } from '../../../core/models/model-api';
+import { JwtRefreshResponse, User } from '../../../core/models/model';
+import { UserApi, UserDetailApi } from '../../../core/models/model-api';
 import { environment } from '../../../../environments/environment';
 import { of } from 'rxjs';
 import { initialState } from '../../../core/store';
@@ -45,8 +45,9 @@ describe('AuthService', () => {
     const mockUserApi: UserApi = {
       user: {
         _id: '0',
-        username: 'Joe',
+        username: 'joe@doe.com',
         email: 'joe@doe.com',
+        name: 'Joe'
       },
       jwt: validJwt
     };
@@ -64,8 +65,9 @@ describe('AuthService', () => {
     const mockUserApi: UserApi = {
       user: {
         _id: '0',
-        username: 'Joe',
+        username: 'joe@doe.com',
         email: 'joe@doe.com',
+        name: 'Joe'
       },
       jwt: validJwt
     };
@@ -93,8 +95,9 @@ describe('AuthService', () => {
     const mockUserApi: UserApi = {
       user: {
         _id: '0',
-        username: 'Joe',
+        username: 'joe@doe.com',
         email: 'joe@doe.com',
+        name: 'Joe'
       },
       jwt: validJwt
     };
@@ -108,13 +111,30 @@ describe('AuthService', () => {
     req.flush(mockUserApi);
   });
 
+  it('deleteAccount() should delete user', () => {
+    const mockUserApi: UserDetailApi = {
+      _id: '0',
+      username: 'joe@doe.com',
+      email: 'joe@doe.com',
+      name: 'Joe'
+    };
+
+    service.deleteAccount({id: 'id'} as User).subscribe((res) => {
+      expect(res).toEqual(mockUserApi);
+    });
+
+    const req = httpMock.expectOne(`${environment.apiUrl}/users/id`);
+    expect(req.request.method).toBe('DELETE');
+    req.flush(mockUserApi);
+  });
+
   it('refreshToken() should return refresh token', () => {
     const mockJwtRenewal: JwtRefreshResponse = {
       ok: true,
       user: {
         id: '0',
-        name: 'Joe',
         email: 'joe@doe.com',
+        name: 'Joe',
         jwt: validJwt
       }
     };

@@ -9,10 +9,13 @@ export interface Translations {
 
 export interface UserApi {
   jwt: string;
-  user: {
-    username: string;
-    _id: string;
-    email: string;
-  };
+  user: UserDetailApi;
+}
+
+export interface UserDetailApi {
+  username: string;
+  _id: string;
+  email: string;
+  name: string;
 }
 
