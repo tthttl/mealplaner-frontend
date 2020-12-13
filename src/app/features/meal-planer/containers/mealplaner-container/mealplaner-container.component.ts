@@ -48,7 +48,7 @@ export class MealplanerContainerComponent implements OnInit {
   mealPlaners$: Observable<MealPlaner[] | null> = this.store.select(selectMealPlaners);
   activeMealPlaner$: Observable<ShoppingList | undefined> = this.store.select(activeMealPlaner);
   activeMealPlanerId$: Observable<string | undefined> = this.store.select(activeMealPlanerId);
-  isOffline: Observable<boolean> = this.store.select(isOffline);
+  isOffline$: Observable<boolean> = this.store.select(isOffline);
 
   private createDialogTranslations: {} = {};
   private editDialogTranslations: {} = {};

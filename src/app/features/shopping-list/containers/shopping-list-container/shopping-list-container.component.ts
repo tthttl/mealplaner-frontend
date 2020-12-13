@@ -43,7 +43,7 @@ export class ShoppingListContainerComponent implements OnInit {
   shoppingLists$: Observable<ShoppingList[] | null> = this.store.select(selectShoppingLists);
   activeShoppingList$: Observable<ShoppingList | undefined> = this.store.select(activeShoppingList);
   activeShoppingListId$: Observable<string | undefined> = this.store.select(activeShoppingListId);
-  isOffline: Observable<boolean> = this.store.select(isOffline);
+  isOffline$: Observable<boolean> = this.store.select(isOffline);
 
   private createDialogTranslations: {} = {};
   private editDialogTranslations: {} = {};
