@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { differenceInCalendarWeeks, differenceInDays } from 'date-fns';
 import { getFirstDateOfWeek, getWeekDayIndex } from '../../../../core/helpers/helpers';
 import { DayPlan, I18n, Language, Meal, MealType } from '../../../../core/models/model';
-import { differenceInCalendarWeeks, differenceInDays } from 'date-fns';
 
 @Component({
   selector: 'app-schedule',
@@ -13,6 +13,7 @@ export class ScheduleComponent implements OnInit, OnChanges {
   @Input() translations: I18n | null = null;
   @Input() currentLanguage: Language | null = null;
   @Input() dayPlan: DayPlan | undefined | null = null;
+  @Input() isOffline = false;
   @Output() dateChanged: EventEmitter<Date> = new EventEmitter();
   @Output() addMeal: EventEmitter<MealType> = new EventEmitter();
   @Output() removeMeal: EventEmitter<Meal> = new EventEmitter();

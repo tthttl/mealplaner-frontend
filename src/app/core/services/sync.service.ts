@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Observable, throwError } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { v4 as uuid } from 'uuid';
 import { BasicShoppingListItem, ShoppingListItem, SyncItem, SyncMethod } from '../models/model';
+import { GlobalState } from '../store';
+import { SyncServiceActions } from '../store/actions';
 import { DBService } from './db.service';
 
 @Injectable({
@@ -10,7 +13,12 @@ import { DBService } from './db.service';
 })
 export class SyncService {
 
-  constructor(private dbService: DBService) {
+  constructor(
+    private dbService: DBService,
+    private store: Store<GlobalState>
+  ) {
+    window.addEventListener('offline', () => store.dispatch(SyncServiceActions.setOfflineMode({isOffline: true})));
+    window.addEventListener('online', () => store.dispatch(SyncServiceActions.setOfflineMode({isOffline: false})));
   }
 
   registerForSync(item: SyncItem): Observable<void> {

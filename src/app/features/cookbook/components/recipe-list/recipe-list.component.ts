@@ -14,6 +14,7 @@ export class RecipeListComponent implements OnInit, OnDestroy {
   @Input() translations: I18n | null = {};
   @Input() currentLang: Language | null = DEFAULT_LANGUAGE;
   @Input() recipes: Recipe[] | undefined | null;
+  @Input() isOffline = false;
   @Output() inputChanged: EventEmitter<string> = new EventEmitter<string>();
   @Output() editRecipe: EventEmitter<string> = new EventEmitter<string>();
   @Output() deleteRecipe: EventEmitter<Recipe> = new EventEmitter<Recipe>();

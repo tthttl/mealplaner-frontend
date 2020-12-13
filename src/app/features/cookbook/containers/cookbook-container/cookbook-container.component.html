@@ -4,6 +4,7 @@
   [recipes]="recipes$ | async"
   [cookbooks]="cookbooks$ | async"
   [selectedCookbook]="selectedCookbook$ | async"
+  [isOffline]="isOffline | async"
   (clickRecipe)="onClickRecipe($event)"
   (createRecipe)="onCreateRecipe()"
   (editRecipe)="onEditRecipe($event)"

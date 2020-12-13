@@ -24,6 +24,7 @@ import {
   activeShoppingList,
   activeShoppingListId,
   GlobalState,
+  isOffline,
   selectActiveCookbookId,
   selectCookbooks,
   selectedCookbook,
@@ -49,6 +50,7 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
   cookbooks$: Observable<Cookbook[]> = this.store.select(selectCookbooks);
   selectedCookbook$: Observable<Cookbook | undefined>;
   activeShoppingList$: Observable<ShoppingList | undefined> = this.store.select(activeShoppingList);
+  isOffline: Observable<boolean> = this.store.select(isOffline);
   private destroy$: Subject<void> = new Subject<void>();
 
   private addRecipeDialogTranslations: {[key: string]: string} = {};

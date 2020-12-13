@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { DEFAULT_LANGUAGE } from '../../../../core/constants/constants';
 import {
   ArrayItemMovedEvent,
@@ -24,6 +24,7 @@ export class ShoppingListPageComponent {
   @Input() activeShoppingListId: string | undefined | null = undefined;
   @Input() translations: I18n | null = {};
   @Input() currentLanguage: Language | null = DEFAULT_LANGUAGE;
+  @Input() isOffline = false;
 
   @Output() changeShoppingList: EventEmitter<ShoppingList> = new EventEmitter();
   @Output() addShoppingListItem: EventEmitter<BasicShoppingListItem> = new EventEmitter();

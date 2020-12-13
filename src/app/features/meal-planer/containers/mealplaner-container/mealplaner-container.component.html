@@ -7,6 +7,7 @@
     [activeMealPlanerId]="activeMealPlanerId$ | async"
     [activeMealPlaner]="activeMealPlaner$ | async"
     [dayPlan]="dayPlan$ | async"
+    [isOffline]="isOffline | async"
     (dateChanged)="onWeekOffsetChanged($event)"
     (changeMealPlaner)="onMealPlanerChange($event)"
     (createMealPlaner)="onMealPlanerCreate()"

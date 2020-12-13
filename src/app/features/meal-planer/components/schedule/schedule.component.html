@@ -35,7 +35,7 @@
           </div>
         </div>
         <button
-          *ngIf="dayPlan && (!dayPlan[section] || dayPlan[section].length === 0) && !displayedDayIsPast"
+          *ngIf="dayPlan && (!dayPlan[section] || dayPlan[section].length === 0) && !displayedDayIsPast && !isOffline"
           class="schedule__add-button"
           (click)="addMeal.emit(section)">
           <fa-icon *ngIf="'chevron-left'"

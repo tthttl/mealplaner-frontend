@@ -7,6 +7,7 @@
     [buttonLabel]="'shopping-list.label' | translate:translations:currentLanguage"
     [ariaDeleteLabel]="'shopping-list.delete' | translate:translations:currentLanguage"
     [ariaEditLabel]="'shopping-list.edit' | translate:translations:currentLanguage"
+    [isOffline]="isOffline"
     (selectList)="onSelectList($event)"
     (editList)="onEditList($event)"
     (deleteList)="onDeleteList($event)"
@@ -16,6 +17,7 @@
     [translations]="translations"
     [currentLanguage]="currentLanguage"
     [dayPlan]="dayPlan"
+    [isOffline]="isOffline"
     (addMeal)="onAddMeal($event)"
     (dateChanged)="onChangeWeekDay($event)"
     (removeMeal)="onRemoveMeal($event)">

@@ -1,6 +1,9 @@
 import { ActionReducerMap, createFeatureSelector, createSelector, MetaReducer } from '@ngrx/store';
+import { format } from 'date-fns';
 import { cookbookStateReducer } from '../../features/cookbook/store/reducers/cookbook-state.reducers';
 import { CookbookState, initialCookbookState } from '../../features/cookbook/store/state/cookbook-state';
+import { mealPlanerStateReducers } from '../../features/meal-planer/store/reducers/meal-paner-state.reducers';
+import { initialMealPlanerState, mealPlanerAdapter, MealPlanerState } from '../../features/meal-planer/store/state/meal-planer-state';
 import { shoppingListReducers } from '../../features/shopping-list/store/reducers/shopping-list.reducers';
 import {
   initialShoppingListState,
@@ -12,9 +15,6 @@ import { isJwtTokenExpired } from '../helpers/helpers';
 import { Cookbook, DayPlan, Recipe } from '../models/model';
 import { appStateReducer } from './reducers/app-state.reducers';
 import { AppState, initialAppState } from './state/app-state';
-import { initialMealPlanerState, mealPlanerAdapter, MealPlanerState } from '../../features/meal-planer/store/state/meal-planer-state';
-import { mealPlanerStateReducers } from '../../features/meal-planer/store/reducers/meal-paner-state.reducers';
-import { format } from 'date-fns';
 
 export interface GlobalState {
   appState: AppState;
@@ -203,4 +203,9 @@ export const activeDayPlan = createSelector(
     }
     return currentDayPlan;
   }
+);
+
+export const isOffline = createSelector(
+  selectAppState,
+  (appState: AppState) => appState.isOffline
 );
