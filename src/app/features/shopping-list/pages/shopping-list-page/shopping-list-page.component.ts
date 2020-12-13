@@ -24,7 +24,7 @@ export class ShoppingListPageComponent {
   @Input() activeShoppingListId: string | undefined | null = undefined;
   @Input() translations: I18n | null = {};
   @Input() currentLanguage: Language | null = DEFAULT_LANGUAGE;
-  @Input() isOffline = false;
+  @Input() isOffline: boolean | null = false;
 
   @Output() changeShoppingList: EventEmitter<ShoppingList> = new EventEmitter();
   @Output() addShoppingListItem: EventEmitter<BasicShoppingListItem> = new EventEmitter();

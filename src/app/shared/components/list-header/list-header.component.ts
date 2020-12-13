@@ -18,7 +18,7 @@ export class ListHeaderComponent {
   @Input() buttonLabel = '';
   @Input() ariaEditLabel = '';
   @Input() ariaDeleteLabel = '';
-  @Input() isOffline = false;
+  @Input() isOffline: boolean | null = false;
   @Output() createList: EventEmitter<undefined> = new EventEmitter();
   @Output() selectList: EventEmitter<List> = new EventEmitter();
   @Output() editList: EventEmitter<List> = new EventEmitter();

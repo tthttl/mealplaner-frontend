@@ -13,7 +13,7 @@ export class ScheduleComponent implements OnInit, OnChanges {
   @Input() translations: I18n | null = null;
   @Input() currentLanguage: Language | null = null;
   @Input() dayPlan: DayPlan | undefined | null = null;
-  @Input() isOffline = false;
+  @Input() isOffline: boolean | null = false;
   @Output() dateChanged: EventEmitter<Date> = new EventEmitter();
   @Output() addMeal: EventEmitter<MealType> = new EventEmitter();
   @Output() removeMeal: EventEmitter<Meal> = new EventEmitter();

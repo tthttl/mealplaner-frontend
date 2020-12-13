@@ -5,11 +5,11 @@
   (logout)="onLogout()"
   (languageChanged)="changeLanguage($event)"
 ></app-navigation>
-<app-beta-teaser
+<app-teaser
   *ngIf="showBetaTeaser"
   [translations]="translations$ | async"
   [currentLanguage]="currentLanguage$ | async">
-</app-beta-teaser>
+</app-teaser>
 
 <div id="main-page" [class.main-page--beat]="showBetaTeaser">
   <router-outlet></router-outlet>

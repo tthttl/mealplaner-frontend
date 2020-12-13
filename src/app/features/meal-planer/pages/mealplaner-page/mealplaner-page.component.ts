@@ -14,7 +14,7 @@ export class MealplanerPageComponent implements OnInit {
   @Input() activeMealPlaner: MealPlaner | undefined | null = undefined;
   @Input() activeMealPlanerId: string | undefined | null = undefined;
   @Input() dayPlan: DayPlan | null | undefined = null;
-  @Input() isOffline = false;
+  @Input() isOffline: boolean | null = false;
   @Output() dateChanged: EventEmitter<Date> = new EventEmitter();
   @Output() changeMealPlaner: EventEmitter<MealPlaner> = new EventEmitter();
   @Output() deleteMealPlaner: EventEmitter<MealPlaner> = new EventEmitter();

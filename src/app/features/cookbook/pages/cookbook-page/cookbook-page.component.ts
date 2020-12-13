@@ -13,7 +13,7 @@ export class CookbookPageComponent {
   @Input() recipes: Recipe[] | undefined | null;
   @Input() cookbooks: Cookbook[] | undefined | null;
   @Input() selectedCookbook: Cookbook | undefined | null;
-  @Input() isOffline = false;
+  @Input() isOffline: boolean | null = false;
   @Output() searchStringChanged: EventEmitter<string> = new EventEmitter<string>();
   @Output() editRecipe: EventEmitter<string> = new EventEmitter<string>();
   @Output() deleteRecipe: EventEmitter<Recipe> = new EventEmitter<Recipe>();
