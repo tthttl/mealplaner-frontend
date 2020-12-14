@@ -6,7 +6,7 @@ const objectStore = 'syncItems';
 const POST = 'POST';
 const PUT = 'PUT';
 const DELETE = 'DELETE';
-const URL = 'https://beta.mealplaner.app/api'
+const BASE_URL = 'https://beta.mealplaner.app/api'
 
 self.addEventListener('sync', (event) => {
   if (event.tag === 'ShoppingListItems') {
@@ -53,7 +53,7 @@ async function syncItemWithServer(item) {
 }
 
 function send(item, method) {
-  const url = method === POST ? URL : URL + '/' + item.payload.id;
+  const url = method === POST ? BASE_URL : BASE_URL + '/' + item.payload.id;
   const body = {
     title: item.payload.basicShoppingListItem.title,
     amount: item.payload.basicShoppingListItem.amount,
@@ -126,7 +126,7 @@ function deleteItemFromDB(key){
 
 function refreshToken() {
   console.log('Fetching JWT - Include');
-  return fetch(URL +'/auth/refresh-token', {
+  return fetch(BASE_URL +'/auth/refresh-token', {
     method: 'POST',
     body: {},
     credentials: 'same-origin'
