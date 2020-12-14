@@ -8,7 +8,6 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { Actions, EffectsModule } from '@ngrx/effects';
 import { Store, StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { environment } from '../environments/environment';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -42,7 +41,7 @@ import { SharedModule } from './shared/shared.module';
     FontAwesomeModule,
     AuthModule,
     SharedModule,
-    ServiceWorkerModule.register('service-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('service-worker.js')
   ],
   providers: [
     {provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AuthService, I18nService, Store, Actions]},
