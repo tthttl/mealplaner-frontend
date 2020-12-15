@@ -62,7 +62,7 @@ async function syncItemWithServer(item, jwt) {
   }
 }
 
-function send(item, method) {
+function send(item, method, jwt) {
   const url = method === POST ? BASE_URL + '/shopping-list-items/' : BASE_URL + '/shopping-list-items/' + item.payload.id;
   const body = {
     title: item.payload.basicShoppingListItem.title,
