@@ -53,7 +53,7 @@ async function syncItemWithServer(item) {
 }
 
 function send(item, method) {
-  const url = method === POST ? BASE_URL : BASE_URL + '/' + item.payload.id;
+  const url = method === POST ? BASE_URL + '/shopping-list-items/' : BASE_URL + '/shopping-list-items/' + item.payload.id;
   const body = {
     title: item.payload.basicShoppingListItem.title,
     amount: item.payload.basicShoppingListItem.amount,
