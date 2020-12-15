@@ -211,14 +211,13 @@ export interface ShoppingListItemDB extends DBSchema {
 
 export interface SyncItem {
   payload: {
-    basicShoppingListItem: BasicShoppingListItem, // Check if id/order are set, if yes, create new ShoppingListItem with these params
+    basicShoppingListItem: BasicShoppingListItem,
     id: string | null,
     order: number | null
   };
   keyPath: string;
   timeStamp: number;
   method: SyncMethod;
-  jwt: string; // TODO Remove when refresh-token ist fixed
 }
 
 export type SyncMethod = 'POST' | 'PUT' | 'DELETE';
