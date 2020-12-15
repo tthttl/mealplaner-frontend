@@ -142,9 +142,9 @@ function refreshToken() {
     credentials: 'same-origin'
   })
     .then(async response => {
-      const parsedRes = await response.json();
-      console.log(parsedRes);
-      return parsedRes.jwt;
+      const parsedResponse = await response.json();
+      console.log(parsedResponse);
+      return parsedResponse.user.jwt;
     })
     .catch(err => {
       console.log('Fetching Refresh Token Failed')
