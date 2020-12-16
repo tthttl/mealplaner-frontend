@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { take } from 'rxjs/operators';
 import { List, ListPickerDialogEvent } from '../../../core/models/model';
 import { DialogService } from '../../../core/services/dialog.service';
@@ -18,6 +18,7 @@ export class ListHeaderComponent {
   @Input() buttonLabel = '';
   @Input() ariaEditLabel = '';
   @Input() ariaDeleteLabel = '';
+  @Input() isOffline: boolean | null = false;
   @Output() createList: EventEmitter<undefined> = new EventEmitter();
   @Output() selectList: EventEmitter<List> = new EventEmitter();
   @Output() editList: EventEmitter<List> = new EventEmitter();

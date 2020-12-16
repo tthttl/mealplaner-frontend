@@ -179,6 +179,12 @@
     color: $blue_grey_70;
     padding-right: $spacing-medium;
     width: rem(32);
+
+    &--padding-left {
+      padding-right: 0;
+      padding-left: $spacing-medium;
+    }
+
   }
 
   &__helper {
@@ -190,6 +196,7 @@
 
   &__hint {
     padding-bottom: $spacing-medium;
+    user-select: none;
   }
 
   &__hint:last-child {

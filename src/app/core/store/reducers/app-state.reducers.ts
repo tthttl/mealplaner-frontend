@@ -6,7 +6,8 @@ import {
   AuthenticatedGuardActions,
   ErrorInterceptorActions,
   I18nApiActions,
-  NavigationActions
+  NavigationActions,
+  SyncServiceActions
 } from '../actions';
 import { AppState, initialAppState } from '../state/app-state';
 
@@ -72,6 +73,14 @@ export const appStateReducer = createReducer<AppState, Action>(
       return {
         ...state,
         language,
+      };
+    }),
+  on(
+    SyncServiceActions.setOfflineMode,
+    (state: AppState, {isOffline}: { isOffline: boolean }) => {
+      return {
+        ...state,
+        isOffline
       };
     })
 );

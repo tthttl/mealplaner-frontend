@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { DEFAULT_LANGUAGE } from '../../../../core/constants/constants';
+import { translateValidationErrors } from '../../../../core/helpers/helpers';
 import { I18n, Language, RegisterCredentials } from '../../../../core/models/model';
 import * as CustomValidators from '../../../../core/validators/custom-validators.validator';
-import { translateValidationErrors } from '../../../../core/helpers/helpers';
+import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
 
 @Component({
   selector: 'app-register-page',
@@ -20,6 +21,7 @@ export class RegisterPageComponent {
   @Output() credentialsReceived: EventEmitter<RegisterCredentials> = new EventEmitter();
 
   loginForm: FormGroup;
+  isPasswordVisible = false;
 
   constructor(private translatePipe: TranslatePipe) {
     this.loginForm = new FormGroup({
@@ -62,4 +64,13 @@ export class RegisterPageComponent {
       this.currentLanguage)
       .filter((error, index) => index === 0);
   }
+
+  togglePasswordVisibility(): void {
+    this.isPasswordVisible = !this.isPasswordVisible;
+  }
+
+  getIcon(): IconProp {
+    return this.isPasswordVisible ? ['fas', 'eye-slash'] : ['fas', 'eye'];
+  }
+
 }
