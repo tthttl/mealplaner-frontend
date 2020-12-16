@@ -5,37 +5,18 @@ import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontaweso
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { moduleMetadata } from '@storybook/angular';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
-import { DialogData, Recipe } from '../../../../core/models/model';
 import { AddRecipeDialogComponent } from './add-recipe-dialog.component';
-
-const dialogData: DialogData<Recipe> = {
-  data: {
-    id: '1',
-    title: 'Apple Pie',
-    cookbookId: 'cookbookId',
-    ingredients: [
-      {
-        amount: 1,
-        unit: 'kg',
-        title: 'Apple',
-        isStapleFood: false
-      }
-    ]
-  },
-  translations: {
-    'ingredients.label-text': 'Ingredients',
-    'button.modify': 'Button 1',
-    'button.add-to-mealplaner': 'Button 2'
-  }
-};
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ReactiveFormsModule } from '@angular/forms';
 
 export default {
-  title: 'RecipeView',
-  excludeStories: /.*Data$/,
+  title: 'Cookbook/RecipeView',
   decorators: [
     moduleMetadata({
       imports: [
         MatDialogModule,
+        MatCheckboxModule,
+        ReactiveFormsModule,
         RouterTestingModule.withRoutes([
             { path: 'recipe/:id', component: AddRecipeDialogComponent }
             ]
@@ -55,7 +36,25 @@ export default {
         },
         {
           provide: MAT_DIALOG_DATA,
-          useValue: dialogData
+          useValue: {
+            data: {
+              id: '1',
+              title: 'Apple Pie',
+              cookbookId: 'cookbookId',
+              ingredients: [
+                {
+                  amount: 1,
+                  unit: 'kg',
+                  title: 'Apple',
+                  isStapleFood: false
+                }
+              ]
+            },
+            translations: {
+              'ingredients.label-text': 'Ingredients',
+              'button.add-to-shopping-list': 'Zur Shoppingliste hinzufügen'
+            }
+          }
         },
         {
           provide: APP_INITIALIZER,

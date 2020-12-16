@@ -66,6 +66,99 @@
   transition-duration: 0.2s;
 }
 
+@mixin buttonColors {
+  color: $blue-grey_10;
+  background-color: $blue_90;
+
+  &:hover{
+    background-color: $blue_60;
+  }
+
+  &:active {
+    background-color: $blue_60;
+  }
+
+  &:focus {
+    background: $blue_60;
+    outline: 2px solid $blue_90;
+  }
+
+  &--no-left-border-radius{
+    border-radius: 0 rem(4) rem(4) 0;
+  }
+
+  &--color-inverted{
+    background-color: #ffffff;
+    color: $blue_100;
+    font-weight: 400;
+
+    &:hover{
+      background-color: $blue-grey_10;
+    }
+
+    &:active {
+      background-color: $blue-grey_10;
+    }
+
+    &:focus {
+      background-color: $blue-grey_10;
+      outline: 2px solid $blue_90;
+    }
+  }
+
+  &--color-accent{
+    background-color: $cyan_90;
+    color:$cyan_10;
+
+    &:hover{
+      background-color: $cyan_60;
+    }
+
+    &:active {
+      background-color: $cyan_80;
+    }
+  }
+
+  &--color-warning{
+    background-color: $red_70;
+    color: $red_10;
+
+    &:hover{
+      background-color: $red_60;
+    }
+
+    &:active {
+      background-color: $red_80;
+    }
+  }
+
+  &--color-disabled{
+    background-color: $blue-grey_50;
+    cursor: not-allowed;
+
+    &:hover,
+    &:active{
+      background-color: $blue-grey_50;
+    }
+
+  }
+
+  &--warning-border{
+    border: rem(2) solid $red_70;
+    border-left: none;
+  }
+}
+
+@mixin buttonIcons {
+  .icon-left{
+    padding-right: $spacing-medium;
+  }
+
+  .icon-right{
+    padding-left: $spacing-medium;
+  }
+}
+
 @mixin authform {
   &__field {
     width: 80%;

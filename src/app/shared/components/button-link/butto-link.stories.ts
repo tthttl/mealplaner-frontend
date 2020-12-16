@@ -3,13 +3,15 @@ import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontaweso
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { action } from '@storybook/addon-actions';
 import { moduleMetadata } from '@storybook/angular';
-import { ButtonComponent } from './button.component';
+import { ButtonLinkComponent } from './button-link.component';
+import { RouterLinkDirectiveStub } from '../../../../../testing/router-link-directive.stub';
 
 export default {
-  title: 'Shared/Button',
+  title: 'Shared/ButtonLink',
   excludeStories: /.*Data$/,
   decorators: [
     moduleMetadata({
+      declarations: [RouterLinkDirectiveStub],
       imports: [FontAwesomeModule],
       providers: [
         {
@@ -45,8 +47,9 @@ export const actionsData = {
   clicked: action('clicked')
 };
 
-export const buttonData = {
-  buttonText: 'Button',
+export const buttonLinkData = {
+  linkText: 'Primary',
+  buttonType: 'button',
   isDisabled: false,
   hasErrors: false,
   color: 'primary',
@@ -56,48 +59,48 @@ export const buttonData = {
 };
 
 // tslint:disable-next-line:no-any
-const Template: any = (args: ButtonComponent) => ({
-  component: ButtonComponent,
+const Template: any = (args: ButtonLinkComponent) => ({
+  component: ButtonLinkComponent,
   props: args,
 });
 
 export let Default = Template.bind({});
 Default.args = {
-  ...buttonData,
+  ...buttonLinkData,
   ...actionsData,
 };
 
 export let Accent = Template.bind({});
 Accent.args = {
-  ...buttonData,
+  ...buttonLinkData,
   ...actionsData,
   color: 'accent'
 };
 
 export let Warn = Template.bind({});
 Warn.args = {
-  ...buttonData,
+  ...buttonLinkData,
   ...actionsData,
   color: 'warn'
 };
 
 export let Disabled = Template.bind({});
 Disabled.args = {
-  ...buttonData,
+  ...buttonLinkData,
   ...actionsData,
   isDisabled: true,
 };
 
 export let IconLeft = Template.bind({});
 IconLeft.args = {
-  ...buttonData,
+  ...buttonLinkData,
   ...actionsData,
   iconLeft: 'plus'
 };
 
 export let IconRight = Template.bind({});
 IconRight.args = {
-  ...buttonData,
+  ...buttonLinkData,
   ...actionsData,
   iconRight: 'trash'
 };
