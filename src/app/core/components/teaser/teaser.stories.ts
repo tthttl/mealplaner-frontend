@@ -5,7 +5,7 @@ import { moduleMetadata } from '@storybook/angular';
 import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterLinkDirectiveStub } from '../../../../../testing/router-link-directive.stub';
-import { BetaTeaserComponent } from './beta-teaser.component';
+import { TeaserComponent } from './teaser.component';
 
 export default {
   title: 'Core/BetaTeaser',
@@ -32,6 +32,7 @@ export default {
 
 export const betaTeaserData = {
   currentLang: 'de',
+  textKey: 'beta.teaser',
   translations: {
     de: {
       'beta.teaser': 'Beta Teaser',
@@ -41,8 +42,8 @@ export const betaTeaserData = {
 
 
 // tslint:disable-next-line:no-any
-const Template: any = (args: BetaTeaserComponent) => ({
-  component: BetaTeaserComponent,
+const Template: any = (args: TeaserComponent) => ({
+  component: TeaserComponent,
   props: args,
 });
 
