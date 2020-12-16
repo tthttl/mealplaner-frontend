@@ -8,7 +8,7 @@ import { RouterLinkDirectiveStub } from '../../../../../testing/router-link-dire
 import { TeaserComponent } from './teaser.component';
 
 export default {
-  title: 'Core/BetaTeaser',
+  title: 'Core/Teaser',
   excludeStories: /.*Data$/,
   decorators: [
     moduleMetadata({
@@ -31,13 +31,7 @@ export default {
 };
 
 export const betaTeaserData = {
-  currentLang: 'de',
-  textKey: 'beta.teaser',
-  translations: {
-    de: {
-      'beta.teaser': 'Beta Teaser',
-    }
-  }
+  text: 'Teaser Text',
 };
 
 
@@ -49,5 +43,5 @@ const Template: any = (args: TeaserComponent) => ({
 
 export let Primary = Template.bind({});
 Primary.args = {
-  ...betaTeaserData,
+  ...betaTeaserData
 };
