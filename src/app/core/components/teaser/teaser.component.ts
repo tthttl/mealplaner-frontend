@@ -7,7 +7,5 @@ import { I18n, Language } from '../../models/model';
   styleUrls: ['./teaser.component.scss']
 })
 export class TeaserComponent {
-  @Input() translations: I18n | null = null;
-  @Input() currentLanguage: Language | null = null;
-  @Input() textKey = '';
+  @Input() text = '';
 }

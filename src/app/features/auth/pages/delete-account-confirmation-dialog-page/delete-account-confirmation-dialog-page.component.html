@@ -1,5 +1,5 @@
 <div class="delete-account-confirmation-dialog">
-  <h1 class="delete-account-confirmation-dialog__title" mat-dialog-title>{{dialogData.translations['title']}}</h1>
+  <h1 class="delete-account-confirmation-dialog__title">{{dialogData.translations['title']}}</h1>
   <div class="delete-account-confirmation-dialog__warning" [innerHTML]="dialogData.translations['warning']">
   </div>
   <div class="delete-account-confirmation-dialog__no-undo">
@@ -13,7 +13,7 @@
     </label>
     <input id="confirm-input" class="delete-account-confirmation-dialog__input" [(ngModel)]="confirmInput"/>
   </div>
-  <div class="delete-account-confirmation-dialog__actions" mat-dialog-actions>
+  <div class="delete-account-confirmation-dialog__actions">
     <app-button
       [buttonType]="'button'"
       [buttonText]="dialogData.translations['button-discard']"

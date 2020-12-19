@@ -231,7 +231,7 @@ export class ShoppingListEffects {
     concatMap(({shoppingListItems, updateObservables}) => {
       const a = forkJoin(updateObservables);
       return a.pipe(
-        map((_, index) => ShoppingListApiActions.addShoppingListItemsSuccess()),
+        map((shoppingListItemsApi, index) => ShoppingListApiActions.addShoppingListItemsSuccess({shoppingListItems: shoppingListItemsApi})),
         catchError(() => of(ShoppingListApiActions.addShoppingListItemsFailure())));
     })
   );

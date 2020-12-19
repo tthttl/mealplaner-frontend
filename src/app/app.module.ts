@@ -19,6 +19,7 @@ import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
 import { I18nService } from './core/services/i18n.service';
 import { metaReducers, reducers } from './core/store';
 import { AppEffects } from './core/store/effects/app.effects';
+import { NotFoundComponent } from './core/components/not-found/not-found.component';
 import { AuthModule } from './features/auth/auth.module';
 import { AuthService } from './features/auth/services/auth.service';
 import { SharedModule } from './shared/shared.module';
@@ -29,6 +30,7 @@ import { SharedModule } from './shared/shared.module';
     AppComponent,
     TeaserComponent,
     NavigationComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
