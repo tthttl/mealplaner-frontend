@@ -11,6 +11,8 @@ import { ListPickerDialogComponent } from './components/list-picker-dialog/list-
 import { ListHeaderComponent } from './components/list-header/list-header.component';
 import { EditListDialogComponent } from './components/edit-list-dialog/edit-list-dialog.component';
 import { TranslatePipe } from './pipes/translate.pipe';
+import { ButtonLinkComponent } from './components/button-link/button-link.component';
+import { RouterModule } from '@angular/router';
 
 const declarations = [
   ButtonComponent,
@@ -19,7 +21,8 @@ const declarations = [
   ListHeaderComponent,
   ListPickerDialogComponent,
   EditListDialogComponent,
-  TranslatePipe
+  TranslatePipe,
+  ButtonLinkComponent,
 ];
 
 
@@ -32,6 +35,7 @@ const declarations = [
     FontAwesomeModule,
     MatSnackBarModule,
     MatDialogModule,
+    RouterModule,
   ],
   exports: [
     ...declarations

@@ -2,6 +2,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ServiceWorkerModule } from '@angular/service-worker';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { Actions, EffectsModule } from '@ngrx/effects';
@@ -11,22 +12,22 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { appInitializer } from './app.initializer';
-import { AuthModule } from './features/auth/auth.module';
-import { AuthService } from './features/auth/services/auth.service';
-import { BetaTeaserComponent } from './core/components/beta-teaser/beta-teaser.component';
 import { NavigationComponent } from './core/components/navigation/navigation.component';
-import { I18nService } from './core/services/i18n.service';
+import { TeaserComponent } from './core/components/teaser/teaser.component';
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
-import { SharedModule } from './shared/shared.module';
+import { I18nService } from './core/services/i18n.service';
 import { metaReducers, reducers } from './core/store';
 import { AppEffects } from './core/store/effects/app.effects';
+import { AuthModule } from './features/auth/auth.module';
+import { AuthService } from './features/auth/services/auth.service';
+import { SharedModule } from './shared/shared.module';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    BetaTeaserComponent,
+    TeaserComponent,
     NavigationComponent,
   ],
   imports: [
@@ -40,6 +41,7 @@ import { AppEffects } from './core/store/effects/app.effects';
     FontAwesomeModule,
     AuthModule,
     SharedModule,
+    ServiceWorkerModule.register('service-worker.js')
   ],
   providers: [
     {provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AuthService, I18nService, Store, Actions]},

@@ -3,8 +3,6 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { take, withLatestFrom } from 'rxjs/operators';
 import { v4 as uuid } from 'uuid';
-import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
-import { EditListDialogComponent } from '../../../../shared/components/edit-list-dialog/edit-list-dialog.component';
 import { DELETION_DELAY } from '../../../../core/constants/constants';
 import {
   BasicShoppingListItem,
@@ -23,11 +21,14 @@ import {
   activeShoppingList,
   activeShoppingListId,
   GlobalState,
+  isOffline,
   selectCurrentLanguage,
   selectCurrentShoppingListItems,
   selectShoppingLists,
   selectTranslations
 } from '../../../../core/store';
+import { EditListDialogComponent } from '../../../../shared/components/edit-list-dialog/edit-list-dialog.component';
+import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
 import { ShoppingListContainerActions } from '../../store/actions';
 
 @Component({
@@ -42,6 +43,7 @@ export class ShoppingListContainerComponent implements OnInit {
   shoppingLists$: Observable<ShoppingList[] | null> = this.store.select(selectShoppingLists);
   activeShoppingList$: Observable<ShoppingList | undefined> = this.store.select(activeShoppingList);
   activeShoppingListId$: Observable<string | undefined> = this.store.select(activeShoppingListId);
+  isOffline$: Observable<boolean> = this.store.select(isOffline);
 
   private createDialogTranslations: {} = {};
   private editDialogTranslations: {} = {};
@@ -86,7 +88,7 @@ export class ShoppingListContainerComponent implements OnInit {
   onShoppingListItemDeleted({shoppingListItem}: DeleteShoppingListItemEvent): void {
     this.store.dispatch(ShoppingListContainerActions.deleteShoppingListItem({shoppingListItem}));
 
-    this.snackBarService.openSnackBar('message.undo', 'message.action', 3000)
+    this.snackBarService.openSnackBar('message.undo', 'message.action', DELETION_DELAY)
       .afterDismissed()
       .pipe(take(1))
       .subscribe(({dismissedByAction}) => {

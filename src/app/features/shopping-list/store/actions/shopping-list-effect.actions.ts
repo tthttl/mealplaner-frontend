@@ -1,6 +1,5 @@
 import { createAction, props } from '@ngrx/store';
 import { BasicShoppingListItem, ShoppingList, ShoppingListItem } from '../../../../core/models/model';
-import { Observable } from 'rxjs';
 
 export const setActiveShoppingList = createAction(
   '[Shopping List Effect] Set Active ShoppingList',
@@ -50,7 +49,7 @@ export const undoOptimisticDeleteShoppingList = createAction(
 
 export const retryEditShoppingList = createAction(
   '[Shopping List API] Retry edit Shopping List',
-  props<{ shoppingList: ShoppingList, changes: ShoppingList}>()
+  props<{ shoppingList: ShoppingList, changes: ShoppingList }>()
 );
 
 export const undoOptimisticEditShoppingList = createAction(
@@ -61,4 +60,31 @@ export const undoOptimisticEditShoppingList = createAction(
 export const retryUpdateShoppingListItems = createAction(
   '[Shopping List API] Retry update Shopping List Items',
   props<{ shoppingListItems: ShoppingListItem[] }>()
+);
+
+export const registerShoppingListItemPostForSync = createAction(
+  '[Shopping List Effect] Offline Mode: POST Shopping List Item',
+  props<{ basicShoppingListItem: BasicShoppingListItem, optimisticId: string}>()
+);
+
+export const registerShoppingListItemPostForSyncSuccess = createAction(
+  '[Shopping List Effect] Offline Mode: POST Shopping List Item Registered For Sync Successfully'
+);
+
+export const registerShoppingListItemUpdatesForSync = createAction(
+  '[Shopping List Effect] Offline Mode: UPDATE Shopping List Item',
+  props<{ shoppingListItems: ShoppingListItem[] }>()
+);
+
+export const registerShoppingListItemUpdatesForSyncSuccess = createAction(
+  '[Shopping List Effect] Offline Mode: UPDATE Shopping List Item Registered For Sync Successfully'
+);
+
+export const registerShoppingListItemDeleteForSync = createAction(
+  '[Shopping List Effect] Offline Mode: DELETE Shopping List Item',
+  props<{ shoppingListItem: ShoppingListItem }>()
+);
+
+export const registerShoppingListItemDeleteForSyncSuccess = createAction(
+  '[Shopping List Effect] Offline Mode: DELETE Shopping List Item Registered For Sync Successfully'
 );

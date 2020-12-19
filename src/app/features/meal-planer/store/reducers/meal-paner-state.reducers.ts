@@ -1,7 +1,7 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { initialMealPlanerState, mealPlanerAdapter, MealPlanerState } from '../state/meal-planer-state';
 import { MealPlanerApiActions, MealPlanerContainerActions, MealPlanerEffectActions } from '../actions';
-import { formatDate } from '@angular/common';
+import { format } from 'date-fns';
 
 export const mealPlanerStateReducers = createReducer<MealPlanerState, Action>(
   initialMealPlanerState,
@@ -102,7 +102,7 @@ export const mealPlanerStateReducers = createReducer<MealPlanerState, Action>(
           ...state.meals,
           [mealPlanerId]: {
             ...state.meals[mealPlanerId],
-            [formatDate(date, 'yyyy-MM-dd', 'de-CH')]: dayPlan
+            [format(date, 'yyyy-MM-dd')]: dayPlan
           }
         }
       };
@@ -114,7 +114,7 @@ export const mealPlanerStateReducers = createReducer<MealPlanerState, Action>(
         return state;
       }
 
-      const date = formatDate(state.selectedDate, 'yyyy-MM-dd', 'de-CH');
+      const date = format(state.selectedDate, 'yyyy-MM-dd');
 
       return {
         ...state,
@@ -137,7 +137,7 @@ export const mealPlanerStateReducers = createReducer<MealPlanerState, Action>(
         return state;
       }
 
-      const date = formatDate(state.selectedDate, 'yyyy-MM-dd', 'de-CH');
+      const date = format(state.selectedDate, 'yyyy-MM-dd');
       const copyDayPlan = {...state.meals[state.activeMealPlaner][date]};
 
 
@@ -163,7 +163,7 @@ export const mealPlanerStateReducers = createReducer<MealPlanerState, Action>(
         return state;
       }
 
-      const date = formatDate(state.selectedDate, 'yyyy-MM-dd', 'de-CH');
+      const date = format(state.selectedDate, 'yyyy-MM-dd');
 
       return {
         ...state,
@@ -188,7 +188,7 @@ export const mealPlanerStateReducers = createReducer<MealPlanerState, Action>(
         return state;
       }
 
-      const date = formatDate(state.selectedDate, 'yyyy-MM-dd', 'de-CH');
+      const date = format(state.selectedDate, 'yyyy-MM-dd');
 
       return {
         ...state,
@@ -214,7 +214,7 @@ export const mealPlanerStateReducers = createReducer<MealPlanerState, Action>(
         return state;
       }
 
-      const date = formatDate(state.selectedDate, 'yyyy-MM-dd', 'de-CH');
+      const date = format(state.selectedDate, 'yyyy-MM-dd');
 
       return {
         ...state,

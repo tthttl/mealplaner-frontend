@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SharedModule } from '../../shared/shared.module';
 import { LoginContainerComponent } from './containers/login-container/login-container.component';
@@ -16,6 +16,9 @@ import { ResetPasswordContainerComponent } from './containers/reset-password-con
 import { ResetPasswordPageComponent } from './pages/reset-password-page/reset-password-page.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { RegisterPageComponent } from './pages/regsiter-page/register-page.component';
+import { AccountContainerComponent } from './containers/account-container/account-container.component';
+import { AccountPageComponent } from './pages/account-page/account-page.component';
+import { DeleteAccountConfirmationDialogPageComponent } from './pages/delete-account-confirmation-dialog-page/delete-account-confirmation-dialog-page.component';
 
 
 @NgModule({
@@ -28,7 +31,10 @@ import { RegisterPageComponent } from './pages/regsiter-page/register-page.compo
     ForgotPasswordContainerComponent,
     ForgotPasswordPageComponent,
     ResetPasswordContainerComponent,
-    ResetPasswordPageComponent
+    ResetPasswordPageComponent,
+    AccountContainerComponent,
+    AccountPageComponent,
+    DeleteAccountConfirmationDialogPageComponent
   ],
   imports: [
     CommonModule,
@@ -36,7 +42,8 @@ import { RegisterPageComponent } from './pages/regsiter-page/register-page.compo
     FontAwesomeModule,
     SharedModule,
     AuthRoutingModule,
-    EffectsModule.forFeature([AuthApiEffects])
+    EffectsModule.forFeature([AuthApiEffects]),
+    FormsModule
   ],
   providers: [
     {

@@ -44,7 +44,7 @@ describe('Cookbook Effects', () => {
     });
 
     store = TestBed.inject(MockStore);
-    router = jasmine.createSpyObj('Router', ['navigate']);
+    router = jasmine.createSpyObj('Router', ['navigate'], {routerState: {snapshot: {url: 'cookbook'}}} );
     recipeService = jasmine.createSpyObj('RecipeService', ['loadRecipes', 'saveRecipe', 'editRecipe', 'deleteRecipe']);
     cookbookService = jasmine.createSpyObj('CookbookService', ['loadCookbooks', 'saveCookbook', 'editCookbook', 'deleteCookbook']);
     storageService = jasmine.createSpyObj('StorageService', ['setItem', 'getItem']);
@@ -278,11 +278,11 @@ describe('Cookbook Effects', () => {
   });
 
   it('switchCookbookWhenDeleted should switch when current List is deleted', () => {
-    store.setState({cookbookState: {activeCookbookId: cookbook.id}});
+    store.setState({cookbookState: {activeCookbookId: cookbook.id, cookbooks: [{id: '1', title: 'test'}]}});
     cookbookEffects = createEffects(of({type: CookbookContainerActions.deleteCookbookFromState.type, cookbook}));
     cookbookEffects.switchCookbookWhenDeleted$.subscribe((action: Action) => {
       expect(action.type).toEqual(CookbookContainerActions.selectCookbook.type);
-      expect((action as CookbookSelectedAction).selectedCookbookId).toEqual(cookbook.id);
+      expect((action as CookbookSelectedAction).selectedCookbookId).toEqual('1');
     });
   });
 

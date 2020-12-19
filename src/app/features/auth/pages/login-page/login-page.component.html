@@ -26,12 +26,15 @@
                  [icon]="['fas','unlock-alt']"></fa-icon>
         <app-input
           class="login-form__input"
-          type="password"
+          [type]="isPasswordVisible ? 'text' : 'password'"
           [border]="false"
           [name]="'password'"
           [placeholder]="'auth.login.password' | translate:translations:currentLanguage"
           [formControl]="getFormControl('password')"
           [errors]="getErrorsFor('password')"></app-input>
+        <fa-icon class="login-form__icon login-form__icon--padding-left"
+                 (click)="togglePasswordVisibility()"
+                 [icon]="getIcon()"></fa-icon>
       </div>
     </div>
   </ng-template>

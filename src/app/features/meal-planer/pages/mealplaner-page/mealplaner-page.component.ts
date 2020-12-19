@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { DayPlan, I18n, Language, List, Meal, MealPlaner, MealType, Recipe, ShoppingList } from '../../../../core/models/model';
+import { DayPlan, I18n, Language, Meal, MealPlaner, MealType } from '../../../../core/models/model';
 
 @Component({
   selector: 'app-mealplaner-page',
@@ -14,6 +14,7 @@ export class MealplanerPageComponent implements OnInit {
   @Input() activeMealPlaner: MealPlaner | undefined | null = undefined;
   @Input() activeMealPlanerId: string | undefined | null = undefined;
   @Input() dayPlan: DayPlan | null | undefined = null;
+  @Input() isOffline: boolean | null = false;
   @Output() dateChanged: EventEmitter<Date> = new EventEmitter();
   @Output() changeMealPlaner: EventEmitter<MealPlaner> = new EventEmitter();
   @Output() deleteMealPlaner: EventEmitter<MealPlaner> = new EventEmitter();

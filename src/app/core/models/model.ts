@@ -1,5 +1,6 @@
-import { SUPPORTED_LANGUAGES } from '../constants/constants';
 import { IconName } from '@fortawesome/fontawesome-common-types';
+import { DBSchema } from 'idb';
+import { SUPPORTED_LANGUAGES } from '../constants/constants';
 
 export type I18n = {
   readonly [key: string]: Translations;
@@ -132,7 +133,7 @@ export interface Recipe {
 
 export interface DialogData<T extends object> {
   readonly data: T;
-  readonly translations: {[key: string]: string};
+  readonly translations: { [key: string]: string };
 }
 
 export interface Cookbook {
@@ -200,3 +201,23 @@ export interface MealPlanerAddEvent {
   recipe: Recipe;
   shoppingListItems: BasicShoppingListItem[];
 }
+
+export interface ShoppingListItemDB extends DBSchema {
+  syncItems: {
+    key: string,
+    value: SyncItem
+  };
+}
+
+export interface SyncItem {
+  payload: {
+    basicShoppingListItem: BasicShoppingListItem,
+    id: string | null,
+    order: number | null
+  };
+  keyPath: string;
+  timeStamp: number;
+  method: SyncMethod;
+}
+
+export type SyncMethod = 'POST' | 'PUT' | 'DELETE';

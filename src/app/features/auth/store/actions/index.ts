@@ -4,6 +4,8 @@ import * as LoginServiceActions from './login-service.actions';
 import * as RegisterContainerActions from './register-container.actions';
 import * as ForgotPasswordContainerActions from './forgot-password-container.actions';
 import * as ResetPasswordContainerActions from './reset-password-container.actions';
+import * as AccountContainerActions from './account-container.actions';
+import * as AuthEffectsActions from './auth-effects.actions';
 
 export {
   LoginContainerActions,
@@ -11,5 +13,7 @@ export {
   LoginServiceActions,
   RegisterContainerActions,
   ForgotPasswordContainerActions,
-  ResetPasswordContainerActions
+  ResetPasswordContainerActions,
+  AccountContainerActions,
+  AuthEffectsActions
 };

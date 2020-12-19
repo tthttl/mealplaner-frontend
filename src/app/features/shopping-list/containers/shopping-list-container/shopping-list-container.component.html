@@ -5,6 +5,7 @@
   [translations]="translations$ | async"
   [activeShoppingList]="activeShoppingList$ | async"
   [currentLanguage]="currentLanguage$ | async"
+  [isOffline] = "isOffline$ | async"
   (changeShoppingList)="onShoppingListChange($event)"
   (addShoppingListItem)="onShoppingListItemAdded($event)"
   (deleteShoppingListItem)="onShoppingListItemDeleted($event)"

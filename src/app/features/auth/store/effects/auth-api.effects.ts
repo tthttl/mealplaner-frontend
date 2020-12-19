@@ -3,13 +3,16 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { GlobalState, selectRequestedUrlBeforeLoginWasRequired } from '../../../../core/store';
 import {
+  AccountContainerActions,
   AuthApiActions,
+  AuthEffectsActions,
   ForgotPasswordContainerActions,
   LoginContainerActions,
   LoginServiceActions,
-  RegisterContainerActions, ResetPasswordContainerActions
+  RegisterContainerActions,
+  ResetPasswordContainerActions
 } from '../actions';
-import { catchError, exhaustMap, map, tap, withLatestFrom } from 'rxjs/operators';
+import { catchError, exhaustMap, filter, map, mergeMap, switchMap, take, tap, withLatestFrom } from 'rxjs/operators';
 import { AuthService } from '../../services/auth.service';
 import { LoginAction } from '../../../../core/models/model-action';
 import { JwtRefreshResponse, User } from '../../../../core/models/model';
@@ -98,16 +101,39 @@ export class AuthApiEffects {
     ofType(AuthApiActions.loginSuccess, AuthApiActions.registerSuccess, AuthApiActions.restPasswordSuccess),
     withLatestFrom(this.store.select(selectRequestedUrlBeforeLoginWasRequired)),
     tap(([_, url]) => {
-      this.router.navigate([url || DEFAULT_REDIRECT_URL_FOR_LOGGED_IN_USER]);
+      this.router.navigateByUrl(url || DEFAULT_REDIRECT_URL_FOR_LOGGED_IN_USER);
     }),
   );
 
   @Effect({dispatch: false})
   redirectWhenLoggedOut$ = this.actions$.pipe(
-    ofType(AuthApiActions.logoutSuccess),
+    ofType(AuthApiActions.logoutSuccess, AuthApiActions.deleteAccountSuccess),
     withLatestFrom(this.store.select(selectRequestedUrlBeforeLoginWasRequired)),
     tap(() => {
       this.router.navigate([REDIRECT_URL_WHEN_LOGOUT]);
     }),
+  );
+
+  @Effect()
+  deleteAccount$ = this.actions$.pipe(
+    ofType(AccountContainerActions.deleteAccount, AuthEffectsActions.retryDeleteAccount),
+    mergeMap(({user}: { user: User }) => {
+      return this.authService.deleteAccount(user).pipe(
+        map(() => AuthApiActions.deleteAccountSuccess({user})),
+        catchError(() => of(AuthApiActions.deleteAccountFailure({user})))
+      );
+    }),
+  );
+
+  @Effect()
+  retryDeleteAccount$ = this.actions$.pipe(
+    ofType(AuthApiActions.deleteAccountFailure),
+    switchMap(({user}) => {
+      console.log('here');
+      return this.snackBarService.openSnackBar('backend-failed.error-message', 'backend-failed.retry').afterDismissed().pipe(
+        take(1),
+        filter(({dismissedByAction}) => dismissedByAction),
+        map(() => AuthEffectsActions.retryDeleteAccount({user})));
+    })
   );
 }

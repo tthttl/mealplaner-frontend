@@ -25,7 +25,7 @@ export function mapUserApiToUserClient(userApi: UserApi): User {
   return {
     jwt: userApi.jwt,
     id: userApi.user._id,
-    name: userApi.user.username,
+    name: userApi.user.name,
     email: userApi.user.email,
   };
 }
@@ -73,7 +73,7 @@ export function moveItemInArray<T>(array: T[], previousIndex: number, currentInd
   return copy;
 }
 
-export function addItemAtIndex<T extends Recipe | List>(newItem: T, items: T[] = []): T[] {
+export function addItemAlphabetically<T extends Recipe | List>(newItem: T, items: T[] = []): T[] {
   const indexToInsert = items.findIndex((item: T) => item.title.toLowerCase() > newItem.title.toLowerCase());
   return indexToInsert > -1 ? [...items.slice(0, indexToInsert), newItem, ...items.slice(indexToInsert)] : [...items, newItem];
 }
@@ -109,4 +109,8 @@ export function getFirstDateOfWeek(date: Date): Date {
 export function getWeekDayIndex(date: Date): number {
   const today = date.getDay() - 1;
   return today >= 0 ? today : 6;
+}
+
+export function stringBetweenChars(str: string, charStart: string, charEnd: string ): string {
+  return str.split(charStart).pop()!.split(charEnd)[0];
 }

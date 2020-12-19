@@ -7,6 +7,9 @@ import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
 import { SharedModule } from '../../../../shared/shared.module';
 
 import { RecipePageComponent } from './recipe-page.component';
+import { APP_INITIALIZER } from '@angular/core';
+import { FaIconComponent, FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { fas } from '@fortawesome/free-solid-svg-icons';
 
 describe('RecipeFormComponent', () => {
   let component: RecipePageComponent;
@@ -17,12 +20,22 @@ describe('RecipeFormComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, SharedModule, MatSlideToggleModule],
-      declarations: [RecipePageComponent, TranslatePipe],
+      declarations: [RecipePageComponent, FaIconComponent, TranslatePipe],
       providers: [
         {
           provide: TranslatePipe,
           useClass: TranslatePipe
-        }
+        },
+        {
+          provide: APP_INITIALIZER,
+          useFactory: (iconLibrary: FaIconLibrary) => {
+            return async () => {
+              iconLibrary.addIconPacks(fas);
+            };
+          },
+          deps: [FaIconLibrary],
+          multi: true,
+        },
       ]
     })
       .compileComponents();

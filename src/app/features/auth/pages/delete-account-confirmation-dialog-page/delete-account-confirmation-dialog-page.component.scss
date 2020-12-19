@@ -1,0 +1,49 @@
+@import "../../../../../styles/settings/colors";
+@import "../../../../../styles/settings/functions";
+@import "../../../../../styles/settings/variables";
+
+
+.delete-account-confirmation-dialog {
+  height: rem(400);
+  max-height: 80%;
+  width: rem(400);
+  margin: 0;
+  padding: 0;
+  max-width: 100%;
+
+  &__title {
+    color: $red_50;
+    font-size: $font-size-normal;
+  }
+
+  &__warning {
+    background: $red_20;
+    border-radius: $border-radius-default;
+    margin: $spacing-medium 0;
+    padding: $spacing-small;
+  }
+
+  &__no-undo {
+    margin: $spacing-medium 0;
+  }
+
+  &__confirm-text {
+    background: $blue-grey_30;
+    padding: $spacing-tiny;
+    border-radius: $border-radius-default;
+    flex-grow: 0;
+  }
+
+  &__input {
+    display: block;
+    margin: $spacing-medium 0;
+    width: 100%;
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: $spacing-medium;
+  }
+}

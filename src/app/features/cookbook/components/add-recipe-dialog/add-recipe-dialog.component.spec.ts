@@ -4,6 +4,8 @@ import { DialogData, Recipe } from '../../../../core/models/model';
 import { SharedModule } from '../../../../shared/shared.module';
 
 import { AddRecipeDialogComponent } from './add-recipe-dialog.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 describe('RecipeViewComponent', () => {
   let component: AddRecipeDialogComponent;
@@ -31,7 +33,7 @@ describe('RecipeViewComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [MatDialogModule, SharedModule],
+      imports: [MatDialogModule, SharedModule, ReactiveFormsModule, MatCheckboxModule],
       declarations: [AddRecipeDialogComponent],
       providers: [
         {

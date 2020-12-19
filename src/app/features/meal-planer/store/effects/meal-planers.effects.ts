@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { act, Actions, Effect, ofType } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { GlobalState, selectUserID } from '../../../../core/store';
 import { SnackbarService } from '../../../../core/services/snackbar.service';
@@ -21,9 +21,10 @@ import {
   withLatestFrom
 } from 'rxjs/operators';
 import { DayPlan, Meal, MealPlaner } from '../../../../core/models/model';
-import { interval, of, pipe } from 'rxjs';
+import { interval, of } from 'rxjs';
 import { DELETION_DELAY } from '../../../../core/constants/constants';
 import { StorageService } from '../../../../core/services/storage.service';
+import { stringBetweenChars } from '../../../../core/helpers/helpers';
 
 @Injectable()
 export class MealPlanersEffects {
@@ -74,6 +75,7 @@ export class MealPlanersEffects {
       MealPlanerEffectActions.setActiveMealPlaner,
       MealPlanerContainerActions.changeSelectedMealPlaner,
     ),
+    filter(() => stringBetweenChars(this.router.routerState.snapshot.url, '/', '?') === 'meal-planer'),
     tap(({mealPlanerId}) => {
       this.router.navigate([], {relativeTo: this.activatedRoute, queryParams: {mealPlanerId}});
     })
@@ -238,7 +240,7 @@ export class MealPlanersEffects {
         catchError(() => {
           return of(MealPlanerApiActions.addMealsFailure(
             {mealType: action.mealType, recipe: action.recipe, optimisticId: action.optimisticId}
-            ));
+          ));
         })
       );
     }),
@@ -260,7 +262,7 @@ export class MealPlanersEffects {
 
   @Effect()
   removeMeal$ = this.actions$.pipe(
-    ofType(MealPlanerContainerActions.removeMeal,  MealPlanerEffectActions.retryRemoveMeal),
+    ofType(MealPlanerContainerActions.removeMeal, MealPlanerEffectActions.retryRemoveMeal),
     concatMap(({type, meal}) => {
       return of({}).pipe(
         delayWhen((action) =>
