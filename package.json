@@ -14,7 +14,7 @@
     "storybook": "npm run docs:json && start-storybook -p 6006",
     "build-storybook": "npm run docs:json && build-storybook",
     "cypress": "node_modules/.bin/cypress open",
-    "build:pwa": "ng build --prod && cp src/app/service-worker.js dist/mealplaner && cp src/app/idb.js dist/mealplaner"
+    "build:pwa": "ng build --prod --configuration=dev && cp src/app/service-worker.js dist/mealplaner && cp src/app/idb.js dist/mealplaner"
   },
   "husky": {
     "hooks": {
