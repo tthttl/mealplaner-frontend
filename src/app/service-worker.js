@@ -1,5 +1,4 @@
-importScripts('./idb.js');
-importScripts('./ngsw-worker.js');
+importScripts('ngsw-worker.js', 'idb.js');
 
 const dataBase = 'shoppingListItems';
 const objectStore = 'syncItems';
