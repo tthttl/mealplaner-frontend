@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { I18n, Language } from '../../../../core/models/model';
-import { DEFAULT_LANGUAGE } from '../../../../core/constants/constants';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { DEFAULT_LANGUAGE } from '../../../../core/constants/constants';
 import { translateValidationErrors } from '../../../../core/helpers/helpers';
+import { I18n, Language } from '../../../../core/models/model';
+import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
 
 @Component({
   selector: 'app-reset-password-page',
@@ -15,7 +16,9 @@ export class ResetPasswordPageComponent {
   @Input() translations: I18n | null = {};
   @Input() currentLang: Language | null = DEFAULT_LANGUAGE;
   @Input() backendError: string | undefined;
+  @Input() isPasswordVisible = false;
   @Output() submitResetPasswordForm: EventEmitter<string> = new EventEmitter();
+  @Output() passwordVisibilityChanged: EventEmitter<void> = new EventEmitter();
 
   resetPasswordResetCodeForm: FormGroup;
 
@@ -48,6 +51,15 @@ export class ResetPasswordPageComponent {
       this.translations,
       this.currentLang)
       .filter((error, index) => index === 0);
+  }
+
+
+  togglePasswordVisibility(): void {
+    this.passwordVisibilityChanged.emit();
+  }
+
+  getIcon(): IconProp {
+    return this.isPasswordVisible ? ['fas', 'eye-slash'] : ['fas', 'eye'];
   }
 
 }

@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Actions, ofType } from '@ngrx/effects';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { I18n, Language, RegisterCredentials } from '../../../../core/models/model';
 import { GlobalState, selectTranslations } from '../../../../core/store';
-import { select, Store } from '@ngrx/store';
 import { AuthApiActions, RegisterContainerActions } from '../../store/actions';
-import { Actions, ofType } from '@ngrx/effects';
 
 @Component({
   selector: 'app-register-container',
@@ -15,6 +15,7 @@ export class RegisterContainerComponent {
   translations$: Observable<I18n | null> = this.store.select(selectTranslations);
   currentLanguage$: Observable<Language> = this.store.pipe(select(state => state.appState.language));
   backendError: string | undefined;
+  isPasswordVisible = false;
 
   constructor(private store: Store<GlobalState>, private actions$: Actions) {
     this.actions$.pipe(ofType(AuthApiActions.registerFailure)).subscribe(({error}: { error: string }) => {
@@ -24,6 +25,10 @@ export class RegisterContainerComponent {
 
   register(credentials: RegisterCredentials): void {
     this.store.dispatch(RegisterContainerActions.register({credentials}));
+  }
+
+  onPasswordVisibilityChanged(): void {
+    this.isPasswordVisible = !this.isPasswordVisible;
   }
 
 }

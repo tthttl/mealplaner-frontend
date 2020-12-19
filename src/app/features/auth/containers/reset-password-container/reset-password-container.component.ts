@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { select, Store } from '@ngrx/store';
-import { GlobalState, selectTranslations } from '../../../../core/store';
-import { Actions, ofType } from '@ngrx/effects';
 import { ActivatedRoute } from '@angular/router';
-import { AuthApiActions, ResetPasswordContainerActions } from '../../store/actions';
+import { Actions, ofType } from '@ngrx/effects';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { I18n, Language } from '../../../../core/models/model';
+import { GlobalState, selectTranslations } from '../../../../core/store';
+import { AuthApiActions, ResetPasswordContainerActions } from '../../store/actions';
 
 @Component({
   selector: 'app-reset-password-container',
@@ -18,6 +18,7 @@ export class ResetPasswordContainerComponent {
   currentLanguage$: Observable<Language> = this.store.pipe(select(state => state.appState.language));
   backendError: string | undefined = undefined;
   codeQueryParam: string;
+  isPasswordVisible = false;
 
   constructor(private store: Store<GlobalState>, private actions$: Actions, private activatedRout: ActivatedRoute) {
     this.actions$.pipe(ofType(AuthApiActions.restPasswordFailure)).subscribe(({error}: { error: string }) => {
@@ -29,6 +30,10 @@ export class ResetPasswordContainerComponent {
 
   resetPassword(password: string): void {
     this.store.dispatch(ResetPasswordContainerActions.resetPassword({password, resetPasswordToken: this.codeQueryParam}));
+  }
+
+  onPasswordVisibilityChanged(): void {
+    this.isPasswordVisible = !this.isPasswordVisible;
   }
 
 }

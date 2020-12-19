@@ -24,14 +24,14 @@
       <div class="login-form__field">
         <fa-icon class="login-form__icon"
                  [icon]="['fas','unlock-alt']"></fa-icon>
-        <app-input
+        <app-password-input
           class="login-form__input"
-          [type]="isPasswordVisible ? 'text' : 'password'"
+          [isPasswordVisible]="isPasswordVisible"
           [border]="false"
           [name]="'password'"
           [placeholder]="'auth.login.password' | translate:translations:currentLanguage"
           [formControl]="getFormControl('password')"
-          [errors]="getErrorsFor('password')"></app-input>
+          [errors]="getErrorsFor('password')"></app-password-input>
         <fa-icon class="login-form__icon login-form__icon--padding-left"
                  (click)="togglePasswordVisibility()"
                  [icon]="getIcon()"></fa-icon>
