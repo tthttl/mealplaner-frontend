@@ -1,15 +1,15 @@
+import { APP_INITIALIZER } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { FaIconComponent, FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { fas } from '@fortawesome/free-solid-svg-icons';
 import { of } from 'rxjs';
 import { Recipe } from '../../../../core/models/model';
 import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
 import { SharedModule } from '../../../../shared/shared.module';
 
 import { RecipePageComponent } from './recipe-page.component';
-import { APP_INITIALIZER } from '@angular/core';
-import { FaIconComponent, FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { fas } from '@fortawesome/free-solid-svg-icons';
 
 describe('RecipeFormComponent', () => {
   let component: RecipePageComponent;
@@ -54,6 +54,7 @@ describe('RecipeFormComponent', () => {
 
   it('submit button should be disabled when inputs are empty', () => {
     component.recipe$ = of({} as Recipe);
+    component.recipeForm.markAsTouched();
     fixture.detectChanges();
     const button = hostElement.querySelector('button[type="submit"]');
     expect(button.disabled).toBeTruthy();
