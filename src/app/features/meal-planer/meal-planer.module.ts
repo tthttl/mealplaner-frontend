@@ -1,4 +1,4 @@
-import { LOCALE_ID, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MealplanerContainerComponent } from './containers/mealplaner-container/mealplaner-container.component';
 import { MealPlanerRoutingModule } from './meal-planer-routing.module';
@@ -45,19 +45,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatCheckboxModule,
     FormsModule,
   ],
-  providers: [
-    {
-      provide: LOCALE_ID,
-      deps: [Store],
-      useFactory: (store: Store<GlobalState>) => {
-        let locale;
-        store.select((state: GlobalState) => state.appState.language).subscribe(currentLanguage => {
-          locale = currentLanguage;
-        });
-        return locale;
-      }
-    }
-  ]
+  providers: []
 })
 export class MealPlanerModule {
 }
