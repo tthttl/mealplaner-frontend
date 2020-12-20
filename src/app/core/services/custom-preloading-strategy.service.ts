@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { PreloadingStrategy, Route, Router } from '@angular/router';
+import { NavigationStart, PreloadingStrategy, Route, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { GlobalState, isLoggedIn as selectIsLoggedIn } from '../store';
-import { mergeMap } from 'rxjs/operators';
+import { filter, map, mergeMap } from 'rxjs/operators';
 
 
 @Injectable({
@@ -25,7 +25,14 @@ export class CustomPreloadingStrategyService implements PreloadingStrategy {
 
         const requestedPage = this.router.url.split('/').pop()!.split('?')[0];
 
-        return route.data?.usedBy?.includes(requestedPage) ? fn() : of(null);
+        return route.data?.usedBy?.includes(requestedPage) ? fn() : this.router.events.pipe(
+          filter(event => event instanceof NavigationStart),
+          map(event => event as NavigationStart),
+          map(({url}) => url.substring(1)),
+          filter(navigatedToPage => route.data?.usedBy?.includes(navigatedToPage)),
+          mergeMap(() => fn())
+        );
+
       })
     );
   }

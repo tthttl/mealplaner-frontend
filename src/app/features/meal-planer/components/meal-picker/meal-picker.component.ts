@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { Cookbook, I18n, Language, Recipe, ShoppingListItem } from '../../../../core/models/model';
 import { fromEvent } from 'rxjs';
-import { debounce, debounceTime, map } from 'rxjs/operators';
+import { debounceTime, map } from 'rxjs/operators';
 import { INPUT_DEBOUNCE_TIME } from '../../../../core/constants/constants';
 
 @Component({

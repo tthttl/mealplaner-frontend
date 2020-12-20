@@ -10,13 +10,20 @@
 
 <div class="product-page__image-wrapper">
   <div class="container">
-    <img
-      class="product-page__img" src="/assets/plate.jpg"
-      [ngStyle]="{'transform': 'rotate(' + plateRotationDegree + 'deg)'}"
-      alt="{{'product-page.meal-alt-text' | translate:translations:currentLanguage}}}"
-      height="640"
-      width="640"
-    />
+    <picture>
+      <source srcset="/assets/plate-320.jpg 1x, /assets/plate-640.jpg 2x"
+              media="(max-width: 340px)">
+      <source srcset="/assets/plate-640.jpg 1x, /assets/plate-1280.jpg 2x">
+
+      <img
+        class="product-page__img"
+        src="/assets/plate-640.jpg"
+        [ngStyle]="{'transform': 'rotate(' + plateRotationDegree + 'deg)'}"
+        alt="{{'product-page.meal-alt-text' | translate:translations:currentLanguage}}}"
+        height="640"
+        width="640"
+      />
+    </picture>
   </div>
 </div>
 
