@@ -16,9 +16,7 @@ export class ResetPasswordPageComponent {
   @Input() translations: I18n | null = {};
   @Input() currentLang: Language | null = DEFAULT_LANGUAGE;
   @Input() backendError: string | undefined;
-  @Input() isPasswordVisible = false;
   @Output() submitResetPasswordForm: EventEmitter<string> = new EventEmitter();
-  @Output() passwordVisibilityChanged: EventEmitter<void> = new EventEmitter();
 
   resetPasswordResetCodeForm: FormGroup;
 
@@ -51,15 +49,6 @@ export class ResetPasswordPageComponent {
       this.translations,
       this.currentLang)
       .filter((error, index) => index === 0);
-  }
-
-
-  togglePasswordVisibility(): void {
-    this.passwordVisibilityChanged.emit();
-  }
-
-  getIcon(): IconProp {
-    return this.isPasswordVisible ? ['fas', 'eye-slash'] : ['fas', 'eye'];
   }
 
 }

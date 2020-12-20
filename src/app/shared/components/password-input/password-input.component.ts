@@ -1,5 +1,6 @@
 import { Component, ElementRef, EventEmitter, forwardRef, Input, Output, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 @Component({
   selector: 'app-password-input',
@@ -25,12 +26,13 @@ export class PasswordInputComponent implements ControlValueAccessor {
   @Input() autocomplete: 'on' | 'off' = 'on';
   @Input() placeholder = '';
   @Input() e2eTestName = '';
-  @Input() isPasswordVisible = false;
+  @Input() color = 'primary';
   @Output() clicked: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
 
   @ViewChild('password', {static: true, read: ElementRef})
   passwordElementRef: ElementRef | undefined;
 
+  isPasswordVisible = false;
   currentValue: string | number = '';
 
   onClicked(event: MouseEvent): void {
@@ -68,4 +70,11 @@ export class PasswordInputComponent implements ControlValueAccessor {
     }
   }
 
+  togglePasswordVisibility(): void {
+    this.isPasswordVisible = !this.isPasswordVisible;
+  }
+
+  getIcon(): IconProp {
+    return this.isPasswordVisible ? ['fas', 'eye-slash'] : ['fas', 'eye'];
+  }
 }

@@ -15,8 +15,6 @@ export class LoginContainerComponent {
   translations$: Observable<I18n | null> = this.store.select(selectTranslations);
   currentLanguage$: Observable<Language> = this.store.pipe(select(state => state.appState.language));
   backendError: string | undefined;
-  isPasswordVisible = false;
-
 
   constructor(private store: Store<GlobalState>, private actions$: Actions) {
     this.actions$.pipe(ofType(AuthApiActions.loginFailure)).subscribe(({error}: { error: string }) => {
@@ -26,10 +24,6 @@ export class LoginContainerComponent {
 
   onLogin(credentials: LoginCredentials): void {
     this.store.dispatch(LoginContainerActions.login({credentials}));
-  }
-
-  onPasswordVisibilityChanged(): void {
-    this.isPasswordVisible = !this.isPasswordVisible;
   }
 
 }

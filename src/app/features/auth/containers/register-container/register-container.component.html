@@ -2,7 +2,5 @@
   [translations]="translations$ | async"
   [currentLanguage]="currentLanguage$ | async"
   [backendErrorMessage]="backendError"
-  [isPasswordVisible]="isPasswordVisible"
-  (passwordVisibilityChanged)="onPasswordVisibilityChanged()"
   (credentialsReceived)="register($event)"
 ></app-register-page>
