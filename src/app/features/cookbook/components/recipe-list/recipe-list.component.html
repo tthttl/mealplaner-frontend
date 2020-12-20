@@ -1,10 +1,23 @@
 <section class="recipe-list" [ngSwitch]="getPageState(recipes)">
-  <app-input
-    class="recipe-list__filter-field"
-    [type]="'search'"
-    [placeholder]="'input.search' | translate:translations:currentLang"
-    #searchField
-  ></app-input>
+  <div class="recipe-list__filter-field">
+    <app-input
+      [type]="'search'"
+      [border]="false"
+      [placeholder]="'input.search' | translate:translations:currentLang"
+      #searchField
+    ></app-input>
+  </div>
+  <div class="add-recipe-row"
+       (click)="createRecipe()"
+       [attr.data-test]="'add-recipe'">
+    <section class="add-recipe-row__title">
+      <fa-icon
+        class="add-recipe-row__icon"
+        [icon]="['fas','plus']"
+      ></fa-icon>
+      {{'button.submit' | translate: translations : currentLang}}
+    </section>
+  </div>
   <div *ngSwitchCase="'default'">
     <div class="recipe-list__item" *ngFor="let recipe of recipes">
       <div class="recipe-list__row">
@@ -12,20 +25,25 @@
           <span>{{recipe.title}}</span>
         </div>
         <div *ngIf="!isOffline" class="recipe-list__buttons-box">
-          <app-button class="recipe-list__button"
-                      [buttonText]="'button.edit' | translate:translations:currentLang"
-                      [iconLeft]="'pen-square'"
-                      [color]="'accent'"
-                      (click)="onEditRecipe(recipe.id)"
-                      [e2eTestName]="'RECIPE-ROW-EDIT'"
-          ></app-button>
-          <app-button class="recipe-list__button"
-                      [buttonText]="'button.delete' | translate:translations:currentLang"
-                      [iconLeft]="'times'"
-                      [color]="'warn'"
-                      (click)="onDeleteRecipe(recipe)"
-                      [e2eTestName]="'RECIPE-ROW-DELETE'"
-          ></app-button>
+          <button
+            class="recipe-list__button"
+            (click)="onEditRecipe(recipe.id)"
+            [attr.data-test]="'RECIPE-ROW-EDIT'"
+          >
+            <fa-icon
+              [icon]="['fas', 'pen-square']"
+            ></fa-icon>
+            {{"button.edit" | translate:translations:currentLang}}
+          </button>
+          <button
+            class="recipe-list__button"
+            (click)="onDeleteRecipe(recipe)"
+            [attr.data-test]="'RECIPE-ROW-DELETE'">
+            <fa-icon
+              [icon]="['fas', 'trash']"
+            ></fa-icon>
+            {{"button.delete" | translate:translations:currentLang}}
+          </button>
         </div>
       </div>
     </div>

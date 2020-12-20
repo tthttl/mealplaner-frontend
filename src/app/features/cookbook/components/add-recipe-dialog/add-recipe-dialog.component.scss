@@ -1,8 +1,6 @@
 @import "../../../../../styles/settings/breakpoints";
 @import "../../../../../styles/settings/variables";
 
-
-
 .ingredient-dialog {
   &__list {
     width: 100%;
@@ -20,6 +18,10 @@
   }
 
   &__actions {
-    margin-top: $spacing-medium;
+    margin-top: $spacing-small;
   }
+}
+
+.mat-dialog-actions{
+  margin-bottom: 0;
 }

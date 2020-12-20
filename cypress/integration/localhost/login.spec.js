@@ -1,6 +1,7 @@
 describe('Login', () => {
 
   it('should login with valid credentials', () => {
+    cy.clearCookies();
     cy.visit('/auth/login');
     cy.get('input[type=email]').type('test@test.ch');
     cy.get('input[type=password]').type('000000');

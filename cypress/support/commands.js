@@ -34,7 +34,7 @@ Cypress.Commands.add('login', () => {
 Cypress.Commands.add('navigateToShoppingLists', () => {
   cy.intercept({
     method: 'GET',
-    path: '/api/shopping-lists?user=5fc29c04cd499e1ce8640794',
+    path: '/api/shopping-lists?user=5fdf81ab0fc5d2052d545b01',
   }, {
     statusCode: 200,
     fixture: 'shopping-lists.json'
@@ -54,7 +54,7 @@ Cypress.Commands.add('navigateToShoppingLists', () => {
 Cypress.Commands.add('navigateToCookbooks', (cookbookId) => {
   cy.intercept({
     method: 'GET',
-    path: '/api/cookbooks?user=5fc29c04cd499e1ce8640794*',
+    path: '/api/cookbooks?user=5fdf81ab0fc5d2052d545b01*',
   }, {
     statusCode: 200,
     fixture: 'cookbooks.json'

@@ -2,5 +2,7 @@
   [translations]="translations$ | async"
   [currentLanguage]="currentLanguage$ | async"
   [backendErrorMessage]="backendError"
+  [isPasswordVisible]="isPasswordVisible"
   (login)="onLogin($event)"
+  (passwordVisibilityChanged)="onPasswordVisibilityChanged()"
 ></app-login-page>

@@ -6,7 +6,7 @@
   (languageChanged)="changeLanguage($event)"
 ></app-navigation>
 <app-teaser
-  *ngIf="true"
+  *ngIf="showBetaTeaser && (isOffline$ | async) === false"
   [text]="'beta.teaser' | translate:(translations$ | async):(currentLanguage$ | async)"
 >
 </app-teaser>

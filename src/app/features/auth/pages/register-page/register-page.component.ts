@@ -18,10 +18,11 @@ export class RegisterPageComponent {
   @Input() translations: I18n | null = {};
   @Input() backendErrorMessage: string | undefined;
   @Input() currentLanguage: Language | null = DEFAULT_LANGUAGE;
+  @Input() isPasswordVisible = false;
   @Output() credentialsReceived: EventEmitter<RegisterCredentials> = new EventEmitter();
+  @Output() passwordVisibilityChanged: EventEmitter<void> = new EventEmitter();
 
   loginForm: FormGroup;
-  isPasswordVisible = false;
 
   constructor(private translatePipe: TranslatePipe) {
     this.loginForm = new FormGroup({
@@ -66,7 +67,7 @@ export class RegisterPageComponent {
   }
 
   togglePasswordVisibility(): void {
-    this.isPasswordVisible = !this.isPasswordVisible;
+    this.passwordVisibilityChanged.emit();
   }
 
   getIcon(): IconProp {

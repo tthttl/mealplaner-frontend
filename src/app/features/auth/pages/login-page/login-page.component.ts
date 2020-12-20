@@ -16,10 +16,11 @@ export class LoginPageComponent {
   @Input() translations: I18n | null = {};
   @Input() currentLanguage: Language | null = DEFAULT_LANGUAGE;
   @Input() backendErrorMessage: string | undefined;
+  @Input() isPasswordVisible = false;
   @Output() login: EventEmitter<LoginCredentials> = new EventEmitter();
+  @Output() passwordVisibilityChanged: EventEmitter<void> = new EventEmitter();
 
   loginForm: FormGroup;
-  isPasswordVisible = false;
 
   constructor(private translatePipe: TranslatePipe) {
     this.loginForm = new FormGroup({
@@ -60,7 +61,7 @@ export class LoginPageComponent {
   }
 
     togglePasswordVisibility(): void {
-        this.isPasswordVisible = !this.isPasswordVisible;
+        this.passwordVisibilityChanged.emit();
     }
 
     getIcon(): IconProp {
