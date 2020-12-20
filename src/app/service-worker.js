@@ -1,11 +1,15 @@
-importScripts('ngsw-worker.js', 'idb.js');
-
 const dataBase = 'shoppingListItems';
 const objectStore = 'syncItems';
 const POST = 'POST';
 const PUT = 'PUT';
 const DELETE = 'DELETE';
 const BASE_URL = 'https://beta.mealplaner.app/api'
+
+try{
+  self.importScripts('ngsw-worker.js', 'idb.js');
+} catch(error){
+  console.log(error)
+}
 
 self.addEventListener('sync', (event) => {
   if (event.tag === 'ShoppingListItems') {
