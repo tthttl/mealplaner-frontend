@@ -3,7 +3,7 @@ describe('Shopping List', () => {
   before(() => {
     cy.intercept({
       method: 'GET',
-      path: '/api/shopping-lists?user=5fc29c04cd499e1ce8640794',
+      path: '/api/shopping-lists?user=5fdf81ab0fc5d2052d545b01',
     }, {
       statusCode: 200,
       fixture: 'shopping-lists.json'

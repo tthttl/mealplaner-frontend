@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { DEFAULT_LANGUAGE } from '../../../../core/constants/constants';
 import { translateValidationErrors } from '../../../../core/helpers/helpers';
 import { I18n, Language, RegisterCredentials } from '../../../../core/models/model';
@@ -21,7 +20,6 @@ export class RegisterPageComponent {
   @Output() credentialsReceived: EventEmitter<RegisterCredentials> = new EventEmitter();
 
   loginForm: FormGroup;
-  isPasswordVisible = false;
 
   constructor(private translatePipe: TranslatePipe) {
     this.loginForm = new FormGroup({
@@ -64,13 +62,4 @@ export class RegisterPageComponent {
       this.currentLanguage)
       .filter((error, index) => index === 0);
   }
-
-  togglePasswordVisibility(): void {
-    this.isPasswordVisible = !this.isPasswordVisible;
-  }
-
-  getIcon(): IconProp {
-    return this.isPasswordVisible ? ['fas', 'eye-slash'] : ['fas', 'eye'];
-  }
-
 }

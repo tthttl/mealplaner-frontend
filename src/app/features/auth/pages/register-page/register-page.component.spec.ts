@@ -1,14 +1,14 @@
+import { APP_INITIALIZER } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
-
-import { RegisterPageComponent } from './register-page.component';
-import { SharedModule } from '../../../../shared/shared.module';
-import { AuthFormComponent } from '../../components/auth-form/auth-form.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FaIconComponent, FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { APP_INITIALIZER } from '@angular/core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
+import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
+import { SharedModule } from '../../../../shared/shared.module';
+import { AuthFormComponent } from '../../components/auth-form/auth-form.component';
+
+import { RegisterPageComponent } from './register-page.component';
 
 describe('RegisterFormComponent', () => {
   let component: RegisterPageComponent;

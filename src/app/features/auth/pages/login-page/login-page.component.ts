@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { DEFAULT_LANGUAGE } from '../../../../core/constants/constants';
 import { translateValidationErrors } from '../../../../core/helpers/helpers';
 import { I18n, Language, LoginCredentials } from '../../../../core/models/model';
@@ -16,10 +15,11 @@ export class LoginPageComponent {
   @Input() translations: I18n | null = {};
   @Input() currentLanguage: Language | null = DEFAULT_LANGUAGE;
   @Input() backendErrorMessage: string | undefined;
+  @Input() isPasswordVisible = false;
   @Output() login: EventEmitter<LoginCredentials> = new EventEmitter();
+  @Output() passwordVisibilityChanged: EventEmitter<void> = new EventEmitter();
 
   loginForm: FormGroup;
-  isPasswordVisible = false;
 
   constructor(private translatePipe: TranslatePipe) {
     this.loginForm = new FormGroup({
@@ -58,13 +58,5 @@ export class LoginPageComponent {
       this.currentLanguage)
       .filter((error, index) => index === 0);
   }
-
-    togglePasswordVisibility(): void {
-        this.isPasswordVisible = !this.isPasswordVisible;
-    }
-
-    getIcon(): IconProp {
-        return this.isPasswordVisible ? ['fas', 'eye-slash'] : ['fas', 'eye'];
-    }
 
 }

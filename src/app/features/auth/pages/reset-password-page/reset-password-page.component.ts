@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { I18n, Language } from '../../../../core/models/model';
-import { DEFAULT_LANGUAGE } from '../../../../core/constants/constants';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { DEFAULT_LANGUAGE } from '../../../../core/constants/constants';
 import { translateValidationErrors } from '../../../../core/helpers/helpers';
+import { I18n, Language } from '../../../../core/models/model';
+import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
 
 @Component({
   selector: 'app-reset-password-page',
