@@ -2,7 +2,7 @@ import { ActionReducerMap, createFeatureSelector, createSelector, MetaReducer } 
 import { format } from 'date-fns';
 import { cookbookStateReducer } from '../../features/cookbook/store/reducers/cookbook-state.reducers';
 import { CookbookState, initialCookbookState } from '../../features/cookbook/store/state/cookbook-state';
-import { mealPlanerStateReducers } from '../../features/meal-planer/store/reducers/meal-paner-state.reducers';
+import { mealPlanerStateReducers } from '../../features/meal-planer/store/reducers/meal-planer-state.reducers';
 import { initialMealPlanerState, mealPlanerAdapter, MealPlanerState } from '../../features/meal-planer/store/state/meal-planer-state';
 import { shoppingListReducers } from '../../features/shopping-list/store/reducers/shopping-list.reducers';
 import {
