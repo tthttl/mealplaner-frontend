@@ -1,7 +1,7 @@
 import { APP_INITIALIZER } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { FaIconComponent, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { of } from 'rxjs';
@@ -19,7 +19,7 @@ describe('RecipeFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, SharedModule, MatSlideToggleModule],
+      imports: [ReactiveFormsModule, SharedModule, MatButtonToggleModule],
       declarations: [RecipePageComponent, FaIconComponent, TranslatePipe],
       providers: [
         {
