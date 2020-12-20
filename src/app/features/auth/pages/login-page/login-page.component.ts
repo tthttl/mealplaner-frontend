@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { DEFAULT_LANGUAGE } from '../../../../core/constants/constants';
 import { translateValidationErrors } from '../../../../core/helpers/helpers';
 import { I18n, Language, LoginCredentials } from '../../../../core/models/model';
@@ -59,13 +58,5 @@ export class LoginPageComponent {
       this.currentLanguage)
       .filter((error, index) => index === 0);
   }
-
-    togglePasswordVisibility(): void {
-        this.passwordVisibilityChanged.emit();
-    }
-
-    getIcon(): IconProp {
-        return this.isPasswordVisible ? ['fas', 'eye-slash'] : ['fas', 'eye'];
-    }
 
 }

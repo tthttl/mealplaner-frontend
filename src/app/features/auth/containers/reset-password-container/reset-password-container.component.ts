@@ -18,7 +18,6 @@ export class ResetPasswordContainerComponent {
   currentLanguage$: Observable<Language> = this.store.pipe(select(state => state.appState.language));
   backendError: string | undefined = undefined;
   codeQueryParam: string;
-  isPasswordVisible = false;
 
   constructor(private store: Store<GlobalState>, private actions$: Actions, private activatedRout: ActivatedRoute) {
     this.actions$.pipe(ofType(AuthApiActions.restPasswordFailure)).subscribe(({error}: { error: string }) => {
@@ -30,10 +29,6 @@ export class ResetPasswordContainerComponent {
 
   resetPassword(password: string): void {
     this.store.dispatch(ResetPasswordContainerActions.resetPassword({password, resetPasswordToken: this.codeQueryParam}));
-  }
-
-  onPasswordVisibilityChanged(): void {
-    this.isPasswordVisible = !this.isPasswordVisible;
   }
 
 }

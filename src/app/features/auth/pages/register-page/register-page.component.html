@@ -39,15 +39,11 @@
                  [icon]="['fas','unlock-alt']"></fa-icon>
         <app-password-input
           class="register-form__input"
-          [isPasswordVisible]="isPasswordVisible"
           [border]="false"
           [name]="'password'"
           [placeholder]="'auth.register.password' | translate:translations:currentLanguage"
           [formControl]="getFormControl('password')"
           [errors]="getErrorsFor('password')"></app-password-input>
-        <fa-icon class="register-form__icon register-form__icon--padding-left"
-                 (click)="togglePasswordVisibility()"
-                 [icon]="getIcon()"></fa-icon>
       </div>
 
 

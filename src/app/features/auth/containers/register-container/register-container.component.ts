@@ -15,7 +15,6 @@ export class RegisterContainerComponent {
   translations$: Observable<I18n | null> = this.store.select(selectTranslations);
   currentLanguage$: Observable<Language> = this.store.pipe(select(state => state.appState.language));
   backendError: string | undefined;
-  isPasswordVisible = false;
 
   constructor(private store: Store<GlobalState>, private actions$: Actions) {
     this.actions$.pipe(ofType(AuthApiActions.registerFailure)).subscribe(({error}: { error: string }) => {
@@ -25,10 +24,6 @@ export class RegisterContainerComponent {
 
   register(credentials: RegisterCredentials): void {
     this.store.dispatch(RegisterContainerActions.register({credentials}));
-  }
-
-  onPasswordVisibilityChanged(): void {
-    this.isPasswordVisible = !this.isPasswordVisible;
   }
 
 }
