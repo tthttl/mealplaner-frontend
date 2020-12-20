@@ -1,6 +1,6 @@
 @import "../../../../../styles/settings/variables";
 
-.create-recipe-button{
-  display: block;
-  padding-top: $spacing-large;
+.cookbook-wrapper {
+  border-radius: $border-radius-default;
+  box-shadow: 0 0 rem(18) $blue-grey_10;
 }

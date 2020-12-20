@@ -7,68 +7,62 @@
   display: block;
   overflow: hidden;
 
-  &__filter-field{
-    display: block;
-    padding-bottom: $spacing-large;
-  }
+  .add-recipe-row{
+    border-top: solid 1px $blue-grey_30;
+    font-weight: 500;
+    color: $cyan_80;
+    font-size: $font-size-small;
 
-  &__item {
-    border: $border-primary;
-    color: $text-70;
-    font-size: $font-size-normal;
-    box-sizing: border-box;
-    margin-top: $spacing-small;
+    &:hover{
+      cursor: pointer;
+    }
 
-    @include large {
-      border: none;
-      border-bottom: solid 1px $blue_70;
-      margin: 0;
+    &__title{
+      padding: $spacing-medium;
+      width: fit-content;
+    }
 
-      &:last-child {
-        border-bottom: none;
-      }
+    &__icon{
+      padding-right: $spacing-tiny;
     }
   }
 
+  &__filter-field{
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+  }
 
+  &__item {
+    border-top: solid 1px $blue-grey_30;
+    color: $text-70;
+    font-size: $font-size-small;
+    box-sizing: border-box;
+    background: #ffffff;
+  }
 
   &__title-box {
     display: flex;
     flex: 1 1 70%;
     align-items: center;
-    padding: $spacing-small;
+    padding: $spacing-medium;
 
     &:hover {
-      background-color: $blue_20;
       cursor: pointer;
     }
 
-    &:active {
-      background-color: $blue_30;
-    }
-
-    @include large{
-      padding: 0 $spacing-small;
-    }
   }
 
   &__buttons-box {
     display: flex;
-
-    @include large{
-      border-left: 1px solid;
-      border-image: linear-gradient(
-          to bottom,
-          white,
-          $blue_70,
-          white
-      ) 1 100%;
-    }
+    justify-content: space-around;
   }
 
   &__button {
-    width: 100%;
-    padding: $spacing-small
+    padding: $spacing-medium;
+    background: none;
+    border: none;
+    color: $blue-100;
+    cursor: pointer;
   }
 
   &__row {

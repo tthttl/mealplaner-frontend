@@ -19,6 +19,7 @@ export class RecipeListComponent implements OnInit, OnDestroy {
   @Output() editRecipe: EventEmitter<string> = new EventEmitter<string>();
   @Output() deleteRecipe: EventEmitter<Recipe> = new EventEmitter<Recipe>();
   @Output() clickRecipe: EventEmitter<Recipe> = new EventEmitter<Recipe>();
+  @Output() newRecipe: EventEmitter<void> = new EventEmitter<void>();
 
   @ViewChild('searchField', {static: true, read: ElementRef}) searchField: ElementRef | undefined;
 
@@ -34,6 +35,10 @@ export class RecipeListComponent implements OnInit, OnDestroy {
       distinctUntilChanged(),
       map((event: InputEvent) => (event?.target as HTMLInputElement).value)
     ).subscribe((value: string) => this.inputChanged.emit(value));
+  }
+
+  createRecipe(): void {
+    this.newRecipe.emit();
   }
 
   onEditRecipe(id: string | undefined): void {
