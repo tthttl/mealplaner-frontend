@@ -85,7 +85,7 @@
         class="recipe-form__button"
         [buttonType]="'submit'"
         [buttonText]="getButtonText() | translate:translations:currentLanguage"
-        [isDisabled]="recipeForm.invalid"
+        [isDisabled]="recipeForm.invalid && (recipeForm.touched || recipeForm.dirty)"
         [e2eTestName]="'create-recipe'"
       ></app-button>
     </form>
