@@ -5,16 +5,16 @@ import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { catchError, concatMap, exhaustMap, filter, map, mergeMap, switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import { STORAGE_SELECTED_COOKBOOK_ID } from '../../../../core/constants/constants';
+import { stringBetweenChars } from '../../../../core/helpers/helpers';
 import { Cookbook, Recipe } from '../../../../core/models/model';
 import { CreateRecipeAction } from '../../../../core/models/model-action';
 import { StorageService } from '../../../../core/services/storage.service';
 import { GlobalState } from '../../../../core/store';
+import { LoadMealDialogActions } from '../../../meal-planer/store/actions';
 import { CookbookService } from '../../services/cookbook.service';
 import { RecipeService } from '../../services/recipe.service';
 import { CookbookApiActions, CookbookContainerActions, RecipeApiActions, RecipeContainerActions } from '../actions';
 import { CookbookState } from '../state/cookbook-state';
-import { LoadMealDialogActions } from '../../../meal-planer/store/actions';
-import { stringBetweenChars } from '../../../../core/helpers/helpers';
 
 @Injectable()
 export class CookbookEffects {
@@ -44,9 +44,11 @@ export class CookbookEffects {
     ofType(CookbookContainerActions.loadRecipes, CookbookApiActions.loadCookbookSuccess, CookbookContainerActions.selectCookbook),
     withLatestFrom(this.store.select(((state: GlobalState) => state.cookbookState))),
     map(([_, cookbookState]) => {
-      const cookbookId = cookbookState?.activeCookbookId ? cookbookState.activeCookbookId :
+      const selectedCookbookId = cookbookState?.activeCookbookId ? cookbookState.activeCookbookId :
         this.storageService.getItem(STORAGE_SELECTED_COOKBOOK_ID);
-      return cookbookId ? cookbookId : cookbookState.cookbooks[0]?.id;
+      const cookbookIds = cookbookState.cookbooks.map((cookbook) => cookbook.id);
+      return selectedCookbookId && cookbookIds.includes(selectedCookbookId) ?
+        selectedCookbookId : cookbookIds[0];
     }),
     concatMap((cookbookId: string) => this.recipeService.loadRecipes(cookbookId)
       .pipe(
