@@ -73,9 +73,19 @@ export function moveItemInArray<T>(array: T[], previousIndex: number, currentInd
   return copy;
 }
 
-export function addItemAlphabetically<T extends Recipe | List>(newItem: T, items: T[] = []): T[] {
-  const indexToInsert = items.findIndex((item: T) => item.title.toLowerCase() > newItem.title.toLowerCase());
-  return indexToInsert > -1 ? [...items.slice(0, indexToInsert), newItem, ...items.slice(indexToInsert)] : [...items, newItem];
+export function addItemAlphabetically<T extends Recipe | List>(newItem: T, array: T[] = []): T[] {
+  const matchingItem = array.find((element: T) => element.id === newItem.id);
+  if (matchingItem) {
+    return array.map((element: T) => {
+      if (element.id === newItem.id) {
+        return newItem;
+      }
+      return element;
+    });
+  } else {
+    const indexToInsert = array.findIndex((item: T) => item.title.toLowerCase() > newItem.title.toLowerCase());
+    return indexToInsert > -1 ? [...array.slice(0, indexToInsert), newItem, ...array.slice(indexToInsert)] : [...array, newItem];
+  }
 }
 
 
@@ -111,6 +121,6 @@ export function getWeekDayIndex(date: Date): number {
   return today >= 0 ? today : 6;
 }
 
-export function stringBetweenChars(str: string, charStart: string, charEnd: string ): string {
+export function stringBetweenChars(str: string, charStart: string, charEnd: string): string {
   return str.split(charStart).pop()!.split(charEnd)[0];
 }

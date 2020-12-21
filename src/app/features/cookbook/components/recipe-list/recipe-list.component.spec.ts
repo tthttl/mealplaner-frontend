@@ -3,8 +3,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
-import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
 import { Recipe } from '../../../../core/models/model';
+import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
 import { SharedModule } from '../../../../shared/shared.module';
 
 import { RecipeListComponent } from './recipe-list.component';
@@ -68,7 +68,7 @@ describe('RecipeListComponent', () => {
 
     editButton.click();
 
-    expect(component.editRecipe.emit).toHaveBeenCalledWith(formData.recipes[0].id);
+    expect(component.editRecipe.emit).toHaveBeenCalledWith(formData.recipes[0] as Recipe);
   });
 
   it('should emit deleteRecipe', () => {

@@ -27,7 +27,7 @@
         <div *ngIf="!isOffline" class="recipe-list__buttons-box">
           <button
             class="recipe-list__button"
-            (click)="onEditRecipe(recipe.id)"
+            (click)="onEditRecipe(recipe)"
             [attr.data-test]="'RECIPE-ROW-EDIT'"
           >
             <fa-icon

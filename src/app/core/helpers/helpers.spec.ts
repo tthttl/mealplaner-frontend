@@ -6,15 +6,15 @@ import {
   addItemAlphabetically,
   copyOrCreateArray,
   decodeJwtToken,
-  isFormTouchedOrDirty,
-  getWeekDayIndex,
   getFirstDateOfWeek,
+  getWeekDayIndex,
+  isFormTouchedOrDirty,
   isJwtTokenExpired,
   mapI18nApiToI18nClient,
   mapUserApiToUserClient,
   moveItemInArray,
-  translateValidationErrors,
-  stringBetweenChars
+  stringBetweenChars,
+  translateValidationErrors
 } from './helpers';
 import createSpyObj = jasmine.createSpyObj;
 
@@ -188,6 +188,11 @@ describe('Helpers', () => {
       title: 'Recipe C'
     };
 
+    const recipeBWithDifferentTitle: Partial<Recipe> = {
+      id: '2',
+      title: 'Recipe To Replace'
+    };
+
     it('should add first', () => {
       const recipes: Recipe[] = [recipeB as Recipe, recipeC as Recipe];
       expect(addItemAlphabetically(recipeA as Recipe, recipes)).toEqual([recipeA as Recipe, recipeB as Recipe, recipeC as Recipe]);
@@ -201,6 +206,12 @@ describe('Helpers', () => {
     it('should add in the middle', () => {
       const recipes: Recipe[] = [recipeA as Recipe, recipeC as Recipe];
       expect(addItemAlphabetically(recipeB as Recipe, recipes)).toEqual([recipeA as Recipe, recipeB as Recipe, recipeC as Recipe]);
+    });
+
+    it('should replace existing', () => {
+      const recipes: Recipe[] = [recipeA as Recipe, recipeB as Recipe, recipeC as Recipe];
+      expect(addItemAlphabetically(recipeBWithDifferentTitle as Recipe, recipes))
+        .toEqual([recipeA as Recipe, recipeBWithDifferentTitle as Recipe, recipeC as Recipe]);
     });
   });
 

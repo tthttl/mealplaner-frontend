@@ -12,7 +12,7 @@ const routes: Routes = [
     component: CookbookContainerComponent,
   },
   {
-    path: 'recipe/:id',
+    path: ':cookbookId/recipe/:id',
     canActivate: [AuthenticatedGuard],
     component: RecipeContainerComponent
   },

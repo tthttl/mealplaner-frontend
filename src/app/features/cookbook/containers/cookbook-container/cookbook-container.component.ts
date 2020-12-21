@@ -53,9 +53,9 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
   isOffline$: Observable<boolean> = this.store.select(isOffline);
   private destroy$: Subject<void> = new Subject<void>();
 
-  private addRecipeDialogTranslations: {[key: string]: string} = {};
-  private createListDialogTranslations: {[key: string]: string} = {};
-  private editListDialogTranslations: {[key: string]: string} = {};
+  private addRecipeDialogTranslations: { [key: string]: string } = {};
+  private createListDialogTranslations: { [key: string]: string } = {};
+  private editListDialogTranslations: { [key: string]: string } = {};
 
   constructor(
     private store: Store<GlobalState>,
@@ -120,8 +120,8 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
       });
   }
 
-  onEditRecipe(recipeId: string): void {
-    this.router.navigate([`cookbook/recipe/${recipeId}`]);
+  onEditRecipe(recipe: Recipe): void {
+    this.router.navigate([`cookbook/${recipe.cookbookId}/recipe/${recipe.id}`]);
   }
 
   onCreateRecipe(): void {
@@ -193,7 +193,7 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
   }
 
   onSelectCookbook(list: List): void {
-        this.store.dispatch(CookbookContainerActions.selectCookbook({selectedCookbookId: list.id}));
+    this.store.dispatch(CookbookContainerActions.selectCookbook({selectedCookbookId: list.id}));
   }
 
   onEditCookbook(list: List): void {

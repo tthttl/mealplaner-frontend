@@ -15,7 +15,7 @@ export class CookbookPageComponent {
   @Input() selectedCookbook: Cookbook | undefined | null;
   @Input() isOffline: boolean | null = false;
   @Output() searchStringChanged: EventEmitter<string> = new EventEmitter<string>();
-  @Output() editRecipe: EventEmitter<string> = new EventEmitter<string>();
+  @Output() editRecipe: EventEmitter<Recipe> = new EventEmitter<Recipe>();
   @Output() deleteRecipe: EventEmitter<Recipe> = new EventEmitter<Recipe>();
   @Output() clickRecipe: EventEmitter<Recipe> = new EventEmitter<Recipe>();
   @Output() createRecipe: EventEmitter<void> = new EventEmitter<void>();
@@ -24,9 +24,9 @@ export class CookbookPageComponent {
   @Output() editCookbook: EventEmitter<List> = new EventEmitter();
   @Output() deleteCookbook: EventEmitter<List> = new EventEmitter();
 
-  onEditRecipe(id: string | undefined): void {
-    if (id) {
-      this.editRecipe.emit(id);
+  onEditRecipe(recipe: Recipe): void {
+    if (recipe) {
+      this.editRecipe.emit(recipe);
     }
   }
 
