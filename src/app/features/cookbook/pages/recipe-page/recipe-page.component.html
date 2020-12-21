@@ -20,8 +20,12 @@
       ></app-input>
 
       <div class="recipe-form__ingredients recipe-form__input">
-        <label
-          class="recipe-form__ingredients_label">{{'ingredients.label-text' | translate:translations:currentLanguage}}</label>
+        <div class="recipe-form__ingredients-row recipe-form__label-container">
+          <label
+            class="recipe-form__label-container--left">{{'ingredients.label-text' | translate:translations:currentLanguage}}</label>
+          <label
+            class="recipe-form__label-container--right">{{'ingredients.label-header' | translate:translations:currentLanguage}}</label>
+        </div>
         <div *ngFor="let ingredient of ingredients.controls; let last = last; let index = index"
              class="recipe-form__ingredients-row"
              [ngClass]="{'ingredients__row--last': last}">
@@ -46,7 +50,7 @@
           >
           </app-select>
           <app-input
-            class="recipe-form__ingredient-input"
+            class="recipe-form__ingredient-input recipe-form__ingredient-title"
             [name]="'title'"
             [border]="false"
             [placeholder]="'recipe-form.placeholder.title' | translate:translations:currentLanguage"
@@ -59,7 +63,7 @@
               [value]="false"
               [formControl]="getIngredientFormControl(ingredient, 'isStapleFood')">
               <mat-button-toggle
-                [value]="true">{{'recipe-form.toggle.yes' | translate:translations:currentLanguage}}</mat-button-toggle>
+                [value]="true">{{(toggleLabelYesKey$ | async) || this.toggleLabelYesKey | translate:translations:currentLanguage}}</mat-button-toggle>
               <mat-button-toggle
                 [value]="false">{{'recipe-form.toggle.no' | translate:translations:currentLanguage}}</mat-button-toggle>
             </mat-button-toggle-group>

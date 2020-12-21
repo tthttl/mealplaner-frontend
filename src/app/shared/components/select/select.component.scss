@@ -5,6 +5,7 @@
 
   &__field {
     @include form-field;
+    outline: none;
 
     &--no-border {
       padding-left: 0;

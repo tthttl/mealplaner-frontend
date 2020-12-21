@@ -45,23 +45,18 @@
     flex: 1 1 70%;
     align-items: center;
     padding: $spacing-medium;
-
-    &:hover {
-      cursor: pointer;
-    }
-
   }
 
   &__buttons-box {
     display: flex;
     justify-content: space-around;
+    padding: $spacing-medium;
   }
 
   &__button {
-    padding: $spacing-medium;
     background: none;
     border: none;
-    color: $blue-100;
+    color: $blue-80;
     cursor: pointer;
     outline: none;
   }
@@ -69,11 +64,10 @@
   &__row {
     display: flex;
     justify-content: space-between;
-    flex-direction: column;
 
-    @include large{
-      flex-direction: row;
-      align-items: stretch;
+    &:hover {
+      cursor: pointer;
+      background-color: $blue-grey_10;
     }
   }
 

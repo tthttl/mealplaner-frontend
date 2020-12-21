@@ -32,8 +32,11 @@
           >
             <fa-icon
               [icon]="['fas', 'pen-square']"
+              aria-hidden="true"
             ></fa-icon>
-            {{"button.edit" | translate:translations:currentLang}}
+            <span class="visually-hidden">
+              {{"button.edit" | translate:translations:currentLang}}
+            </span>
           </button>
           <button
             class="recipe-list__button"
@@ -41,8 +44,11 @@
             [attr.data-test]="'RECIPE-ROW-DELETE'">
             <fa-icon
               [icon]="['fas', 'trash']"
+              aria-hidden="true"
             ></fa-icon>
-            {{"button.delete" | translate:translations:currentLang}}
+            <span class="visually-hidden">
+              {{"button.delete" | translate:translations:currentLang}}
+            </span>
           </button>
         </div>
       </div>
