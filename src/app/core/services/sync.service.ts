@@ -17,6 +17,9 @@ export class SyncService {
     private dbService: DBService,
     private store: Store<GlobalState>
   ) {
+    if (!navigator.onLine) {
+      store.dispatch(SyncServiceActions.setOfflineMode({isOffline: true}));
+    }
     window.addEventListener('offline', () => store.dispatch(SyncServiceActions.setOfflineMode({isOffline: true})));
     window.addEventListener('online', () => store.dispatch(SyncServiceActions.setOfflineMode({isOffline: false})));
   }
