@@ -1,7 +1,7 @@
 import { LocationStrategy } from '@angular/common';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable, Observer, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DEFAULT_LANGUAGE } from '../../../../core/constants/constants';
 import { isFormTouchedOrDirty, translateValidationErrors } from '../../../../core/helpers/helpers';
@@ -25,9 +25,6 @@ export class RecipePageComponent implements OnInit, OnDestroy {
   ingredients: FormArray;
   units: SelectOption<string>[] = [];
   destroy$: Subject<void> = new Subject<void>();
-  toggleLabelYesKey = 'recipe-form.toggle.yes';
-  toggleLabelYesKey$: Observable<string> | undefined;
-  mediaQuery = window.matchMedia('(max-width: 600px)');
 
   constructor(
     private translatePipe: TranslatePipe,
@@ -48,16 +45,6 @@ export class RecipePageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.units = this.createUnits();
     this.recipe$?.pipe(takeUntil(this.destroy$)).subscribe((recipe: Recipe | undefined) => this.fillForm(recipe));
-    this.toggleLabelYesKey = this.mediaQuery.matches ? 'recipe-form.toggle.yes.mobile' : 'recipe-form.toggle.yes';
-    this.toggleLabelYesKey$ = Observable.create((observer: Observer<string>) => {
-      this.mediaQuery.addEventListener('change', (event: MediaQueryListEvent) => {
-        if (event.matches) {
-          observer.next('recipe-form.toggle.yes.mobile');
-        } else {
-          observer.next('recipe-form.toggle.yes');
-        }
-      });
-    });
   }
 
   fillForm(recipe: Recipe | undefined): void {

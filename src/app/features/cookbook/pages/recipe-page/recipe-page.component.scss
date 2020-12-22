@@ -103,20 +103,6 @@
     flex-basis: 33%;
   }
 
-  .mat-button-toggle-group {
-    margin-bottom: 1rem;
-
-    .mat-button-toggle-checked {
-      background-color: $blue-grey_80;
-      color: $blue-grey_10;
-    }
-
-    @include large {
-      margin-right: $spacing-small;
-      margin-bottom: 0;
-    }
-  }
-
   &__ingredients-button {
     padding: $spacing-small;
 

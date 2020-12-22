@@ -59,14 +59,16 @@
           >
           </app-input>
           <div class="recipe-form__ingredient-toggle">
-            <mat-button-toggle-group
-              [value]="false"
-              [formControl]="getIngredientFormControl(ingredient, 'isStapleFood')">
-              <mat-button-toggle
-                [value]="true">{{(toggleLabelYesKey$ | async) || this.toggleLabelYesKey | translate:translations:currentLanguage}}</mat-button-toggle>
-              <mat-button-toggle
-                [value]="false">{{'recipe-form.toggle.no' | translate:translations:currentLanguage}}</mat-button-toggle>
-            </mat-button-toggle-group>
+            <app-toggle-button-wrapper
+              [translations]="translations"
+              [currentLanguage]="currentLanguage"
+              [formControl]="getIngredientFormControl(ingredient, 'isStapleFood')"
+              [mobileLabelKeyTrue]="'recipe-form.toggle.yes.mobile'"
+              [desktopLabelKeyTrue]="'recipe-form.toggle.yes'"
+              [mobileLabelKeyFalse]="'recipe-form.toggle.no'"
+              [desktopLabelKeyFalse]="'recipe-form.toggle.no'"
+            >
+            </app-toggle-button-wrapper>
           </div>
           <button
             class="recipe-form__ingredient-icon-wrapper"

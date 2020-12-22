@@ -8,6 +8,7 @@ import { of } from 'rxjs';
 import { Recipe } from '../../../../core/models/model';
 import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
 import { SharedModule } from '../../../../shared/shared.module';
+import { ToggleButtonWrapperComponent } from '../../components/toggle-button-wrapper/toggle-button-wrapper.component';
 
 import { RecipePageComponent } from './recipe-page.component';
 
@@ -20,7 +21,7 @@ describe('RecipeFormComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, SharedModule, MatButtonToggleModule],
-      declarations: [RecipePageComponent, FaIconComponent, TranslatePipe],
+      declarations: [RecipePageComponent, ToggleButtonWrapperComponent, FaIconComponent, TranslatePipe],
       providers: [
         {
           provide: TranslatePipe,
