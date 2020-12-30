@@ -63,6 +63,10 @@ export class IngredientsPickerComponent implements OnInit {
     this.choseIngredients.emit(ingredients);
   }
 
+  submitWithoutIngredients(): void {
+    this.choseIngredients.emit([]);
+  }
+
   onChangeSelectedShoppingList(selectedShoppingListId: string): void {
     this.selectedShoppingListId = selectedShoppingListId;
   }

@@ -53,9 +53,10 @@
     </app-button>
     <app-button
       class="ingredients-picker__action"
-      [buttonType]="'submit'"
+      [buttonType]="'button'"
       [buttonText]="'ingredients-picker.secondary' | translate:translations:currentLanguage"
       [color]="'inverted'"
+      (click)="submitWithoutIngredients()"
     >
     </app-button>
   </div>
