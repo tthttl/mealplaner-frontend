@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BasicShoppingListItem, Cookbook, I18n, Language, MealPlanerAddEvent, Recipe, ShoppingList } from '../../../../core/models/model';
 
 @Component({
   selector: 'app-add-meal-dialog-page',
   templateUrl: './add-meal-dialog-page.component.html',
-  styleUrls: ['./add-meal-dialog-page.component.scss']
+  styleUrls: ['./add-meal-dialog-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddMealDialogPageComponent implements OnInit {
   @Input() recipes: { [key: string]: Recipe[] } | null | undefined = undefined;

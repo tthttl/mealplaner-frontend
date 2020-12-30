@@ -14,7 +14,7 @@
         <app-input
           class="login-form__input"
           type="email"
-          [border]="false"
+          [border]="'bottom'"
           [name]="'email'"
           [placeholder]="'auth.login.email' | translate:translations:currentLanguage"
           [formControl]="getFormControl('identifier')"
@@ -26,7 +26,7 @@
                  [icon]="['fas','unlock-alt']"></fa-icon>
         <app-password-input
           class="login-form__input"
-          [border]="false"
+          [border]="'bottom'"
           [name]="'password'"
           [placeholder]="'auth.login.password' | translate:translations:currentLanguage"
           [formControl]="getFormControl('password')"

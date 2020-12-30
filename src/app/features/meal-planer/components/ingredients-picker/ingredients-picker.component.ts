@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BasicShoppingListItem, I18n, Language, RecipeIngredient, SelectedIngredient, ShoppingList } from '../../../../core/models/model';
 import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/forms';
 import { mapSelectedIngredientToBasicShoppingListItem } from '../../../../core/helpers/helpers';
@@ -6,7 +6,8 @@ import { mapSelectedIngredientToBasicShoppingListItem } from '../../../../core/h
 @Component({
   selector: 'app-ingredients-picker',
   templateUrl: './ingredients-picker.component.html',
-  styleUrls: ['./ingredients-picker.component.scss']
+  styleUrls: ['./ingredients-picker.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class IngredientsPickerComponent implements OnInit {
   @Input() translations: I18n | null = null;
@@ -60,6 +61,10 @@ export class IngredientsPickerComponent implements OnInit {
       .map((item: SelectedIngredient) => mapSelectedIngredientToBasicShoppingListItem(item, this.selectedShoppingListId || undefined));
 
     this.choseIngredients.emit(ingredients);
+  }
+
+  submitWithoutIngredients(): void {
+    this.choseIngredients.emit([]);
   }
 
   onChangeSelectedShoppingList(selectedShoppingListId: string): void {

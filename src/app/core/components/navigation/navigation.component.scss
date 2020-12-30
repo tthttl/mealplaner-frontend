@@ -50,8 +50,11 @@
     padding-right: $spacing-medium;
   }
 
-  &__primary-action {
+  &__link {
     background: #ffffff;
+  }
+
+  &__primary-action {
     height: 100%;
     display: flex;
     align-items: center;

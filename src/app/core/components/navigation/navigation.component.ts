@@ -1,11 +1,12 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { SUPPORTED_LANGUAGES } from '../../constants/constants';
 import { I18n, Language, Link, SelectOption } from '../../models/model';
 
 @Component({
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
-  styleUrls: ['./navigation.component.scss']
+  styleUrls: ['./navigation.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NavigationComponent {
   @Input() translations: I18n | null = null;

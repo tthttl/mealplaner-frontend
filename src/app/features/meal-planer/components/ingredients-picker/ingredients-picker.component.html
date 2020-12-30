@@ -43,11 +43,20 @@
        </span>
     </mat-checkbox>
   </div>
-  <div class="ingredient-dialog__actions">
+  <div class="ingredients_picker__actions">
     <app-button
+      class="ingredients-picker__action"
       [buttonType]="'submit'"
-      [buttonText]="'ingredients-picker.button' | translate:translations:currentLanguage"
+      [buttonText]="'ingredients-picker.primary' | translate:translations:currentLanguage"
       [color]="'primary'"
+    >
+    </app-button>
+    <app-button
+      class="ingredients-picker__action"
+      [buttonType]="'button'"
+      [buttonText]="'ingredients-picker.secondary' | translate:translations:currentLanguage"
+      [color]="'inverted'"
+      (click)="submitWithoutIngredients()"
     >
     </app-button>
   </div>

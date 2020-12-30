@@ -1,11 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { getFirstDateOfWeek } from '../../../../core/helpers/helpers';
 import { I18n, Language } from '../../../../core/models/model';
 
 @Component({
   selector: 'app-schedule-controlls',
   templateUrl: './schedule-controlls.component.html',
-  styleUrls: ['./schedule-controlls.component.scss']
+  styleUrls: ['./schedule-controlls.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ScheduleControllsComponent implements OnInit {
   @Input() selectedDate: Date | undefined | null;

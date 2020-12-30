@@ -1,6 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { DEFAULT_LANGUAGE } from '../../../../core/constants/constants';
 import { translateValidationErrors } from '../../../../core/helpers/helpers';
 import { I18n, Language } from '../../../../core/models/model';
@@ -9,7 +8,8 @@ import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
 @Component({
   selector: 'app-reset-password-page',
   templateUrl: './reset-password-page.component.html',
-  styleUrls: ['./reset-password-page.component.scss']
+  styleUrls: ['./reset-password-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ResetPasswordPageComponent {
 

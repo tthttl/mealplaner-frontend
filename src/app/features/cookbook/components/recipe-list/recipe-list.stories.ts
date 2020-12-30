@@ -10,8 +10,6 @@ import { ButtonComponent } from '../../../../shared/components/button/button.com
 import { InputComponent } from '../../../../shared/components/input/input.component';
 import { SelectComponent } from '../../../../shared/components/select/select.component';
 import { RecipeListComponent } from './recipe-list.component';
-import { ShoppingListComponent } from '../../../shopping-list/components/shopping-list/shopping-list.component';
-import { taskData } from '../../../shopping-list/components/shopping-list/shopping-list.stories';
 
 
 export default {

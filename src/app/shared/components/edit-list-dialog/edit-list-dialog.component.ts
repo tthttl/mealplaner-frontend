@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DialogData, List } from '../../../core/models/model';
@@ -6,7 +6,8 @@ import { DialogData, List } from '../../../core/models/model';
 @Component({
   selector: 'app-edit-list-dialog',
   templateUrl: './edit-list-dialog.component.html',
-  styleUrls: ['./edit-list-dialog.component.scss']
+  styleUrls: ['./edit-list-dialog.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditListDialogComponent {
   public isEditing = false;

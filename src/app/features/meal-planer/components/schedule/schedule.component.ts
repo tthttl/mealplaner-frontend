@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { differenceInCalendarWeeks, differenceInDays } from 'date-fns';
 import { getFirstDateOfWeek, getWeekDayIndex } from '../../../../core/helpers/helpers';
 import { DayPlan, I18n, Language, Meal, MealType } from '../../../../core/models/model';
@@ -6,7 +6,8 @@ import { DayPlan, I18n, Language, Meal, MealType } from '../../../../core/models
 @Component({
   selector: 'app-schedule',
   templateUrl: './schedule.component.html',
-  styleUrls: ['./schedule.component.scss']
+  styleUrls: ['./schedule.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ScheduleComponent implements OnInit, OnChanges {
   @Input() selectedDate: Date | null | undefined;

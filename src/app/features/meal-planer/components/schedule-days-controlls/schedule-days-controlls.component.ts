@@ -5,7 +5,7 @@ import { I18n, Language } from '../../../../core/models/model';
   selector: 'app-schedule-days-controlls',
   templateUrl: './schedule-days-controlls.component.html',
   styleUrls: ['./schedule-days-controlls.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ScheduleDaysControllsComponent implements OnInit {
   @Input() selectedDayIndex: number | undefined;

@@ -4,7 +4,7 @@
       <app-input
         class="recipe-form__input recipe-form--input-title"
         [name]="'title'"
-        [border]="false"
+        [border]="'bottom'"
         [placeholder]="'recipe-form.label.title' | translate:translations:currentLanguage"
         [errors]="getErrorsFor('title')"
         [formControl]="getFormControl('title')"
@@ -13,7 +13,7 @@
       <app-input
         class="recipe-form__input recipe-form--input-url"
         [name]="'url'"
-        [border]="false"
+        [border]="'bottom'"
         [placeholder]="'recipe-form.label.url' | translate:translations:currentLanguage"
         [formControl]="getFormControl('url')"
         [e2eTestName]="'recipe-url'"
@@ -28,7 +28,7 @@
           <app-input
             class="recipe-form__ingredient-input recipe-form__ingredient-amount"
             [type]="'number'"
-            [border]="false"
+            [border]="'bottom'"
             [minValue]="0"
             [name]="'amount'"
             [placeholder]="'recipe-form.placeholder.amount' | translate:translations:currentLanguage"
@@ -39,7 +39,7 @@
           <app-select
             class="recipe-form__ingredient-input recipe-form__ingredient-unit"
             [options]="units"
-            [border]="false"
+            [border]="'bottom'"
             [name]="'unit'"
             [formControl]="getIngredientFormControl(ingredient, 'unit')"
             [e2eTestName]="'ingredient-unit'"
@@ -48,7 +48,7 @@
           <app-input
             class="recipe-form__ingredient-input"
             [name]="'title'"
-            [border]="false"
+            [border]="'bottom'"
             [placeholder]="'recipe-form.placeholder.title' | translate:translations:currentLanguage"
             [formControl]="getIngredientFormControl(ingredient, 'title')"
             [e2eTestName]="'ingredient-title'"

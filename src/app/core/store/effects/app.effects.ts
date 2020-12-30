@@ -23,7 +23,7 @@ export class AppEffects {
     withLatestFrom(this.store.select(selectTranslations)),
     filter(([action, i18n]: [SetLanguageAction, I18n]) => !i18n || !i18n[action.language]),
     exhaustMap(([action, _]: [SetLanguageAction, I18n]) => this.i18nService.getI18n(action.language).pipe(
-      map((i18n: I18n) => I18nApiActions.getI18nSuccess({i18n})),
+      map((i18n: I18n) => I18nApiActions.getI18nSuccess({i18n, language: action.language})),
       catchError(() => of(I18nApiActions.getI18nFailure()))
     ))
   );

@@ -1,11 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { I18n, Language, User } from '../../../../core/models/model';
 import { DEFAULT_LANGUAGE } from '../../../../core/constants/constants';
 
 @Component({
   selector: 'app-account-page',
   templateUrl: './account-page.component.html',
-  styleUrls: ['./account-page.component.scss']
+  styleUrls: ['./account-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AccountPageComponent implements OnInit {
   @Input() translations: I18n | null = {};

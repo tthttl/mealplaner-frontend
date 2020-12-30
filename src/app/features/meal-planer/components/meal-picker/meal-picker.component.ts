@@ -1,5 +1,5 @@
 import {
-  AfterViewInit,
+  AfterViewInit, ChangeDetectionStrategy,
   Component,
   ElementRef,
   EventEmitter,
@@ -18,7 +18,8 @@ import { INPUT_DEBOUNCE_TIME } from '../../../../core/constants/constants';
 @Component({
   selector: 'app-meal-picker',
   templateUrl: './meal-picker.component.html',
-  styleUrls: ['./meal-picker.component.scss']
+  styleUrls: ['./meal-picker.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MealPickerComponent implements OnChanges, AfterViewInit {
   @Input() recipes: {[key: string]: Recipe[]} | null | undefined = undefined;

@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { fromEvent, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, takeUntil } from 'rxjs/operators';
 import { DEFAULT_LANGUAGE, INPUT_DEBOUNCE_TIME } from '../../../../core/constants/constants';
@@ -7,7 +7,8 @@ import { I18n, Language, Recipe } from '../../../../core/models/model';
 @Component({
   selector: 'app-recipe-list',
   templateUrl: './recipe-list.component.html',
-  styleUrls: ['./recipe-list.component.scss']
+  styleUrls: ['./recipe-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RecipeListComponent implements OnInit, OnDestroy {
 

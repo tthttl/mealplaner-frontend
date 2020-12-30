@@ -1,5 +1,5 @@
 import { LocationStrategy } from '@angular/common';
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -11,7 +11,8 @@ import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
 @Component({
   selector: 'app-recipe-page',
   templateUrl: './recipe-page.component.html',
-  styleUrls: ['./recipe-page.component.scss']
+  styleUrls: ['./recipe-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RecipePageComponent implements OnInit, OnDestroy {
 

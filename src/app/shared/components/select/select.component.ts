@@ -1,4 +1,4 @@
-import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { v4 as uuid } from 'uuid';
 import { SelectOption } from '../../../core/models/model';
@@ -8,6 +8,7 @@ import { SelectOption } from '../../../core/models/model';
   selector: 'app-select',
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -21,7 +22,7 @@ export class SelectComponent<T> implements OnInit, ControlValueAccessor {
   @Input() name = '';
   @Input() options: SelectOption<T>[] = [];
   @Input() label: string | undefined;
-  @Input() border = true;
+  @Input() border: 'all' | 'bottom' | 'none' = 'all';
   @Input() errors: string[] = [];
   @Input() defaultValue: T | undefined;
   @Input() isDisabled = false;
