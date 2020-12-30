@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, forwardRef, Input, Output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, forwardRef, Input, Output, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
@@ -6,6 +6,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
   selector: 'app-password-input',
   templateUrl: './password-input.component.html',
   styleUrls: ['./password-input.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -17,7 +18,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 export class PasswordInputComponent implements ControlValueAccessor {
 
   @Input() name: string | undefined;
-  @Input() border = true;
+  @Input() border: 'all' | 'bottom' = 'bottom';
   @Input() ariaDescribedBy: string | undefined;
   @Input() minValue: number | undefined;
   @Input() label: string | undefined;

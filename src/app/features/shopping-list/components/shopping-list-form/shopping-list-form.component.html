@@ -4,7 +4,7 @@
       class="shopping-list-form--input shopping-list-form--input-amount"
       type="number"
       [minValue]="0"
-      [border]="false"
+      [border]="'bottom'"
       [name]="'amount'"
       [placeholder]="'shoppingList.addForm.amount' | translate:translations:currentLang"
       [formControl]="getFormControl('amount')"
@@ -16,7 +16,7 @@
       class="shopping-list-form--input shopping-list-form--input-unit"
       [options]="units"
       [name]="'unit'"
-      [border]="false"
+      [border]="'bottom'"
       [formControl]="getFormControl('unit')"
       [e2eTestName]="'shopping-list-item-unit'"
     >
@@ -25,7 +25,7 @@
     <app-input
       class="shopping-list-form--input shopping-list-form--input-title"
       [placeholder]="'shoppingList.addForm.product' | translate:translations:currentLang"
-      [border]="false"
+      [border]="'bottom'"
       [formControl]="getFormControl('title')"
       [e2eTestName]="'shopping-list-item-name'"
     >

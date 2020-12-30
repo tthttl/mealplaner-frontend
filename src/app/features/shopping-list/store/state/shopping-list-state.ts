@@ -6,7 +6,17 @@ export const shoppingListAdapter = createEntityAdapter<ShoppingList>({
 });
 
 export const shoppingListItemAdapter = createEntityAdapter<ShoppingListItem>({
-  sortComparer: ((a, b) => (b.order || Number.MAX_VALUE) - (a.order || Number.MAX_VALUE)),
+  sortComparer: ((a, b) => {
+    if ( (a.order ?? Number.MAX_VALUE) < (b.order ?? Number.MAX_VALUE)) {
+      return 1;
+    }
+
+    if ( (a.order ?? Number.MAX_VALUE) > (b.order ?? Number.MAX_VALUE)) {
+      return -1;
+    }
+
+    return 0;
+  }),
 });
 
 export interface ShoppingListState {

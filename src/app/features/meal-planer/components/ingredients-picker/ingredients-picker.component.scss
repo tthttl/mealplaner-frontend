@@ -41,4 +41,9 @@
     display: flex;
     justify-content: space-between;
   }
+
+  &__action {
+    display: block;
+    margin-bottom: $spacing-small;
+  }
 }

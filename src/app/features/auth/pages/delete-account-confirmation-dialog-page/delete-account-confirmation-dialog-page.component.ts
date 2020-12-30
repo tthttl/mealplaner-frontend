@@ -1,11 +1,12 @@
-import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { Cookbook, DialogData, I18n, Language, MealPlanerAddEvent, Recipe, ShoppingList, User } from '../../../../core/models/model';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-delete-account-confirmation-dialog-page',
   templateUrl: './delete-account-confirmation-dialog-page.component.html',
-  styleUrls: ['./delete-account-confirmation-dialog-page.component.scss']
+  styleUrls: ['./delete-account-confirmation-dialog-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DeleteAccountConfirmationDialogPageComponent implements OnInit {
   @Input() recipes: { [key: string]: Recipe[] } | null | undefined = undefined;

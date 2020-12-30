@@ -4,7 +4,7 @@
            [(ngModel)]="currentValue"
            [type]="type"
            [id]="inputId"
-           [class.input__field--no-border]="!border"
+           [class.input__field--border-bottom]="border === 'bottom'"
            [attr.name]="name"
            [autocomplete]="autocomplete"
            [placeholder]="placeholder"

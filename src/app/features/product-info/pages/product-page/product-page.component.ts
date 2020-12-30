@@ -1,4 +1,4 @@
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, Input, OnInit } from '@angular/core';
 import { I18n, Language } from '../../../../core/models/model';
 import { DEFAULT_LANGUAGE } from '../../../../core/constants/constants';
 
@@ -6,6 +6,7 @@ import { DEFAULT_LANGUAGE } from '../../../../core/constants/constants';
   selector: 'app-product-page',
   templateUrl: './product-page.component.html',
   styleUrls: ['./product-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductPageComponent implements OnInit {
   @Input() translations: I18n | null = {};

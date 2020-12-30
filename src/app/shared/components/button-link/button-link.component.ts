@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IconName } from '@fortawesome/fontawesome-common-types';
 
 @Component({
   selector: 'app-button-link',
   templateUrl: './button-link.component.html',
-  styleUrls: ['./button-link.component.scss']
+  styleUrls: ['./button-link.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ButtonLinkComponent implements OnInit {
   @Input() linkText = '';

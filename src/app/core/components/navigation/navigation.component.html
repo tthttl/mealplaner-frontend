@@ -29,7 +29,7 @@
 
       <app-select
         class="main-navigation__secondary-action"
-        [border]="false"
+        [border]="'none'"
         [name]="'language'"
         [options]="supportedLanguages"
         [defaultValue]="currentLanguage"
@@ -56,7 +56,7 @@
         </a>
 
         <a [routerLink]="['/auth/register']"
-           class="main-navigation__primary-action"
+           class="main-navigation__primary-action main-navigation__link"
            data-test="register-link">
           {{'app.navigation.register' | translate:translations:currentLanguage }}
         </a>

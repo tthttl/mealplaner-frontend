@@ -1,4 +1,4 @@
-import { Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { v4 as uuid } from 'uuid';
 
@@ -6,6 +6,7 @@ import { v4 as uuid } from 'uuid';
   selector: 'app-input',
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -17,7 +18,7 @@ export class InputComponent implements ControlValueAccessor {
 
   @Input() type = 'text';
   @Input() name: string | undefined;
-  @Input() border = true;
+  @Input() border: boolean | 'all' | 'bottom' = true;
   @Input() ariaDescribedBy: string | undefined;
   @Input() minValue: number | undefined;
   @Input() label: string | undefined;

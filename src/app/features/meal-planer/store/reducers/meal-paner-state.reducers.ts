@@ -2,6 +2,7 @@ import { Action, createReducer, on } from '@ngrx/store';
 import { initialMealPlanerState, mealPlanerAdapter, MealPlanerState } from '../state/meal-planer-state';
 import { MealPlanerApiActions, MealPlanerContainerActions, MealPlanerEffectActions } from '../actions';
 import { format } from 'date-fns';
+import { DayPlan } from '../../../../core/models/model';
 
 export const mealPlanerStateReducers = createReducer<MealPlanerState, Action>(
   initialMealPlanerState,
@@ -36,7 +37,7 @@ export const mealPlanerStateReducers = createReducer<MealPlanerState, Action>(
         mealPlaners: mealPlanerAdapter.addOne(mealPlaner, state.mealPlaners),
         meals: {
           ...state.meals,
-          [mealPlaner.id]: {},
+          [mealPlaner.id]: {[format(new Date(), 'yyyy-MM-dd')]: {} as DayPlan},
         },
         activeMealPlaner: mealPlaner.id,
       };

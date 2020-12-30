@@ -3,15 +3,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { moduleMetadata } from '@storybook/angular';
-import { ButtonComponent } from '../button/button.component';
-import { InputComponent } from './input.component';
+import { PasswordInputComponent } from './password-input.component';
+import { InputComponent } from '../input/input.component';
 
 export default {
-  title: 'Shared/Input',
+  title: 'Shared/PasswordInput',
   excludeStories: /.*Data$/,
   decorators: [
     moduleMetadata({
-      declarations: [ButtonComponent],
+      declarations: [InputComponent],
       imports: [ReactiveFormsModule, FontAwesomeModule],
       providers: [
         {
@@ -38,8 +38,8 @@ export const inputData = {
 };
 
 // tslint:disable-next-line:no-any
-const Template: any = (args: InputComponent) => ({
-  component: InputComponent,
+const Template: any = (args: PasswordInputComponent) => ({
+  component: PasswordInputComponent,
   props: args,
 });
 
@@ -48,11 +48,6 @@ Default.args = {
   ...inputData,
 };
 
-export let WithoutLabel = Template.bind({});
-WithoutLabel.args = {
-  ...inputData,
-  label: '',
-};
 
 export let WithErrors = Template.bind({});
 WithErrors.args = {
@@ -60,8 +55,3 @@ WithErrors.args = {
   errors: ['Error']
 };
 
-export let BorderBottom = Template.bind({});
-BorderBottom.args = {
-  ...inputData,
-  border: 'bottom'
-};

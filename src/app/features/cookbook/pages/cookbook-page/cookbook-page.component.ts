@@ -1,11 +1,12 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { DEFAULT_LANGUAGE } from '../../../../core/constants/constants';
 import { Cookbook, I18n, Language, List, Recipe } from '../../../../core/models/model';
 
 @Component({
   selector: 'app-cookbook-page',
   templateUrl: './cookbook-page.component.html',
-  styleUrls: ['./cookbook-page.component.scss']
+  styleUrls: ['./cookbook-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CookbookPageComponent {
   @Input() translations: I18n | null = {};

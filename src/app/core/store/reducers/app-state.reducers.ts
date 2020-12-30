@@ -16,9 +16,10 @@ export const appStateReducer = createReducer<AppState, Action>(
   initialAppState,
   on(
     I18nApiActions.getI18nSuccess,
-    (state, {i18n}: { i18n: I18n }) => {
+    (state, {i18n, language}: { i18n: I18n, language: Language }) => {
       return {
         ...state,
+        language,
         i18n: {
           ...state.i18n,
           ...i18n
@@ -67,8 +68,15 @@ export const appStateReducer = createReducer<AppState, Action>(
       };
     }),
   on(
-    AppInitializationActions.setLanguage,
     NavigationActions.changeLanguage,
+    (state: AppState, {language}: { language: Language }) => {
+      return state.i18n && language in state.i18n ? {
+        ...state,
+        language,
+      } : state;
+    }),
+  on(
+    AppInitializationActions.setLanguage,
     (state: AppState, {language}: { language: Language }) => {
       return {
         ...state,

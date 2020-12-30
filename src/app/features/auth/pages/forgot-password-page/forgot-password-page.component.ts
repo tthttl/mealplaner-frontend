@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { I18n, Language } from '../../../../core/models/model';
 import { DEFAULT_LANGUAGE } from '../../../../core/constants/constants';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -9,7 +9,8 @@ import { translateValidationErrors } from '../../../../core/helpers/helpers';
 @Component({
   selector: 'app-forgot-password-page',
   templateUrl: './forgot-password-page.component.html',
-  styleUrls: ['./forgot-password-page.component.scss']
+  styleUrls: ['./forgot-password-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ForgotPasswordPageComponent implements OnInit {
 

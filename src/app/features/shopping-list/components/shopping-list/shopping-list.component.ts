@@ -1,11 +1,12 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { DEFAULT_LANGUAGE } from '../../../../core/constants/constants';
 import { ArrayItemMovedEvent, I18n, Language, ShoppingListItem } from '../../../../core/models/model';
 
 @Component({
   selector: 'app-shopping-list',
   templateUrl: './shopping-list.component.html',
-  styleUrls: ['./shopping-list.component.scss']
+  styleUrls: ['./shopping-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ShoppingListComponent {
   @Input() items: ShoppingListItem[] | null | undefined = undefined;

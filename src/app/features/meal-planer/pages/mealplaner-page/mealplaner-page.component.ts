@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DayPlan, I18n, Language, Meal, MealPlaner, MealType } from '../../../../core/models/model';
 
 @Component({
   selector: 'app-mealplaner-page',
   templateUrl: './mealplaner-page.component.html',
-  styleUrls: ['./mealplaner-page.component.scss']
+  styleUrls: ['./mealplaner-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MealplanerPageComponent implements OnInit {
   @Input() selectedDate: Date | null | undefined;

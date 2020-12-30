@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DialogData, Recipe, RecipeIngredient, SelectedIngredient } from '../../../../core/models/model';
@@ -6,7 +6,8 @@ import { DialogData, Recipe, RecipeIngredient, SelectedIngredient } from '../../
 @Component({
   selector: 'app-recipe-dialog',
   templateUrl: './add-recipe-dialog.component.html',
-  styleUrls: ['./add-recipe-dialog.component.scss']
+  styleUrls: ['./add-recipe-dialog.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddRecipeDialogComponent implements OnInit {
   ingredientsForm: FormGroup = new FormGroup({

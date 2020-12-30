@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DEFAULT_LANGUAGE } from '../../../../core/constants/constants';
 import { translateValidationErrors } from '../../../../core/helpers/helpers';
@@ -9,7 +9,8 @@ import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.scss']
+  styleUrls: ['./login-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginPageComponent {
   @Input() translations: I18n | null = {};
