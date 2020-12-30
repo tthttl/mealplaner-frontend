@@ -43,7 +43,7 @@ import { SharedModule } from './shared/shared.module';
     FontAwesomeModule,
     AuthModule,
     SharedModule,
-    ServiceWorkerModule.register('ngsw-worker.js')
+    ServiceWorkerModule.register('service-worker.js')
   ],
   providers: [
     {provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AuthService, I18nService, Store, Actions]},
