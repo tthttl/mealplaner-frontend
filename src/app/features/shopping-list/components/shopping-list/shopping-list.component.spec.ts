@@ -6,7 +6,7 @@ import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
 import { ArrayItemMovedEvent, ShoppingListItem } from '../../../../core/models/model';
 
 import { ShoppingListComponent } from './shopping-list.component';
-import { APP_INITIALIZER } from '@angular/core';
+import { APP_INITIALIZER, ChangeDetectionStrategy } from '@angular/core';
 import { FaIconComponent, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 
@@ -31,6 +31,9 @@ describe('ShoppingListComponent', () => {
         },
       ]
     })
+      .overrideComponent(ShoppingListComponent, {
+        set: {changeDetection: ChangeDetectionStrategy.Default}
+      })
       .compileComponents();
   }));
 

@@ -1,7 +1,7 @@
-import { APP_INITIALIZER } from '@angular/core';
+import { APP_INITIALIZER, ChangeDetectionStrategy } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { FaIconComponent, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
 import { Recipe } from '../../../../core/models/model';
@@ -17,7 +17,7 @@ describe('RecipeListComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [SharedModule],
-      declarations: [RecipeListComponent, TranslatePipe],
+      declarations: [RecipeListComponent, FaIconComponent, TranslatePipe],
       providers: [
         {
           provide: TranslatePipe,
@@ -35,6 +35,9 @@ describe('RecipeListComponent', () => {
         },
       ]
     })
+      .overrideComponent(RecipeListComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default }
+      })
       .compileComponents();
   }));
 

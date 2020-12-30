@@ -15,7 +15,8 @@ describe('i18nReducer', () => {
     it('should add de translations to state', () => {
       expect(appStateReducer({...initialAppState},
         I18nApiActions.getI18nSuccess({
-          i18n: {de: {}}
+          i18n: {de: {}},
+          language: 'de',
         }))).toEqual({
         ...initialAppState,
         i18n: {
@@ -32,10 +33,11 @@ describe('i18nReducer', () => {
         I18nApiActions.getI18nSuccess({
           i18n: {
             en: {} as Translations
-          }
+          },
+          language: 'en',
         }))).toEqual({
         ...initialAppState,
-        language: 'de',
+        language: 'en',
         user: null,
         i18n: {
           de: {} as Translations,
@@ -197,7 +199,7 @@ describe('i18nReducer', () => {
         },
         NavigationActions.changeLanguage({language: 'en'}))).toEqual({
         ...initialAppState,
-        language: 'en'
+        language: 'de'
       });
     });
   });

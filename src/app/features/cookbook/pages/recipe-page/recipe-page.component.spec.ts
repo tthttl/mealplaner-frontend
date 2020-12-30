@@ -1,4 +1,4 @@
-import { APP_INITIALIZER } from '@angular/core';
+import { APP_INITIALIZER, ChangeDetectionStrategy } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -10,6 +10,7 @@ import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
 import { SharedModule } from '../../../../shared/shared.module';
 
 import { RecipePageComponent } from './recipe-page.component';
+import { RecipeListComponent } from '../../components/recipe-list/recipe-list.component';
 
 describe('RecipeFormComponent', () => {
   let component: RecipePageComponent;
@@ -38,6 +39,9 @@ describe('RecipeFormComponent', () => {
         },
       ]
     })
+      .overrideComponent(RecipePageComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default }
+      })
       .compileComponents();
   }));
 

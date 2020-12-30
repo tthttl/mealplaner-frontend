@@ -5,7 +5,7 @@ import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
 import { SharedModule } from '../../../shared/shared.module';
 import { RouterLinkDirectiveStub } from '../../../../../testing/router-link-directive.stub';
 import { FaIconComponent, FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { APP_INITIALIZER } from '@angular/core';
+import { APP_INITIALIZER, ChangeDetectionStrategy } from '@angular/core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 
 
@@ -30,6 +30,9 @@ describe('NavigationComponent', () => {
         },
       ]
     })
+      .overrideComponent(NavigationComponent, {
+        set: {changeDetection: ChangeDetectionStrategy.Default}
+      })
       .compileComponents();
   }));
 
