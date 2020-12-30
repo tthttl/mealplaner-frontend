@@ -7,13 +7,13 @@ import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { APP_INITIALIZER } from '@angular/core';
-import { ShoppingListFormComponent } from './shopping-list-form.component';
 import { SharedModule } from '../../../../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ShoppingListFormComponent } from './shopping-list-form.component';
 
 export default {
-  title: 'ShoppingListForm',
-  excludeStories: /.*Data$/,
+  title: 'ShoppingList/ShoppingListForm',
+  excludeStories: /.*formData$/,
   decorators: [
     moduleMetadata({
       declarations: [],
@@ -26,7 +26,7 @@ export default {
               iconLibrary.addIconPacks(fas);
             };
           },
-          deps: [ FaIconLibrary ],
+          deps: [FaIconLibrary],
           multi: true,
         },
         {
@@ -38,11 +38,8 @@ export default {
   ],
 };
 
-export const actionsData = {
-  itemAdded: action('itemAdded'),
-};
 
-export const taskData = {
+export const formData = {
   translations: {
     de: {
       'shoppingList.addForm.amount': 'Menge',
@@ -52,14 +49,18 @@ export const taskData = {
       'shoppingList.addForm.addLabel': 'Hinzufügen',
     }
   },
-  currentLang: 'de'
+  currentLang: 'de',
+  itemAdded: action('itemAdded'),
 };
 
-export const Default = () => ({
+
+// tslint:disable-next-line:no-any
+const Template: any = (args: ShoppingListFormComponent) => ({
   component: ShoppingListFormComponent,
-  props: {
-    ...taskData,
-    ...actionsData
-  },
+  props: args,
 });
 
+export let Default = Template.bind({});
+Default.args = {
+  ...formData,
+};

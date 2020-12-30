@@ -42,7 +42,7 @@ export class CookbookPageComponent {
     this.searchStringChanged.emit(searchTerm);
   }
 
-  click(): void {
+  onNewRecipe(): void {
     this.createRecipe.emit();
   }
 

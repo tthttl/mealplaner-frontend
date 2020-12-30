@@ -19,7 +19,7 @@
   }
 
   &__lead-text {
-    color: $blue-grey_60;
+    color: $blue-grey_70;
     max-width: rem(550);
     margin: rem(30) auto;
     font-size: $font-size-normal;
@@ -35,6 +35,14 @@
     max-width: 80%;
     margin: 0 auto;
     display: block;
+    border-radius: 50%;
+    aspect-ratio: attr(width) / attr(height);
+    width: 100%;
+    height: auto;
+  }
+
+  &__plate {
+
   }
 
   &__image-wrapper {

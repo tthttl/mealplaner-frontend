@@ -64,7 +64,7 @@ deploy-storybook:
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    # Append keyscan output into known hosts
+    # Append key scan output into known hosts
     - ssh-keyscan $SERVER_IP >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
     - rsync -r --exclude=".*" $CI_PROJECT_DIR/storybook-static/ $SERVER_USER@$SERVER_IP:/var/www/storybook.mealplaner.app/html --delete
@@ -83,7 +83,7 @@ deploy-dev:
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    # Append keyscan output into known hosts
+    # Append key scan output into known hosts
     - ssh-keyscan $SERVER_IP >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
     - rsync -r --exclude=".*" $CI_PROJECT_DIR/dist/mealplaner/ $SERVER_USER@$SERVER_IP:/var/www/beta.mealplaner.app/html --delete
@@ -102,7 +102,7 @@ deploy-prod:
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    # Append keyscan output into known hosts
+    # Append key scan output into known hosts
     - ssh-keyscan $SERVER_IP >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
     - rsync -r --exclude=".*" $CI_PROJECT_DIR/dist/mealplaner/ $SERVER_USER@$SERVER_IP:/var/www/mealplaner.app/html --delete

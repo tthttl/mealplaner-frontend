@@ -9,7 +9,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 
 
 export default {
-  title: 'ListHeader',
+  title: 'Shared/ListHeader',
   excludeStories: /.*Data$/,
   decorators: [
     moduleMetadata({

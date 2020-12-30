@@ -9,9 +9,11 @@ import { moduleMetadata } from '@storybook/angular';
 import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
 import { I18n, ShoppingListItem } from '../../../../core/models/model';
 import { ShoppingListComponent } from './shopping-list.component';
+import { ButtonComponent } from '../../../../shared/components/button/button.component';
+import { buttonData } from '../../../../shared/components/button/button.stories';
 
 export default {
-  title: 'ShoppingList',
+  title: 'ShoppingList/ShoppingList',
   excludeStories: /.*Data$/,
   decorators: [
     moduleMetadata({
@@ -55,11 +57,22 @@ export const taskData: {items: ShoppingListItem[], translations: I18n} = {
   }
 };
 
-export const Default = () => ({
+
+// tslint:disable-next-line:no-any
+const Template: any = (args: ShoppingListComponent) => ({
   component: ShoppingListComponent,
-  props: {
-    ...taskData,
-    ...actionsData
-  },
+  props: args,
 });
 
+export let Default = Template.bind({});
+Default.args = {
+  ...taskData,
+  ...actionsData,
+};
+
+export let Loading = Template.bind({});
+Loading.args = {
+  ...taskData,
+  ...actionsData,
+  items: null
+};

@@ -6,7 +6,7 @@ import { moduleMetadata } from '@storybook/angular';
 import { ButtonComponent } from './button.component';
 
 export default {
-  title: 'Button',
+  title: 'Shared/Button',
   excludeStories: /.*Data$/,
   decorators: [
     moduleMetadata({
@@ -24,7 +24,21 @@ export default {
         },
       ]
     })
-  ]
+  ],
+  argTypes: {
+    buttonType: {
+      control: {type: 'select', options: ['button', 'submit', 'reset']},
+    },
+    color: {
+      control: {type: 'select', options: ['primary', 'accent', 'inverted', 'warn']},
+    },
+    iconLeft: {
+      control: {type: 'select', options: ['', 'trash', 'plus']},
+    },
+    iconRight: {
+      control: {type: 'select', options: ['', 'trash', 'plus']},
+    },
+  }
 };
 
 export const actionsData = {
@@ -32,71 +46,60 @@ export const actionsData = {
 };
 
 export const buttonData = {
-  text: 'Primary',
+  buttonText: 'Button',
   isDisabled: false,
-  e2eTestName: 'buttonTest'
+  hasErrors: false,
+  color: 'primary',
+  e2eTestName: 'buttonTest',
+  iconLeft: '',
+  iconRight: '',
 };
 
-export const Default = () => ({
+// tslint:disable-next-line:no-any
+const Template: any = (args: ButtonComponent) => ({
   component: ButtonComponent,
-  props: {
-    buttonText: buttonData.text,
-    isDisabled: buttonData.isDisabled,
-    e2eTestName: buttonData.e2eTestName,
-    clicked: actionsData.clicked
-  }
+  props: args,
 });
 
-export const Accent = () => ({
-  component: ButtonComponent,
-  props: {
-    buttonText: 'Accent',
-    isDisabled: buttonData.isDisabled,
-    e2eTestName: buttonData.e2eTestName,
-    clicked: actionsData.clicked,
-    color: 'accent'
-  }
-});
+export let Default = Template.bind({});
+Default.args = {
+  ...buttonData,
+  ...actionsData,
+};
 
-export const Warning = () => ({
-  component: ButtonComponent,
-  props: {
-    buttonText: 'Warning',
-    isDisabled: buttonData.isDisabled,
-    e2eTestName: buttonData.e2eTestName,
-    clicked: actionsData.clicked,
-    color: 'warn'
-  }
-});
+export let Accent = Template.bind({});
+Accent.args = {
+  ...buttonData,
+  ...actionsData,
+  color: 'accent'
+};
 
-export const Disabled = () => ({
-  component: ButtonComponent,
-  props: {
-    buttonText: 'Disabled',
-    isDisabled: true,
-    e2eTestName: buttonData.e2eTestName,
-    clicked: actionsData.clicked,
-  }
-});
+export let Warn = Template.bind({});
+Warn.args = {
+  ...buttonData,
+  ...actionsData,
+  color: 'warn'
+};
 
-export const IconLeft = () => ({
-  component: ButtonComponent,
-  props: {
-    buttonText: 'Add',
-    isDisabled: buttonData.isDisabled,
-    e2eTestName: buttonData.e2eTestName,
-    clicked: actionsData.clicked,
-    iconLeft: 'plus'
-  }
-});
+export let Disabled = Template.bind({});
+Disabled.args = {
+  ...buttonData,
+  ...actionsData,
+  isDisabled: true,
+};
 
-export const IconRight = () => ({
-  component: ButtonComponent,
-  props: {
-    buttonText: 'Delete',
-    isDisabled: buttonData.isDisabled,
-    e2eTestName: buttonData.e2eTestName,
-    clicked: actionsData.clicked,
-    iconRight: 'trash'
-  }
-});
+export let IconLeft = Template.bind({});
+IconLeft.args = {
+  ...buttonData,
+  ...actionsData,
+  iconLeft: 'plus'
+};
+
+export let IconRight = Template.bind({});
+IconRight.args = {
+  ...buttonData,
+  ...actionsData,
+  iconRight: 'trash'
+};
+
+

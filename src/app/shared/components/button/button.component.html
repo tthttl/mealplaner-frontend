@@ -5,12 +5,11 @@
   [type]="buttonType"
   (click)="onClick($event)"
   [ngClass]="{
-  'button--no-left-border-radius': isInputGroup,
   'button--color-inverted': color === 'inverted' && !isDisabled,
   'button--color-accent': color === 'accent' && !isDisabled,
   'button--color-warning': color === 'warn' && !isDisabled,
   'button--color-disabled': isDisabled,
-  'button--warning-border': isInputGroup && hasErrors
+  'button--warning-border': hasErrors
   }"
 >
   <fa-icon *ngIf="iconLeft"

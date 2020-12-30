@@ -1,5 +1,5 @@
 import { APP_INITIALIZER } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { action } from '@storybook/addon-actions';
@@ -8,7 +8,7 @@ import { ButtonComponent } from '../button/button.component';
 import { SelectComponent } from './select.component';
 
 export default {
-  title: 'Select',
+  title: 'Shared/Select',
   excludeStories: /.*Data$/,
   decorators: [
     moduleMetadata({
@@ -37,6 +37,7 @@ export const inputData = {
     {key: 'Skoda', value: 'Skoda'},
     {key: 'BMW', value: 'BMW'},
   ],
+  label: '',
   isDisabled: false,
 };
 
@@ -44,62 +45,48 @@ export const actionsData = {
   valueChanged: action('valueChanged'),
 };
 
-export const Default = () => ({
+// tslint:disable-next-line:no-any
+const Template: any = (args: SelectComponent<string>) => ({
   component: SelectComponent,
-  props: {
-    ...inputData,
-    ...actionsData,
-  }
-});
-
-export const WithLabel = () => ({
-  component: SelectComponent,
-  props: {
-    ...inputData,
-    label: 'Label',
-    ...actionsData,
-  }
-});
-
-export const Disabled = () => ({
-  component: SelectComponent,
-  props: {
-    ...inputData,
-    isDisabled: true,
-    ...actionsData,
-  }
+  props: args,
 });
 
 
-export const WithObjectValues = () => ({
-  component: SelectComponent,
-  props: {
-    ...inputData,
-    options: [
-      {key: 'Tesla Key', value: {brand: 'Tesla'}},
-      {key: 'Audi Key', value: {brand: 'Audi'}},
-      {key: 'Skoda', value: {brand: 'Skoda'}},
-      {key: 'BMW', value: {brand: 'BMW'}},
-    ],
-    ...actionsData,
-  }
-});
+export let Default = Template.bind({});
+Default.args = {
+  ...inputData,
+  ...actionsData,
+};
 
-export const WithErrors = () => ({
-  component: SelectComponent,
-  props: {
-    ...inputData,
-    errors: ['An error has occured!'],
-    ...actionsData,
-  }
-});
+export let WithLabel = Template.bind({});
+WithLabel.args = {
+  ...inputData,
+  ...actionsData,
+  label: 'Label',
+};
 
+export let Disabled = Template.bind({});
+Disabled.args = {
+  ...inputData,
+  ...actionsData,
+  isDisabled: true,
+};
 
+export let WithObjectValues = Template.bind({});
+WithObjectValues.args = {
+  ...inputData,
+  ...actionsData,
+  options: [
+    {key: 'Tesla Key', value: {brand: 'Tesla'}},
+    {key: 'Audi Key', value: {brand: 'Audi'}},
+    {key: 'Skoda', value: {brand: 'Skoda'}},
+    {key: 'BMW', value: {brand: 'BMW'}},
+  ],
+};
 
-
-function createFormControl(name: string): FormControl {
-  const formGroup: FormGroup = new FormGroup({
-    testControl: new FormControl('')
-  });
-  return formGroup.get(name) as FormControl;
-}
+export let WithErrors = Template.bind({});
+WithErrors.args = {
+  ...inputData,
+  ...actionsData,
+  errors: ['An error has occured!'],
+};

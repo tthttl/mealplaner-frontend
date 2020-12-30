@@ -10,10 +10,12 @@ import { ButtonComponent } from '../../../../shared/components/button/button.com
 import { InputComponent } from '../../../../shared/components/input/input.component';
 import { SelectComponent } from '../../../../shared/components/select/select.component';
 import { RecipeListComponent } from './recipe-list.component';
+import { ShoppingListComponent } from '../../../shopping-list/components/shopping-list/shopping-list.component';
+import { taskData } from '../../../shopping-list/components/shopping-list/shopping-list.stories';
 
 
 export default {
-  title: 'RecipeList',
+  title: 'Cookbook/RecipeList',
   excludeStories: /.*Data$/,
   decorators: [
     moduleMetadata({
@@ -75,11 +77,21 @@ export const formData = {
   ]
 };
 
-export const Default = () => ({
+// tslint:disable-next-line:no-any
+const Template: any = (args: RecipeListComponent) => ({
   component: RecipeListComponent,
-  props: {
-    ...formData,
-    ...actionsData
-  }
+  props: args,
 });
 
+export let Default = Template.bind({});
+Default.args = {
+  ...formData,
+  ...actionsData,
+};
+
+export let Loading = Template.bind({});
+Loading.args = {
+  ...formData,
+  ...actionsData,
+  recipes: null
+};

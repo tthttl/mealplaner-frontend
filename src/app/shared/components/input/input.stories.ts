@@ -8,7 +8,7 @@ import { ButtonComponent } from '../button/button.component';
 import { InputComponent } from './input.component';
 
 export default {
-  title: 'Input',
+  title: 'Shared/Input',
   excludeStories: /.*Data$/,
   decorators: [
     moduleMetadata({
@@ -34,79 +34,30 @@ export const inputData = {
   isDisabled: false,
   e2eTestName: 'test',
   label: 'Label',
-  errors: ['Ooops!', 'An error has occured!'],
+  errors: [],
   placeholder: 'Placeholder',
-  formControl: createFormControl()
 };
 
-export const actionsData = {
-  clicked: action('clicked'),
+// tslint:disable-next-line:no-any
+const Template: any = (args: InputComponent) => ({
+  component: InputComponent,
+  props: args,
+});
+
+export let Default = Template.bind({});
+Default.args = {
+  ...inputData,
 };
 
-export const Default = () => ({
-  component: InputComponent,
-  props: {
-    ...inputData,
-    placeholder: '',
-    errors: []
-  }
-});
+export let WithoutLabel = Template.bind({});
+WithoutLabel.args = {
+  ...inputData,
+  label: '',
+};
 
-export const WithoutLabel = () => ({
-  component: InputComponent,
-  props: {
-    ...inputData,
-    label: '',
-    errors: []
-  }
-});
+export let WithErros = Template.bind({});
+WithoutLabel.args = {
+  ...inputData,
+  errors: ['Error']
+};
 
-export const WithError = () => ({
-  component: InputComponent,
-  props: {
-    ...inputData,
-    placeholder: ''
-  }
-});
-
-export const WithPrimaryButton = () => ({
-  component: InputComponent,
-  props: {
-    ...inputData,
-    placeholder: '',
-    buttonText: 'Click',
-    errors: [],
-    clicked: actionsData.clicked
-  }
-});
-
-export const WithAccentButton = () => ({
-  component: InputComponent,
-  props: {
-    ...inputData,
-    placeholder: '',
-    buttonText: 'Click',
-    errors: [],
-    color: 'accent',
-    clicked: actionsData.clicked
-  }
-});
-
-export const WithButtonAndError = () => ({
-  component: InputComponent,
-  props: {
-    ...inputData,
-    placeholder: '',
-    buttonText: 'Click',
-    errors: ['Ooops!', 'An error has occured!'],
-    color: 'accent',
-    clicked: actionsData.clicked
-  }
-});
-
-function createFormControl(): FormControl {
-  const formGroup: FormGroup = new FormGroup({
-    testControl: new FormControl('')
-  });
-  return formGroup.get('testControl') as FormControl;
-}

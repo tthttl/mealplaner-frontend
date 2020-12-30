@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { select, Store } from '@ngrx/store';
-import { GlobalState, selectTranslations } from '../../../../core/store';
-import { Actions, ofType } from '@ngrx/effects';
 import { ActivatedRoute } from '@angular/router';
-import { AuthApiActions, ResetPasswordContainerActions } from '../../store/actions';
+import { Actions, ofType } from '@ngrx/effects';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { I18n, Language } from '../../../../core/models/model';
+import { GlobalState, selectTranslations } from '../../../../core/store';
+import { AuthApiActions, ResetPasswordContainerActions } from '../../store/actions';
 
 @Component({
   selector: 'app-reset-password-container',

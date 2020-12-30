@@ -17,7 +17,7 @@
           *ngFor="let cookbook of cookbooks"
           [value]="cookbook.id"
           [selected]="cookbook.id === selectedCookbookId"
-        >{{cookbook.title}}</option>
+        >{{cookbook.title || ('cookbook.default-title' |  translate:translations:currentLanguage)}} </option>
     </select>
   </div>
 

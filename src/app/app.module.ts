@@ -13,6 +13,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { appInitializer } from './app.initializer';
 import { NavigationComponent } from './core/components/navigation/navigation.component';
+import { NotFoundComponent } from './core/components/not-found/not-found.component';
 import { TeaserComponent } from './core/components/teaser/teaser.component';
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
@@ -29,6 +30,7 @@ import { SharedModule } from './shared/shared.module';
     AppComponent,
     TeaserComponent,
     NavigationComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,7 +43,7 @@ import { SharedModule } from './shared/shared.module';
     FontAwesomeModule,
     AuthModule,
     SharedModule,
-    ServiceWorkerModule.register('service-worker.js')
+    ServiceWorkerModule.register('ngsw-worker.js')
   ],
   providers: [
     {provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AuthService, I18nService, Store, Actions]},

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CustomPreloadingStrategyService } from './core/services/custom-preloading-strategy.service';
 import { AuthModule } from './features/auth/auth.module';
 import { AccountContainerComponent } from './features/auth/containers/account-container/account-container.component';
+import { NotFoundComponent } from './core/components/not-found/not-found.component';
 
 
 const routes: Routes = [
@@ -31,7 +32,11 @@ const routes: Routes = [
   {
     path: 'account',
     component: AccountContainerComponent
-  }
+  },
+  {
+    path: '**',
+    component: NotFoundComponent
+  },
 ];
 
 @NgModule({
