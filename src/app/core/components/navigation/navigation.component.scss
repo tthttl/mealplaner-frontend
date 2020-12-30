@@ -12,6 +12,11 @@
   align-items: center;
   z-index: $z-index-top;
   background: $blue_100;
+  font-size: $font-size-tiny;
+
+  @include medium {
+    font-size: $font-size-small;
+  }
 
   &__logo {
     height: rem(32);
@@ -43,10 +48,6 @@
     align-items: center;
     text-decoration: none;
     padding-right: $spacing-medium;
-
-    @include medium {
-      padding-right: $spacing-large;
-    }
   }
 
   &__primary-action {

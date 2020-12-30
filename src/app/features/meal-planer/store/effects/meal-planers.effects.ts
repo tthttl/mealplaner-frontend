@@ -22,7 +22,7 @@ import {
 } from 'rxjs/operators';
 import { DayPlan, Meal, MealPlaner } from '../../../../core/models/model';
 import { interval, of } from 'rxjs';
-import { DELETION_DELAY } from '../../../../core/constants/constants';
+import { DELETION_DELAY, STORAGE_SELECTED_MEAL_PLANER_ID } from '../../../../core/constants/constants';
 import { StorageService } from '../../../../core/services/storage.service';
 import { stringBetweenChars } from '../../../../core/helpers/helpers';
 
@@ -88,7 +88,7 @@ export class MealPlanersEffects {
       MealPlanerContainerActions.changeSelectedMealPlaner,
     ),
     tap(({mealPlanerId}) => {
-      this.storageService.setItem('selectedMealPlanerId', mealPlanerId);
+      this.storageService.setItem(STORAGE_SELECTED_MEAL_PLANER_ID, mealPlanerId);
     })
   );
 

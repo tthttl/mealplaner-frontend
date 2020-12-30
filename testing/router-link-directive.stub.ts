@@ -1,6 +1,7 @@
 /* tslint:disable */
 import { Directive, HostListener, Input } from '@angular/core';
 
+// noinspection AngularMissingOrInvalidDeclarationInModule
 @Directive({
   selector: '[routerLink]'
 })

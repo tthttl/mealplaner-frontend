@@ -142,7 +142,7 @@ export const mealPlanerStateReducers = createReducer<MealPlanerState, Action>(
 
 
       if (copyDayPlan.hasOwnProperty(meal.type)) {
-        delete copyDayPlan[meal.type];
+        copyDayPlan[meal.type] = [];
       }
 
       return {
