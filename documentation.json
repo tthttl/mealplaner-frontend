@@ -6459,7 +6459,63 @@
         },
         {
             "name": "ButtonLinkComponent",
-            "id": "component-ButtonLinkComponent-a395565d7b7b61210819e18c8121e246",
+            "id": "component-ButtonLinkComponent-cc7d69ec2336446c5c4ea7770fbd41c3",
+            "file": "dist/mealplaner-gzip/shared/components/button-link/button-link.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-button-link",
+            "styleUrls": [
+                "./button-link.component.scss"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./button-link.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [],
+            "methodsClass": [
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 12
+                }
+            ],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import { Component, OnInit } from '@angular/core';\n\n@Component({\n  selector: 'app-button-link',\n  templateUrl: './button-link.component.html',\n  styleUrls: ['./button-link.component.scss']\n})\nexport class ButtonLinkComponent implements OnInit {\n\n  constructor() { }\n\n  ngOnInit(): void {\n  }\n\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "",
+                    "styleUrl": "./button-link.component.scss"
+                }
+            ],
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [],
+                "line": 8
+            },
+            "implements": [
+                "OnInit"
+            ],
+            "templateData": "<p>button-link works!</p>\n"
+        },
+        {
+            "name": "ButtonLinkComponent",
+            "id": "component-ButtonLinkComponent-a395565d7b7b61210819e18c8121e246-1",
             "file": "src/app/shared/components/button-link/button-link.component.ts",
             "changeDetection": "ChangeDetectionStrategy.OnPush",
             "encapsulation": [],
@@ -6548,66 +6604,10 @@
             "implements": [
                 "OnInit"
             ],
-            "templateData": "<a\n  class=\"button-link\"\n  [attr.data-test]=\"e2eTestName\"\n  [routerLink]=\"link\"\n  [ngClass]=\"{\n    'button-link--color-inverted': color === 'inverted' && !isDisabled,\n    'button-link--color-accent': color === 'accent' && !isDisabled,\n    'button-link--color-warning': color === 'warn' && !isDisabled,\n    'button-link--color-disabled': isDisabled\n  }\"\n>\n  <fa-icon *ngIf=\"iconLeft\"\n           [icon]=\"['fas', iconLeft]\"\n           class=\"icon-left\"\n  ></fa-icon>\n  {{linkText}}\n  <fa-icon *ngIf=\"iconRight\"\n           [icon]=\"['fas', iconRight]\"\n           class=\"icon-right\"\n  ></fa-icon>\n</a>\n"
-        },
-        {
-            "name": "ButtonLinkComponent",
-            "id": "component-ButtonLinkComponent-cc7d69ec2336446c5c4ea7770fbd41c3-1",
-            "file": "dist/mealplaner-gzip/shared/components/button-link/button-link.component.ts",
-            "encapsulation": [],
-            "entryComponents": [],
-            "inputs": [],
-            "outputs": [],
-            "providers": [],
-            "selector": "app-button-link",
-            "styleUrls": [
-                "./button-link.component.scss"
-            ],
-            "styles": [],
-            "templateUrl": [
-                "./button-link.component.html"
-            ],
-            "viewProviders": [],
-            "inputsClass": [],
-            "outputsClass": [],
-            "propertiesClass": [],
-            "methodsClass": [
-                {
-                    "name": "ngOnInit",
-                    "args": [],
-                    "optional": false,
-                    "returnType": "void",
-                    "typeParameters": [],
-                    "line": 12
-                }
-            ],
-            "hostBindings": [],
-            "hostListeners": [],
-            "description": "",
-            "rawdescription": "",
-            "type": "component",
-            "sourceCode": "import { Component, OnInit } from '@angular/core';\n\n@Component({\n  selector: 'app-button-link',\n  templateUrl: './button-link.component.html',\n  styleUrls: ['./button-link.component.scss']\n})\nexport class ButtonLinkComponent implements OnInit {\n\n  constructor() { }\n\n  ngOnInit(): void {\n  }\n\n}\n",
-            "assetsDirs": [],
-            "styleUrlsData": [
-                {
-                    "data": "",
-                    "styleUrl": "./button-link.component.scss"
-                }
-            ],
-            "stylesData": "",
-            "constructorObj": {
-                "name": "constructor",
-                "description": "",
-                "args": [],
-                "line": 8
-            },
-            "implements": [
-                "OnInit"
-            ],
             "isDuplicate": true,
             "duplicateId": 1,
             "duplicateName": "ButtonLinkComponent-1",
-            "templateData": "<p>button-link works!</p>\n"
+            "templateData": "<a\n  class=\"button-link\"\n  [attr.data-test]=\"e2eTestName\"\n  [routerLink]=\"link\"\n  [ngClass]=\"{\n    'button-link--color-inverted': color === 'inverted' && !isDisabled,\n    'button-link--color-accent': color === 'accent' && !isDisabled,\n    'button-link--color-warning': color === 'warn' && !isDisabled,\n    'button-link--color-disabled': isDisabled\n  }\"\n>\n  <fa-icon *ngIf=\"iconLeft\"\n           [icon]=\"['fas', iconLeft]\"\n           class=\"icon-left\"\n  ></fa-icon>\n  {{linkText}}\n  <fa-icon *ngIf=\"iconRight\"\n           [icon]=\"['fas', iconRight]\"\n           class=\"icon-right\"\n  ></fa-icon>\n</a>\n"
         },
         {
             "name": "CookbookContainerComponent",
@@ -10095,7 +10095,7 @@
         },
         {
             "name": "PasswordInputComponent",
-            "id": "component-PasswordInputComponent-f55d5e9452a932f9318ddd5e11160c57",
+            "id": "component-PasswordInputComponent-cc641870b848d7b04e53bc310c9170a4",
             "file": "src/app/shared/components/password-input/password-input.component.ts",
             "changeDetection": "ChangeDetectionStrategy.OnPush",
             "encapsulation": [],
@@ -10131,7 +10131,7 @@
                 },
                 {
                     "name": "border",
-                    "defaultValue": "'all'",
+                    "defaultValue": "'bottom'",
                     "line": 21,
                     "type": "\"all\" | \"bottom\""
                 },
@@ -10373,11 +10373,11 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, forwardRef, Input, Output, ViewChild } from '@angular/core';\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';\nimport { IconProp } from '@fortawesome/fontawesome-svg-core';\n\n@Component({\n  selector: 'app-password-input',\n  templateUrl: './password-input.component.html',\n  styleUrls: ['./password-input.component.scss'],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  providers: [\n    {\n      provide: NG_VALUE_ACCESSOR,\n      useExisting: forwardRef(() => PasswordInputComponent),\n      multi: true\n    }\n  ]\n})\nexport class PasswordInputComponent implements ControlValueAccessor {\n\n  @Input() name: string | undefined;\n  @Input() border: 'all' | 'bottom' = 'all';\n  @Input() ariaDescribedBy: string | undefined;\n  @Input() minValue: number | undefined;\n  @Input() label: string | undefined;\n  @Input() errors: string[] = [];\n  @Input() isDisabled = false;\n  @Input() autocomplete: 'on' | 'off' = 'on';\n  @Input() placeholder = '';\n  @Input() e2eTestName = '';\n  @Input() color = 'primary';\n  @Output() clicked: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();\n\n  @ViewChild('password', {static: true, read: ElementRef})\n  passwordElementRef: ElementRef | undefined;\n\n  isPasswordVisible = false;\n  currentValue: string | number = '';\n\n  onClicked(event: MouseEvent): void {\n    this.clicked.emit(event);\n  }\n\n  onTouched = () => {\n  }\n\n  onChange = (value: string | number) => {\n  }\n\n  onInputChange(value: string | number): void {\n    this.onChange(value);\n  }\n\n  onBlur(): void {\n    this.onTouched();\n  }\n\n  // tslint:disable-next-line:no-any\n  registerOnChange(fn: any): void {\n    this.onChange = fn;\n  }\n\n  // tslint:disable-next-line:no-any\n  registerOnTouched(fn: any): void {\n    this.onTouched = fn;\n  }\n\n  // tslint:disable-next-line:no-any\n  writeValue(value: any): void {\n    if (value !== undefined) {\n      this.currentValue = value;\n    }\n  }\n\n  togglePasswordVisibility(): void {\n    this.isPasswordVisible = !this.isPasswordVisible;\n  }\n\n  getIcon(): IconProp {\n    return this.isPasswordVisible ? ['fas', 'eye-slash'] : ['fas', 'eye'];\n  }\n}\n",
+            "sourceCode": "import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, forwardRef, Input, Output, ViewChild } from '@angular/core';\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';\nimport { IconProp } from '@fortawesome/fontawesome-svg-core';\n\n@Component({\n  selector: 'app-password-input',\n  templateUrl: './password-input.component.html',\n  styleUrls: ['./password-input.component.scss'],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  providers: [\n    {\n      provide: NG_VALUE_ACCESSOR,\n      useExisting: forwardRef(() => PasswordInputComponent),\n      multi: true\n    }\n  ]\n})\nexport class PasswordInputComponent implements ControlValueAccessor {\n\n  @Input() name: string | undefined;\n  @Input() border: 'all' | 'bottom' = 'bottom';\n  @Input() ariaDescribedBy: string | undefined;\n  @Input() minValue: number | undefined;\n  @Input() label: string | undefined;\n  @Input() errors: string[] = [];\n  @Input() isDisabled = false;\n  @Input() autocomplete: 'on' | 'off' = 'on';\n  @Input() placeholder = '';\n  @Input() e2eTestName = '';\n  @Input() color = 'primary';\n  @Output() clicked: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();\n\n  @ViewChild('password', {static: true, read: ElementRef})\n  passwordElementRef: ElementRef | undefined;\n\n  isPasswordVisible = false;\n  currentValue: string | number = '';\n\n  onClicked(event: MouseEvent): void {\n    this.clicked.emit(event);\n  }\n\n  onTouched = () => {\n  }\n\n  onChange = (value: string | number) => {\n  }\n\n  onInputChange(value: string | number): void {\n    this.onChange(value);\n  }\n\n  onBlur(): void {\n    this.onTouched();\n  }\n\n  // tslint:disable-next-line:no-any\n  registerOnChange(fn: any): void {\n    this.onChange = fn;\n  }\n\n  // tslint:disable-next-line:no-any\n  registerOnTouched(fn: any): void {\n    this.onTouched = fn;\n  }\n\n  // tslint:disable-next-line:no-any\n  writeValue(value: any): void {\n    if (value !== undefined) {\n      this.currentValue = value;\n    }\n  }\n\n  togglePasswordVisibility(): void {\n    this.isPasswordVisible = !this.isPasswordVisible;\n  }\n\n  getIcon(): IconProp {\n    return this.isPasswordVisible ? ['fas', 'eye-slash'] : ['fas', 'eye'];\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": "@import \"../../../../styles/settings/colors\";\n\n.password-wrapper {\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n\n  .password-input {\n    width: 100%;\n  }\n\n  .password-icon {\n    padding-left: 1rem;\n\n    &--primary {\n      color: $blue_grey_70\n    }\n\n    &--secondary {\n      color: $cyan_80;\n    }\n\n  }\n\n}\n",
+                    "data": "@import \"../../../../styles/settings/colors\";\n@import \"../../../../styles/settings/variables\";\n\n.password-input {\n  display: flex;\n  flex-direction: row;\n\n  &__field {\n    width: 100%;\n  }\n\n  &__icon {\n    padding-top: $spacing-medium;\n    padding-left: 1rem;\n\n    &--primary {\n      color: $blue_grey_70\n    }\n\n    &--secondary {\n      color: $cyan_80;\n    }\n\n    &--border-bottom {\n      border-bottom: 1px solid  $blue-grey_80;\n    }\n  }\n\n}\n",
                     "styleUrl": "./password-input.component.scss"
                 }
             ],
@@ -10385,7 +10385,7 @@
             "implements": [
                 "ControlValueAccessor"
             ],
-            "templateData": "<div class=\"password-wrapper\">\n  <app-input\n    class=\"password-input\"\n    #password\n    [type]=\"isPasswordVisible ? 'text' : 'password'\"\n    [(ngModel)]=\"currentValue\"\n    [name]=\"name\"\n    [border]=\"border\"\n    [ariaDescribedBy]=\"ariaDescribedBy\"\n    [minValue]=\"minValue\"\n    [autocomplete]=\"autocomplete\"\n    [placeholder]=\"placeholder\"\n    [e2eTestName]=\"e2eTestName\"\n    [errors]=\"errors\"\n    [isDisabled]=\"isDisabled\"\n    (clicked)=\"onClicked($event)\"\n    (blur)=\"onBlur()\"\n    (ngModelChange)=\"onInputChange($event)\"\n  ></app-input>\n  <ng-content></ng-content>\n  <fa-icon class=\"password-icon\"\n           [ngClass]=\"'password-icon--' + color\"\n           (click)=\"togglePasswordVisibility()\"\n           [icon]=\"getIcon()\"></fa-icon>\n</div>\n"
+            "templateData": "<div class=\"password-input\">\n  <app-input\n    class=\"password-input__field\"\n    #password\n    [type]=\"isPasswordVisible ? 'text' : 'password'\"\n    [(ngModel)]=\"currentValue\"\n    [name]=\"name\"\n    [border]=\"border\"\n    [ariaDescribedBy]=\"ariaDescribedBy\"\n    [minValue]=\"minValue\"\n    [autocomplete]=\"autocomplete\"\n    [placeholder]=\"placeholder\"\n    [e2eTestName]=\"e2eTestName\"\n    [errors]=\"errors\"\n    [isDisabled]=\"isDisabled\"\n    (clicked)=\"onClicked($event)\"\n    (blur)=\"onBlur()\"\n    (ngModelChange)=\"onInputChange($event)\"\n  ></app-input>\n  <ng-content></ng-content>\n  <fa-icon class=\"password-input__icon\"\n           [ngClass]=\"'password-input__icon--' + color\"\n           [class.password-input__icon--border-bottom]=\"border === 'bottom'\"\n           (click)=\"togglePasswordVisibility()\"\n           [icon]=\"getIcon()\"></fa-icon>\n</div>\n"
         },
         {
             "name": "ProductPageComponent",
@@ -14127,9 +14127,6 @@
                             "name": "ButtonComponent"
                         },
                         {
-                            "name": "ButtonLinkComponent"
-                        },
-                        {
                             "name": "EditListDialogComponent"
                         },
                         {
@@ -14280,7 +14277,7 @@
                 "name": "Accent",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/button-link/button-link.stories.ts",
+                "file": "src/app/shared/components/button/button.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -14288,7 +14285,7 @@
                 "name": "Accent",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/button/button.stories.ts",
+                "file": "src/app/shared/components/button-link/button-link.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -14299,6 +14296,14 @@
                 "file": "src/app/core/components/navigation/navigation.stories.ts",
                 "type": "object",
                 "defaultValue": "{\n  logout: action('clicked'),\n  languageChanged: action('languageChanged')\n}"
+            },
+            {
+                "name": "actionsData",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/button/button.stories.ts",
+                "type": "object",
+                "defaultValue": "{\n  clicked: action('clicked')\n}"
             },
             {
                 "name": "actionsData",
@@ -14320,9 +14325,25 @@
                 "name": "actionsData",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/button/button.stories.ts",
+                "file": "src/app/features/cookbook/components/recipe-list/recipe-list.stories.ts",
                 "type": "object",
-                "defaultValue": "{\n  clicked: action('clicked')\n}"
+                "defaultValue": "{\n  inputChanged: action('inputChanged'),\n  editRecipe: action('editRecipe'),\n  deleteRecipe: action('deleteRecipe')\n}"
+            },
+            {
+                "name": "actionsData",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/features/meal-planer/components/ingredients-picker/ingredients-picker.stories.ts",
+                "type": "object",
+                "defaultValue": "{\n  choseIngredients: action('choseIngredients'),\n  changeSelectedCookbook: action('back'),\n}"
+            },
+            {
+                "name": "actionsData",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/features/meal-planer/components/meal-picker/meal-picker.stories.ts",
+                "type": "object",
+                "defaultValue": "{\n  selectRecipe: action('selectRecipe'),\n  changeSelectedCookbook: action('changeSelectedCookbook'),\n}"
             },
             {
                 "name": "actionsData",
@@ -14344,14 +14365,6 @@
                 "name": "actionsData",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/features/meal-planer/components/ingredients-picker/ingredients-picker.stories.ts",
-                "type": "object",
-                "defaultValue": "{\n  choseIngredients: action('choseIngredients'),\n  changeSelectedCookbook: action('back'),\n}"
-            },
-            {
-                "name": "actionsData",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/features/meal-planer/components/schedule-days-controlls/schedule-days-controls.stories.ts",
                 "type": "object",
                 "defaultValue": "{\n  changeDayIndex: action('changeDayIndex'),\n}"
@@ -14360,25 +14373,9 @@
                 "name": "actionsData",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/features/meal-planer/components/meal-picker/meal-picker.stories.ts",
-                "type": "object",
-                "defaultValue": "{\n  selectRecipe: action('selectRecipe'),\n  changeSelectedCookbook: action('changeSelectedCookbook'),\n}"
-            },
-            {
-                "name": "actionsData",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/features/shopping-list/components/shopping-list/shopping-list.stories.ts",
                 "type": "object",
                 "defaultValue": "{\n  itemDeleted: action('itemDeleted'),\n  listItemMoved: action('listItemMoved'),\n}"
-            },
-            {
-                "name": "actionsData",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/features/cookbook/components/recipe-list/recipe-list.stories.ts",
-                "type": "object",
-                "defaultValue": "{\n  inputChanged: action('inputChanged'),\n  editRecipe: action('editRecipe'),\n  deleteRecipe: action('deleteRecipe')\n}"
             },
             {
                 "name": "activeDayPlan",
@@ -14499,6 +14496,14 @@
                 "file": "src/app/core/components/teaser/teaser.stories.ts",
                 "type": "object",
                 "defaultValue": "{\n  text: 'Teaser Text',\n}"
+            },
+            {
+                "name": "BorderBottom",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/input/input.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
             },
             {
                 "name": "bulkUpdateShoppingListItems",
@@ -14696,6 +14701,14 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/button/button.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/button-link/button-link.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -14728,22 +14741,6 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/select/select.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/button/button.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/list-header/list-header.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -14753,6 +14750,46 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/shared/components/password-input/password-input.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/select/select.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/features/cookbook/components/recipe-list/recipe-list.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/features/cookbook/components/add-recipe-dialog/add-recipe-dialog.stories.ts",
+                "type": "",
+                "defaultValue": "() => ({\n  component: AddRecipeDialogComponent,\n  props: {}\n})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/features/meal-planer/components/ingredients-picker/ingredients-picker.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/features/meal-planer/components/meal-picker/meal-picker.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -14776,31 +14813,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/features/meal-planer/components/ingredients-picker/ingredients-picker.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/features/meal-planer/components/schedule-days-controlls/schedule-days-controls.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/features/meal-planer/components/meal-picker/meal-picker.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/features/shopping-list/components/shopping-list/shopping-list.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -14816,15 +14829,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/features/cookbook/components/add-recipe-dialog/add-recipe-dialog.stories.ts",
-                "type": "",
-                "defaultValue": "() => ({\n  component: AddRecipeDialogComponent,\n  props: {}\n})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/features/cookbook/components/recipe-list/recipe-list.stories.ts",
+                "file": "src/app/features/shopping-list/components/shopping-list/shopping-list.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -15016,6 +15021,14 @@
                 "name": "Disabled",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/button/button.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Disabled",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/button-link/button-link.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -15025,14 +15038,6 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/shared/components/select/select.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Disabled",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/button/button.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -15200,17 +15205,9 @@
                 "name": "formData",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/features/meal-planer/components/schedule/schedule.stories.ts",
+                "file": "src/app/features/cookbook/components/recipe-list/recipe-list.stories.ts",
                 "type": "object",
-                "defaultValue": "{\n  translations: {\n    de: {\n      'weekday-short.monday': 'Mo',\n      'weekday-short.tuesday': 'Di',\n      'weekday-short.wednesday': 'Mi',\n      'weekday-short.thursday': 'Do',\n      'weekday-short.friday': 'Fr',\n      'weekday-short.saturday': 'Sa',\n      'weekday-short.sunday': 'So',\n      'meal-planer.breakfast': 'Frühstück',\n      'meal-planer.lunch': 'Mittagessen',\n      'meal-planer.dinner': 'Abendessen',\n      'meal-planer-add.lunch': 'Mittagessen hinzufügen',\n      'meal-planer-add.dinner': 'Abendessen hinzufügen',\n    }\n  },\n  selectedDate: new Date(),\n  dayPlan: {\n    breakfast: [{\n      id: 'id',\n      type: 'breakfast',\n      date: '',\n      recipe: {\n        title: 'Menu',\n        cookbookId: 'cookbook',\n        ingredients: [],\n        url: 'https://google.com',\n      },\n    }]\n  }\n}"
-            },
-            {
-                "name": "formData",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/features/meal-planer/components/schedule-controlls/schedule-controls.stories.ts",
-                "type": "object",
-                "defaultValue": "{\n  translations: {\n    de: {\n    }\n  },\n  selectedDate: new Date(),\n}"
+                "defaultValue": "{\n  translations: {\n    de: {\n      'input.search': 'Suchen',\n      'button.edit': 'Bearbeiten',\n      'button.delete': 'Löschen'\n    }\n  },\n  recipes: [\n    {\n      id: '1',\n      title: 'Chocolate chip cookie'\n    },\n    {\n      id: '2',\n      title: 'Cheesecake'\n    },\n    {\n      id: '3',\n      title: 'Muffin'\n    }\n  ]\n}"
             },
             {
                 "name": "formData",
@@ -15232,17 +15229,25 @@
                 "name": "formData",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/features/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts",
+                "file": "src/app/features/meal-planer/components/schedule/schedule.stories.ts",
                 "type": "object",
-                "defaultValue": "{\n  translations: {\n    de: {\n      'shoppingList.addForm.amount': 'Menge',\n      'shoppingList.addForm.product': 'Zucker',\n      'shoppingList.addForm.piece': 'Stück',\n      'shoppingList.addForm.pack': 'Packung',\n      'shoppingList.addForm.addLabel': 'Hinzufügen',\n    }\n  },\n  currentLang: 'de',\n  itemAdded: action('itemAdded'),\n}"
+                "defaultValue": "{\n  translations: {\n    de: {\n      'weekday-short.monday': 'Mo',\n      'weekday-short.tuesday': 'Di',\n      'weekday-short.wednesday': 'Mi',\n      'weekday-short.thursday': 'Do',\n      'weekday-short.friday': 'Fr',\n      'weekday-short.saturday': 'Sa',\n      'weekday-short.sunday': 'So',\n      'meal-planer.breakfast': 'Frühstück',\n      'meal-planer.lunch': 'Mittagessen',\n      'meal-planer.dinner': 'Abendessen',\n      'meal-planer-add.lunch': 'Mittagessen hinzufügen',\n      'meal-planer-add.dinner': 'Abendessen hinzufügen',\n    }\n  },\n  selectedDate: new Date(),\n  dayPlan: {\n    breakfast: [{\n      id: 'id',\n      type: 'breakfast',\n      date: '',\n      recipe: {\n        title: 'Menu',\n        cookbookId: 'cookbook',\n        ingredients: [],\n        url: 'https://google.com',\n      },\n    }]\n  }\n}"
             },
             {
                 "name": "formData",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/features/cookbook/components/recipe-list/recipe-list.stories.ts",
+                "file": "src/app/features/meal-planer/components/schedule-controlls/schedule-controls.stories.ts",
                 "type": "object",
-                "defaultValue": "{\n  translations: {\n    de: {\n      'input.search': 'Suchen',\n      'button.edit': 'Bearbeiten',\n      'button.delete': 'Löschen'\n    }\n  },\n  recipes: [\n    {\n      id: '1',\n      title: 'Chocolate chip cookie'\n    },\n    {\n      id: '2',\n      title: 'Cheesecake'\n    },\n    {\n      id: '3',\n      title: 'Muffin'\n    }\n  ]\n}"
+                "defaultValue": "{\n  translations: {\n    de: {\n    }\n  },\n  selectedDate: new Date(),\n}"
+            },
+            {
+                "name": "formData",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/features/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts",
+                "type": "object",
+                "defaultValue": "{\n  translations: {\n    de: {\n      'shoppingList.addForm.amount': 'Menge',\n      'shoppingList.addForm.product': 'Zucker',\n      'shoppingList.addForm.piece': 'Stück',\n      'shoppingList.addForm.pack': 'Packung',\n      'shoppingList.addForm.addLabel': 'Hinzufügen',\n    }\n  },\n  currentLang: 'de',\n  itemAdded: action('itemAdded'),\n}"
             },
             {
                 "name": "getI18n",
@@ -15272,7 +15277,7 @@
                 "name": "IconLeft",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/button-link/button-link.stories.ts",
+                "file": "src/app/shared/components/button/button.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -15280,14 +15285,6 @@
                 "name": "IconLeft",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/button/button.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "IconRight",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/button-link/button-link.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -15297,6 +15294,14 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/shared/components/button/button.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "IconRight",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/button-link/button-link.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -15368,17 +15373,17 @@
                 "name": "inputData",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/select/select.stories.ts",
+                "file": "src/app/shared/components/password-input/password-input.stories.ts",
                 "type": "object",
-                "defaultValue": "{\n  options: [\n    {key: 'Tesla', value: 'Tesla'},\n    {key: 'Audi', value: 'Audi'},\n    {key: 'Skoda', value: 'Skoda'},\n    {key: 'BMW', value: 'BMW'},\n  ],\n  label: '',\n  isDisabled: false,\n}"
+                "defaultValue": "{\n  isDisabled: false,\n  e2eTestName: 'test',\n  label: 'Label',\n  errors: [],\n  placeholder: 'Placeholder',\n}"
             },
             {
                 "name": "inputData",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/password-input/password-input.stories.ts",
+                "file": "src/app/shared/components/select/select.stories.ts",
                 "type": "object",
-                "defaultValue": "{\n  isDisabled: false,\n  e2eTestName: 'test',\n  label: 'Label',\n  errors: [],\n  placeholder: 'Placeholder',\n}"
+                "defaultValue": "{\n  options: [\n    {key: 'Tesla', value: 'Tesla'},\n    {key: 'Audi', value: 'Audi'},\n    {key: 'Skoda', value: 'Skoda'},\n    {key: 'BMW', value: 'BMW'},\n  ],\n  label: '',\n  isDisabled: false,\n}"
             },
             {
                 "name": "isActiveMealPlanerLoading",
@@ -15480,7 +15485,7 @@
                 "name": "Loading",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/features/meal-planer/components/schedule/schedule.stories.ts",
+                "file": "src/app/features/cookbook/components/recipe-list/recipe-list.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -15496,7 +15501,7 @@
                 "name": "Loading",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/features/shopping-list/components/shopping-list/shopping-list.stories.ts",
+                "file": "src/app/features/meal-planer/components/schedule/schedule.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -15504,7 +15509,7 @@
                 "name": "Loading",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/features/cookbook/components/recipe-list/recipe-list.stories.ts",
+                "file": "src/app/features/shopping-list/components/shopping-list/shopping-list.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -15624,6 +15629,14 @@
                 "name": "loadShoppingLists",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/features/cookbook/store/actions/cookbook-container.actions.ts",
+                "type": "",
+                "defaultValue": "createAction('[Cookbook Container] Load ShoppingLists from Cookbook Container')"
+            },
+            {
+                "name": "loadShoppingLists",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/features/meal-planer/store/actions/add-meal-dialog.actions.ts",
                 "type": "",
                 "defaultValue": "createAction('[Add Meal Dialog] Load ShoppingLists')"
@@ -15635,14 +15648,6 @@
                 "file": "src/app/features/shopping-list/store/actions/shopping-list-container.actions.ts",
                 "type": "",
                 "defaultValue": "createAction('[Shopping List Container] Load Shopping Lists')"
-            },
-            {
-                "name": "loadShoppingLists",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/features/cookbook/store/actions/cookbook-container.actions.ts",
-                "type": "",
-                "defaultValue": "createAction('[Cookbook Container] Load ShoppingLists from Cookbook Container')"
             },
             {
                 "name": "loadShoppingListsFailure",
@@ -15720,17 +15725,17 @@
                 "name": "logout",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/core/store/actions/navigation.actions.ts",
+                "file": "src/app/core/store/actions/error-interceptor.actions.ts",
                 "type": "",
-                "defaultValue": "createAction('[Navigation Action] Logout')"
+                "defaultValue": "createAction('[Error Interceptor] Logout')"
             },
             {
                 "name": "logout",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/core/store/actions/error-interceptor.actions.ts",
+                "file": "src/app/core/store/actions/navigation.actions.ts",
                 "type": "",
-                "defaultValue": "createAction('[Error Interceptor] Logout')"
+                "defaultValue": "createAction('[Navigation Action] Logout')"
             },
             {
                 "name": "logoutFailure",
@@ -15824,7 +15829,7 @@
                 "name": "Primary",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/core/components/not-found/not-found.stories.ts",
+                "file": "src/app/core/components/teaser/teaser.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -15832,7 +15837,7 @@
                 "name": "Primary",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/core/components/teaser/teaser.stories.ts",
+                "file": "src/app/core/components/not-found/not-found.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -16431,6 +16436,14 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/core/components/teaser/teaser.stories.ts",
+                "type": "any",
+                "defaultValue": "(args: TeaserComponent) => ({\n  component: TeaserComponent,\n  props: args,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/core/components/not-found/not-found.stories.ts",
                 "type": "any",
                 "defaultValue": "(args: NotFoundComponent) => ({\n  component: NotFoundComponent,\n  props: args,\n})"
@@ -16439,9 +16452,9 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/core/components/teaser/teaser.stories.ts",
+                "file": "src/app/shared/components/button/button.stories.ts",
                 "type": "any",
-                "defaultValue": "(args: TeaserComponent) => ({\n  component: TeaserComponent,\n  props: args,\n})"
+                "defaultValue": "(args: ButtonComponent) => ({\n  component: ButtonComponent,\n  props: args,\n})"
             },
             {
                 "name": "Template",
@@ -16479,22 +16492,6 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/select/select.stories.ts",
-                "type": "any",
-                "defaultValue": "(args: SelectComponent<string>) => ({\n  component: SelectComponent,\n  props: args,\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/button/button.stories.ts",
-                "type": "any",
-                "defaultValue": "(args: ButtonComponent) => ({\n  component: ButtonComponent,\n  props: args,\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/list-header/list-header.stories.ts",
                 "type": "any",
                 "defaultValue": "(args: ListHeaderComponent) => ({\n  component: ListHeaderComponent,\n  props: args,\n})"
@@ -16506,6 +16503,38 @@
                 "file": "src/app/shared/components/password-input/password-input.stories.ts",
                 "type": "any",
                 "defaultValue": "(args: PasswordInputComponent) => ({\n  component: PasswordInputComponent,\n  props: args,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/select/select.stories.ts",
+                "type": "any",
+                "defaultValue": "(args: SelectComponent<string>) => ({\n  component: SelectComponent,\n  props: args,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/features/cookbook/components/recipe-list/recipe-list.stories.ts",
+                "type": "any",
+                "defaultValue": "(args: RecipeListComponent) => ({\n  component: RecipeListComponent,\n  props: args,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/features/meal-planer/components/ingredients-picker/ingredients-picker.stories.ts",
+                "type": "any",
+                "defaultValue": "(args: IngredientsPickerComponent) => ({\n  component: IngredientsPickerComponent,\n  props: args,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/features/meal-planer/components/meal-picker/meal-picker.stories.ts",
+                "type": "any",
+                "defaultValue": "(args: MealPickerComponent) => ({\n  component: MealPickerComponent,\n  props: args,\n})"
             },
             {
                 "name": "Template",
@@ -16527,33 +16556,9 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/features/meal-planer/components/ingredients-picker/ingredients-picker.stories.ts",
-                "type": "any",
-                "defaultValue": "(args: IngredientsPickerComponent) => ({\n  component: IngredientsPickerComponent,\n  props: args,\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/features/meal-planer/components/schedule-days-controlls/schedule-days-controls.stories.ts",
                 "type": "any",
                 "defaultValue": "(args: ScheduleDaysControllsComponent) => ({\n  component: ScheduleDaysControllsComponent,\n  props: args,\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/features/meal-planer/components/meal-picker/meal-picker.stories.ts",
-                "type": "any",
-                "defaultValue": "(args: MealPickerComponent) => ({\n  component: MealPickerComponent,\n  props: args,\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/features/shopping-list/components/shopping-list/shopping-list.stories.ts",
-                "type": "any",
-                "defaultValue": "(args: ShoppingListComponent) => ({\n  component: ShoppingListComponent,\n  props: args,\n})"
             },
             {
                 "name": "Template",
@@ -16567,9 +16572,9 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/features/cookbook/components/recipe-list/recipe-list.stories.ts",
+                "file": "src/app/features/shopping-list/components/shopping-list/shopping-list.stories.ts",
                 "type": "any",
-                "defaultValue": "(args: RecipeListComponent) => ({\n  component: RecipeListComponent,\n  props: args,\n})"
+                "defaultValue": "(args: ShoppingListComponent) => ({\n  component: ShoppingListComponent,\n  props: args,\n})"
             },
             {
                 "name": "undoDeleteCookbookFromState",
@@ -16703,7 +16708,7 @@
                 "name": "Warn",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/button-link/button-link.stories.ts",
+                "file": "src/app/shared/components/button/button.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -16711,7 +16716,23 @@
                 "name": "Warn",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/button/button.stories.ts",
+                "file": "src/app/shared/components/button-link/button-link.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "WithErrors",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/input/input.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "WithErrors",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/password-input/password-input.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -16720,22 +16741,6 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/shared/components/select/select.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "WithErros",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/input/input.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "WithErros",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/password-input/password-input.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -16760,14 +16765,6 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/shared/components/input/input.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "WithoutLabel",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/password-input/password-input.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             }
@@ -17300,80 +17297,6 @@
         ],
         "enumerations": [],
         "groupedVariables": {
-            "src/app/shared/components/button-link/button-link.stories.ts": [
-                {
-                    "name": "Accent",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/button-link/button-link.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "actionsData",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/button-link/button-link.stories.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  clicked: action('clicked')\n}"
-                },
-                {
-                    "name": "buttonLinkData",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/button-link/button-link.stories.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  linkText: 'Primary',\n  buttonType: 'button',\n  isDisabled: false,\n  hasErrors: false,\n  color: 'primary',\n  e2eTestName: 'buttonTest',\n  iconLeft: '',\n  iconRight: '',\n}"
-                },
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/button-link/button-link.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Disabled",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/button-link/button-link.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "IconLeft",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/button-link/button-link.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "IconRight",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/button-link/button-link.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/button-link/button-link.stories.ts",
-                    "type": "any",
-                    "defaultValue": "(args: ButtonLinkComponent) => ({\n  component: ButtonLinkComponent,\n  props: args,\n})"
-                },
-                {
-                    "name": "Warn",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/button-link/button-link.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                }
-            ],
             "src/app/shared/components/button/button.stories.ts": [
                 {
                     "name": "Accent",
@@ -17444,6 +17367,80 @@
                     "ctype": "miscellaneous",
                     "subtype": "variable",
                     "file": "src/app/shared/components/button/button.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                }
+            ],
+            "src/app/shared/components/button-link/button-link.stories.ts": [
+                {
+                    "name": "Accent",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/button-link/button-link.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "actionsData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/button-link/button-link.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  clicked: action('clicked')\n}"
+                },
+                {
+                    "name": "buttonLinkData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/button-link/button-link.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  linkText: 'Primary',\n  buttonType: 'button',\n  isDisabled: false,\n  hasErrors: false,\n  color: 'primary',\n  e2eTestName: 'buttonTest',\n  iconLeft: '',\n  iconRight: '',\n}"
+                },
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/button-link/button-link.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Disabled",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/button-link/button-link.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "IconLeft",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/button-link/button-link.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "IconRight",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/button-link/button-link.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/button-link/button-link.stories.ts",
+                    "type": "any",
+                    "defaultValue": "(args: ButtonLinkComponent) => ({\n  component: ButtonLinkComponent,\n  props: args,\n})"
+                },
+                {
+                    "name": "Warn",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/button-link/button-link.stories.ts",
                     "type": "",
                     "defaultValue": "Template.bind({})"
                 }
@@ -17564,6 +17561,132 @@
                     "defaultValue": "Template.bind({})"
                 }
             ],
+            "src/app/features/cookbook/components/recipe-list/recipe-list.stories.ts": [
+                {
+                    "name": "actionsData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/features/cookbook/components/recipe-list/recipe-list.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  inputChanged: action('inputChanged'),\n  editRecipe: action('editRecipe'),\n  deleteRecipe: action('deleteRecipe')\n}"
+                },
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/features/cookbook/components/recipe-list/recipe-list.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "formData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/features/cookbook/components/recipe-list/recipe-list.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  translations: {\n    de: {\n      'input.search': 'Suchen',\n      'button.edit': 'Bearbeiten',\n      'button.delete': 'Löschen'\n    }\n  },\n  recipes: [\n    {\n      id: '1',\n      title: 'Chocolate chip cookie'\n    },\n    {\n      id: '2',\n      title: 'Cheesecake'\n    },\n    {\n      id: '3',\n      title: 'Muffin'\n    }\n  ]\n}"
+                },
+                {
+                    "name": "Loading",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/features/cookbook/components/recipe-list/recipe-list.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/features/cookbook/components/recipe-list/recipe-list.stories.ts",
+                    "type": "any",
+                    "defaultValue": "(args: RecipeListComponent) => ({\n  component: RecipeListComponent,\n  props: args,\n})"
+                }
+            ],
+            "src/app/features/meal-planer/components/ingredients-picker/ingredients-picker.stories.ts": [
+                {
+                    "name": "actionsData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/features/meal-planer/components/ingredients-picker/ingredients-picker.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  choseIngredients: action('choseIngredients'),\n  changeSelectedCookbook: action('back'),\n}"
+                },
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/features/meal-planer/components/ingredients-picker/ingredients-picker.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "formData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/features/meal-planer/components/ingredients-picker/ingredients-picker.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  translations: {\n    de: {\n      'unit.kg': 'kg',\n      'unit.tableSpoon': 'EL',\n      'ingredients-picker.back': 'zurück',\n      'ingredients-picker.shopping-list': 'Einkaufsliste',\n      'ingredients-picker.button': 'Hinzufügen'\n    }\n  },\n  currentLanguage: 'de',\n  shoppingLists: [{id: '1', title: 'Shoppinglist 1'}, {id: '2', title: 'Shoppinglist 1'}],\n  preSelectedShoppingListId: '1',\n  ingredientsList: [{\n      title: 'Zutat 1',\n      amount: 2,\n      unit: 'kg',\n      isStableFood: false,\n  },\n    {\n      title: 'Grudzutat',\n      amount: 2,\n      unit: 'tableSpoon',\n      isStableFood: true,\n    }]\n}"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/features/meal-planer/components/ingredients-picker/ingredients-picker.stories.ts",
+                    "type": "any",
+                    "defaultValue": "(args: IngredientsPickerComponent) => ({\n  component: IngredientsPickerComponent,\n  props: args,\n})"
+                }
+            ],
+            "src/app/features/meal-planer/components/meal-picker/meal-picker.stories.ts": [
+                {
+                    "name": "actionsData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/features/meal-planer/components/meal-picker/meal-picker.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  selectRecipe: action('selectRecipe'),\n  changeSelectedCookbook: action('changeSelectedCookbook'),\n}"
+                },
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/features/meal-planer/components/meal-picker/meal-picker.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "EmptyList",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/features/meal-planer/components/meal-picker/meal-picker.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "formData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/features/meal-planer/components/meal-picker/meal-picker.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  translations: {\n    de: {\n      'meal-picker.title': 'Rezepet auswählen',\n      'meal-picker.cookbook': 'Kochbuch',\n      'meal-picker.filter': 'Suche',\n      'meal-picker.empty-cookbook': 'Das Kochbuch ist leer',\n      'meal-picker.empty-cookbook-add-recipe': 'Rezept hinzufügen'\n    }\n  },\n  cookbooks: [{id: '1', title: 'Kochbuch 1'}, {id: '2', title: 'Kochbuch 2'}],\n  preSelectedCookbookId: '2',\n  recipes: {\n    1: [\n      {\n        title: 'Menu 1',\n        cookbookId: 'cookbook',\n        ingredients: [],\n        url: 'https://google.com',\n      },\n      {\n        title: 'Menu 2',\n        cookbookId: 'cookbook',\n        ingredients: [],\n        url: 'https://google.com',\n      },\n      {\n        title: 'Menu 3',\n        cookbookId: 'cookbook',\n        ingredients: [],\n        url: 'https://google.com',\n      }\n    ],\n    2: [\n      {\n        title: 'Menu 1',\n        cookbookId: 'cookbook',\n        ingredients: [],\n        url: 'https://google.com',\n      },\n      {\n        title: 'Menu 2',\n        cookbookId: 'cookbook',\n        ingredients: [],\n        url: 'https://google.com',\n      },\n      {\n        title: 'Menu 3',\n        cookbookId: 'cookbook',\n        ingredients: [],\n        url: 'https://google.com',\n      }\n    ]\n  }\n}"
+                },
+                {
+                    "name": "Loading",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/features/meal-planer/components/meal-picker/meal-picker.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/features/meal-planer/components/meal-picker/meal-picker.stories.ts",
+                    "type": "any",
+                    "defaultValue": "(args: MealPickerComponent) => ({\n  component: MealPickerComponent,\n  props: args,\n})"
+                }
+            ],
             "src/app/features/meal-planer/components/schedule/schedule.stories.ts": [
                 {
                     "name": "actionsData",
@@ -17640,40 +17763,6 @@
                     "defaultValue": "(args: ScheduleControllsComponent) => ({\n  component: ScheduleControllsComponent,\n  props: args,\n})"
                 }
             ],
-            "src/app/features/meal-planer/components/ingredients-picker/ingredients-picker.stories.ts": [
-                {
-                    "name": "actionsData",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/features/meal-planer/components/ingredients-picker/ingredients-picker.stories.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  choseIngredients: action('choseIngredients'),\n  changeSelectedCookbook: action('back'),\n}"
-                },
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/features/meal-planer/components/ingredients-picker/ingredients-picker.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "formData",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/features/meal-planer/components/ingredients-picker/ingredients-picker.stories.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  translations: {\n    de: {\n      'unit.kg': 'kg',\n      'unit.tableSpoon': 'EL',\n      'ingredients-picker.back': 'zurück',\n      'ingredients-picker.shopping-list': 'Einkaufsliste',\n      'ingredients-picker.button': 'Hinzufügen'\n    }\n  },\n  currentLanguage: 'de',\n  shoppingLists: [{id: '1', title: 'Shoppinglist 1'}, {id: '2', title: 'Shoppinglist 1'}],\n  preSelectedShoppingListId: '1',\n  ingredientsList: [{\n      title: 'Zutat 1',\n      amount: 2,\n      unit: 'kg',\n      isStableFood: false,\n  },\n    {\n      title: 'Grudzutat',\n      amount: 2,\n      unit: 'tableSpoon',\n      isStableFood: true,\n    }]\n}"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/features/meal-planer/components/ingredients-picker/ingredients-picker.stories.ts",
-                    "type": "any",
-                    "defaultValue": "(args: IngredientsPickerComponent) => ({\n  component: IngredientsPickerComponent,\n  props: args,\n})"
-                }
-            ],
             "src/app/features/meal-planer/components/schedule-days-controlls/schedule-days-controls.stories.ts": [
                 {
                     "name": "actionsData",
@@ -17716,56 +17805,6 @@
                     "defaultValue": "(args: ScheduleDaysControllsComponent) => ({\n  component: ScheduleDaysControllsComponent,\n  props: args,\n})"
                 }
             ],
-            "src/app/features/meal-planer/components/meal-picker/meal-picker.stories.ts": [
-                {
-                    "name": "actionsData",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/features/meal-planer/components/meal-picker/meal-picker.stories.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  selectRecipe: action('selectRecipe'),\n  changeSelectedCookbook: action('changeSelectedCookbook'),\n}"
-                },
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/features/meal-planer/components/meal-picker/meal-picker.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "EmptyList",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/features/meal-planer/components/meal-picker/meal-picker.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "formData",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/features/meal-planer/components/meal-picker/meal-picker.stories.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  translations: {\n    de: {\n      'meal-picker.title': 'Rezepet auswählen',\n      'meal-picker.cookbook': 'Kochbuch',\n      'meal-picker.filter': 'Suche',\n      'meal-picker.empty-cookbook': 'Das Kochbuch ist leer',\n      'meal-picker.empty-cookbook-add-recipe': 'Rezept hinzufügen'\n    }\n  },\n  cookbooks: [{id: '1', title: 'Kochbuch 1'}, {id: '2', title: 'Kochbuch 2'}],\n  preSelectedCookbookId: '2',\n  recipes: {\n    1: [\n      {\n        title: 'Menu 1',\n        cookbookId: 'cookbook',\n        ingredients: [],\n        url: 'https://google.com',\n      },\n      {\n        title: 'Menu 2',\n        cookbookId: 'cookbook',\n        ingredients: [],\n        url: 'https://google.com',\n      },\n      {\n        title: 'Menu 3',\n        cookbookId: 'cookbook',\n        ingredients: [],\n        url: 'https://google.com',\n      }\n    ],\n    2: [\n      {\n        title: 'Menu 1',\n        cookbookId: 'cookbook',\n        ingredients: [],\n        url: 'https://google.com',\n      },\n      {\n        title: 'Menu 2',\n        cookbookId: 'cookbook',\n        ingredients: [],\n        url: 'https://google.com',\n      },\n      {\n        title: 'Menu 3',\n        cookbookId: 'cookbook',\n        ingredients: [],\n        url: 'https://google.com',\n      }\n    ]\n  }\n}"
-                },
-                {
-                    "name": "Loading",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/features/meal-planer/components/meal-picker/meal-picker.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/features/meal-planer/components/meal-picker/meal-picker.stories.ts",
-                    "type": "any",
-                    "defaultValue": "(args: MealPickerComponent) => ({\n  component: MealPickerComponent,\n  props: args,\n})"
-                }
-            ],
             "src/app/features/shopping-list/components/shopping-list/shopping-list.stories.ts": [
                 {
                     "name": "actionsData",
@@ -17806,48 +17845,6 @@
                     "file": "src/app/features/shopping-list/components/shopping-list/shopping-list.stories.ts",
                     "type": "any",
                     "defaultValue": "(args: ShoppingListComponent) => ({\n  component: ShoppingListComponent,\n  props: args,\n})"
-                }
-            ],
-            "src/app/features/cookbook/components/recipe-list/recipe-list.stories.ts": [
-                {
-                    "name": "actionsData",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/features/cookbook/components/recipe-list/recipe-list.stories.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  inputChanged: action('inputChanged'),\n  editRecipe: action('editRecipe'),\n  deleteRecipe: action('deleteRecipe')\n}"
-                },
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/features/cookbook/components/recipe-list/recipe-list.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "formData",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/features/cookbook/components/recipe-list/recipe-list.stories.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  translations: {\n    de: {\n      'input.search': 'Suchen',\n      'button.edit': 'Bearbeiten',\n      'button.delete': 'Löschen'\n    }\n  },\n  recipes: [\n    {\n      id: '1',\n      title: 'Chocolate chip cookie'\n    },\n    {\n      id: '2',\n      title: 'Cheesecake'\n    },\n    {\n      id: '3',\n      title: 'Muffin'\n    }\n  ]\n}"
-                },
-                {
-                    "name": "Loading",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/features/cookbook/components/recipe-list/recipe-list.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/features/cookbook/components/recipe-list/recipe-list.stories.ts",
-                    "type": "any",
-                    "defaultValue": "(args: RecipeListComponent) => ({\n  component: RecipeListComponent,\n  props: args,\n})"
                 }
             ],
             "src/app/core/store/index.ts": [
@@ -18592,6 +18589,56 @@
                     "defaultValue": "(args: TeaserComponent) => ({\n  component: TeaserComponent,\n  props: args,\n})"
                 }
             ],
+            "src/app/shared/components/input/input.stories.ts": [
+                {
+                    "name": "BorderBottom",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/input/input.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/input/input.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "inputData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/input/input.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  isDisabled: false,\n  e2eTestName: 'test',\n  label: 'Label',\n  errors: [],\n  placeholder: 'Placeholder',\n}"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/input/input.stories.ts",
+                    "type": "any",
+                    "defaultValue": "(args: InputComponent) => ({\n  component: InputComponent,\n  props: args,\n})"
+                },
+                {
+                    "name": "WithErrors",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/input/input.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "WithoutLabel",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/input/input.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                }
+            ],
             "src/app/features/shopping-list/store/actions/shopping-list-effect.actions.ts": [
                 {
                     "name": "bulkUpdateShoppingListItems",
@@ -19123,48 +19170,6 @@
                     "defaultValue": "(args: EditListDialogComponent) => ({\n  component: EditListDialogComponent,\n  props: args,\n  template: `<app-edit-list-dialog>Test</app-edit-list-dialog>`,\n})"
                 }
             ],
-            "src/app/shared/components/input/input.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/input/input.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "inputData",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/input/input.stories.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  isDisabled: false,\n  e2eTestName: 'test',\n  label: 'Label',\n  errors: [],\n  placeholder: 'Placeholder',\n}"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/input/input.stories.ts",
-                    "type": "any",
-                    "defaultValue": "(args: InputComponent) => ({\n  component: InputComponent,\n  props: args,\n})"
-                },
-                {
-                    "name": "WithErros",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/input/input.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "WithoutLabel",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/input/input.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                }
-            ],
             "src/app/shared/components/list-picker-dialog/list-picker-dialog.stories.ts": [
                 {
                     "name": "Default",
@@ -19267,20 +19272,22 @@
                     "defaultValue": "(args: PasswordInputComponent) => ({\n  component: PasswordInputComponent,\n  props: args,\n})"
                 },
                 {
-                    "name": "WithErros",
+                    "name": "WithErrors",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
                     "file": "src/app/shared/components/password-input/password-input.stories.ts",
                     "type": "",
                     "defaultValue": "Template.bind({})"
-                },
+                }
+            ],
+            "src/app/features/cookbook/components/add-recipe-dialog/add-recipe-dialog.stories.ts": [
                 {
-                    "name": "WithoutLabel",
+                    "name": "Default",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/shared/components/password-input/password-input.stories.ts",
+                    "file": "src/app/features/cookbook/components/add-recipe-dialog/add-recipe-dialog.stories.ts",
                     "type": "",
-                    "defaultValue": "Template.bind({})"
+                    "defaultValue": "() => ({\n  component: AddRecipeDialogComponent,\n  props: {}\n})"
                 }
             ],
             "src/app/features/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts": [
@@ -19307,16 +19314,6 @@
                     "file": "src/app/features/shopping-list/components/shopping-list-form/shopping-list-form.stories.ts",
                     "type": "any",
                     "defaultValue": "(args: ShoppingListFormComponent) => ({\n  component: ShoppingListFormComponent,\n  props: args,\n})"
-                }
-            ],
-            "src/app/features/cookbook/components/add-recipe-dialog/add-recipe-dialog.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/features/cookbook/components/add-recipe-dialog/add-recipe-dialog.stories.ts",
-                    "type": "",
-                    "defaultValue": "() => ({\n  component: AddRecipeDialogComponent,\n  props: {}\n})"
                 }
             ],
             "src/app/core/constants/constants.ts": [
@@ -24628,6 +24625,16 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
+                "name": "BorderBottom",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/input/input.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
                 "name": "Default",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
@@ -24658,7 +24665,7 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
-                "name": "WithErros",
+                "name": "WithErrors",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -24825,17 +24832,7 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
-                "name": "WithErros",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/shared/components/password-input/password-input.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "WithoutLabel",
+                "name": "WithErrors",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
