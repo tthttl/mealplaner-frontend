@@ -1,7 +1,8 @@
-import { mealPlanerStateReducers } from './meal-planer-state.reducers';
-import { initialMealPlanerState } from '../state/meal-planer-state';
+import { format } from 'date-fns';
+import { DayPlan, MealPlaner, Recipe } from '../../../../core/models/model';
 import { MealPlanerApiActions, MealPlanerContainerActions, MealPlanerEffectActions } from '../actions';
-import { DayPlan, Meal, MealPlaner, Recipe } from '../../../../core/models/model';
+import { initialMealPlanerState } from '../state/meal-planer-state';
+import { mealPlanerStateReducers } from './meal-planer-state.reducers';
 
 describe('mealPlanerReducers', () => {
   describe('MealPlanerContainerActions.selectedDateChanged', () => {
@@ -59,7 +60,7 @@ describe('mealPlanerReducers', () => {
         ...initialMealPlanerState,
         activeMealPlaner: '42',
         meals: {
-          42: {},
+          42: {[format(new Date(), 'yyyy-MM-dd')]: {} as DayPlan},
         },
         mealPlaners: {
           ids: ['42'],
