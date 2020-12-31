@@ -53,9 +53,10 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
   isOffline$: Observable<boolean> = this.store.select(isOffline);
   private destroy$: Subject<void> = new Subject<void>();
 
-  private addRecipeDialogTranslations: {[key: string]: string} = {};
-  private createListDialogTranslations: {[key: string]: string} = {};
-  private editListDialogTranslations: {[key: string]: string} = {};
+  private addRecipeDialogTranslations: { [key: string]: string } = {};
+  private createListDialogTranslations: { [key: string]: string } = {};
+  private editListDialogTranslations: { [key: string]: string } = {};
+  private defaultShoppingListTitle = '';
 
   constructor(
     private store: Store<GlobalState>,
@@ -104,6 +105,7 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
         'cancel-button-text': this.translatePipe.transform('edit-cookbook.cancel-button-text', translations, currentLanguage),
         placeholder: this.translatePipe.transform('edit-cookbook.placeholder', translations, currentLanguage),
       };
+      this.defaultShoppingListTitle = this.translatePipe.transform('shopping-list.default-title', translations, currentLanguage);
     });
   }
 
@@ -120,8 +122,8 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
       });
   }
 
-  onEditRecipe(recipeId: string): void {
-    this.router.navigate([`cookbook/recipe/${recipeId}`]);
+  onEditRecipe(recipe: Recipe): void {
+    this.router.navigate([`cookbook/${recipe.cookbookId}/recipe/${recipe.id}`]);
   }
 
   onCreateRecipe(): void {
@@ -151,7 +153,8 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
                 shoppingListItem: item
               })));
             this.activeShoppingList$.pipe(take(1)).subscribe((shoppingList: ShoppingList | undefined) => {
-              const snackBarRef = this.snackBarService.openSnackBar('message.ingredients-added-to-shoppinglist', shoppingList?.title || '');
+              const snackBarRef = this.snackBarService
+                .openSnackBar('message.ingredients-added-to-shoppinglist', shoppingList?.title || this.defaultShoppingListTitle);
               snackBarRef.afterDismissed().pipe(take(1)).subscribe(({dismissedByAction}) => {
                 if (dismissedByAction) {
                   this.router.navigate(['/shopping-list'], {queryParams: {shoppingListId: shoppingList?.id}});
@@ -193,7 +196,7 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
   }
 
   onSelectCookbook(list: List): void {
-        this.store.dispatch(CookbookContainerActions.selectCookbook({selectedCookbookId: list.id}));
+    this.store.dispatch(CookbookContainerActions.selectCookbook({selectedCookbookId: list.id}));
   }
 
   onEditCookbook(list: List): void {

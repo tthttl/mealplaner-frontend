@@ -4,9 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { v4 as uuid } from 'uuid';
-import { STORAGE_SELECTED_COOKBOOK_ID } from '../../../../core/constants/constants';
 import { I18n, Language, Recipe } from '../../../../core/models/model';
-import { StorageService } from '../../../../core/services/storage.service';
 import { GlobalState, selectActiveCookbookId, selectedRecipe, selectTranslations } from '../../../../core/store';
 import { RecipeContainerActions } from '../../store/actions';
 
@@ -26,14 +24,13 @@ export class RecipeContainerComponent implements OnInit {
     private store: Store<GlobalState>,
     private router: Router,
     private route: ActivatedRoute,
-    private storageService: StorageService,
   ) {
   }
 
   ngOnInit(): void {
-    const selectedCookbookId = this.storageService.getItem(STORAGE_SELECTED_COOKBOOK_ID);
+    const selectedCookbookId = this.route.snapshot.paramMap.get('cookbookId');
     this.id = this.route.snapshot.paramMap.get('id');
-    if (this.id) {
+    if (this.id && selectedCookbookId) {
       this.store.dispatch(RecipeContainerActions.loadRecipe({id: this.id!}));
       this.recipe$ = this.store.select(selectedRecipe(selectedCookbookId, this.id));
     }

@@ -17,7 +17,7 @@ export class RecipeListComponent implements OnInit, OnDestroy {
   @Input() recipes: Recipe[] | undefined | null;
   @Input() isOffline: boolean | null = false;
   @Output() inputChanged: EventEmitter<string> = new EventEmitter<string>();
-  @Output() editRecipe: EventEmitter<string> = new EventEmitter<string>();
+  @Output() editRecipe: EventEmitter<Recipe> = new EventEmitter<Recipe>();
   @Output() deleteRecipe: EventEmitter<Recipe> = new EventEmitter<Recipe>();
   @Output() clickRecipe: EventEmitter<Recipe> = new EventEmitter<Recipe>();
   @Output() newRecipe: EventEmitter<void> = new EventEmitter<void>();
@@ -42,9 +42,9 @@ export class RecipeListComponent implements OnInit, OnDestroy {
     this.newRecipe.emit();
   }
 
-  onEditRecipe(id: string | undefined): void {
-    if (id) {
-      this.editRecipe.emit(id);
+  onEditRecipe(recipe: Recipe): void {
+    if (recipe) {
+      this.editRecipe.emit(recipe);
     }
   }
 

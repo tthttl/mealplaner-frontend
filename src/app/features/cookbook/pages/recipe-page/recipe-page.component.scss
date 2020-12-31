@@ -19,13 +19,6 @@
     margin-top: $spacing-medium;
   }
 
-  &__ingredients_label {
-    display: block;
-    color: $blue-grey_80;
-    padding-bottom: $spacing-medium;
-    padding-left: $spacing-medium;
-  }
-
   &__ingredients {
     width: 100%;
     display: flex;
@@ -56,7 +49,6 @@
   }
 
   &__ingredient-input {
-    flex: 1 1 auto;
 
     @include large {
       padding-right: $spacing-medium;
@@ -67,35 +59,48 @@
     }
   }
 
+  &__label-container {
+    display: flex;
+    color: $blue-grey_80;
+    justify-content: flex-start;
+    padding-left: 1rem;
+    border-bottom: none;
+
+    &--left {
+      flex-basis: 63%;
+    }
+
+    &--right {
+      display: none;
+
+      @include large {
+        display: flex;
+      }
+
+    }
+
+  }
+
   &__ingredient-amount {
     @include large {
-      max-width: rem(96);
+      flex-basis: 10%;
     }
   }
 
   &__ingredient-unit {
     @include large {
-      max-width: rem(142);
+      flex-basis: 20%;
     }
   }
 
-  .recipe-form__ingredient-toggle{
+  &__ingredient-toggle {
     display: flex;
+    flex-basis: 25%;
     justify-content: center;
   }
 
-  .mat-button-toggle-group {
-    margin-bottom: 1rem;
-
-    @include large {
-      margin-right: $spacing-small;
-      margin-bottom: 0;
-    }
-  }
-
-  .mat-button-toggle-checked {
-    background-color: $blue-grey_80;
-    color: $blue-grey_10;
+  &__ingredient-title {
+    flex-basis: 33%;
   }
 
   &__ingredients-button {
@@ -107,6 +112,7 @@
   }
 
   &__ingredient-icon-wrapper {
+    flex: auto;
     background-color: $red_70;
     border-radius: $border-radius-default;
     @include button();
@@ -175,7 +181,10 @@
   }
 }
 
-;
+.mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
+  font-size: 0.5rem;
+}
+
 
 
 
