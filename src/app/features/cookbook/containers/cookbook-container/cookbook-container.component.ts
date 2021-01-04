@@ -27,6 +27,7 @@ import {
   isOffline,
   selectActiveCookbookId,
   selectCookbooks,
+  selectCurrentLanguage,
   selectedCookbook,
   selectTranslations
 } from '../../../../core/store';
@@ -75,9 +76,9 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
         this.store.dispatch(CookbookContainerActions.loadShoppingLists());
       }
     });
-    this.store.select(selectTranslations).pipe(
-      withLatestFrom(this.store.select((state: GlobalState) => state.appState.language))
-    ).subscribe(([translations, currentLanguage]: [I18n | null, Language]) => {
+    this.store.select(selectCurrentLanguage).pipe(
+      withLatestFrom(this.store.select(selectTranslations))
+    ).subscribe(([currentLanguage, translations]: [Language, I18n | null]) => {
       this.addRecipeDialogTranslations = {
         'ingredients.label-text': this.translatePipe.transform('ingredients.label-text', translations, currentLanguage),
         'button.add-to-shopping-list': this.translatePipe.transform('button.add-to-shopping-list', translations, currentLanguage),
