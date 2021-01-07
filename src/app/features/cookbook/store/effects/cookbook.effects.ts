@@ -121,7 +121,7 @@ export class CookbookEffects {
     filter(({recipe}: { recipe: Recipe }) => !!recipe.id),
     mergeMap(({recipe}: { recipe: Recipe }) => this.recipeService.deleteRecipe(recipe.id!)
       .pipe(
-        map(() => CookbookApiActions.deleteRecipeSuccess({deletedRecipe: recipe})),
+        map(() => CookbookApiActions.deleteRecipeSuccess({recipeToDelete: recipe})),
         catchError(() => of(CookbookApiActions.undoDeleteRecipeFromState({recipe})))
       )
     )
