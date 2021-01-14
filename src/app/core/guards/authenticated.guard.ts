@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs';
-import { GlobalState, selectUser } from '../store';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { isJwtTokenExpired } from '../helpers/helpers';
+import { GlobalState, selectUser } from '../store';
 import { AuthenticatedGuardActions } from '../store/actions';
 
 @Injectable({
@@ -19,7 +19,7 @@ export class AuthenticatedGuard implements CanActivate {
     return this.store.select(selectUser).pipe(
       map(user => {
 
-        if (!user?.jwt || isJwtTokenExpired(user.jwt)) {
+        if ((!user?.jwt || isJwtTokenExpired(user.jwt)) && navigator.onLine) {
           if (url !== 'auth/login' && url !== 'auth/register') {
             this.store.dispatch(AuthenticatedGuardActions.setRequestedUrlBeforeLoginWasRequired({url}));
           }
