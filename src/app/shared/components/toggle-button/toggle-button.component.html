@@ -1,0 +1,8 @@
+<mat-button-toggle-group
+  (change)="changed($event)"
+  [value]="selectedValue">
+  <mat-button-toggle
+    [value]="true">{{ (showMobileText$ | async) ? mobileLabelTrue : desktopLabelTrue }}</mat-button-toggle>
+  <mat-button-toggle
+    [value]="false">{{ (showMobileText$ | async) ? mobileLabelFalse : desktopLabelFalse }}</mat-button-toggle>
+</mat-button-toggle-group>

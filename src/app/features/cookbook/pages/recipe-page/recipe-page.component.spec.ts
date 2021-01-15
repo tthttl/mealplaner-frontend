@@ -8,10 +8,9 @@ import { of } from 'rxjs';
 import { Recipe } from '../../../../core/models/model';
 import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
 import { SharedModule } from '../../../../shared/shared.module';
-import { ToggleButtonWrapperComponent } from '../../components/toggle-button-wrapper/toggle-button-wrapper.component';
 
 import { RecipePageComponent } from './recipe-page.component';
-import { RecipeListComponent } from '../../components/recipe-list/recipe-list.component';
+import { ToggleButtonComponent } from '../../../../shared/components/toggle-button/toggle-button.component';
 
 describe('RecipeFormComponent', () => {
   let component: RecipePageComponent;
@@ -22,7 +21,7 @@ describe('RecipeFormComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, SharedModule, MatButtonToggleModule],
-      declarations: [RecipePageComponent, ToggleButtonWrapperComponent, FaIconComponent, TranslatePipe],
+      declarations: [RecipePageComponent, ToggleButtonComponent, FaIconComponent, TranslatePipe],
       providers: [
         {
           provide: TranslatePipe,
@@ -41,7 +40,7 @@ describe('RecipeFormComponent', () => {
       ]
     })
       .overrideComponent(RecipePageComponent, {
-        set: { changeDetection: ChangeDetectionStrategy.Default }
+        set: {changeDetection: ChangeDetectionStrategy.Default}
       })
       .compileComponents();
   }));

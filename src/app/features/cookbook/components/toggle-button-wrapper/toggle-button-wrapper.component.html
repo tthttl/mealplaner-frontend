@@ -1,8 +1,0 @@
-<mat-button-toggle-group
-  (change)="changed($event)"
-  [value]="selectedValue">
-  <mat-button-toggle
-    [value]="true">{{(changingLabelTrue$ | async) || changingLabelTrue | translate:translations:currentLanguage}}</mat-button-toggle>
-  <mat-button-toggle
-    [value]="false">{{(changingLabelFalse$ | async) || changingLabelFalse | translate:translations:currentLanguage}}</mat-button-toggle>
-</mat-button-toggle-group>
