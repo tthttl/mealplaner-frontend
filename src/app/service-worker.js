@@ -140,7 +140,7 @@ function deleteItemFromDB(key){
 function refreshToken() {
   console.log('Fetching JWT - Include');
   return fetch(BASE_URL +'/auth/refresh-token', {
-    method: 'POST',
+    method: 'GET',
     body: {},
     credentials: 'same-origin'
   })
