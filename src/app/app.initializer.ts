@@ -17,36 +17,28 @@ export function appInitializer(
   actions$: Actions
 ): () => void {
   return () => new Promise(resolve => {
+    store.dispatch(AppInitializationActions.refreshToken());
+
     const userLanguage: string = localStorage.getItem('userLanguage') || getBrowserLanguage() || DEFAULT_LANGUAGE;
     const appLanguage: Language = SUPPORTED_LANGUAGES.guard(userLanguage) ? userLanguage as Language : DEFAULT_LANGUAGE;
     store.dispatch(AppInitializationActions.setLanguage({language: appLanguage}));
 
-    if (navigator.onLine) {
-      store.dispatch(AppInitializationActions.refreshToken());
+    const loadI18nDone$ = actions$.pipe(
+      ofType(I18nApiActions.getI18nSuccess),
+      takeUntil(actions$.pipe(ofType(I18nApiActions.getI18nFailure))),
+      take(1)
+    );
+    const refreshedTokenDone$ = actions$.pipe(
+      ofType(AuthApiActions.refreshTokenSuccess),
+      takeUntil(actions$.pipe(ofType(AuthApiActions.refreshTokenFailed))),
+      take(1)
+    );
 
-      const loadI18nDone$ = actions$.pipe(
-        ofType(I18nApiActions.getI18nSuccess),
-        takeUntil(actions$.pipe(ofType(I18nApiActions.getI18nFailure))),
-        take(1)
-      );
-      const refreshedTokenDone$ = actions$.pipe(
-        ofType(AuthApiActions.refreshTokenSuccess),
-        takeUntil(actions$.pipe(ofType(AuthApiActions.refreshTokenFailed))),
-        take(1)
-      );
-
-      forkJoin([
-        loadI18nDone$,
-        refreshedTokenDone$
-      ]).subscribe()
-        .add(resolve);
-    } else {
-      actions$.pipe(
-        ofType(I18nApiActions.getI18nSuccess),
-        takeUntil(actions$.pipe(ofType(I18nApiActions.getI18nFailure))),
-        take(1)
-      ).subscribe().add(resolve);
-    }
+    forkJoin([
+      loadI18nDone$,
+      refreshedTokenDone$
+    ]).subscribe()
+      .add(resolve);
 
   });
 }
