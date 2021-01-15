@@ -90,6 +90,15 @@ export const cookbookStateReducer = createReducer<CookbookState, Action>(
       }
     };
   }),
+  on(CookbookApiActions.deleteRecipeSuccess, (state: CookbookState, {recipeToDelete}: DeleteRecipeFromStateAction) => {
+    return {
+      ...state,
+      recipes: {
+        ...state.recipes,
+        [recipeToDelete.cookbookId]: state.recipes[recipeToDelete.cookbookId].filter((recipe: Recipe) => recipe.id !== recipeToDelete.id)
+      }
+    };
+  }),
   on(CookbookApiActions.undoDeleteRecipeFromState, (state: CookbookState, {recipe}: UndoDeleteRecipeFromStateAction) => {
     return {
       ...state,

@@ -24,6 +24,7 @@ import {
   activeMealPlanerId,
   GlobalState,
   isOffline,
+  selectCurrentLanguage,
   selectMealPlaners,
   selectSelectedDate,
   selectTranslations
@@ -59,9 +60,9 @@ export class MealplanerContainerComponent implements OnInit {
     private dialogService: DialogService,
     private translatePipe: TranslatePipe
   ) {
-    this.store.select(selectTranslations).pipe(
-      withLatestFrom(this.store.select((state: GlobalState) => state.appState.language))
-    ).subscribe(([translations, currentLanguage]: [I18n | null, Language]) => {
+    this.store.select(selectCurrentLanguage).pipe(
+      withLatestFrom(this.store.select(selectTranslations))
+    ).subscribe(([currentLanguage, translations]: [Language, I18n | null]) => {
       this.createDialogTranslations = {
         title: this.translatePipe.transform('create-meal-planer.heading', translations, currentLanguage),
         'save-button-text': this.translatePipe.transform('create-meal-planer.save-button-text', translations, currentLanguage),
