@@ -3,6 +3,9 @@ import { initialMealPlanerState, mealPlanerAdapter, MealPlanerState } from '../s
 import { MealPlanerApiActions, MealPlanerContainerActions, MealPlanerEffectActions } from '../actions';
 import { format } from 'date-fns';
 import { DayPlan } from '../../../../core/models/model';
+import { AuthApiActions } from '../../../auth/store/actions';
+import { ErrorInterceptorActions, NavigationActions } from '../../../../core/store/actions';
+import { initialCookbookState } from '../../../cookbook/store/state/cookbook-state';
 
 export const mealPlanerStateReducers = createReducer<MealPlanerState, Action>(
   initialMealPlanerState,
@@ -231,5 +234,16 @@ export const mealPlanerStateReducers = createReducer<MealPlanerState, Action>(
         }
       };
     }
-  )
+  ),
+  on(
+    AuthApiActions.refreshTokenFailed,
+    ErrorInterceptorActions.logout,
+    AuthApiActions.deleteAccountSuccess,
+    NavigationActions.logout,
+    (state) => {
+      return {
+        ...state,
+        ...initialMealPlanerState,
+      };
+    }),
 );

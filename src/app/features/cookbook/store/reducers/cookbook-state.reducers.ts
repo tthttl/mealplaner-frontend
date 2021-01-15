@@ -20,6 +20,9 @@ import {
 } from '../../../../core/models/model-action';
 import { CookbookApiActions, CookbookContainerActions, RecipeApiActions, RecipeContainerActions } from '../actions';
 import { CookbookState, initialCookbookState } from '../state/cookbook-state';
+import { AuthApiActions } from '../../../auth/store/actions';
+import { ErrorInterceptorActions, NavigationActions } from '../../../../core/store/actions';
+import { initialAppState } from '../../../../core/store/state/app-state';
 
 export const cookbookStateReducer = createReducer<CookbookState, Action>(
   initialCookbookState,
@@ -178,4 +181,15 @@ export const cookbookStateReducer = createReducer<CookbookState, Action>(
       activeCookbookId: selectedCookbookId
     };
   }),
+  on(
+    AuthApiActions.refreshTokenFailed,
+    ErrorInterceptorActions.logout,
+    AuthApiActions.deleteAccountSuccess,
+    NavigationActions.logout,
+    (state) => {
+      return {
+        ...state,
+        ...initialCookbookState,
+      };
+    }),
 );
