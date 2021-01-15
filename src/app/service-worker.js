@@ -141,7 +141,6 @@ function refreshToken() {
   console.log('Fetching JWT - Include');
   return fetch(BASE_URL +'/auth/refresh-token', {
     method: 'GET',
-    body: {},
     credentials: 'same-origin'
   })
     .then(async response => {
