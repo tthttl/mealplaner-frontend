@@ -1,14 +1,14 @@
-import { getTestBed, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { AuthService } from './auth.service';
-import { JwtRefreshResponse, User } from '../../../core/models/model';
-import { UserApi, UserDetailApi } from '../../../core/models/model-api';
-import { environment } from '../../../../environments/environment';
-import { of } from 'rxjs';
-import { initialState } from '../../../core/store';
+import { getTestBed, TestBed } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
+import { of } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 import { mapUserApiToUserClient } from '../../../core/helpers/helpers';
+import { JwtRefreshResponse, User } from '../../../core/models/model';
+import { UserApi, UserDetailApi } from '../../../core/models/model-api';
+import { initialState } from '../../../core/store';
+import { AuthService } from './auth.service';
 
 
 describe('AuthService', () => {
@@ -144,7 +144,7 @@ describe('AuthService', () => {
     });
 
     const req = httpMock.expectOne(`${environment.authUrl}/auth/refresh-token`);
-    expect(req.request.method).toBe('POST');
+    expect(req.request.method).toBe('GET');
     req.flush(mockJwtRenewal);
   });
 

@@ -26,5 +26,77 @@
         ]
       }
     }
+  ],
+  "dataGroups": [
+    {
+      "name": "auth",
+      "urls": ["*/auth*"],
+      "cacheConfig": {
+        "maxSize": 20,
+        "maxAge": "12h",
+        "timeout": "350u",
+        "strategy": "freshness"
+      }
+    },
+    {
+      "name": "i18n",
+      "urls": ["*/i18n*"],
+      "cacheConfig": {
+        "maxSize": 20,
+        "maxAge": "12h",
+        "timeout": "350u",
+        "strategy": "freshness"
+      }
+    },
+    {
+      "name": "shopping-lists",
+      "urls": ["*/shopping-lists*"],
+      "cacheConfig": {
+        "maxSize": 20,
+        "maxAge": "12h",
+        "timeout": "350u",
+        "strategy": "freshness"
+      }
+    },
+    {
+      "name": "mealplaners",
+      "urls": ["*/mealplaners*"],
+      "cacheConfig": {
+        "maxSize": 20,
+        "maxAge": "12h",
+        "timeout": "350u",
+        "strategy": "freshness"
+      }
+    },
+    {
+      "name": "cookbooks",
+      "urls": ["*/cookbooks*"],
+      "cacheConfig": {
+        "maxSize": 20,
+        "maxAge": "12h",
+        "timeout": "350u",
+        "strategy": "freshness"
+      }
+    },
+    {
+      "name": "recipes",
+      "urls": ["*/recipes*"],
+      "cacheConfig": {
+        "maxSize": 20,
+        "maxAge": "12h",
+        "timeout": "350u",
+        "strategy": "freshness"
+      }
+    },
+    {
+      "name": "account",
+      "urls": ["*/account*"],
+      "cacheConfig": {
+        "maxSize": 20,
+        "maxAge": "12h",
+        "timeout": "350u",
+        "strategy": "freshness"
+      }
+    }
   ]
 }

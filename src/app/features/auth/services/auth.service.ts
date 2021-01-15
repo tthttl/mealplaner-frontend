@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
 import { decodeJwtToken, mapUserApiToUserClient } from '../../../core/helpers/helpers';
-import { UserApi, UserDetailApi } from '../../../core/models/model-api';
 import { JwtRefreshResponse, LoginCredentials, RegisterCredentials, User } from '../../../core/models/model';
+import { UserApi, UserDetailApi } from '../../../core/models/model-api';
 import { GlobalState } from '../../../core/store';
-import { Store } from '@ngrx/store';
 import { LoginServiceActions } from '../store/actions';
 
 @Injectable({
@@ -40,7 +40,7 @@ export class AuthService {
   }
 
   refreshToken(): Observable<JwtRefreshResponse> {
-    return this.httpClient.post<JwtRefreshResponse>(`${environment.authUrl}/auth/refresh-token`, {}).pipe(
+    return this.httpClient.get<JwtRefreshResponse>(`${environment.authUrl}/auth/refresh-token`).pipe(
       tap((jwtRenewal: JwtRefreshResponse) => jwtRenewal.user && this.startRefreshTokenTimer(jwtRenewal.user.jwt))
     );
   }
