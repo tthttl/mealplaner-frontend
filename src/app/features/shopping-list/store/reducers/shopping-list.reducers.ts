@@ -10,6 +10,9 @@ import {
   LoadShoppingListsSuccessAction,
   SetActiveShoppingListAction
 } from '../../../../core/models/model-action';
+import { AuthApiActions } from '../../../auth/store/actions';
+import { ErrorInterceptorActions, NavigationActions } from '../../../../core/store/actions';
+import { initialCookbookState } from '../../../cookbook/store/state/cookbook-state';
 
 
 export const shoppingListReducers = createReducer<ShoppingListState, Action>(
@@ -212,5 +215,16 @@ export const shoppingListReducers = createReducer<ShoppingListState, Action>(
         shoppingListItems: copyShoppingListsItems,
       };
     }
-  )
+  ),
+  on(
+    AuthApiActions.refreshTokenFailed,
+    ErrorInterceptorActions.logout,
+    AuthApiActions.deleteAccountSuccess,
+    NavigationActions.logout,
+    (state) => {
+      return {
+        ...state,
+        ...initialShoppingListState,
+      };
+    }),
 );

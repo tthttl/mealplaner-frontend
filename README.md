@@ -14,6 +14,12 @@ Run `npm run build` to build the project. The build artifacts will be stored in 
 To create a build for qa run:`npm run build:qa`
 To create a build for prod run: `npm run build:prod`
 
+## Strict Mode
+In this project angular strict mode is Enabled.
+This means that TypeScript is in the strict mode, as well as other strictness flags recommended by the TypeScript team are enabled.
+Specifically: forceConsistentCasingInFileNames, noImplicitReturns, noFallthroughCasesInSwitch.
+This also turns on strict Angular compiler flags strictTemplates, strictInjectionParameters and strictInputAccessModifiers.
+
 ## Running unit tests
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
