@@ -14,6 +14,8 @@ import { ListPickerDialogComponent } from './components/list-picker-dialog/list-
 import { PasswordInputComponent } from './components/password-input/password-input.component';
 import { SelectComponent } from './components/select/select.component';
 import { TranslatePipe } from './pipes/translate.pipe';
+import { ToggleButtonComponent } from './components/toggle-button/toggle-button.component';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 const declarations = [
   ButtonComponent,
@@ -24,7 +26,8 @@ const declarations = [
   EditListDialogComponent,
   TranslatePipe,
   ButtonLinkComponent,
-  PasswordInputComponent
+  PasswordInputComponent,
+  ToggleButtonComponent,
 ];
 
 
@@ -38,6 +41,7 @@ const declarations = [
     MatSnackBarModule,
     MatDialogModule,
     RouterModule,
+    MatButtonToggleModule,
   ],
   exports: [
     ...declarations

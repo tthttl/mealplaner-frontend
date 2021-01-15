@@ -12,7 +12,6 @@ import { TranslatePipe } from '../../shared/pipes/translate.pipe';
 import { SharedModule } from '../../shared/shared.module';
 import { AddRecipeDialogComponent } from './components/add-recipe-dialog/add-recipe-dialog.component';
 import { RecipeListComponent } from './components/recipe-list/recipe-list.component';
-import { ToggleButtonWrapperComponent } from './components/toggle-button-wrapper/toggle-button-wrapper.component';
 import { CookbookContainerComponent } from './containers/cookbook-container/cookbook-container.component';
 import { RecipeContainerComponent } from './containers/recipe-container/recipe-container.component';
 import { CookbookRoutingModule } from './cookbook-routing.module';
@@ -31,7 +30,6 @@ import { CookbookEffects } from './store/effects/cookbook.effects';
     RecipeContainerComponent,
     AddRecipeDialogComponent,
     CookbookPageComponent,
-    ToggleButtonWrapperComponent
   ],
     imports: [
         CommonModule,
@@ -44,7 +42,6 @@ import { CookbookEffects } from './store/effects/cookbook.effects';
         MatSlideToggleModule,
         MatDialogModule,
         MatCheckboxModule,
-        MatButtonToggleModule,
     ],
   providers: [
     {

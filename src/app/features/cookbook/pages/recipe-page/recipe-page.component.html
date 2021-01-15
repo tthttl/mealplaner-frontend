@@ -59,16 +59,14 @@
           >
           </app-input>
           <div class="recipe-form__ingredient-toggle">
-            <app-toggle-button-wrapper
-              [translations]="translations"
-              [currentLanguage]="currentLanguage"
+            <app-toggle-button
               [formControl]="getIngredientFormControl(ingredient, 'isStapleFood')"
-              [mobileLabelKeyTrue]="'recipe-form.toggle.yes.mobile'"
-              [desktopLabelKeyTrue]="'recipe-form.toggle.yes'"
-              [mobileLabelKeyFalse]="'recipe-form.toggle.no'"
-              [desktopLabelKeyFalse]="'recipe-form.toggle.no'"
+              [mobileLabelTrue]="'recipe-form.toggle.yes.mobile' | translate:translations:currentLanguage"
+              [desktopLabelTrue]="'recipe-form.toggle.yes' | translate:translations:currentLanguage"
+              [mobileLabelFalse]="'recipe-form.toggle.no' | translate:translations:currentLanguage"
+              [desktopLabelFalse]="'recipe-form.toggle.no' | translate:translations:currentLanguage"
             >
-            </app-toggle-button-wrapper>
+            </app-toggle-button>
           </div>
           <button
             class="recipe-form__ingredient-icon-wrapper"
