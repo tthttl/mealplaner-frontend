@@ -1,8 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable, Subject } from 'rxjs';
-import { map, switchMap, take, withLatestFrom } from 'rxjs/operators';
+import { interval, Observable, Subject } from 'rxjs';
+import { delay, map, switchMap, take, takeUntil, takeWhile, withLatestFrom } from 'rxjs/operators';
 import { v4 as uuid } from 'uuid';
 import { mapSelectedIngredientToBasicShoppingListItem } from '../../../../core/helpers/helpers';
 import {
@@ -21,7 +21,7 @@ import {
 import { DialogService } from '../../../../core/services/dialog.service';
 import { SnackbarService } from '../../../../core/services/snackbar.service';
 import {
-  activeShoppingList,
+  activeShoppingList as activeShoppingListSelector,
   activeShoppingListId,
   GlobalState,
   isOffline,
@@ -38,19 +38,20 @@ import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
 import { AddRecipeDialogComponent } from '../../components/add-recipe-dialog/add-recipe-dialog.component';
 import { CookbookApiActions, CookbookContainerActions } from '../../store/actions';
 import { copyIngredientsToShoppingList, copyRecipeToMealplaner } from '../../store/actions/cookbook-container.actions';
+import { ShoppingListState } from '../../../shopping-list/store/state/shopping-list-state';
 
 @Component({
   selector: 'app-cookbook-container',
   templateUrl: './cookbook-container.component.html',
   styleUrls: ['./cookbook-container.component.scss']
 })
-export class CookbookContainerComponent implements OnInit, OnDestroy {
+export class CookbookContainerComponent implements OnInit, AfterViewInit, OnDestroy {
   translations$: Observable<I18n | null> = this.store.select(selectTranslations);
   currentLanguage$: Observable<Language> = this.store.select((state: GlobalState) => state.appState.language);
   recipes$: Observable<Recipe[]> = this.selectRecipes();
   cookbooks$: Observable<Cookbook[]> = this.store.select(selectCookbooks);
   selectedCookbook$: Observable<Cookbook | undefined>;
-  activeShoppingList$: Observable<ShoppingList | undefined> = this.store.select(activeShoppingList);
+  activeShoppingList$: Observable<ShoppingList | undefined> = this.store.select(activeShoppingListSelector);
   isOffline$: Observable<boolean> = this.store.select(isOffline);
   private destroy$: Subject<void> = new Subject<void>();
 
@@ -58,6 +59,8 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
   private createListDialogTranslations: { [key: string]: string } = {};
   private editListDialogTranslations: { [key: string]: string } = {};
   private defaultShoppingListTitle = '';
+  private shoppingLists: ShoppingList[] = [];
+  private activeShoppingList: string | undefined;
 
   constructor(
     private store: Store<GlobalState>,
@@ -71,11 +74,6 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.store.dispatch(CookbookContainerActions.loadCookbook());
-    this.activeShoppingList$.pipe(take(1)).subscribe((shoppingList: ShoppingList | undefined) => {
-      if (!shoppingList) {
-        this.store.dispatch(CookbookContainerActions.loadShoppingLists());
-      }
-    });
     this.store.select(selectCurrentLanguage).pipe(
       withLatestFrom(this.store.select(selectTranslations))
     ).subscribe(([currentLanguage, translations]: [Language, I18n | null]) => {
@@ -83,6 +81,8 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
         'ingredients.label-text': this.translatePipe.transform('ingredients.label-text', translations, currentLanguage),
         'button.add-to-shopping-list': this.translatePipe.transform('button.add-to-shopping-list', translations, currentLanguage),
         'button.add-to-mealplaner': this.translatePipe.transform('button.add-to-mealplaner', translations, currentLanguage),
+        'ingredients-picker.shopping-list': this.translatePipe.transform('ingredients-picker.shopping-list', translations, currentLanguage),
+        'shopping-list.default-title': this.translatePipe.transform('shopping-list.default-title', translations, currentLanguage),
         kg: 'kg',
         g: 'g',
         l: 'l',
@@ -110,6 +110,20 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
     });
   }
 
+  ngAfterViewInit(): void {
+    interval(200).pipe(
+      withLatestFrom(this.store.select(activeShoppingListId)),
+      takeWhile(([_, activeShoppingList]) => !activeShoppingList),
+    ).subscribe(() => {
+      this.store.dispatch(CookbookContainerActions.loadShoppingLists());
+    });
+
+    this.store.select('shoppingListState').subscribe(({shoppingLists, activeShoppingList}: ShoppingListState) => {
+      this.shoppingLists = Object.values(shoppingLists.entities) as ShoppingList[];
+      this.activeShoppingList = activeShoppingList;
+    });
+  }
+
   onDeleteRecipe(recipe: Recipe): void {
     const snackBarRef = this.snackBarService.openSnackBar('message.undo', 'message.action');
     this.store.dispatch(CookbookContainerActions.deleteRecipeFromState({recipeToDelete: recipe}));
@@ -133,35 +147,26 @@ export class CookbookContainerComponent implements OnInit, OnDestroy {
 
   onClickRecipe(recipe: Recipe): void {
     const dialogRef = this.dialogService.openDialog(AddRecipeDialogComponent, {
-      data: recipe,
+      data: {
+        recipe,
+        shoppingLists: this.shoppingLists,
+        activeShoppingList: this.activeShoppingList
+      },
       translations: this.addRecipeDialogTranslations,
     });
     dialogRef.afterClosed()
       .pipe(
         take(1),
-        withLatestFrom(this.store.select(activeShoppingListId))
-      )
-      .subscribe(([event, shoppingListId]: [RecipeViewDialogEvent, string | undefined]) => {
+      ).subscribe((event: RecipeViewDialogEvent) => {
+        console.log('here');
         switch (event?.event) {
-          case 'recipe':
-            this.store.dispatch(copyRecipeToMealplaner({recipe: event.recipe!}));
-            break;
           case 'selectedIngredients':
             event.selectedIngredients
-              ?.map((item: SelectedIngredient) => mapSelectedIngredientToBasicShoppingListItem(item, shoppingListId))
+              ?.map((item: SelectedIngredient) => mapSelectedIngredientToBasicShoppingListItem(item, event.targetShoppingList))
               .forEach((item: BasicShoppingListItem) => this.store.dispatch(copyIngredientsToShoppingList({
                 optimisticId: uuid(),
                 shoppingListItem: item
               })));
-            this.activeShoppingList$.pipe(take(1)).subscribe((shoppingList: ShoppingList | undefined) => {
-              const snackBarRef = this.snackBarService
-                .openSnackBar('message.ingredients-added-to-shoppinglist', shoppingList?.title || this.defaultShoppingListTitle);
-              snackBarRef.afterDismissed().pipe(take(1)).subscribe(({dismissedByAction}) => {
-                if (dismissedByAction) {
-                  this.router.navigate(['/shopping-list'], {queryParams: {shoppingListId: shoppingList?.id}});
-                }
-              });
-            });
             break;
         }
       });

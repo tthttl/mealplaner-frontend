@@ -1,7 +1,7 @@
 <div class="ingredient-dialog">
-  <div mat-dialog-title>{{dialogData.data.title}}</div>
+  <div mat-dialog-title>{{dialogData.data.recipe.title}}</div>
   <h4>{{dialogData.translations['ingredients.label-text']}}</h4>
-  <form [formGroup]="ingredientsForm" (ngSubmit)="onAddIngredients()">
+  <form [formGroup]="ingredientsForm" (ngSubmit)="onAddIngredients()"  class="ingredient-dialog__form">
     <div class="ingredient-dialog__list" *ngFor="let ingredient of ingredients.controls" mat-dialog-content>
       <mat-checkbox
         class="ingredient-dialog__list-item"
@@ -15,6 +15,22 @@
         <span class="ingredient-dialog__list-column">{{getFormControl(ingredient, 'title').value}}</span>
       </mat-checkbox>
     </div>
+    <label for="shoppingLists" class="ingredient-dialog__shopping-list-select-label">
+      {{ dialogData.translations['ingredients-picker.shopping-list']  }}
+    </label>
+    <select
+      name="shoppingLists"
+      id="shoppingLists"
+      class="ingredients-picker__shopping-list-select"
+      formControlName="selectedShoppingList"
+      >
+      <option
+        *ngFor="let shoppingList of dialogData.data.shoppingLists"
+        [value]="shoppingList.id"
+       [ngValue]="shoppingList.id"
+      >{{shoppingList.title || dialogData.translations['shopping-list.default-title']}}</option>
+    </select>
+
     <div class="ingredient-dialog__actions" mat-dialog-actions>
       <app-button
         [buttonType]="'submit'"

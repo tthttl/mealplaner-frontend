@@ -17,6 +17,16 @@
     }
   }
 
+  &__form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__shopping-list-select-label {
+    font-weight: bold;
+    margin-top: $spacing-medium;
+  }
+
   &__actions {
     margin-top: $spacing-small;
   }
@@ -25,3 +35,4 @@
 .mat-dialog-actions{
   margin-bottom: 0;
 }
+

@@ -69,7 +69,12 @@ To keep the advantages from lazyloading a custom preloading strategy was impleme
 To define a dependence. Add the route to a module which also uses this module For example: the cookbook path: data: {usedBy: ['meal-planer']}.
 
 ##Open issues
-Offline functionality is only available at beta.mealplaner.app. 
-Resources, tokens and translations are correctly cached but urls unfortunately not always. => Site reload works unreliably. 
-Background synchronisation is only implemented on shopping-list screen. Scope: Creation, deletion, reordering of shopping-list items when offline are stored in indexed db 
+- Offline functionality is only available at beta.mealplaner.app. 
+- Resources, tokens and translations are correctly cached but urls unfortunately not always. => Site reload works unreliably. 
+- Background synchronisation is only implemented on shopping-list screen. Scope: Creation, deletion, reordering of shopping-list items when offline are stored in indexed db 
 then synchronised with the server as soon the app is online again. 
+- Deleting Items allways takes 3 Seconds. If the user refreshes 
+
+
+##Future Improvements
+- Add an adding algorithm that checks if the items that is being added is already on the list and if so make an PATCH Request to change the quantity of this item. 

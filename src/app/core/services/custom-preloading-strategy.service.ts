@@ -30,7 +30,7 @@ export class CustomPreloadingStrategyService implements PreloadingStrategy {
           map(event => event as NavigationStart),
           map(({url}) => url.substring(1)),
           filter(navigatedToPage => route.data?.usedBy?.includes(navigatedToPage)),
-          mergeMap(() => fn())
+          mergeMap(() => fn()),
         );
 
       })

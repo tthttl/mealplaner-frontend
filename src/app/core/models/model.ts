@@ -171,6 +171,7 @@ export interface RecipeViewDialogEvent {
   readonly event: 'selectedIngredients' | 'recipe';
   readonly recipe?: Recipe;
   readonly selectedIngredients?: SelectedIngredient[];
+  readonly targetShoppingList: string;
 }
 
 export interface Link {
