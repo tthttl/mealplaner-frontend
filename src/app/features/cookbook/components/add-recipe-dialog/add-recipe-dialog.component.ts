@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { DialogData, Recipe, RecipeIngredient, SelectedIngredient } from '../../../../core/models/model';
+import { DialogData, Recipe, RecipeIngredient, SelectedIngredient, ShoppingList } from '../../../../core/models/model';
+import { activeShoppingList } from '../../../../core/store';
 
 @Component({
   selector: 'app-recipe-dialog',
@@ -11,6 +12,7 @@ import { DialogData, Recipe, RecipeIngredient, SelectedIngredient } from '../../
 })
 export class AddRecipeDialogComponent implements OnInit {
   ingredientsForm: FormGroup = new FormGroup({
+    selectedShoppingList: new FormControl(this.dialogData.data.activeShoppingList),
     ingredients: new FormArray([])
   });
 
@@ -20,12 +22,11 @@ export class AddRecipeDialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<AddRecipeDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public dialogData: DialogData<Recipe>,
-  ) {
-  }
+    @Inject(MAT_DIALOG_DATA) public dialogData: DialogData<{recipe: Recipe, shoppingLists: ShoppingList[], activeShoppingList: string}>,
+  ) {}
 
   ngOnInit(): void {
-    this.dialogData.data.ingredients.forEach((ingredient: RecipeIngredient) => {
+    this.dialogData.data.recipe.ingredients.forEach((ingredient: RecipeIngredient) => {
       ((this.ingredientsForm.controls.ingredients as FormArray).controls).push(new FormGroup({
         id: new FormControl(ingredient.id),
         isSelected: new FormControl(!ingredient.isStapleFood),
@@ -41,7 +42,8 @@ export class AddRecipeDialogComponent implements OnInit {
     this.dialogRef.close({
       event: 'selectedIngredients',
       selectedIngredients: this.ingredients.controls.map((control: AbstractControl) => (control as FormGroup).value)
-        .filter((item: SelectedIngredient) => item.isSelected)
+        .filter((item: SelectedIngredient) => item.isSelected),
+      targetShoppingList: this.ingredientsForm.controls.selectedShoppingList.value,
     });
   }
 

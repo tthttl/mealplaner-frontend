@@ -171,8 +171,9 @@ export class ShoppingListEffects {
   @Effect()
   deleteShoppingListItem$ = this.actions$.pipe(
     ofType(ShoppingListContainerActions.deleteShoppingListItem, ShoppingListEffectActions.retryDeleteShoppingListItem),
-    concatMap(({type, shoppingListItem}) => {
+    mergeMap(({type, shoppingListItem}) => {
       return of({}).pipe(
+        tap(() => console.log('started Deleting')),
         delayWhen((action) =>
           (type !== ShoppingListEffectActions.retryDeleteShoppingListItem.type) ? interval(DELETION_DELAY) : interval(0)
         ),

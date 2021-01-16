@@ -8,5 +8,5 @@ export const DELETION_DELAY = 3000;
 export const INPUT_DEBOUNCE_TIME = 300;
 export const STORAGE_SELECTED_COOKBOOK_ID = 'selectedCookbookId';
 export const STORAGE_SELECTED_SHOPPING_LIST_ID = 'selectedShoppingListId';
-export const STORAGE_SELECTED_MEAL_PLANER_ID = 'selectedShoppingListId';
+export const STORAGE_SELECTED_MEAL_PLANER_ID = 'selectedMealPlanerId';
 export const SUPPORTED_LANGUAGES = StringUnion('de', 'en');

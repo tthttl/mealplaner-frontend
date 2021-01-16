@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { DialogData, Recipe } from '../../../../core/models/model';
+import { DialogData, Recipe, ShoppingList } from '../../../../core/models/model';
 import { SharedModule } from '../../../../shared/shared.module';
 
 import { AddRecipeDialogComponent } from './add-recipe-dialog.component';
@@ -11,19 +11,20 @@ describe('RecipeViewComponent', () => {
   let component: AddRecipeDialogComponent;
   let fixture: ComponentFixture<AddRecipeDialogComponent>;
 
-  const dialogData: DialogData<Recipe> = {
+  const dialogData: DialogData<{recipe: Recipe, shoppingLists: ShoppingList[], activeShoppingList: string}> = {
     data: {
-      id: '1',
-      title: 'title',
-      cookbookId: 'cookbookId',
-      ingredients: [
-        {
-          amount: 1,
-          unit: 'kg',
-          title: 'ingredient',
-          isStapleFood: false
-        }
-      ]
+      shoppingLists: [{id: 'shoppingLists', title: ''}],
+      activeShoppingList: 'shoppingLists',
+      recipe: {
+        ingredients: [
+          {
+            amount: 1,
+            unit: 'kg',
+            title: 'ingredient',
+            isStapleFood: false
+          }
+        ]
+      } as Recipe
     },
     translations: {
       'ingredients.label-text': 'test',
@@ -71,7 +72,7 @@ describe('RecipeViewComponent', () => {
     const result = [...ingredientColumns]
       .map((column) => column.innerHTML)
       .reduce((previous: string, current: string) => previous + ' ' + current);
-    expect(result).toEqual(dialogData.data.ingredients[0].amount.toString() + ' '
-      + dialogData.data.ingredients[0].unit + ' ' + dialogData.data.ingredients[0].title);
+    expect(result).toEqual(dialogData.data.recipe.ingredients[0].amount.toString() + ' '
+      + dialogData.data.recipe.ingredients[0].unit + ' ' + dialogData.data.recipe.ingredients[0].title);
   });
 });
